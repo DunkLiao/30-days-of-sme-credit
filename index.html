@@ -566,7 +566,7 @@
     .card-title a {
       color: inherit;
       font: inherit;
-      text-decoration: none;
+      text-decoration: underline;
       text-decoration-color: var(--secondary);
       text-underline-offset: 0.18em;
     }
@@ -579,6 +579,31 @@
       font-size: var(--body-size);
       color: var(--on-surface-variant);
       margin: 0;
+    }
+
+    .card-primary-link {
+      align-self: flex-start;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-xs);
+      min-height: 44px;
+      padding: var(--space-xs) var(--space-md);
+      border: 1px solid var(--primary);
+      border-radius: var(--rounded);
+      background: var(--primary);
+      color: var(--on-primary);
+      font-size: var(--label-size);
+      font-weight: 700;
+      text-decoration: none;
+      transition: background-color var(--dur-micro) var(--ease-out), box-shadow var(--dur-micro) var(--ease-out);
+    }
+    .card-primary-link:hover,
+    .card-primary-link:focus-visible {
+      background: var(--secondary);
+      border-color: var(--secondary);
+      color: var(--on-primary);
+      box-shadow: 0 2px 8px color-mix(in srgb, var(--primary) 20%, transparent);
     }
 
     .card-toggle {
@@ -1036,7 +1061,7 @@
     <section id="section-curriculum">
       <div class="section-head">
         <h2>五大模組 30 天實務課綱與進度追蹤</h2>
-        <p class="section-sub">點擊模組標籤篩選、展開卡片查看實務要點，或勾選學習天數紀錄進度（自動儲存）</p>
+        <p class="section-sub">點「進入完整課程」或課程標題閱讀當天內容；展開「課程摘要」可先看重點，模組標籤可篩選課程，勾選可記錄進度。</p>
       </div>
 
       <div class="controls-panel">
@@ -1911,8 +1936,13 @@
             <h3 class="card-title"><a href="Day${String(item.day).padStart(2, `0`)}.html">${escapeHtml(item.title)}</a></h3>
             <p class="card-summary">${escapeHtml(item.summary)}</p>
 
+            <a class="card-primary-link" href="Day${String(item.day).padStart(2, `0`)}.html" aria-label="進入 Day ${dayStr} 完整課程：${escapeHtml(item.title)}">
+              <span>進入 Day ${dayStr} 完整課程</span>
+              <span aria-hidden="true">→</span>
+            </a>
+
             <button type="button" class="card-toggle" aria-expanded="${isExpanded ? `true` : `false`}" onclick="toggleDayDetails(${item.day})">
-              <span>${isExpanded ? `收合實務要點` : `查看實務要點`}</span>
+              <span>${isExpanded ? `收合課程摘要` : `展開課程摘要`}</span>
               <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
                 <path d="M4 6L8 10L12 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="square"/>
               </svg>
