@@ -1,8 +1,8 @@
 {
   "id": "./index.html",
-  "name": "中小企業授信與財報分析實務",
+  "name": "中小企業徵信與財報分析實務",
   "short_name": "授信實務30天",
-  "description": "鎖頭銀行中小企業授信與財報分析實務課程",
+  "description": "鎖頭銀行中小企業徵信與財報分析實務課程",
   "lang": "zh-Hant-TW",
   "start_url": "./index.html",
   "scope": "./",
