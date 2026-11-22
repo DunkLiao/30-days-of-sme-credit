@@ -1,0 +1,2258 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#14283a">
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="./manifest.webmanifest">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="授信實務30天">
+  <script>
+    if ("serviceWorker" in navigator && (location.protocol === "https:" || location.hostname === "localhost")) {
+      window.addEventListener("load", () => navigator.serviceWorker.register("./service-worker.js").catch((error) => console.warn("PWA offline support unavailable:", error)));
+    }
+  </script>
+  <meta name="artifact-type" content="narrative">
+  <meta name="design-style" content="charter">
+  <title>中小企業授信與財報分析實務-Day22-買賣業與零售批發業查核實務</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@500;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@1.43.0/dist/umd/lucide.min.js" defer></script>
+  <style>
+    :root {
+      color-scheme: light;
+
+      /* Theme Colors */
+      --navy-deep: #0A192F;
+      --navy-royal: #1E3A8A;
+      --slate-metal: #334155;
+      --slate-muted: #64748B;
+      --gold-champagne: #D97706;
+      --gold-amber-dark: #B45309;
+      --gold-bright: #F59E0B;
+      --bg-light: #F8FAFC;
+      --surface-white: #FFFFFF;
+      --text-dark: #0F172A;
+      --text-body: #1E293B;
+      --alert-red: #DC2626;
+      --safe-emerald: #059669;
+
+      /* Derived Tokens */
+      --background: var(--bg-light);
+      --surface-container-low: var(--surface-white);
+      --surface-container: #F1F5F9;
+      --surface-container-high: #E2E8F0;
+      --surface-navy-tint: #EFF6FF;
+      --surface-amber-soft: #FFFBEB;
+      --surface-amber-border: #FDE68A;
+      --surface-red-soft: #FEF2F2;
+      --surface-red-border: #FECACA;
+      --surface-green-soft: #ECFDF5;
+      --surface-green-border: #A7F3D0;
+
+      --on-surface: var(--text-dark);
+      --on-surface-body: var(--text-body);
+      --on-surface-variant: var(--slate-metal);
+      --on-surface-muted: #475569;
+      --on-navy-muted: #CBD5E1;
+
+      --outline: var(--gold-champagne);
+      --outline-variant: #CBD5E1;
+      --outline-subtle: #E2E8F0;
+
+      --primary: var(--navy-deep);
+      --primary-accent: var(--navy-royal);
+      --on-primary: var(--surface-white);
+      --primary-container: var(--surface-navy-tint);
+      --on-primary-container: var(--navy-royal);
+
+      --secondary: var(--slate-metal);
+      --tertiary: var(--gold-amber-dark);
+      --positive: var(--safe-emerald);
+      --positive-text: #047857;
+      --warning: var(--gold-champagne);
+      --error: var(--alert-red);
+      --error-text: #B91C1C;
+      --focus: var(--gold-bright);
+
+      /* Typography */
+      --font-headline: 'Noto Serif TC', Georgia, serif;
+      --font-body: 'Noto Sans TC', 'Inter', sans-serif;
+      --font-label: 'JetBrains Mono', 'Noto Sans TC', monospace;
+
+      --display-size: clamp(1.45rem, 1.1rem + 1.6vw, 2.15rem);
+      --headline-size: clamp(1.18rem, 1.02rem + 0.7vw, 1.5rem);
+      --subhead-size: clamp(1rem, 0.95rem + 0.3vw, 1.15rem);
+      --body-size: clamp(0.95rem, 0.92rem + 0.15vw, 1.02rem);
+      --label-size: 0.75rem;
+
+      /* Spacing Scale */
+      --space-xs: 0.25rem;
+      --space-sm: 0.5rem;
+      --space-md: 1rem;
+      --space-lg: 1.5rem;
+      --space-xl: 2.25rem;
+      --space-2xl: 3rem;
+
+      /* Radii & Shadows */
+      --rounded: 0.25rem;
+      --rounded-lg: 0.5rem;
+      --rounded-pill: 9999px;
+      --brass-rule: 2px solid var(--gold-champagne);
+      --navy-rule: 3px solid var(--gold-bright);
+      --hairline: 1px solid var(--outline-subtle);
+      --card-shadow: 0 1px 3px rgba(10, 25, 47, 0.06), 0 1px 2px rgba(10, 25, 47, 0.04);
+      --card-shadow-hover: 0 8px 20px rgba(10, 25, 47, 0.09);
+
+      /* Motion */
+      --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+      --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+      --dur-micro: 140ms;
+      --dur-short: 240ms;
+    }
+
+    /* Base Reset */
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+
+    html, body {
+      overflow-x: clip;
+      margin: 0;
+      padding: 0;
+      background-color: var(--background);
+      color: var(--on-surface-body);
+      font-family: var(--font-body);
+      font-size: var(--body-size);
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    header {
+      position: static !important;
+    }
+
+    button, input, select, textarea {
+      font-family: inherit;
+    }
+
+    :focus-visible {
+      outline: 3px solid var(--focus);
+      outline-offset: 2px;
+    }
+
+    /* Header Band */
+    .title-band {
+      background: linear-gradient(135deg, var(--navy-deep) 0%, var(--navy-royal) 100%);
+      color: var(--on-primary);
+      border-bottom: var(--navy-rule);
+      padding: var(--space-xl) var(--space-lg) var(--space-lg);
+    }
+
+    .title-band-inner {
+      max-width: 1140px;
+      margin: 0 auto;
+    }
+
+    .dossier-top-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-sm);
+      margin-bottom: var(--space-md);
+      padding-bottom: var(--space-sm);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.16);
+    }
+
+    .dossier-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-xs);
+      background-color: var(--gold-bright);
+      color: var(--navy-deep);
+      font-family: var(--font-label);
+      font-weight: 600;
+      font-size: var(--label-size);
+      padding: var(--space-xs) var(--space-sm);
+      border-radius: var(--rounded);
+      letter-spacing: 0.03em;
+    }
+
+    .dossier-meta {
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      color: var(--on-navy-muted);
+    }
+
+    .title-band h1 {
+      font-family: var(--font-headline);
+      font-weight: 700;
+      font-size: var(--display-size);
+      line-height: 1.25;
+      margin: 0 0 var(--space-sm);
+      color: var(--on-primary);
+    }
+
+    .title-lede {
+      margin: 0;
+      max-width: 72ch;
+      color: var(--on-navy-muted);
+      font-size: var(--body-size);
+    }
+
+    /* Main Container */
+    .page-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: var(--space-lg);
+      padding: var(--space-lg);
+      max-width: 1140px;
+      margin: 0 auto;
+    }
+
+    .page-grid * {
+      min-width: 0;
+    }
+
+    /* Section Headings */
+    .section-head {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: var(--space-sm);
+      border-top: var(--brass-rule);
+      border-bottom: var(--hairline);
+      padding: var(--space-md) 0 var(--space-sm);
+      margin-bottom: var(--space-md);
+    }
+
+    .section-head h2 {
+      margin: 0;
+      font-family: var(--font-headline);
+      font-size: var(--headline-size);
+      font-weight: 700;
+      color: var(--on-surface);
+      line-height: 1.3;
+    }
+
+    .section-kicker {
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      color: var(--tertiary);
+      font-weight: 600;
+    }
+
+    /* Hero Features Grid */
+    .hero-features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(250px, 100%), 1fr));
+      gap: var(--space-md);
+    }
+
+    .feature-card {
+      background-color: var(--surface-container-low);
+      border: var(--hairline);
+      border-top: var(--brass-rule);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-md) var(--space-lg);
+      box-shadow: var(--card-shadow);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-sm);
+    }
+
+    .feature-card-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-sm);
+    }
+
+    .feature-code {
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      font-weight: 600;
+      color: var(--primary-accent);
+      background-color: var(--primary-container);
+      padding: var(--space-xs) var(--space-sm);
+      border-radius: var(--rounded);
+    }
+
+    .feature-card h3 {
+      margin: 0;
+      font-family: var(--font-headline);
+      font-size: var(--subhead-size);
+      color: var(--on-surface);
+    }
+
+    .feature-card p {
+      margin: 0;
+      font-size: 0.93rem;
+      color: var(--on-surface-variant);
+    }
+
+    .source-note-inline {
+      margin-top: auto;
+      padding-top: var(--space-sm);
+      border-top: 1px dashed var(--outline-variant);
+      font-size: 0.82rem;
+      color: var(--on-surface-muted);
+    }
+
+    /* Progress & Filter Control Panel */
+    .control-panel {
+      background-color: var(--surface-container-low);
+      border: var(--hairline);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-lg);
+      box-shadow: var(--card-shadow);
+      display: grid;
+      gap: var(--space-md);
+    }
+
+    .progress-header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-md);
+    }
+
+    .progress-stat-group {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xs);
+    }
+
+    .progress-label {
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      color: var(--on-surface-muted);
+      font-weight: 600;
+    }
+
+    .progress-counter {
+      font-family: var(--font-headline);
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--on-surface);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .progress-counter .highlight-num {
+      color: var(--primary-accent);
+    }
+
+    .progress-counter.is-complete .highlight-num {
+      color: var(--positive-text);
+    }
+
+    .progress-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-sm);
+    }
+
+    .progress-track {
+      width: 100%;
+      height: 12px;
+      background-color: var(--surface-container-high);
+      border-radius: var(--rounded-pill);
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background-color: var(--gold-champagne);
+      border-radius: var(--rounded-pill);
+      transition: width var(--dur-short) var(--ease-out), background-color var(--dur-short) var(--ease-out);
+    }
+
+    .progress-fill.is-complete {
+      background-color: var(--positive);
+    }
+
+    /* Search & Filter Row */
+    .search-filter-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: var(--space-md);
+      align-items: end;
+      padding-top: var(--space-md);
+      border-top: var(--hairline);
+    }
+
+    .input-group {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xs);
+    }
+
+    .input-label {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--on-surface);
+    }
+
+    .search-box-wrap {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .search-input {
+      width: 100%;
+      min-height: 44px;
+      padding: var(--space-sm) 2.75rem var(--space-sm) var(--space-md);
+      border: 1px solid var(--outline-variant);
+      border-radius: var(--rounded);
+      background-color: var(--surface-white);
+      color: var(--on-surface);
+      font-size: 0.95rem;
+      transition: border-color var(--dur-micro) var(--ease-out), box-shadow var(--dur-micro) var(--ease-out);
+    }
+
+    .search-input:focus {
+      outline: none;
+      border-color: var(--primary-accent);
+      box-shadow: 0 0 0 3px rgba(30, 58, 138, 0.14);
+    }
+
+    .search-clear-btn {
+      position: absolute;
+      right: var(--space-xs);
+      min-width: 36px;
+      min-height: 36px;
+      border: none;
+      background: transparent;
+      color: var(--on-surface-muted);
+      cursor: pointer;
+      border-radius: var(--rounded);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .search-clear-btn:hover {
+      background-color: var(--surface-container);
+      color: var(--on-surface);
+    }
+
+    .search-clear-btn[hidden] {
+      display: none;
+    }
+
+    /* Buttons */
+    .btn {
+      min-height: 44px;
+      padding: var(--space-sm) var(--space-md);
+      border-radius: var(--rounded);
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-xs);
+      border: 1px solid transparent;
+      transition: background-color var(--dur-micro) var(--ease-out), color var(--dur-micro) var(--ease-out), box-shadow var(--dur-micro) var(--ease-out);
+    }
+
+    .btn-secondary {
+      background-color: var(--surface-white);
+      border-color: var(--outline-variant);
+      color: var(--on-surface);
+    }
+
+    .btn-secondary:hover {
+      background-color: var(--surface-container);
+    }
+
+    .btn-primary {
+      background-color: var(--primary);
+      color: var(--on-primary);
+    }
+
+    .btn-primary:hover {
+      background-color: var(--primary-accent);
+    }
+
+    .btn-danger-ghost {
+      background-color: var(--surface-white);
+      border-color: var(--surface-red-border);
+      color: var(--error-text);
+    }
+
+    .btn-danger-ghost:hover {
+      background-color: var(--surface-red-soft);
+    }
+
+    .btn-danger-ghost[data-armed="true"] {
+      background-color: var(--error);
+      border-color: var(--error);
+      color: var(--on-primary);
+    }
+
+    /* Filter Chips */
+    .filter-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-sm);
+      align-items: center;
+    }
+
+    .filter-chip {
+      min-height: 40px;
+      padding: var(--space-xs) var(--space-md);
+      border-radius: var(--rounded);
+      border: 1px solid var(--outline-variant);
+      background-color: var(--surface-white);
+      color: var(--on-surface-variant);
+      font-size: 0.86rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background-color var(--dur-micro) var(--ease-out), color var(--dur-micro) var(--ease-out), box-shadow var(--dur-micro) var(--ease-out);
+    }
+
+    .filter-chip:hover {
+      background-color: var(--surface-container);
+      color: var(--on-surface);
+    }
+
+    .filter-chip.is-active {
+      background-color: var(--primary);
+      border-color: var(--primary);
+      color: var(--on-primary);
+      font-weight: 600;
+    }
+
+    .filter-status-line {
+      font-size: 0.85rem;
+      color: var(--on-surface-muted);
+      font-family: var(--font-label);
+    }
+
+    /* Chapter Cards List */
+    .chapters-stack {
+      display: grid;
+      gap: var(--space-lg);
+    }
+
+    .chapter-card {
+      background-color: var(--surface-container-low);
+      border: 1px solid var(--outline-variant);
+      border-left: 4px solid var(--primary-accent);
+      border-radius: var(--rounded-lg);
+      box-shadow: var(--card-shadow);
+      overflow: hidden;
+      transition: box-shadow var(--dur-short) var(--ease-out), border-color var(--dur-short) var(--ease-out);
+      container-type: inline-size;
+    }
+
+    .chapter-card:hover {
+      box-shadow: var(--card-shadow-hover);
+    }
+
+    .chapter-card.is-read {
+      border-left-color: var(--positive);
+    }
+
+    .chapter-card[hidden] {
+      display: none;
+    }
+
+    .chapter-header {
+      padding: var(--space-lg);
+      display: grid;
+      gap: var(--space-md);
+      background-color: var(--surface-white);
+    }
+
+    .chapter-top-bar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-sm);
+    }
+
+    .chapter-badges {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: var(--space-sm);
+    }
+
+    .chapter-num-pill {
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      font-weight: 600;
+      background-color: var(--primary);
+      color: var(--on-primary);
+      padding: var(--space-xs) var(--space-sm);
+      border-radius: var(--rounded);
+    }
+
+    .chapter-tag {
+      font-size: var(--label-size);
+      font-weight: 600;
+      padding: var(--space-xs) var(--space-sm);
+      border-radius: var(--rounded);
+      background-color: var(--surface-container);
+      color: var(--on-surface-variant);
+    }
+
+    .chapter-gap-badge {
+      font-size: var(--label-size);
+      font-weight: 600;
+      padding: var(--space-xs) var(--space-sm);
+      border-radius: var(--rounded);
+      background-color: var(--surface-amber-soft);
+      border: 1px solid var(--surface-amber-border);
+      color: var(--tertiary);
+    }
+
+    /* Read Checkbox Control */
+    .read-toggle-label {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-sm);
+      min-height: 44px;
+      padding: var(--space-xs) var(--space-md);
+      border-radius: var(--rounded);
+      border: 1px solid var(--outline-variant);
+      background-color: var(--surface-white);
+      color: var(--on-surface);
+      font-size: 0.88rem;
+      font-weight: 600;
+      cursor: pointer;
+      user-select: none;
+      transition: background-color var(--dur-micro) var(--ease-out), border-color var(--dur-micro) var(--ease-out);
+    }
+
+    .read-toggle-label:hover {
+      background-color: var(--surface-container);
+    }
+
+    .read-toggle-label.is-checked {
+      background-color: var(--surface-green-soft);
+      border-color: var(--positive);
+      color: var(--positive-text);
+    }
+
+    .read-checkbox {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--positive);
+      cursor: pointer;
+    }
+
+    .chapter-trigger {
+      width: 100%;
+      text-align: left;
+      background: transparent;
+      border: none;
+      padding: 0;
+      cursor: pointer;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: var(--space-md);
+      align-items: start;
+      color: inherit;
+    }
+
+    .chapter-title {
+      margin: 0 0 var(--space-xs);
+      font-family: var(--font-headline);
+      font-size: var(--headline-size);
+      font-weight: 700;
+      color: var(--on-surface);
+      line-height: 1.35;
+    }
+
+    .chapter-summary {
+      margin: 0;
+      color: var(--on-surface-variant);
+      font-size: 0.95rem;
+    }
+
+    .expand-pill {
+      min-height: 44px;
+      min-width: 108px;
+      padding: var(--space-xs) var(--space-md);
+      border-radius: var(--rounded);
+      border: 1px solid var(--outline-variant);
+      background-color: var(--surface-container);
+      color: var(--primary-accent);
+      font-size: 0.86rem;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-xs);
+      transition: background-color var(--dur-micro) var(--ease-out), transform var(--dur-short) var(--ease-out);
+    }
+
+    .chapter-trigger:hover .expand-pill {
+      background-color: var(--primary-container);
+    }
+
+    .expand-chevron {
+      transition: transform var(--dur-short) var(--ease-out);
+    }
+
+    .chapter-card.is-open .expand-chevron {
+      transform: rotate(180deg);
+    }
+
+    /* Chapter Body */
+    .chapter-body {
+      border-top: var(--hairline);
+      padding: var(--space-lg);
+      background-color: var(--background);
+      display: grid;
+      gap: var(--space-lg);
+    }
+
+    .chapter-body[hidden] {
+      display: none;
+    }
+
+    .content-grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: var(--space-md);
+    }
+
+    @container (max-width: 680px) {
+      .content-grid-2 {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .detail-panel {
+      background-color: var(--surface-white);
+      border: var(--hairline);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-md) var(--space-lg);
+    }
+
+    .detail-panel h4 {
+      margin: 0 0 var(--space-sm);
+      font-family: var(--font-headline);
+      font-size: var(--subhead-size);
+      color: var(--primary-accent);
+      display: flex;
+      align-items: center;
+      gap: var(--space-xs);
+    }
+
+    .detail-panel ul {
+      margin: 0;
+      padding-left: 1.25rem;
+      display: grid;
+      gap: var(--space-sm);
+    }
+
+    .detail-panel li {
+      color: var(--on-surface-body);
+    }
+
+    .detail-panel p {
+      margin: 0 0 var(--space-sm);
+    }
+
+    .detail-panel p:last-child {
+      margin-bottom: 0;
+    }
+
+    .metric-highlight {
+      font-family: var(--font-label);
+      font-weight: 600;
+      color: var(--primary-accent);
+      background-color: var(--primary-container);
+      padding: 0.08rem 0.35rem;
+      border-radius: var(--rounded);
+    }
+
+    /* Callouts */
+    .callout {
+      border-radius: var(--rounded-lg);
+      padding: var(--space-md) var(--space-lg);
+      border: 1px solid transparent;
+      border-left-width: 4px;
+      display: grid;
+      gap: var(--space-xs);
+    }
+
+    .callout-title {
+      font-weight: 700;
+      font-size: 0.95rem;
+      display: flex;
+      align-items: center;
+      gap: var(--space-xs);
+    }
+
+    .callout-risk {
+      background-color: var(--surface-red-soft);
+      border-color: var(--surface-red-border);
+      border-left-color: var(--error);
+    }
+
+    .callout-risk .callout-title {
+      color: var(--error-text);
+    }
+
+    .callout-safe {
+      background-color: var(--surface-green-soft);
+      border-color: var(--surface-green-border);
+      border-left-color: var(--positive);
+    }
+
+    .callout-safe .callout-title {
+      color: var(--positive-text);
+    }
+
+    .callout-missing {
+      background-color: var(--surface-amber-soft);
+      border-color: var(--surface-amber-border);
+      border-left-color: var(--gold-champagne);
+    }
+
+    .callout-missing .callout-title {
+      color: var(--tertiary);
+    }
+
+    .missing-tag {
+      display: inline-block;
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      font-weight: 700;
+      background-color: var(--gold-champagne);
+      color: var(--surface-white);
+      padding: 0.1rem 0.45rem;
+      border-radius: var(--rounded);
+      margin-right: var(--space-xs);
+    }
+
+    .callout ul {
+      margin: var(--space-xs) 0 0;
+      padding-left: 1.25rem;
+      display: grid;
+      gap: var(--space-xs);
+    }
+
+    /* Tables */
+    .table-wrap {
+      overflow-x: auto;
+      background-color: var(--surface-white);
+      border: var(--hairline);
+      border-radius: var(--rounded-lg);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+
+    th {
+      background-color: var(--surface-container);
+      color: var(--on-surface);
+      font-weight: 700;
+      text-align: left;
+      padding: var(--space-sm) var(--space-md);
+      border-bottom: var(--brass-rule);
+      white-space: nowrap;
+    }
+
+    td {
+      padding: var(--space-sm) var(--space-md);
+      border-bottom: var(--hairline);
+      color: var(--on-surface-body);
+      vertical-align: top;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    .num-col {
+      text-align: right;
+      font-family: var(--font-label);
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+    }
+
+    .status-pill-risk {
+      display: inline-block;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--error-text);
+      background-color: var(--surface-red-soft);
+      padding: 0.12rem 0.45rem;
+      border-radius: var(--rounded);
+    }
+
+    .status-pill-safe {
+      display: inline-block;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--positive-text);
+      background-color: var(--surface-green-soft);
+      padding: 0.12rem 0.45rem;
+      border-radius: var(--rounded);
+    }
+
+    .status-pill-missing {
+      display: inline-block;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--tertiary);
+      background-color: var(--surface-amber-soft);
+      border: 1px solid var(--surface-amber-border);
+      padding: 0.12rem 0.45rem;
+      border-radius: var(--rounded);
+    }
+
+    /* Interactive Diagnostic Lab inside Chapter 5 */
+    .lab-box {
+      background-color: var(--surface-white);
+      border: 1px solid var(--outline-variant);
+      border-top: var(--brass-rule);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-lg);
+      display: grid;
+      gap: var(--space-md);
+    }
+
+    .lab-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-sm);
+    }
+
+    .lab-tab-btn {
+      min-height: 40px;
+      padding: var(--space-xs) var(--space-md);
+      border-radius: var(--rounded);
+      border: 1px solid var(--outline-variant);
+      background-color: var(--surface-container);
+      color: var(--on-surface-variant);
+      font-size: 0.86rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .lab-tab-btn.is-active {
+      background-color: var(--primary-accent);
+      border-color: var(--primary-accent);
+      color: var(--on-primary);
+    }
+
+    .lab-sliders {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(220px, 100%), 1fr));
+      gap: var(--space-md);
+      padding: var(--space-md);
+      background-color: var(--surface-container);
+      border-radius: var(--rounded);
+    }
+
+    .slider-field {
+      display: grid;
+      gap: var(--space-xs);
+    }
+
+    .slider-label-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--on-surface);
+    }
+
+    .slider-val {
+      font-family: var(--font-label);
+      color: var(--primary-accent);
+    }
+
+    input[type="range"] {
+      width: 100%;
+      accent-color: var(--primary-accent);
+      cursor: pointer;
+    }
+
+    .lab-metrics-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(160px, 100%), 1fr));
+      gap: var(--space-sm);
+    }
+
+    .lab-metric-tile {
+      background-color: var(--background);
+      border: var(--hairline);
+      border-radius: var(--rounded);
+      padding: var(--space-sm) var(--space-md);
+    }
+
+    .lab-metric-name {
+      font-size: 0.78rem;
+      color: var(--on-surface-muted);
+      font-weight: 600;
+    }
+
+    .lab-metric-num {
+      font-family: var(--font-label);
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--on-surface);
+      font-variant-numeric: tabular-nums;
+      margin-top: var(--space-xs);
+    }
+
+    .lab-metric-num.is-alert {
+      color: var(--error-text);
+    }
+
+    .lab-metric-num.is-ok {
+      color: var(--positive-text);
+    }
+
+    .svg-chart-wrap {
+      width: 100%;
+      background-color: var(--background);
+      border: var(--hairline);
+      border-radius: var(--rounded);
+      padding: var(--space-md);
+    }
+
+    .svg-chart {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    /* Empty Search State */
+    .empty-state {
+      background-color: var(--surface-white);
+      border: var(--hairline);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-2xl) var(--space-lg);
+      text-align: center;
+      display: grid;
+      gap: var(--space-md);
+      justify-items: center;
+    }
+
+    .empty-state[hidden] {
+      display: none;
+    }
+
+    .empty-state h3 {
+      margin: 0;
+      font-family: var(--font-headline);
+      color: var(--on-surface);
+    }
+
+    .empty-state p {
+      margin: 0;
+      color: var(--on-surface-muted);
+      max-width: 48ch;
+    }
+
+    /* Footer */
+    .site-footer {
+      background-color: var(--navy-deep);
+      color: var(--on-navy-muted);
+      border-top: var(--navy-rule);
+      padding: var(--space-lg);
+      margin-top: var(--space-xl);
+    }
+
+    .footer-inner {
+      max-width: 1140px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-md);
+      font-size: 0.88rem;
+    }
+
+    .footer-brand {
+      font-family: var(--font-label);
+      font-weight: 600;
+      color: var(--gold-bright);
+    }
+
+    /* Responsive Mobile Rules */
+    @media (max-width: 640px) {
+      .title-band {
+        padding: var(--space-lg) var(--space-md);
+      }
+
+      .page-grid {
+        padding: var(--space-md);
+        gap: var(--space-md);
+      }
+
+      .search-filter-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .chapter-header,
+      .chapter-body,
+      .control-panel {
+        padding: var(--space-md);
+      }
+
+      .chapter-trigger {
+        grid-template-columns: 1fr;
+      }
+
+      .expand-pill {
+        width: 100%;
+      }
+    }
+
+    /* Reduced Motion */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+      .home-link { display: inline-flex; align-items: center; color: var(--outline); font: inherit; font-size: var(--label-size, 0.875rem); font-weight: 600; text-decoration: none; border: 1px solid var(--outline); padding: 0.4rem 0.7rem; margin: 0 0 var(--space-sm) 0; }
+    .home-link:hover, .home-link:focus-visible { color: var(--on-primary); text-decoration: underline; text-underline-offset: 0.18em; }
+    @media (max-width: 640px) { }
+      .header-bank-label { display: inline-block; margin: 0 0 var(--space-sm); color: var(--outline); font-family: var(--font-label); font-size: var(--label-size, 0.875rem); font-weight: 700; letter-spacing: 0.08em; }
+  </style>
+</head>
+<body>
+  <header class="title-band">
+    <div class="title-band-inner">
+      <span class="header-bank-label">鎖頭銀行</span>
+      <div class="dossier-top-row">
+        <span class="dossier-badge">鎖頭銀行 · 徵信實務課程指南</span>
+        <span class="dossier-meta">MODULE 04 · DAY 22 · 買賣與流通零售專篇</span>
+      </div>
+      <h1>中小企業授信與財報分析實務-Day22-買賣業與零售批發業查核實務</h1>
+      <p class="title-lede">
+        彙整鎖頭銀行徵信實務課程、授信審查三鏈分析法及聯徵中心產業統計規範，聚焦「通路結構、存貨週轉天數與電子支付金流勾稽」三大核心查核面向。凡課綱延伸子題未於原始來源提及者，均明確標示「來源未提供」。
+      </p>
+    </div>
+  </header>
+
+  <main class="page-grid">
+    <!-- Hero Overview Section -->
+    <section aria-labelledby="hero-heading">
+      <div class="section-head">
+        <h2 id="hero-heading">核心概念總覽：買賣業與批發零售業營運及財務特徵</h2>
+        <span class="section-kicker">CORE PROFILE · 4 維度查核視角</span>
+      </div>
+
+      <div class="hero-features">
+        <article class="feature-card">
+          <div class="feature-card-head">
+            <span class="feature-code">01 · 資產結構</span>
+          </div>
+          <h3>輕固定資產與 IFRS 16 租賃權重</h3>
+          <p>
+            連鎖零售與百貨業（如遠東百貨、7-11 直營體系）不動產廠房佔比未必高，但因長期承租據點，帳上<strong>使用權資產與租賃負債</strong>佔比極大，會直接壓低流動比並推升固定長期適合率。
+          </p>
+          <div class="source-note-inline">
+            備註：一般買賣業固定資產佔比通用標準「來源未提供」。
+          </div>
+        </article>
+
+        <article class="feature-card">
+          <div class="feature-card-head">
+            <span class="feature-code">02 · 流動性要求</span>
+          </div>
+          <h3>高存貨與應收帳款流動性要求</h3>
+          <p>
+            批發買賣業營運資金高度集中於應收帳款與存貨（如批發商案例兩者合佔流動資產 83.3%）。查核須確認變現速度、帳齡品質與有無受限設質，避免帳面流動比失真。
+          </p>
+          <div class="source-note-inline">
+            依據：授信審查三種方法、資產負債表流動性排列原則。
+          </div>
+        </article>
+
+        <article class="feature-card">
+          <div class="feature-card-head">
+            <span class="feature-code">03 · 獲利構造</span>
+          </div>
+          <h3>低毛利競爭 vs 通路抽成模型</h3>
+          <p>
+            一般批發貿易毛利易受壓縮（案例由 20% 降至 15%）；反之大型百貨與超商透過預收禮券與專櫃抽成（25%～35%），形成「負營運資金但獲利穩健」之雙層收款優勢。
+          </p>
+          <div class="source-note-inline">
+            備註：管銷營業費用控管之標準比率「來源未提供」。
+          </div>
+        </article>
+
+        <article class="feature-card">
+          <div class="feature-card-head">
+            <span class="feature-code">04 · 營運循環</span>
+          </div>
+          <h3>高週轉節奏與金流實質勾稽</h3>
+          <p>
+            買賣業賴高週轉支撐現金流，須嚴防「存貨／應收增速遠高於營收」的資金積壓警訊，並依《徵信準則》第 18 條將財報與 401/403/405 營業稅表及存摺流水交叉比對。
+          </p>
+          <div class="source-note-inline">
+            備註：「以銷定進」標準化採購循環定義「來源未提供」。
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Interactive Search, Filter & Progress Tracker -->
+    <section class="control-panel" aria-label="學習進度與章節篩選工具">
+      <div class="progress-header">
+        <div class="progress-stat-group">
+          <span class="progress-label">LEARNING PROGRESS · 章節完讀追蹤</span>
+          <div id="progress-counter" class="progress-counter">
+            已讀 <span id="read-count" class="highlight-num">0</span> / 5 章節（<span id="read-percent">0</span>%）
+          </div>
+        </div>
+        <div class="progress-actions">
+          <button type="button" class="btn btn-secondary" onclick="toggleAllChapters(true)">全部展開</button>
+          <button type="button" class="btn btn-secondary" onclick="toggleAllChapters(false)">全部收合</button>
+          <button type="button" id="reset-progress-btn" class="btn btn-danger-ghost" data-armed="false" onclick="handleResetProgress(this)">重設進度</button>
+        </div>
+      </div>
+
+      <div class="progress-track" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="progress-bar-role">
+        <div id="progress-fill" class="progress-fill"></div>
+      </div>
+
+      <div class="search-filter-grid">
+        <div class="input-group">
+          <label for="chapter-search" class="input-label">即時關鍵字搜尋（章節標題、會計科目、法規條號或實務案例）</label>
+          <div class="search-box-wrap">
+            <input
+              type="search"
+              id="chapter-search"
+              class="search-input"
+              placeholder="輸入關鍵字，例如：遠東百貨、401、IFRS 16、存貨、聯徵、來源未提供…"
+              oninput="handleSearchInput(this.value)"
+            >
+            <button type="button" id="clear-search-btn" class="search-clear-btn" aria-label="清除搜尋文字" hidden onclick="clearSearchInput()">
+              <i data-lucide="x" aria-hidden="true"></i>
+            </button>
+          </div>
+        </div>
+        <div class="filter-status-line" id="filter-result-status">顯示全部 5 個章節</div>
+      </div>
+
+      <div class="filter-row" role="group" aria-label="章節分類標籤篩選">
+        <button type="button" class="filter-chip is-active" data-filter="all" onclick="setCategoryFilter('all', this)">全部章節</button>
+        <button type="button" class="filter-chip" data-filter="財務結構與IFRS16" onclick="setCategoryFilter('財務結構與IFRS16', this)">財務結構與IFRS16</button>
+        <button type="button" class="filter-chip" data-filter="存貨與週轉查核" onclick="setCategoryFilter('存貨與週轉查核', this)">存貨與週轉查核</button>
+        <button type="button" class="filter-chip" data-filter="通路與應收帳款" onclick="setCategoryFilter('通路與應收帳款', this)">通路與應收帳款</button>
+        <button type="button" class="filter-chip" data-filter="稅務與金流勾稽" onclick="setCategoryFilter('稅務與金流勾稽', this)">稅務與金流勾稽</button>
+        <button type="button" class="filter-chip" data-filter="聯徵對標與授信決策" onclick="setCategoryFilter('聯徵對標與授信決策', this)">聯徵對標與授信決策</button>
+        <button type="button" class="filter-chip" data-filter="unread" onclick="setCategoryFilter('unread', this)">僅看未讀</button>
+      </div>
+    </section>
+
+    <!-- Chapters Section -->
+    <section aria-labelledby="chapters-heading">
+      <div class="section-head">
+        <h2 id="chapters-heading">實務查核五大章節（點選卡片展開完整解析與「來源未提供」對照）</h2>
+        <span class="section-kicker">5 MODULES · 可展開查閱與勾選已讀</span>
+      </div>
+
+      <div id="chapters-container" class="chapters-stack">
+
+        <!-- CHAPTER 1 -->
+        <article class="chapter-card" id="card-ch1" data-chapter="1" data-category="財務結構與IFRS16" data-search="買賣業 批發零售業 營運特性 財務結構 輕固定資產 重流動資產 以銷定進 營業費用 遠東百貨 遠百 全家 7-11 IFRS 16 使用權資產 租賃負債 流動比率 速動比率 固定長期適合率 負營運資金 禮券 專櫃抽成 401 403 405 小規模營業人 鎖頭銀行 來源未提供">
+          <div class="chapter-header">
+            <div class="chapter-top-bar">
+              <div class="chapter-badges">
+                <span class="chapter-num-pill">CHAPTER 01</span>
+                <span class="chapter-tag">財務結構與IFRS16</span>
+                <span class="chapter-gap-badge">含部分來源未提供項</span>
+              </div>
+              <label class="read-toggle-label" id="label-read-1" onclick="event.stopPropagation()">
+                <input type="checkbox" class="read-checkbox" id="check-read-1" onchange="toggleReadState(1, this.checked)">
+                <span id="read-text-1">標記已讀</span>
+              </label>
+            </div>
+
+            <button type="button" class="chapter-trigger" id="trigger-1" aria-expanded="true" aria-controls="body-1" onclick="toggleChapterBody(1)">
+              <div>
+                <h3 class="chapter-title">第一章：買賣業與批發零售業營運特性與財務結構</h3>
+                <p class="chapter-summary">
+                  破解流通百貨「流動比與速動比不足 100%、固定長期適合率大於 100%」卻仍獲利穩健之結構密碼，並釐清輕資產、以銷定進與營業費用控制於現有來源之揭露範圍。
+                </p>
+              </div>
+              <span class="expand-pill">
+                <span id="expand-label-1">收合內容</span>
+                <i data-lucide="chevron-down" class="expand-chevron" aria-hidden="true"></i>
+              </span>
+            </button>
+          </div>
+
+          <div class="chapter-body" id="body-1">
+            <div class="content-grid-2">
+              <div class="detail-panel">
+                <h4><i data-lucide="building-2" aria-hidden="true"></i> 流通百貨與連鎖零售業實務解析</h4>
+                <ul>
+                  <li>
+                    <strong>打破傳統比率迷思（遠東百貨實例）：</strong>傳統製造業若「近三期流動比率與速動比率不足 <span class="metric-highlight">100%</span>、固定長期適合率均大於 <span class="metric-highlight">100%</span>」，常被視為以短支長警訊；但遠百實際流動／速動比率甚至僅約 <span class="metric-highlight">80%～90%</span>，仍屬鎖頭銀行眼中獲利極穩的優質企業。
+                  </li>
+                  <li>
+                    <strong>IFRS 16 租賃準則結構影響：</strong>百貨與連鎖超商（如 7-11、全家直營門市）高度依賴承租營業據點，財報中「使用權資產」甚至高於不動產廠房設備，投資性不動產亦高。龐大的短期租賃負債會壓低流動比率，判斷償債結構時，使用權資產與租賃負債的匹配性遠比傳統流動比重要。
+                  </li>
+                  <li>
+                    <strong>負營運資金與雙層現金流：</strong>預先售出禮券（如企業以 94～95 折買入面額 1,000 元禮券，先收 950 元）帳列未提供勞務之預收負債；待消費者至專櫃／美食街消費，店家還須上繳營業額 <span class="metric-highlight">25%～35%</span> 抽成，形同先收資金、後收抽成之穩定金流。
+                  </li>
+                </ul>
+              </div>
+
+              <div class="detail-panel">
+                <h4><i data-lucide="layers" aria-hidden="true"></i> 批發商流動性與營業稅結構</h4>
+                <ul>
+                  <li>
+                    <strong>重流動資產結構與變現品質（批發商教學案例）：</strong>批發商流動資產 1,200 萬元中，應收帳款 600 萬元與存貨 400 萬元合佔 <span class="metric-highlight">83.3%</span>；營運資金雖維持 400 萬元，但流動比由 200% 降至 150%、速動比由 150% 降至 100%，顯示短期緩衝高度依賴應收與存貨品質。
+                  </li>
+                  <li>
+                    <strong>受限制資產排列原則：</strong>會計師編製資產負債表係依「變現速度與有無受限」由上而下排列。若定存單或約當現金附有質押或限制條款，將被列至流動資產下方或非流動項下，徵信時應深入附註檢視，不可盡信表面流動比率。
+                  </li>
+                  <li>
+                    <strong>小規模營業人（405 表）擴張現況：</strong>買賣零售業通常申報 401 表（處分資產或兼營用 403 表），而不具法人資格之小規模營業人則為 405 表；疫後因紓困與振興專案，鎖頭銀行此類客戶由疫情前近 2 萬戶增至約 3 萬戶。
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>查核指標／構面</th>
+                    <th>傳統製造業判讀基準</th>
+                    <th>百貨／連鎖零售業實務（來源實證）</th>
+                    <th>徵信查核重點</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>流動比率 ／ 速動比率</strong></td>
+                    <td>通常期待高於 100% 作為短期償債緩衝</td>
+                    <td>常態低於 100%（遠百實例僅約 80%～90%）</td>
+                    <td>檢視預收禮券負債與短期租賃負債比重，不單以比率不足 100% 否決</td>
+                  </tr>
+                  <tr>
+                    <td><strong>固定長期適合率</strong></td>
+                    <td>大於 100% 恐有以短支長風險</td>
+                    <td>常態大於 100%（使用權資產高於廠房設備）</td>
+                    <td>拆解 IFRS 16 使用權資產與投資性不動產租金收益匹配度</td>
+                  </tr>
+                  <tr>
+                    <td><strong>連鎖加盟營運資金</strong></td>
+                    <td>收貨款→備料生產→銷貨收款</td>
+                    <td>總部先鋪貨含利潤，門市上繳營收後再撥還店主份額</td>
+                    <td>確認總部與門市之雙層抽利結構是否為該業態穩定常態</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="callout callout-missing">
+              <div class="callout-title">
+                <i data-lucide="alert-circle" aria-hidden="true"></i>
+                本章節「來源未提供」項目明確標示
+              </div>
+              <ul>
+                <li><span class="missing-tag">來源未提供</span> <strong>買賣業「輕固定資產、重流動資產」通用量化標準：</strong>來源僅呈現百貨業高使用權資產及批發商教學案例之流動資產數字，未提供一般買賣業固定資產佔總資產之標準門檻。</li>
+                <li><span class="missing-tag">來源未提供</span> <strong>「以銷定進」之標準化營運循環控管流程：</strong>原始教材與錄音未討論以銷定進採購機制之具體作業步驟與週期標準。</li>
+                <li><span class="missing-tag">來源未提供</span> <strong>營業費用控制能力指標（管銷費用率、門市租金與人事費用率）：</strong>來源僅說明「營業利益率」反映本業獲利能力，未針對零售批發業之營業費用拆解控管設定檢核標準。</li>
+              </ul>
+            </div>
+          </div>
+        </article>
+
+        <!-- CHAPTER 2 -->
+        <article class="chapter-card" id="card-ch2" data-chapter="2" data-category="存貨與週轉查核" data-search="存貨週轉天數 滯銷風險 週轉天數異常拉長 快時尚 生鮮 3C 效期 跌價損失 寄銷 在途存貨 盤點 N20 會計師懲戒 保留意見 批發商 設備廠 200天 來源未提供">
+          <div class="chapter-header">
+            <div class="chapter-top-bar">
+              <div class="chapter-badges">
+                <span class="chapter-num-pill">CHAPTER 02</span>
+                <span class="chapter-tag">存貨與週轉查核</span>
+                <span class="chapter-gap-badge">含部分來源未提供項</span>
+              </div>
+              <label class="read-toggle-label" id="label-read-2" onclick="event.stopPropagation()">
+                <input type="checkbox" class="read-checkbox" id="check-read-2" onchange="toggleReadState(2, this.checked)">
+                <span id="read-text-2">標記已讀</span>
+              </label>
+            </div>
+
+            <button type="button" class="chapter-trigger" id="trigger-2" aria-expanded="false" aria-controls="body-2" onclick="toggleChapterBody(2)">
+              <div>
+                <h3 class="chapter-title">第二章：存貨週轉天數與滯銷風險查核</h3>
+                <p class="chapter-summary">
+                  結合「批發商備貨倍增警訊」與「設備廠 200 天待驗收存貨」實證，分辨真實滯銷與營運常態；並建立 N20 會計師懲戒與期初存貨盤點之防線。
+                </p>
+              </div>
+              <span class="expand-pill">
+                <span id="expand-label-2">展開詳情</span>
+                <i data-lucide="chevron-down" class="expand-chevron" aria-hidden="true"></i>
+              </span>
+            </button>
+          </div>
+
+          <div class="chapter-body" id="body-2" hidden>
+            <div class="content-grid-2">
+              <div class="detail-panel">
+                <h4><i data-lucide="package-search" aria-hidden="true"></i> 週轉天數拉長預警與成長不相稱判讀</h4>
+                <ul>
+                  <li>
+                    <strong>營運週轉率定義：</strong>課堂實務將存貨與應收帳款週轉合稱為「營運週轉期／週轉率」（聯徵產業統計中以倍數 <span class="metric-highlight">T</span> 表達），並直接關聯短期週轉資金需求。
+                  </li>
+                  <li>
+                    <strong>成長不相稱警訊（批發商教學案例）：</strong>當批發商營收成長 <span class="metric-highlight">+20%</span>（2,000 萬→2,400 萬），但存貨卻暴增 <span class="metric-highlight">+100%</span>（200 萬→400 萬），且毛利率同步由 20% 跌至 15%，即屬異常訊號。徵信不可只見營收成長就放行，必須立即追查<strong>存貨明細與實際去化情形</strong>，評估是否發生滯銷積壓或錯估備貨。
+                  </li>
+                  <li>
+                    <strong>排除季節性誤判：</strong>比較分析法特別提醒，須配合景氣與產業銷售模式解讀，避免將正常季節性備貨誤認為存貨異常。
+                  </li>
+                </ul>
+              </div>
+
+              <div class="detail-panel">
+                <h4><i data-lucide="shield-alert" aria-hidden="true"></i> 盤點實務例外與會計師查核防線</h4>
+                <ul>
+                  <li>
+                    <strong>長天期存貨未必滯銷（設備廠實錄）：</strong>課堂舉電子業設備廠為例，其存貨週轉天期可高達 <span class="metric-highlight">200 多天</span>；實務詢問財務長後發現，機器其實早已裝入下游客戶廠內運轉生產，僅因尚未完成半年後的最終驗收，會計上仍列於「存貨」。由此可見，查核必須貼近實際商業運作，不能只看帳面天數。
+                  </li>
+                  <li>
+                    <strong>聯徵 N20 懲戒紀錄防線：</strong>鎖頭銀行系統針對會計師懲戒（N20）設有控管，若發現簽證會計師曾因「存貨盤點不確實」受罰鍰處分（非停業／除名），徵信報告仍可依規定審慎評估採用，但須明確查證並說明「該受查公司當期存貨是否確實完成盤點」。
+                  </li>
+                  <li>
+                    <strong>首次授信達 3,000 萬之保留意見：</strong>新達門檻企業首次委請會計師簽證時，常見因「期初存貨無法實地盤點」而出具保留意見，實務上若其餘帳務尚屬合理仍可受理。
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="callout callout-risk">
+              <div class="callout-title">
+                <i data-lucide="alert-triangle" aria-hidden="true"></i>
+                實務風控警示：三層檢核避免「帳面正常、庫存死貨」
+              </div>
+              <p>
+                若發現企業「存貨增幅 &gt; 營收增幅」、「速動比率顯著低於流動比率（表示資產過度壓在存貨）」且伴隨「毛利率下降、短期借款大增」，應要求提供存貨明細並核對期後去化紀錄，不得僅依賴未調整的營運資金絕對金額（例如維持 400 萬元）作為償債無虞之依據。
+              </p>
+            </div>
+
+            <div class="callout callout-missing">
+              <div class="callout-title">
+                <i data-lucide="alert-circle" aria-hidden="true"></i>
+                本章節「來源未提供」項目明確標示
+              </div>
+              <ul>
+                <li><span class="missing-tag">來源未提供</span> <strong>存貨週轉天數異常拉長之固定預警天數門檻：</strong>來源未設定「超過幾日即屬異常」之單一絕對天數紅線，主張以「歷年自身趨勢」及「聯徵同業統計」對標判斷。</li>
+                <li><span class="missing-tag">來源未提供</span> <strong>快時尚、生鮮食品、3C 等品類之存貨效期管理與跌價損失提列規範：</strong>原始來源與筆記均未涉及不同零售品類之效期管控與存貨跌價損失評估細節。</li>
+                <li><span class="missing-tag">來源未提供</span> <strong>寄銷存貨（Consignment）與在途存貨（Goods in Transit）盤點查核實務：</strong>來源僅提及期初存貨無法盤點之保留意見及 N20 會計師盤點不實懲戒查核，未針對寄銷及在途存貨列明盤點步驟。</li>
+              </ul>
+            </div>
+          </div>
+        </article>
+
+        <!-- CHAPTER 3 -->
+        <article class="chapter-card" id="card-ch3" data-chapter="3" data-category="通路與應收帳款" data-search="應收帳款 通路結構 大通路商 百貨 大賣場 長票期 扣款條件 經銷合約 銷退保護條款 進貨折讓 鴻海 180天 360天 遠東百貨 25% 35% 7-11 全家 趨勢分析法 250% 應收帳款承購 Factoring 關係人 公司法第15條 虛開發票 5% 8% 來源未提供">
+          <div class="chapter-header">
+            <div class="chapter-top-bar">
+              <div class="chapter-badges">
+                <span class="chapter-num-pill">CHAPTER 03</span>
+                <span class="chapter-tag">通路與應收帳款</span>
+                <span class="chapter-gap-badge">含部分來源未提供項</span>
+              </div>
+              <label class="read-toggle-label" id="label-read-3" onclick="event.stopPropagation()">
+                <input type="checkbox" class="read-checkbox" id="check-read-3" onchange="toggleReadState(3, this.checked)">
+                <span id="read-text-3">標記已讀</span>
+              </label>
+            </div>
+
+            <button type="button" class="chapter-trigger" id="trigger-3" aria-expanded="false" aria-controls="body-3" onclick="toggleChapterBody(3)">
+              <div>
+                <h3 class="chapter-title">第三章：應收帳款與通路結構分析</h3>
+                <p class="chapter-summary">
+                  拆解百貨專櫃抽成、連鎖超商雙層撥還、強勢買方「180 天驗收＋180 天期票」生態，並查核應收帳款增速背離、關係人款項與 Factoring 風險歸屬。
+                </p>
+              </div>
+              <span class="expand-pill">
+                <span id="expand-label-3">展開詳情</span>
+                <i data-lucide="chevron-down" class="expand-chevron" aria-hidden="true"></i>
+              </span>
+            </button>
+          </div>
+
+          <div class="chapter-body" id="body-3" hidden>
+            <div class="content-grid-2">
+              <div class="detail-panel">
+                <h4><i data-lucide="network" aria-hidden="true"></i> 通路權力結構與長票期實證</h4>
+                <ul>
+                  <li>
+                    <strong>百貨與超商通路抽成構造：</strong>遠東百貨專櫃及美食街廠商須配合檔期促銷，並將營業額之 <span class="metric-highlight">25%～35%</span> 上繳百貨；7-11、全家則透過總部鋪貨予店主（已含批發利潤）並統收門市營收後撥還店主份額，供貨或加盟方實質承受雙層抽利。
+                  </li>
+                  <li>
+                    <strong>大廠長驗收與長票期擠壓（鴻海協力廠案例）：</strong>部分大型品牌或代工龍頭對協力商採取「交貨後 <span class="metric-highlight">180 天驗收</span>＋驗收完再簽發 <span class="metric-highlight">180 天期票</span>」，導致協力商應收帳款週轉天期拉長至 <span class="metric-highlight">360 天</span>。
+                  </li>
+                  <li>
+                    <strong>判讀準則：</strong>若供應商長期與大廠往來皆維持 360 天週轉卻無壞帳且訂單穩定，屬已撐起該營運模式之常態；查核重點應轉向「對單一大廠集中度、訂單續約穩定度與營收起伏」。
+                  </li>
+                </ul>
+              </div>
+
+              <div class="detail-panel">
+                <h4><i data-lucide="file-check-2" aria-hidden="true"></i> 帳齡、銷退折讓與關係人穿透查核</h4>
+                <ul>
+                  <li>
+                    <strong>趨勢背離預警（筆記《趨勢分析法》）：</strong>當第 1～3 年營收趨勢為 100%→120%→150%，而應收帳款趨勢卻躍升至 100%→150%→<span class="metric-highlight">250%</span> 且稅前淨利跌至 80% 時，須查明是否放寬收款條件、客戶延遲付款或期末突擊出貨。
+                  </li>
+                  <li>
+                    <strong>銷貨退回與虛開發票防範：</strong>實務查證發票與 401 表時，應留意後續「銷貨退回、銷貨折讓」之扣減效果，並警覺業界偶有透過虛開發票墊高營業額（課堂提及常態約 <span class="metric-highlight">5%～8%</span>）以爭取融資額度之手法。
+                  </li>
+                  <li>
+                    <strong>關係人應收款辨別：</strong>「應收關係人款項」多屬本業交易（如元太科技垂直整合於合併報表即沖銷）；「其他應收款—關係人」若列借方且非本業，實務常為股東挪用公司資金（違反《公司法》第 15 條），須忠實揭露並上陳評估。
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>應收帳款承購（Factoring）類型</th>
+                    <th>授信審查主體</th>
+                    <th>3,000 萬財簽門檻計算</th>
+                    <th>實務例外風險（鎖頭銀行查核點）</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>有追索權（Recourse）</strong></td>
+                    <td>看<strong>賣方</strong>（授信申請人）資信</td>
+                    <td>計入賣方總授信金額</td>
+                    <td>買方拒付時，銀行直接向賣方追索</td>
+                  </tr>
+                  <tr>
+                    <td><strong>無追索權（Non-recourse / 賣斷）</strong></td>
+                    <td>看<strong>買方</strong>（如 Apple 等核心買家）資信</td>
+                    <td>依《徵信準則》第 18 條第 1 項第 8 款，買方額度免計入 3,000 萬財簽門檻</td>
+                    <td>若實務上賣方「勞務或貨品提供不完全」產生商業糾紛，銀行仍得返還追索賣方</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="callout callout-missing">
+              <div class="callout-title">
+                <i data-lucide="alert-circle" aria-hidden="true"></i>
+                本章節「來源未提供」項目明確標示
+              </div>
+              <ul>
+                <li><span class="missing-tag">來源未提供</span> <strong>大賣場（量販通路）專屬長票期天數與通路扣款條件明細：</strong>來源僅載明百貨專櫃抽成（25%～35%）、超商雙層撥還及科技大廠 180+180 天案例，未列出量販大賣場之上架費、廣告贊助費、週年慶促銷扣款等專屬條款。</li>
+                <li><span class="missing-tag">來源未提供</span> <strong>經銷合約之「銷退保護條款」檢視要件與「進貨折讓款」勾稽實務：</strong>來源僅點出「銷貨退回與銷貨折讓」會造成帳面營收與真實現金流差異，未進一步解說經銷合約條款審閱及進貨折讓會計勾稽細節。</li>
+              </ul>
+            </div>
+          </div>
+        </article>
+
+        <!-- CHAPTER 4 -->
+        <article class="chapter-card" id="card-ch4" data-chapter="4" data-category="稅務與金流勾稽" data-search="電子支付 第三方支付 POS 信用卡 行動支付 入帳水單 水單 401 403 405 營業稅申報書 交叉比對 存摺 對帳單 徵信準則第18條 空窗期 所得稅分期 K33 K34 來源未提供">
+          <div class="chapter-header">
+            <div class="chapter-top-bar">
+              <div class="chapter-badges">
+                <span class="chapter-num-pill">CHAPTER 04</span>
+                <span class="chapter-tag">稅務與金流勾稽</span>
+                <span class="chapter-gap-badge">多數細項來源未提供</span>
+              </div>
+              <label class="read-toggle-label" id="label-read-4" onclick="event.stopPropagation()">
+                <input type="checkbox" class="read-checkbox" id="check-read-4" onchange="toggleReadState(4, this.checked)">
+                <span id="read-text-4">標記已讀</span>
+              </label>
+            </div>
+
+            <button type="button" class="chapter-trigger" id="trigger-4" aria-expanded="false" aria-controls="body-4" onclick="toggleChapterBody(4)">
+              <div>
+                <h3 class="chapter-title">第四章：電子支付與第三方金流勾稽實務</h3>
+                <p class="chapter-summary">
+                  彙整《徵信準則》第 18 條「401/403 表與銀行存摺資金流水交叉檢核」規範與 401 申報空窗期限制，並精確區分來源中「水單」一詞原意，明確標示 POS 與第三方支付未提供處。
+                </p>
+              </div>
+              <span class="expand-pill">
+                <span id="expand-label-4">展開詳情</span>
+                <i data-lucide="chevron-down" class="expand-chevron" aria-hidden="true"></i>
+              </span>
+            </button>
+          </div>
+
+          <div class="chapter-body" id="body-4" hidden>
+            <div class="content-grid-2">
+              <div class="detail-panel">
+                <h4><i data-lucide="landmark" aria-hidden="true"></i> 法定外部金流勾稽與 401/403/405 判讀</h4>
+                <ul>
+                  <li>
+                    <strong>外部交叉檢核依據（《徵信準則》第 18 條第 1 項第 5 款）：</strong>徵信人員取得企業財報後，必須與「<strong>營業稅申報書（401／403 表）、進出口報單、海關統計數據及銀行帳戶資金流水（存摺、對帳單）</strong>」交叉核對；若營收、應收或存貨顯有不符，應令客戶說明並於報告詳實列示。
+                  </li>
+                  <li>
+                    <strong>第一還款來源實證（農信保教材 & 鎖頭銀行實務）：</strong>評估還款可靠性時，不得僅看損益表營業額與帳面獲利，必須核對<strong>銀行存摺、對帳單及實際交易憑證</strong>，確認款項是否真實入帳。
+                  </li>
+                  <li>
+                    <strong>401 表之時效限制與空窗期：</strong>雙月申報制下，3 月 15 日方能看到 1～2 月、5 月 15 日方能看到 3～4 月銷售額；且 401 表僅呈現銷售額申報，無法反映成本費用與損益（尤其非公發公司於 1/1～5/31 僅有上年底暫結表，空窗期長達半年）。
+                  </li>
+                </ul>
+              </div>
+
+              <div class="detail-panel">
+                <h4><i data-lucide="file-warning" aria-hidden="true"></i> 來源名詞嚴謹辨析（避免誤用混淆）</h4>
+                <ul>
+                  <li>
+                    <strong>來源中所謂「水單」之實際定義：</strong>本筆記本課程錄音中出現之「水單」，係指<strong>境外法人公司</strong>依《徵信準則》第 17 條規定，於尚未取得存續證明（COI／Certificate of Good Standing）前，先向代辦機構取得之「<strong>最近年度政府規費繳訖證明單據影本</strong>（俗稱水單）」，並非電子支付平台之撥款對帳水單。
+                  </li>
+                  <li>
+                    <strong>來源中所謂「信用卡分期」之實際脈絡：</strong>課堂提及三陽工業／慧洋 KY 案例之「分期款項達 4,000 多萬元」（聯徵 K33/K34），係指負責人個人以信用卡進行<strong>大額所得稅正常消費分期</strong>（銀行為爭取高資產客戶金流所推業務），用以對比惡性循環信用（2N 異常），屬於個人債信判讀，而非零售商戶端 POS 收單金流。
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="callout callout-missing">
+              <div class="callout-title">
+                <i data-lucide="alert-circle" aria-hidden="true"></i>
+                本章節「來源未提供」項目明確標示（請特別留意）
+              </div>
+              <ul>
+                <li><span class="missing-tag">來源未提供</span> <strong>零售業 POS 機（銷售時點情報系統）查核步驟：</strong>原始來源與筆記皆未論及如何調閱、檢視零售業 POS 機日報／月報及與帳載銷貨核對之作業程序。</li>
+                <li><span class="missing-tag">來源未提供</span> <strong>信用卡刷卡收單金流勾稽細節：</strong>來源未提供商戶端刷卡收單請款明細、手續費扣抵還原公式及結算入帳時間差調整方式。</li>
+                <li><span class="missing-tag">來源未提供</span> <strong>行動支付／第三方支付平台入帳水單與 401 申報書交叉比對實務：</strong>關於街口、LINE Pay 或第三方支付平台撥款水單與 401 銷售額之勾稽方法，於本次提供之來源中完全未提及。</li>
+              </ul>
+            </div>
+
+            <div class="callout callout-safe">
+              <div class="callout-title">
+                <i data-lucide="check-circle-2" aria-hidden="true"></i>
+                基於現有來源之替代查核防線
+              </div>
+              <p>
+                在未另行取得 POS 或電子支付平台專章規範前，鎖頭銀行徵信人員於實務上應回歸《徵信準則》第 18 條：以<strong>「會計師查核財報（副本逕送聯徵聯防）＋ 401／403／405 營業稅申報書 ＋ 銀行存摺／對帳單現金流入」</strong>進行三方交叉檢核，遇有重大差異務必請客戶提出說明並留存軌跡。
+              </p>
+            </div>
+          </div>
+        </article>
+
+        <!-- CHAPTER 5 -->
+        <article class="chapter-card" id="card-ch5" data-chapter="5" data-category="聯徵對標與授信決策" data-search="聯徵中心 產業財務統計 批發零售業 中位數 Q2 M 綜合平均數 A+ 算術平均數 A 四分位數 7大營收級距 毛利率偏低 週轉天數過長 徵信準則第7條 准駁 週轉金額度 營收範圍 現金流量比率 40% 第24條 第36條 第37條 鎖頭銀行 試算 來源未提供">
+          <div class="chapter-header">
+            <div class="chapter-top-bar">
+              <div class="chapter-badges">
+                <span class="chapter-num-pill">CHAPTER 05</span>
+                <span class="chapter-tag">聯徵對標與授信決策</span>
+                <span class="chapter-gap-badge">含部分來源未提供項</span>
+              </div>
+              <label class="read-toggle-label" id="label-read-5" onclick="event.stopPropagation()">
+                <input type="checkbox" class="read-checkbox" id="check-read-5" onchange="toggleReadState(5, this.checked)">
+                <span id="read-text-5">標記已讀</span>
+              </label>
+            </div>
+
+            <button type="button" class="chapter-trigger" id="trigger-5" aria-expanded="false" aria-controls="body-5" onclick="toggleChapterBody(5)">
+              <div>
+                <h3 class="chapter-title">第五章：聯徵中心批發零售業財務對標與異常偏離處置</h3>
+                <p class="chapter-summary">
+                  掌握聯徵「7 大營收級距」與統計指標判讀規則，落實徵信獨立不表示准駁之專業職責、鎖頭銀行「週轉金不逾營收範圍」內規，並附批發商案例互動診斷實驗室。
+                </p>
+              </div>
+              <span class="expand-pill">
+                <span id="expand-label-5">展開詳情</span>
+                <i data-lucide="chevron-down" class="expand-chevron" aria-hidden="true"></i>
+              </span>
+            </button>
+          </div>
+
+          <div class="chapter-body" id="body-5" hidden>
+            <div class="content-grid-2">
+              <div class="detail-panel">
+                <h4><i data-lucide="bar-chart-3" aria-hidden="true"></i> 聯徵「產業財務統計資訊」對標規則</h4>
+                <ul>
+                  <li>
+                    <strong>樣本基礎與準則分軌：</strong>聯徵中心每年彙編約 <span class="metric-highlight">3 萬 5 千本</span>會計師簽證財報與 <span class="metric-highlight">16 萬企業戶</span>授信餘額，按行政院主計總處行業標準分類，分 ROC GAAP（45 項）、IFRSs（108 年起含 IFRS 16 藍字科目共 60 項比率）與 EAS 編製；週轉率以倍數（<span class="metric-highlight">T</span>）揭露，餘以百分比（<span class="metric-highlight">%</span>）表示。
+                  </li>
+                  <li>
+                    <strong>7 大營收級距精準分群：</strong>分為 <span class="metric-highlight">≧100 億</span>、<span class="metric-highlight">50～100 億</span>、<span class="metric-highlight">10～50 億</span>、<span class="metric-highlight">5～10 億</span>、<span class="metric-highlight">1～5 億</span>、<span class="metric-highlight">0.4～1 億</span>、<span class="metric-highlight">&lt;0.4 億</span>，避免以百億大型批發商比率誤判中小企業體質。
+                  </li>
+                  <li>
+                    <strong>集中與離散統計量：</strong>提供算術平均數（A）、消除極端值之<strong>綜合平均數（A+）</strong>、<strong>中位數（M）</strong>、上／下四分位數（U／L）與標準差（S）。行內欲查詢同業財務比率，可至專區內「財務徵信作業手冊」調閱。
+                  </li>
+                </ul>
+              </div>
+
+              <div class="detail-panel">
+                <h4><i data-lucide="scale" aria-hidden="true"></i> 異常偏離處置與週轉金額度核算</h4>
+                <ul>
+                  <li>
+                    <strong>不直接表示准駁（《徵信準則》第 7 條）：</strong>徵信人員應公正平實撰寫報告，<strong>不宜對授信案件表示准駁意見</strong>。比率偏離同業時，不得直接憑單一指標決定准駁，應徹底查明成因並忠實揭露予授信主辦判斷。
+                  </li>
+                  <li>
+                    <strong>三期一致化調整（《徵信準則》第 24 條）：</strong>若財報科目分類前後不一致導致對標失真，可依一般公認會計原則調整三期報表使分析具可比性。
+                  </li>
+                  <li>
+                    <strong>鎖頭銀行週轉金內規與還款檢視：</strong>鎖頭銀行規定「<strong>週轉金額度須在營收範圍內核予</strong>」；實務須比對報稅營業收入與財簽損益表達差異（如單站式損益表僅列淨額時）。並依實際資金缺口、整體本息償付能力及防衛性現金指標（如<strong>現金流量比率 &gt; 40%</strong> 為穩健）核實額度；留存查證軌跡即可依第 36、37 條免責。
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- Embedded Interactive Diagnostic Lab -->
+            <div class="lab-box" aria-label="批發零售業三鏈分析與週轉警訊互動試算">
+              <div class="section-head" style="margin-bottom: 0; border-top: none; padding-top: 0;">
+                <h4 style="margin: 0; font-family: var(--font-headline); font-size: var(--subhead-size); color: var(--on-surface);">
+                  互動診斷演練：批發商教學案例 vs 自訂情境試算（單位：新台幣萬元）
+                </h4>
+                <span class="section-kicker">INTERACTIVE LAB · 實數／比率／趨勢三鏈連動</span>
+              </div>
+
+              <div class="lab-tabs" role="tablist" aria-label="案例情境切換">
+                <button type="button" class="lab-tab-btn is-active" id="tab-wholesale" onclick="loadLabPreset('wholesale', this)">載入來源案例：批發商週轉警訊</button>
+                <button type="button" class="lab-tab-btn" id="tab-retail-dept" onclick="loadLabPreset('dept', this)">載入情境參考：百貨低流動比常態（教學模擬）</button>
+              </div>
+
+              <div class="lab-sliders">
+                <div class="slider-field">
+                  <div class="slider-label-row">
+                    <label for="slider-rev">今年營業收入（去年 2,000 萬）</label>
+                    <span class="slider-val" id="val-rev">2,400 萬</span>
+                  </div>
+                  <input type="range" id="slider-rev" min="1600" max="3600" step="100" value="2400" oninput="onLabSliderInput()">
+                </div>
+
+                <div class="slider-field">
+                  <div class="slider-label-row">
+                    <label for="slider-gp">今年毛利（去年 400 萬 / 20%）</label>
+                    <span class="slider-val" id="val-gp">360 萬</span>
+                  </div>
+                  <input type="range" id="slider-gp" min="200" max="800" step="20" value="360" oninput="onLabSliderInput()">
+                </div>
+
+                <div class="slider-field">
+                  <div class="slider-label-row">
+                    <label for="slider-ar">今年應收帳款（去年 300 萬）</label>
+                    <span class="slider-val" id="val-ar">600 萬</span>
+                  </div>
+                  <input type="range" id="slider-ar" min="200" max="900" step="50" value="600" oninput="onLabSliderInput()">
+                </div>
+
+                <div class="slider-field">
+                  <div class="slider-label-row">
+                    <label for="slider-inv">今年存貨（去年 200 萬）</label>
+                    <span class="slider-val" id="val-inv">400 萬</span>
+                  </div>
+                  <input type="range" id="slider-inv" min="100" max="800" step="50" value="400" oninput="onLabSliderInput()">
+                </div>
+              </div>
+
+              <div class="lab-metrics-row">
+                <div class="lab-metric-tile">
+                  <div class="lab-metric-name">營收成長幅度</div>
+                  <div class="lab-metric-num" id="m-rev-growth">+20.0%</div>
+                </div>
+                <div class="lab-metric-tile">
+                  <div class="lab-metric-name">今年毛利率（去年 20.0%）</div>
+                  <div class="lab-metric-num is-alert" id="m-gp-margin">15.0%</div>
+                </div>
+                <div class="lab-metric-tile">
+                  <div class="lab-metric-name">流動比率（流動負債 800 萬）</div>
+                  <div class="lab-metric-num" id="m-curr-ratio">150.0%</div>
+                </div>
+                <div class="lab-metric-tile">
+                  <div class="lab-metric-name">速動比率（扣存貨後）</div>
+                  <div class="lab-metric-num" id="m-quick-ratio">100.0%</div>
+                </div>
+                <div class="lab-metric-tile">
+                  <div class="lab-metric-name">週轉金核貸參考上限（營收範圍）</div>
+                  <div class="lab-metric-num" id="m-rev-cap">2,400 萬</div>
+                </div>
+              </div>
+
+              <div class="svg-chart-wrap">
+                <svg id="growth-svg" class="svg-chart" viewBox="0 0 680 180" role="img" aria-label="營收與應收帳款、存貨成長幅度對照圖">
+                  <!-- Rendered dynamically by JS using CSS variable colors -->
+                </svg>
+              </div>
+
+              <div id="lab-opinion-box" class="callout callout-risk">
+                <div class="callout-title" id="lab-opinion-title">徵信審查揭露重點（依《徵信準則》第 7 條客觀陳述，不代為准駁）</div>
+                <p id="lab-opinion-text">
+                  借戶營收雖成長 20%，惟毛利率由 20% 降至 15%，應收帳款與存貨增幅（+100%）均遠高於營收，且短期借款增加。新增融資需求可能與營運資金占用增加有關，應查明帳款回收、帳齡及存貨去化情形，並依實際資金缺口與本息償付能力評估。
+                </p>
+              </div>
+            </div>
+
+            <div class="callout callout-missing">
+              <div class="callout-title">
+                <i data-lucide="alert-circle" aria-hidden="true"></i>
+                本章節「來源未提供」項目明確標示
+              </div>
+              <ul>
+                <li><span class="missing-tag">來源未提供</span> <strong>聯徵中心批發零售業各細行業具體中位數（註：來源稱為 M，未以 Q2 命名）之實際數值表：</strong>所附《產業財務統計資訊內容說明》PDF 僅詳述編製基礎與營收級距，未收錄批發業或零售業各細行業之實際財務比率數值。</li>
+                <li><span class="missing-tag">來源未提供</span> <strong>毛利率偏低或週轉天數過長之標準化額度扣減公式：</strong>來源僅確立鎖頭銀行「週轉金要在營收範圍內核予」內規，以及依實際資金缺口、現金流量與償付能力評估之原則，未提供固定扣減比例或算式。</li>
+              </ul>
+            </div>
+          </div>
+        </article>
+
+      </div>
+
+      <!-- Empty Search State -->
+      <div id="empty-search-state" class="empty-state" hidden>
+        <i data-lucide="search-x" aria-hidden="true"></i>
+        <h3>找不到符合條件的查核章節</h3>
+        <p>目前搜尋關鍵字或分類標籤篩選無符合內容，請嘗試更換關鍵字或重設全部篩選條件。</p>
+        <button type="button" class="btn btn-primary" onclick="resetAllFilters()">顯示全部 5 個章節</button>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <a class="home-link" href="index.html">回首頁</a>
+      <span>鎖頭銀行企業授信與徵信實務數位學習講義 · 嚴格依循原始來源並標示未提供項</span>
+      <span class="footer-brand">Powered By Dunk</span>
+    </div>
+  </footer>
+
+  <api-shim></api-shim>
+
+  <script>
+    const TOTAL_CHAPTERS = 5;
+
+    const appState = {
+      readChapters: [],
+      openChapters: [1],
+      activeFilter: 'all',
+      searchQuery: ''
+    };
+
+    const labData = {
+      rev: 2400,
+      gp: 360,
+      ar: 600,
+      inv: 400,
+      otherCurrAsset: 200,
+      currLiab: 800,
+      mode: 'wholesale'
+    };
+
+    function getSafeReadSet() {
+      return new Set(Array.isArray(appState.readChapters) ? appState.readChapters : []);
+    }
+
+    async function persistState() {
+      if (window.notebookAppApi && typeof window.notebookAppApi.setAppState === 'function') {
+        try {
+          await window.notebookAppApi.setAppState({
+            readChapters: appState.readChapters,
+            openChapters: appState.openChapters,
+            activeFilter: appState.activeFilter,
+            searchQuery: appState.searchQuery
+          });
+        } catch (err) {
+          // Graceful fallback inside viewer
+        }
+      }
+    }
+
+    function updateProgressUI() {
+      const readSet = getSafeReadSet();
+      const count = readSet.size;
+      const pct = Math.round((count / TOTAL_CHAPTERS) * 100);
+
+      const countEl = document.getElementById('read-count');
+      const pctEl = document.getElementById('read-percent');
+      const counterWrap = document.getElementById('progress-counter');
+      const fillEl = document.getElementById('progress-fill');
+      const barRole = document.getElementById('progress-bar-role');
+
+      if (countEl) countEl.textContent = String(count);
+      if (pctEl) pctEl.textContent = String(pct);
+      if (fillEl) {
+        fillEl.style.width = `${pct}%`;
+        fillEl.classList.toggle('is-complete', count === TOTAL_CHAPTERS);
+      }
+      if (counterWrap) {
+        counterWrap.classList.toggle('is-complete', count === TOTAL_CHAPTERS);
+      }
+      if (barRole) {
+        barRole.setAttribute('aria-valuenow', String(pct));
+      }
+
+      for (let i = 1; i <= TOTAL_CHAPTERS; i++) {
+        const isRead = readSet.has(i);
+        const card = document.getElementById(`card-ch${i}`);
+        const checkbox = document.getElementById(`check-read-${i}`);
+        const label = document.getElementById(`label-read-${i}`);
+        const text = document.getElementById(`read-text-${i}`);
+
+        if (card) card.classList.toggle('is-read', isRead);
+        if (checkbox) checkbox.checked = isRead;
+        if (label) label.classList.toggle('is-checked', isRead);
+        if (text) text.textContent = isRead ? `已完成閱讀` : `標記已讀`;
+      }
+    }
+
+    function syncOpenUI() {
+      const openSet = new Set(Array.isArray(appState.openChapters) ? appState.openChapters : []);
+      for (let i = 1; i <= TOTAL_CHAPTERS; i++) {
+        const isOpen = openSet.has(i);
+        const card = document.getElementById(`card-ch${i}`);
+        const body = document.getElementById(`body-${i}`);
+        const trigger = document.getElementById(`trigger-${i}`);
+        const label = document.getElementById(`expand-label-${i}`);
+
+        if (card) card.classList.toggle('is-open', isOpen);
+        if (body) body.hidden = !isOpen;
+        if (trigger) trigger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+        if (label) label.textContent = isOpen ? `收合內容` : `展開詳情`;
+      }
+    }
+
+    function applyFilters() {
+      const query = (appState.searchQuery || '').trim().toLowerCase();
+      const filter = appState.activeFilter || 'all';
+      const readSet = getSafeReadSet();
+      let visibleCount = 0;
+
+      for (let i = 1; i <= TOTAL_CHAPTERS; i++) {
+        const card = document.getElementById(`card-ch${i}`);
+        if (!card) continue;
+
+        const category = card.getAttribute('data-category') || '';
+        const searchPool = `${card.getAttribute('data-search') || ''} ${card.textContent || ''}`.toLowerCase();
+
+        let matchesCategory = true;
+        if (filter === 'unread') {
+          matchesCategory = !readSet.has(i);
+        } else if (filter !== 'all') {
+          matchesCategory = category === filter;
+        }
+
+        const matchesQuery = !query || searchPool.includes(query);
+        const isVisible = matchesCategory && matchesQuery;
+
+        card.hidden = !isVisible;
+        if (isVisible) visibleCount++;
+      }
+
+      const emptyEl = document.getElementById('empty-search-state');
+      if (emptyEl) emptyEl.hidden = visibleCount > 0;
+
+      const statusEl = document.getElementById('filter-result-status');
+      if (statusEl) {
+        if (visibleCount === TOTAL_CHAPTERS && filter === 'all' && !query) {
+          statusEl.textContent = `顯示全部 ${TOTAL_CHAPTERS} 個章節`;
+        } else {
+          statusEl.textContent = `符合篩選條件：${visibleCount} / ${TOTAL_CHAPTERS} 個章節`;
+        }
+      }
+    }
+
+    function toggleReadState(chapterNum, checked) {
+      const readSet = getSafeReadSet();
+      if (checked) {
+        readSet.add(chapterNum);
+      } else {
+        readSet.delete(chapterNum);
+      }
+      appState.readChapters = Array.from(readSet).sort((a, b) => a - b);
+      updateProgressUI();
+      if (appState.activeFilter === 'unread') {
+        applyFilters();
+      }
+      persistState();
+    }
+
+    function toggleChapterBody(chapterNum) {
+      const openSet = new Set(Array.isArray(appState.openChapters) ? appState.openChapters : []);
+      if (openSet.has(chapterNum)) {
+        openSet.delete(chapterNum);
+      } else {
+        openSet.add(chapterNum);
+      }
+      appState.openChapters = Array.from(openSet).sort((a, b) => a - b);
+      syncOpenUI();
+      persistState();
+    }
+
+    function toggleAllChapters(expand) {
+      appState.openChapters = expand ? [1, 2, 3, 4, 5] : [];
+      syncOpenUI();
+      persistState();
+    }
+
+    function handleSearchInput(val) {
+      appState.searchQuery = val;
+      const clearBtn = document.getElementById('clear-search-btn');
+      if (clearBtn) clearBtn.hidden = !val;
+      applyFilters();
+      persistState();
+    }
+
+    function clearSearchInput() {
+      const inputEl = document.getElementById('chapter-search');
+      if (inputEl) inputEl.value = '';
+      handleSearchInput('');
+    }
+
+    function setCategoryFilter(filterName, btnEl) {
+      appState.activeFilter = filterName;
+      const chips = document.querySelectorAll('.filter-chip');
+      chips.forEach((chip) => {
+        chip.classList.toggle('is-active', chip.getAttribute('data-filter') === filterName);
+      });
+      if (btnEl) btnEl.classList.add('is-active');
+      applyFilters();
+      persistState();
+    }
+
+    function resetAllFilters() {
+      const inputEl = document.getElementById('chapter-search');
+      if (inputEl) inputEl.value = '';
+      const clearBtn = document.getElementById('clear-search-btn');
+      if (clearBtn) clearBtn.hidden = true;
+      appState.searchQuery = '';
+      appState.activeFilter = 'all';
+
+      const chips = document.querySelectorAll('.filter-chip');
+      chips.forEach((chip) => {
+        chip.classList.toggle('is-active', chip.getAttribute('data-filter') === 'all');
+      });
+      applyFilters();
+      persistState();
+    }
+
+    function handleResetProgress(btn) {
+      if (!btn) return;
+      if (btn.dataset.armed !== 'true') {
+        btn.dataset.armed = 'true';
+        btn.textContent = `再次點擊確認歸零`;
+        setTimeout(() => {
+          if (btn.dataset.armed === 'true') {
+            btn.dataset.armed = 'false';
+            btn.textContent = `重設進度`;
+          }
+        }, 4000);
+        return;
+      }
+      btn.dataset.armed = 'false';
+      btn.textContent = `重設進度`;
+      appState.readChapters = [];
+      updateProgressUI();
+      applyFilters();
+      persistState();
+    }
+
+    function renderLabChart(revPct, arPct, invPct) {
+      const svg = document.getElementById('growth-svg');
+      if (!svg) return;
+
+      const items = [
+        { label: `營業收入增幅`, pct: revPct, color: `var(--navy-royal)` },
+        { label: `應收帳款增幅`, pct: arPct, color: arPct > revPct + 15 ? `var(--alert-red)` : `var(--gold-champagne)` },
+        { label: `存貨金額增幅`, pct: invPct, color: invPct > revPct + 15 ? `var(--alert-red)` : `var(--safe-emerald)` }
+      ];
+
+      const maxAbs = Math.max(100, Math.abs(revPct), Math.abs(arPct), Math.abs(invPct), 40);
+      const zeroX = 240;
+      const maxBarWidth = 340;
+
+      let markup = `<line x1="${zeroX}" y1="16" x2="${zeroX}" y2="164" stroke="var(--outline-variant)" stroke-width="1.5" />`;
+      markup += `<text x="${zeroX}" y="12" text-anchor="middle" font-size="11" font-family="var(--font-label)" fill="var(--on-surface-muted)">0% 基準線</text>`;
+
+      items.forEach((item, idx) => {
+        const y = 32 + idx * 46;
+        const barW = Math.max(4, (Math.abs(item.pct) / maxAbs) * maxBarWidth);
+        const barX = item.pct >= 0 ? zeroX : Math.max(125, zeroX - barW);
+        const sign = item.pct > 0 ? `+` : ``;
+        const textX = item.pct >= 0 ? zeroX + barW + 8 : barX - 8;
+        const anchor = item.pct >= 0 ? `start` : `end`;
+
+        markup += `<text x="12" y="${y + 18}" font-size="13" font-weight="600" font-family="var(--font-body)" fill="var(--on-surface)">${item.label}</text>`;
+        markup += `<rect x="${barX}" y="${y}" width="${barW}" height="24" rx="3" fill="${item.color}" />`;
+        markup += `<text x="${textX}" y="${y + 17}" text-anchor="${anchor}" font-size="12" font-weight="700" font-family="var(--font-label)" fill="${item.color}">${sign}${item.pct.toFixed(1)}%</text>`;
+      });
+
+      svg.innerHTML = markup;
+    }
+
+    function updateLabCalculations() {
+      const rev = labData.rev;
+      const gp = labData.gp;
+      const ar = labData.ar;
+      const inv = labData.inv;
+      const currAsset = ar + inv + labData.otherCurrAsset;
+      const currLiab = labData.currLiab;
+
+      const revGrowth = ((rev - 2000) / 2000) * 100;
+      const arGrowth = ((ar - 300) / 300) * 100;
+      const invGrowth = ((inv - 200) / 200) * 100;
+      const gpMargin = (gp / rev) * 100;
+      const currRatio = (currAsset / currLiab) * 100;
+      const quickRatio = ((currAsset - inv) / currLiab) * 100;
+
+      const elRev = document.getElementById('val-rev');
+      const elGp = document.getElementById('val-gp');
+      const elAr = document.getElementById('val-ar');
+      const elInv = document.getElementById('val-inv');
+      if (elRev) elRev.textContent = `${rev.toLocaleString()} 萬`;
+      if (elGp) elGp.textContent = `${gp.toLocaleString()} 萬`;
+      if (elAr) elAr.textContent = `${ar.toLocaleString()} 萬`;
+      if (elInv) elInv.textContent = `${inv.toLocaleString()} 萬`;
+
+      const mRev = document.getElementById('m-rev-growth');
+      const mGp = document.getElementById('m-gp-margin');
+      const mCurr = document.getElementById('m-curr-ratio');
+      const mQuick = document.getElementById('m-quick-ratio');
+      const mCap = document.getElementById('m-rev-cap');
+
+      if (mRev) mRev.textContent = `${revGrowth >= 0 ? '+' : ''}${revGrowth.toFixed(1)}%`;
+      if (mGp) {
+        mGp.textContent = `${gpMargin.toFixed(1)}%`;
+        mGp.className = `lab-metric-num ${gpMargin < 18 ? 'is-alert' : 'is-ok'}`;
+      }
+      if (mCurr) {
+        mCurr.textContent = `${currRatio.toFixed(1)}%`;
+        mCurr.className = `lab-metric-num ${currRatio < 100 ? 'is-alert' : ''}`;
+      }
+      if (mQuick) {
+        mQuick.textContent = `${quickRatio.toFixed(1)}%`;
+        mQuick.className = `lab-metric-num ${quickRatio < 100 ? 'is-alert' : ''}`;
+      }
+      if (mCap) mCap.textContent = `${rev.toLocaleString()} 萬`;
+
+      renderLabChart(revGrowth, arGrowth, invGrowth);
+
+      const opBox = document.getElementById('lab-opinion-box');
+      const opTitle = document.getElementById('lab-opinion-title');
+      const opText = document.getElementById('lab-opinion-text');
+      if (!opBox || !opTitle || !opText) return;
+
+      if (labData.mode === 'dept') {
+        opBox.className = `callout callout-safe`;
+        opTitle.textContent = `流通百貨情境判讀（依《徵信準則》第 7 條忠實揭露產業特性）`;
+        opText.textContent = `若借戶為百貨／連鎖零售體系，雖帳面流動比（${currRatio.toFixed(1)}%）與速動比（${quickRatio.toFixed(1)}%）均低於 100%，惟須揭露其成因是否來自預收禮券負債、IFRS 16 租賃負債及專櫃 25%～35% 抽成金流結構，不得單憑比率低於 100% 即逕行認定償債異常；實際週轉額度仍以鎖頭銀行內規於營收 ${rev.toLocaleString()} 萬範圍內評估。`;
+      } else if (arGrowth > revGrowth + 15 || invGrowth > revGrowth + 15 || gpMargin < 18) {
+        opBox.className = `callout callout-risk`;
+        opTitle.textContent = `徵信審查揭露重點（偵測到成長不相稱或毛利下滑警訊）`;
+        opText.textContent = `借戶營收變動 ${revGrowth >= 0 ? '+' : ''}${revGrowth.toFixed(1)}%，惟毛利率降至 ${gpMargin.toFixed(1)}%（去年 20.0%），且應收帳款（${arGrowth >= 0 ? '+' : ''}${arGrowth.toFixed(1)}%）／存貨（${invGrowth >= 0 ? '+' : ''}${invGrowth.toFixed(1)}%）增幅與營收顯不相當。應依《徵信準則》第 7 條客觀揭露：請授信主辦複查帳齡、401 表與存摺收款紀錄及存貨去化情形，並依實際資金缺口核計不逾營收 ${rev.toLocaleString()} 萬元之合理週轉額度。`;
+      } else {
+        opBox.className = `callout callout-safe`;
+        opTitle.textContent = `徵信審查揭露重點（營收、資金占用與獲利尚屬相稱）`;
+        opText.textContent = `借戶營收變動與應收帳款、存貨成長幅度尚稱一致，毛利率維持 ${gpMargin.toFixed(1)}%，流動比與速動比分別為 ${currRatio.toFixed(1)}% 與 ${quickRatio.toFixed(1)}%。實務上仍應依《徵信準則》第 18 條核對 401/403 表及銀行資金流水，留存徵信軌跡，供授信主辦於營收範圍內評估核貸條件。`;
+      }
+    }
+
+    function onLabSliderInput() {
+      const sRev = document.getElementById('slider-rev');
+      const sGp = document.getElementById('slider-gp');
+      const sAr = document.getElementById('slider-ar');
+      const sInv = document.getElementById('slider-inv');
+
+      if (sRev) labData.rev = Number(sRev.value);
+      if (sGp) labData.gp = Number(sGp.value);
+      if (sAr) labData.ar = Number(sAr.value);
+      if (sInv) labData.inv = Number(sInv.value);
+      labData.mode = 'custom';
+      updateLabCalculations();
+    }
+
+    function loadLabPreset(preset, btnEl) {
+      const tabs = document.querySelectorAll('.lab-tab-btn');
+      tabs.forEach((t) => t.classList.remove('is-active'));
+      if (btnEl) btnEl.classList.add('is-active');
+
+      if (preset === 'dept') {
+        labData.rev = 2800;
+        labData.gp = 780;
+        labData.ar = 250;
+        labData.inv = 150;
+        labData.otherCurrAsset = 250;
+        labData.currLiab = 800;
+        labData.mode = 'dept';
+      } else {
+        labData.rev = 2400;
+        labData.gp = 360;
+        labData.ar = 600;
+        labData.inv = 400;
+        labData.otherCurrAsset = 200;
+        labData.currLiab = 800;
+        labData.mode = 'wholesale';
+      }
+
+      const sRev = document.getElementById('slider-rev');
+      const sGp = document.getElementById('slider-gp');
+      const sAr = document.getElementById('slider-ar');
+      const sInv = document.getElementById('slider-inv');
+      if (sRev) sRev.value = String(labData.rev);
+      if (sGp) sGp.value = String(labData.gp);
+      if (sAr) sAr.value = String(labData.ar);
+      if (sInv) sInv.value = String(labData.inv);
+
+      updateLabCalculations();
+    }
+
+    async function initApp() {
+      if (window.notebookAppApi && typeof window.notebookAppApi.getAppState === 'function') {
+        try {
+          const saved = await window.notebookAppApi.getAppState();
+          if (saved && typeof saved === 'object') {
+            if (Array.isArray(saved.readChapters)) appState.readChapters = saved.readChapters;
+            if (Array.isArray(saved.openChapters)) appState.openChapters = saved.openChapters;
+            if (typeof saved.activeFilter === 'string') appState.activeFilter = saved.activeFilter;
+            if (typeof saved.searchQuery === 'string') appState.searchQuery = saved.searchQuery;
+          }
+        } catch (err) {
+          // Proceed with default state
+        }
+      }
+
+      const searchEl = document.getElementById('chapter-search');
+      const clearBtn = document.getElementById('clear-search-btn');
+      if (searchEl) searchEl.value = appState.searchQuery;
+      if (clearBtn) clearBtn.hidden = !appState.searchQuery;
+
+      const chips = document.querySelectorAll('.filter-chip');
+      chips.forEach((chip) => {
+        chip.classList.toggle('is-active', chip.getAttribute('data-filter') === appState.activeFilter);
+      });
+
+      updateProgressUI();
+      syncOpenUI();
+      applyFilters();
+      updateLabCalculations();
+
+      if (window.lucide && typeof window.lucide.createIcons === 'function') {
+        window.lucide.createIcons();
+      }
+
+      if (window.notebookAppApi && typeof window.notebookAppApi.notifyAppReady === 'function') {
+        window.notebookAppApi.notifyAppReady();
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', initApp);
+  </script>
+</body>
+</html>

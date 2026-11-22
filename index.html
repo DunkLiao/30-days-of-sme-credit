@@ -1,0 +1,2214 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#14283a">
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="./manifest.webmanifest">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="授信實務30天">
+  <script>
+    if ("serviceWorker" in navigator && (location.protocol === "https:" || location.hostname === "localhost")) {
+      window.addEventListener("load", () => navigator.serviceWorker.register("./service-worker.js").catch((error) => console.warn("PWA offline support unavailable:", error)));
+    }
+  </script>
+  <meta name="artifact-type" content="dashboard">
+  <meta name="design-style" content="charter">
+  <title>中小企業授信與財報分析實務（30天課程）｜課程導航與徵信速查</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&family=Noto+Sans+TC:wght@400;500;600;700&family=Noto+Serif+TC:wght@400;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.1/dist/chart.umd.min.js"></script>
+  <style>
+    :root {
+      color-scheme: light;
+
+      /* 1. Charter base adapted to cool-white & metallic slate per user preference */
+      --background: #f6f8fb;
+      --surface-container-low: #ffffff;
+      --surface-container: #eaeff5;
+      --surface-container-high: #dfe6f0;
+
+      /* Ink */
+      --on-surface: #141b29;
+      --on-surface-variant: #475569;
+
+      /* Rules & Champagne Gold / Brass */
+      --outline: #b08d57;
+      --outline-variant: #cfd8e3;
+      --outline-on-navy: #dfc392;
+
+      /* Accents */
+      --primary: #14213d;
+      --primary-hover: #0d172b;
+      --on-primary: #f6f8fb;
+      --primary-container: #e2e8f2;
+      --on-primary-container: #14213d;
+      --secondary: #235347;
+      --secondary-container: #e6f0ec;
+      --tertiary: #7c5e2c;
+      --error: #9b2c2c;
+      --error-container: #fdf2f2;
+      --on-error: #ffffff;
+
+      /* Data series */
+      --data-1: #14213d;
+      --data-2: #7c5e2c;
+      --data-3: #235347;
+      --data-4: #475569;
+      --data-context: #c2cad6;
+
+      /* Fonts (Chinese-first stack) */
+      --font-headline: 'Noto Serif TC', 'Libre Caslon Text', serif;
+      --font-body: 'Noto Sans TC', 'Inter', sans-serif;
+      --font-label: 'IBM Plex Mono', 'Noto Sans TC', monospace;
+
+      /* Shape (Charter squared 2px corners) */
+      --rounded: 0.125rem;
+      --rounded-lg: 0.125rem;
+      --rounded-full: 0.125rem;
+
+      /* Style effects */
+      --brass-rule: 2px solid var(--outline);
+      --hairline: 1px solid var(--outline-variant);
+      --leaf-underline: 0 1px 0 var(--outline-variant);
+
+      /* 3. Shared tokens */
+      --positive: #235347;
+      --warning: #8a5a19;
+      --focus: #14213d;
+
+      /* Dashboard / Explorer tight scale */
+      --display-size: clamp(1.75rem, 1.35rem + 1.2vw, 2.35rem);
+      --headline-size: clamp(1.25rem, 1.08rem + 0.5vw, 1.55rem);
+      --subhead-size: clamp(1.0625rem, 1rem + 0.25vw, 1.1875rem);
+      --body-size: clamp(0.9375rem, 0.9rem + 0.15vw, 1rem);
+      --label-size: 0.75rem;
+
+      /* Spacing scale (4pt base) */
+      --space-xs: 0.25rem;
+      --space-sm: 0.5rem;
+      --space-md: 1rem;
+      --space-lg: 1.5rem;
+      --space-xl: 2.5rem;
+      --space-2xl: 4rem;
+
+      /* Motion */
+      --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+      --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+      --dur-micro: 120ms;
+      --dur-short: 220ms;
+      --dur-long: 420ms;
+    }
+
+    /* Base reset */
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body {
+      overflow-x: clip;
+      margin: 0;
+      padding: 0;
+      background-color: var(--background);
+      color: var(--on-surface);
+      font-family: var(--font-body);
+      font-size: var(--body-size);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    header { position: static !important; }
+    button, input, select, textarea { font-family: inherit; }
+
+    .page-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: var(--space-xl);
+      padding: var(--space-lg);
+      max-width: 1240px;
+      margin: 0 auto;
+      overflow: hidden;
+    }
+    .page-grid * { min-width: 0; }
+
+    /* Focus rings (Accessibility 4.7) */
+    :focus-visible {
+      outline: 2px solid var(--focus);
+      outline-offset: 2px;
+    }
+    .title-band :focus-visible {
+      outline: 2px solid var(--outline-on-navy);
+      outline-offset: 2px;
+    }
+
+    /* 1. Navy Title Band */
+    .title-band {
+      background: var(--primary);
+      color: var(--on-primary);
+      padding: var(--space-xl) var(--space-lg) var(--space-lg);
+      border-bottom: 3px solid var(--outline);
+    }
+    .title-band-inner {
+      max-width: 1240px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+      gap: var(--space-lg);
+      align-items: end;
+    }
+    .title-kicker {
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      font-weight: 500;
+      color: var(--outline-on-navy);
+      margin: 0 0 var(--space-sm);
+      letter-spacing: 0.04em;
+    }
+    .title-band h1 {
+      font-family: var(--font-headline);
+      font-weight: 400;
+      font-size: var(--display-size);
+      line-height: 1.2;
+      color: var(--on-primary);
+      margin: 0 0 var(--space-sm);
+    }
+    .title-band .lede {
+      color: color-mix(in srgb, var(--on-primary) 82%, var(--primary));
+      margin: 0;
+      max-width: 65ch;
+      font-size: var(--body-size);
+    }
+    .title-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-sm);
+      justify-content: flex-end;
+    }
+    .nav-anchor {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-xs);
+      min-height: 44px;
+      padding: var(--space-xs) var(--space-md);
+      background: transparent;
+      color: var(--on-primary);
+      border: 1px solid var(--outline);
+      border-radius: var(--rounded);
+      font-size: var(--label-size);
+      font-weight: 500;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background-color var(--dur-micro) var(--ease-out), border-color var(--dur-micro) var(--ease-out);
+    }
+    .nav-anchor:hover {
+      background: color-mix(in srgb, var(--on-primary) 12%, var(--primary));
+    }
+    .nav-anchor.active {
+      background: var(--outline);
+      color: var(--primary);
+      font-weight: 600;
+    }
+
+    /* Section Head */
+    .section-head {
+      border-top: var(--brass-rule);
+      padding-top: var(--space-md);
+      border-bottom: var(--hairline);
+      padding-bottom: var(--space-sm);
+      margin-bottom: var(--space-lg);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: var(--space-sm);
+    }
+    .section-head h2 {
+      font-family: var(--font-headline);
+      font-weight: 400;
+      font-size: var(--headline-size);
+      line-height: 1.25;
+      margin: 0;
+      color: var(--on-surface);
+    }
+    .section-sub {
+      font-size: var(--label-size);
+      color: var(--on-surface-variant);
+      margin: 0;
+    }
+
+    /* 2. Top KPI Figure Row */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr));
+      gap: var(--space-md);
+    }
+    .figure-card {
+      background: var(--surface-container-low);
+      border-top: var(--brass-rule);
+      box-shadow: var(--leaf-underline);
+      border-left: var(--hairline);
+      border-right: var(--hairline);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-md) var(--space-lg);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: var(--space-xs);
+    }
+    .figure-label {
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      font-weight: 600;
+      color: var(--on-surface-variant);
+      margin: 0;
+    }
+    .figure-value {
+      font-family: var(--font-headline);
+      font-weight: 400;
+      font-size: clamp(1.5rem, 1.25rem + 0.8vw, 2rem);
+      font-variant-numeric: tabular-nums lining-nums;
+      color: var(--on-surface);
+      line-height: 1.15;
+      margin: 0;
+    }
+    .figure-delta {
+      font-size: var(--label-size);
+      color: var(--tertiary);
+      font-weight: 600;
+      margin: 0;
+    }
+    .figure-delta.positive {
+      color: var(--secondary);
+    }
+
+    /* Progress Bar */
+    .progress-track {
+      width: 100%;
+      height: 8px;
+      background: var(--surface-container);
+      border-radius: var(--rounded);
+      overflow: hidden;
+      margin-top: var(--space-xs);
+    }
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background: var(--primary);
+      transition: width var(--dur-long) var(--ease-out);
+    }
+    .progress-fill.complete {
+      background: var(--secondary);
+    }
+
+    /* 3. Module Filter & Search Controls */
+    .controls-panel {
+      background: var(--surface-container-low);
+      border: var(--hairline);
+      border-top: var(--brass-rule);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-md) var(--space-lg);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-md);
+      margin-bottom: var(--space-lg);
+    }
+    .module-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-sm);
+    }
+    .mod-tab {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-xs);
+      min-height: 44px;
+      padding: var(--space-xs) var(--space-md);
+      background: var(--surface-container-low);
+      border: 1px solid var(--outline-variant);
+      border-radius: var(--rounded);
+      color: var(--on-surface);
+      font-size: var(--label-size);
+      font-weight: 500;
+      cursor: pointer;
+      transition: background-color var(--dur-micro) var(--ease-out), border-color var(--dur-micro) var(--ease-out), color var(--dur-micro) var(--ease-out);
+    }
+    .mod-tab:hover {
+      background: var(--primary-container);
+      border-color: var(--primary);
+    }
+    .mod-tab[aria-pressed="true"] {
+      background: var(--primary);
+      color: var(--on-primary);
+      border-color: var(--primary);
+    }
+    .mod-tab .tab-count {
+      font-family: var(--font-label);
+      font-variant-numeric: tabular-nums;
+      padding: 1px 6px;
+      background: var(--surface-container);
+      color: var(--on-surface-variant);
+      border-radius: var(--rounded);
+      font-size: 0.75rem;
+    }
+    .mod-tab[aria-pressed="true"] .tab-count {
+      background: color-mix(in srgb, var(--on-primary) 18%, var(--primary));
+      color: var(--outline-on-navy);
+    }
+
+    .toolbar-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1.4fr) minmax(0, 0.8fr) auto;
+      gap: var(--space-md);
+      align-items: end;
+    }
+    .field-group {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xs);
+    }
+    .field-label {
+      font-size: var(--label-size);
+      font-weight: 600;
+      color: var(--on-surface-variant);
+    }
+    .field-input, .field-select {
+      width: 100%;
+      min-height: 44px;
+      padding: var(--space-xs) var(--space-md);
+      background: var(--surface-container-low);
+      border: 1px solid var(--outline-variant);
+      border-radius: var(--rounded);
+      color: var(--on-surface);
+      font-size: var(--body-size);
+      transition: border-color var(--dur-micro) var(--ease-out), box-shadow var(--dur-micro) var(--ease-out);
+    }
+    .field-select {
+      padding-right: var(--space-xl);
+    }
+    .field-input:focus, .field-select:focus {
+      border-color: var(--primary);
+      outline: none;
+      box-shadow: 0 0 0 2px var(--primary-container);
+    }
+
+    .action-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-sm);
+      align-items: center;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-xs);
+      min-height: 44px;
+      padding: var(--space-xs) var(--space-md);
+      border-radius: var(--rounded);
+      font-size: var(--label-size);
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color var(--dur-micro) var(--ease-out), color var(--dur-micro) var(--ease-out), border-color var(--dur-micro) var(--ease-out);
+    }
+    .btn-primary {
+      background: var(--primary);
+      color: var(--on-primary);
+      border: 1px solid var(--primary);
+    }
+    .btn-primary:hover {
+      background: var(--primary-hover);
+    }
+    .btn-secondary {
+      background: var(--surface-container-low);
+      color: var(--primary);
+      border: 1px solid var(--primary);
+    }
+    .btn-secondary:hover {
+      background: var(--primary-container);
+    }
+    .btn-danger-outline {
+      background: var(--surface-container-low);
+      color: var(--error);
+      border: 1px solid var(--outline-variant);
+    }
+    .btn-danger-outline:hover, .btn-danger-outline[data-armed="true"] {
+      background: var(--error-container);
+      border-color: var(--error);
+    }
+
+    .status-banner {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-sm);
+      padding: var(--space-sm) var(--space-md);
+      background: var(--surface-container);
+      border-left: 3px solid var(--outline);
+      border-radius: var(--rounded);
+      font-size: var(--label-size);
+      color: var(--on-surface);
+    }
+    .status-banner strong {
+      color: var(--primary);
+      font-family: var(--font-label);
+    }
+
+    /* 4. Curriculum Cards Grid */
+    .curriculum-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(360px, 100%), 1fr));
+      gap: var(--space-lg);
+    }
+    .day-card {
+      background: var(--surface-container-low);
+      border: var(--hairline);
+      border-top: 2px solid var(--primary);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-md) var(--space-lg);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-sm);
+      transition: box-shadow var(--dur-short) var(--ease-out), border-top-color var(--dur-short) var(--ease-out);
+    }
+    .day-card:hover {
+      box-shadow: 0 4px 14px color-mix(in srgb, var(--primary) 8%, transparent);
+    }
+    .day-card.is-done {
+      border-top-color: var(--secondary);
+      background: color-mix(in srgb, var(--secondary-container) 22%, var(--surface-container-low));
+    }
+
+    .card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: var(--space-sm);
+    }
+    .card-badges {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: var(--space-xs);
+    }
+    .day-badge {
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      font-weight: 600;
+      padding: 2px 8px;
+      background: var(--primary);
+      color: var(--on-primary);
+      border-radius: var(--rounded);
+      font-variant-numeric: tabular-nums;
+    }
+    .day-card.is-done .day-badge {
+      background: var(--secondary);
+    }
+    .mod-stamp {
+      font-size: var(--label-size);
+      font-weight: 600;
+      padding: 2px 8px;
+      border: 1px solid var(--outline);
+      color: var(--tertiary);
+      background: transparent;
+      border-radius: var(--rounded);
+    }
+
+    /* Accessible Checkbox Button */
+    .check-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-xs);
+      min-height: 44px;
+      padding: 0 var(--space-sm);
+      background: transparent;
+      border: 1px solid var(--outline-variant);
+      border-radius: var(--rounded);
+      color: var(--on-surface-variant);
+      font-size: var(--label-size);
+      font-weight: 500;
+      cursor: pointer;
+      transition: background-color var(--dur-micro) var(--ease-out), border-color var(--dur-micro) var(--ease-out), color var(--dur-micro) var(--ease-out);
+    }
+    .check-btn:hover {
+      border-color: var(--secondary);
+      color: var(--secondary);
+    }
+    .check-btn[aria-checked="true"] {
+      background: var(--secondary-container);
+      border-color: var(--secondary);
+      color: var(--secondary);
+      font-weight: 600;
+    }
+    .check-box {
+      width: 18px;
+      height: 18px;
+      border: 1.5px solid currentColor;
+      border-radius: var(--rounded);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .check-btn[aria-checked="true"] .check-box {
+      background: var(--secondary);
+      color: var(--surface-container-low);
+      border-color: var(--secondary);
+    }
+
+    .card-title {
+      font-family: var(--font-headline);
+      font-weight: 700;
+      font-size: var(--subhead-size);
+      line-height: 1.35;
+      margin: 0;
+      color: var(--on-surface);
+    }
+    .card-title a {
+      color: inherit;
+      font: inherit;
+      text-decoration: none;
+      text-decoration-color: var(--secondary);
+      text-underline-offset: 0.18em;
+    }
+    .card-title a:hover,
+    .card-title a:focus-visible {
+      color: var(--secondary);
+      text-decoration: underline;
+    }
+    .card-summary {
+      font-size: var(--body-size);
+      color: var(--on-surface-variant);
+      margin: 0;
+    }
+
+    .card-toggle {
+      align-self: flex-start;
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-xs);
+      min-height: 44px;
+      padding: var(--space-xs) var(--space-sm);
+      background: transparent;
+      border: none;
+      border-bottom: 1.5px solid var(--outline);
+      color: var(--primary);
+      font-size: var(--label-size);
+      font-weight: 600;
+      cursor: pointer;
+      transition: color var(--dur-micro) var(--ease-out), background-color var(--dur-micro) var(--ease-out);
+    }
+    .card-toggle:hover {
+      background: var(--primary-container);
+    }
+    .card-toggle svg {
+      transition: transform var(--dur-short) var(--ease-in-out);
+    }
+    .card-toggle[aria-expanded="true"] svg {
+      transform: rotate(180deg);
+    }
+
+    .card-details {
+      display: none;
+      border-top: var(--hairline);
+      padding-top: var(--space-sm);
+      margin-top: var(--space-xs);
+      flex-direction: column;
+      gap: var(--space-sm);
+    }
+    .card-details.open {
+      display: flex;
+      animation: fadeSlide var(--dur-short) var(--ease-out);
+    }
+    @keyframes fadeSlide {
+      from { opacity: 0; transform: translateY(-4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .detail-block {
+      background: var(--background);
+      border-left: 2px solid var(--outline);
+      padding: var(--space-sm) var(--space-md);
+      border-radius: var(--rounded);
+    }
+    .detail-block.practical {
+      border-left-color: var(--primary);
+      background: var(--surface-container);
+    }
+    .detail-heading {
+      font-size: var(--label-size);
+      font-weight: 700;
+      color: var(--primary);
+      margin: 0 0 2px;
+    }
+    .detail-text {
+      font-size: var(--label-size);
+      line-height: 1.65;
+      color: var(--on-surface);
+      margin: 0;
+    }
+    .tag-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-xs);
+    }
+    .meta-tag {
+      font-family: var(--font-label);
+      font-size: 0.75rem;
+      padding: 2px 7px;
+      background: var(--surface-container);
+      color: var(--on-surface-variant);
+      border: 1px solid var(--outline-variant);
+      border-radius: var(--rounded);
+    }
+
+    /* Empty state */
+    .empty-state {
+      grid-column: 1 / -1;
+      background: var(--surface-container-low);
+      border: var(--hairline);
+      border-top: var(--brass-rule);
+      padding: var(--space-xl);
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--space-sm);
+    }
+
+    /* 5. Workbench Section (Threshold Calculator + Quick Reference) */
+    .workbench-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.35fr);
+      gap: var(--space-lg);
+      align-items: start;
+    }
+    .panel-card {
+      background: var(--surface-container-low);
+      border: var(--hairline);
+      border-top: var(--brass-rule);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-lg);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-md);
+    }
+    .panel-title {
+      font-family: var(--font-headline);
+      font-weight: 700;
+      font-size: var(--subhead-size);
+      margin: 0;
+      color: var(--on-surface);
+    }
+    .panel-desc {
+      font-size: var(--label-size);
+      color: var(--on-surface-variant);
+      margin: 0;
+    }
+
+    .preset-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-xs);
+    }
+    .preset-btn {
+      min-height: 36px;
+      padding: 4px 10px;
+      background: var(--surface-container);
+      border: 1px solid var(--outline-variant);
+      border-radius: var(--rounded);
+      color: var(--on-surface);
+      font-size: 0.75rem;
+      font-weight: 500;
+      cursor: pointer;
+    }
+    .preset-btn:hover {
+      background: var(--primary-container);
+      border-color: var(--primary);
+    }
+
+    .calc-inputs-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: var(--space-md);
+    }
+    .calc-checks {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-sm);
+      padding: var(--space-sm) var(--space-md);
+      background: var(--background);
+      border: var(--hairline);
+      border-radius: var(--rounded);
+    }
+    .inline-check {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+      min-height: 36px;
+      cursor: pointer;
+      font-size: var(--label-size);
+      color: var(--on-surface);
+    }
+    .inline-check input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--primary);
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    .calc-output {
+      background: var(--surface-container);
+      border-top: 2px solid var(--primary);
+      padding: var(--space-md);
+      border-radius: var(--rounded);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-sm);
+    }
+    .calc-output-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: var(--space-sm);
+      border-bottom: 1px solid var(--outline-variant);
+      padding-bottom: var(--space-xs);
+    }
+    .calc-output-row:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+    .calc-out-label {
+      font-size: var(--label-size);
+      color: var(--on-surface-variant);
+      font-weight: 600;
+    }
+    .calc-out-val {
+      font-family: var(--font-headline);
+      font-weight: 700;
+      font-size: var(--subhead-size);
+      font-variant-numeric: tabular-nums;
+      color: var(--primary);
+      text-align: right;
+    }
+    .calc-out-val.alert {
+      color: var(--error);
+    }
+    .calc-out-val.safe {
+      color: var(--secondary);
+    }
+    .calc-checklist {
+      margin: 0;
+      padding-left: 1.25rem;
+      font-size: var(--label-size);
+      color: var(--on-surface);
+      line-height: 1.6;
+    }
+
+    /* Reference Table */
+    .ref-filter-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: var(--space-md);
+      align-items: end;
+    }
+    .ref-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-xs);
+    }
+    .ref-pill {
+      min-height: 44px;
+      padding: var(--space-xs) var(--space-sm);
+      background: var(--surface-container-low);
+      border: 1px solid var(--outline-variant);
+      border-radius: var(--rounded);
+      color: var(--on-surface-variant);
+      font-size: var(--label-size);
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .ref-pill:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+    .ref-pill[aria-pressed="true"] {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: var(--on-primary);
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+      border: var(--hairline);
+      border-radius: var(--rounded);
+      max-height: 540px;
+      overflow-y: auto;
+    }
+    table.ref-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: var(--label-size);
+      text-align: left;
+    }
+    .ref-table thead th {
+      position: sticky;
+      top: 0;
+      z-index: 2;
+      background: var(--surface-container-high);
+      color: var(--on-surface);
+      font-weight: 700;
+      padding: var(--space-sm) var(--space-md);
+      border-bottom: 2px solid var(--outline);
+      white-space: nowrap;
+    }
+    .ref-table tbody td {
+      padding: var(--space-sm) var(--space-md);
+      border-bottom: var(--hairline);
+      vertical-align: top;
+      line-height: 1.55;
+    }
+    .ref-table tbody tr:hover {
+      background: var(--primary-container);
+    }
+    .code-mono {
+      font-family: var(--font-label);
+      font-weight: 600;
+      color: var(--primary);
+      font-variant-numeric: tabular-nums;
+      display: inline-block;
+      padding: 1px 6px;
+      background: var(--surface-container);
+      border-radius: var(--rounded);
+    }
+    .cat-tag {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--tertiary);
+      white-space: nowrap;
+    }
+
+    /* 6. Three-Chain Analysis & Chart Section */
+    .analysis-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+      gap: var(--space-lg);
+      align-items: stretch;
+    }
+    .chain-steps {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: var(--space-md);
+      margin-bottom: var(--space-md);
+    }
+    .chain-step {
+      background: var(--background);
+      border-top: 2px solid var(--primary);
+      border-left: var(--hairline);
+      border-right: var(--hairline);
+      border-bottom: var(--hairline);
+      padding: var(--space-md);
+      border-radius: var(--rounded);
+    }
+    .chain-step.step-2 { border-top-color: var(--tertiary); }
+    .chain-step.step-3 { border-top-color: var(--secondary); }
+    .chain-num {
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      color: var(--tertiary);
+      font-weight: 600;
+      margin: 0 0 var(--space-xs);
+    }
+    .chain-step h4 {
+      font-family: var(--font-headline);
+      font-size: var(--subhead-size);
+      margin: 0 0 var(--space-xs);
+      color: var(--on-surface);
+    }
+    .chain-step p {
+      font-size: var(--label-size);
+      color: var(--on-surface-variant);
+      margin: 0;
+      line-height: 1.55;
+    }
+
+    .chart-box {
+      position: relative;
+      min-height: 280px;
+      width: 100%;
+    }
+    .case-callout {
+      background: var(--error-container);
+      border-left: 3px solid var(--error);
+      padding: var(--space-sm) var(--space-md);
+      font-size: var(--label-size);
+      color: var(--on-surface);
+      border-radius: var(--rounded);
+    }
+
+    /* Footer */
+    .page-footer {
+      border-top: var(--brass-rule);
+      padding-top: var(--space-md);
+      padding-bottom: var(--space-xl);
+      font-size: var(--label-size);
+      color: var(--on-surface-variant);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xs);
+    }
+
+    /* Responsive Breakpoints */
+    @media (max-width: 960px) {
+      .title-band-inner { grid-template-columns: 1fr; }
+      .title-nav { justify-content: flex-start; }
+      .workbench-grid { grid-template-columns: 1fr; }
+      .analysis-grid { grid-template-columns: 1fr; }
+      .toolbar-row { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 640px) {
+      .page-grid { padding: var(--space-md); gap: var(--space-lg); }
+      .title-band { padding: var(--space-lg) var(--space-md); }
+      .calc-inputs-grid { grid-template-columns: 1fr; }
+      .chain-steps { grid-template-columns: 1fr; }
+      .ref-filter-row { grid-template-columns: 1fr; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="title-band">
+    <div class="title-band-inner">
+      <div>
+        <p class="title-kicker">CREDIT UNDERWRITING &amp; FINANCIAL STATEMENT ANALYSIS · 30-DAY CURRICULUM</p>
+        <h1>中小企業授信與財報分析實務</h1>
+        <p class="header-kicker">鎖頭銀行</p>
+        <p class="lede">緊扣《銀行法》與《銀行公會會員徵信準則》，從 3,000 萬融資簽證門檻、三鏈分析法、聯徵產業財務統計到關係人穿透與舞弊查核的 30 天實戰導航與徵信指標速查手冊。</p>
+      </div>
+      <nav class="title-nav" aria-label="頁面快速導航">
+        <a class="nav-anchor active" href="#section-curriculum">30 天實務課綱</a>
+        <a class="nav-anchor" href="#section-workbench">3,000 萬判定與指標速查</a>
+        <a class="nav-anchor" href="#section-analysis">三鏈分析實例解析</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="page-grid">
+    <!-- Top KPI Figure Row -->
+    <section aria-label="學習進度與核心準則摘要">
+      <div class="kpi-grid">
+        <article class="figure-card">
+          <p class="figure-label">課程完成進度</p>
+          <p class="figure-value" id="kpi-progress-text">0 / 30 天</p>
+          <div class="progress-track" role="progressbar" aria-valuemin="0" aria-valuemax="30" aria-valuenow="0" id="main-progress-bar">
+            <div class="progress-fill" id="main-progress-fill"></div>
+          </div>
+          <p class="figure-delta positive" id="kpi-progress-pct">0% · 尚未開始標記，勾選下方卡片追蹤進度</p>
+        </article>
+
+        <article class="figure-card">
+          <p class="figure-label">強制融資簽證門檻</p>
+          <p class="figure-value">3,000 萬元</p>
+          <p class="figure-delta">聯徵歸戶餘額＋本次申請額度（可扣存單質借／押匯）</p>
+        </article>
+
+        <article class="figure-card">
+          <p class="figure-label">授信審查分析框架</p>
+          <p class="figure-value">三鏈分析法</p>
+          <p class="figure-delta">實數看金額 · 比率看結構 · 比較看差異</p>
+        </article>
+
+        <article class="figure-card">
+          <p class="figure-label">徵信人員法定鐵律</p>
+          <p class="figure-value">留存軌跡</p>
+          <p class="figure-delta">有所本 · 充分揭露 · 均依規定辦理（§36/§37免責）</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- Section 1: 30-Day Curriculum Explorer -->
+    <section id="section-curriculum">
+      <div class="section-head">
+        <h2>五大模組 30 天實務課綱與進度追蹤</h2>
+        <p class="section-sub">點擊模組標籤篩選、展開卡片查看實務要點，或勾選學習天數紀錄進度（自動儲存）</p>
+      </div>
+
+      <div class="controls-panel">
+        <div class="module-tabs" role="group" aria-label="模組篩選標籤" id="module-tabs">
+          <button type="button" class="mod-tab" data-mod="all" aria-pressed="true" onclick="setModuleFilter('all')">
+            全部模組 <span class="tab-count" id="count-all">0/30</span>
+          </button>
+          <button type="button" class="mod-tab" data-mod="1" aria-pressed="false" onclick="setModuleFilter('1')">
+            模組一：法規與基礎 (D1–6) <span class="tab-count" id="count-1">0/6</span>
+          </button>
+          <button type="button" class="mod-tab" data-mod="2" aria-pressed="false" onclick="setModuleFilter('2')">
+            模組二：財報與財簽 (D7–12) <span class="tab-count" id="count-2">0/6</span>
+          </button>
+          <button type="button" class="mod-tab" data-mod="3" aria-pressed="false" onclick="setModuleFilter('3')">
+            模組三：三鏈與三大表 (D13–18) <span class="tab-count" id="count-3">0/6</span>
+          </button>
+          <button type="button" class="mod-tab" data-mod="4" aria-pressed="false" onclick="setModuleFilter('4')">
+            模組四：聯徵與特殊業態 (D19–24) <span class="tab-count" id="count-4">0/6</span>
+          </button>
+          <button type="button" class="mod-tab" data-mod="5" aria-pressed="false" onclick="setModuleFilter('5')">
+            模組五：關係人與決策 (D25–30) <span class="tab-count" id="count-5">0/6</span>
+          </button>
+        </div>
+
+        <div class="toolbar-row">
+          <div class="field-group">
+            <label class="field-label" for="curriculum-search">搜尋課綱主題、法條或實務關鍵字</label>
+            <input type="search" id="curriculum-search" class="field-input" placeholder="例如：401表、EBITDA、N20、IFRS 16、水單、公司法第15條" oninput="handleSearchInput(this.value)">
+          </div>
+          <div class="field-group">
+            <label class="field-label" for="status-filter">完成狀態篩選</label>
+            <select id="status-filter" class="field-select" onchange="setStatusFilter(this.value)">
+              <option value="all">顯示全部天數</option>
+              <option value="pending">僅看尚未完成</option>
+              <option value="done">僅看已完成</option>
+            </select>
+          </div>
+          <div class="action-row">
+            <button type="button" class="btn btn-secondary" onclick="toggleAllDetails(true)">全部展開</button>
+            <button type="button" class="btn btn-secondary" onclick="toggleAllDetails(false)">全部收合</button>
+            <button type="button" class="btn btn-danger-outline" id="btn-reset-progress" data-armed="false" onclick="resetProgress(this)">重設進度</button>
+          </div>
+        </div>
+
+        <div class="status-banner" id="curriculum-status-banner">
+          <span>目前顯示：<strong id="visible-count">30</strong> 堂課</span>
+          <span id="next-milestone-hint">建議學習起點：從「Day 1 銀行徵信法規架構」開始建立法規地圖。</span>
+        </div>
+      </div>
+
+      <div class="curriculum-grid" id="curriculum-grid">
+        <!-- Rendered dynamically by JS -->
+      </div>
+    </section>
+
+    <!-- Section 2: Credit Officer Workbench (30M Threshold Checker + Quick Reference) -->
+    <section id="section-workbench">
+      <div class="section-head">
+        <h2>徵信實務速查與判定工作台</h2>
+        <p class="section-sub">即時計算《徵信準則》第 16、18、22 條授信資料表分級與財簽義務，並快速檢索核心財務指標與聯徵代碼</p>
+      </div>
+
+      <div class="workbench-grid">
+        <!-- Left: 3,000萬財簽門檻與資料表分級試算 -->
+        <article class="panel-card">
+          <div>
+            <h3 class="panel-title">3,000 萬財簽門檻與資料表分級判定器</h3>
+            <p class="panel-desc">依聯徵歸戶餘額與本次申貸額度，扣除合格項目後判定資料表級別與財報徵提義務。</p>
+          </div>
+
+          <div>
+            <p class="field-label" style="margin: 0 0 var(--space-xs);">實務情境快速載入</p>
+            <div class="preset-bar">
+              <button type="button" class="preset-btn" onclick="loadCalcPreset(1800, 1400, 0, 0, false, false, false)">借新還舊突破3,000萬</button>
+              <button type="button" class="preset-btn" onclick="loadCalcPreset(2500, 1200, 800, 200, false, false, false)">含質借與押匯扣除</button>
+              <button type="button" class="preset-btn" onclick="loadCalcPreset(400, 800, 0, 0, true, false, true)">小規模十足擔保(空窗期)</button>
+              <button type="button" class="preset-btn" onclick="loadCalcPreset(300, 500, 0, 0, false, true, false)">申請本票保證(特例)</button>
+            </div>
+          </div>
+
+          <div class="calc-inputs-grid">
+            <div class="field-group">
+              <label class="field-label" for="calc-jcic">聯徵 B33 歸戶餘額（萬元）</label>
+              <input type="number" id="calc-jcic" class="field-input" min="0" step="100" value="1800" oninput="runThresholdCalc()">
+            </div>
+            <div class="field-group">
+              <label class="field-label" for="calc-new">本次新申請額度（萬元）</label>
+              <input type="number" id="calc-new" class="field-input" min="0" step="100" value="1400" oninput="runThresholdCalc()">
+            </div>
+            <div class="field-group">
+              <label class="field-label" for="calc-cd">扣除：本行存單質借（萬元）</label>
+              <input type="number" id="calc-cd" class="field-input" min="0" step="50" value="0" oninput="runThresholdCalc()">
+            </div>
+            <div class="field-group">
+              <label class="field-label" for="calc-fx">扣除：進出口押匯（萬元）</label>
+              <input type="number" id="calc-fx" class="field-input" min="0" step="50" value="0" oninput="runThresholdCalc()">
+            </div>
+          </div>
+
+          <div class="calc-checks">
+            <label class="inline-check">
+              <input type="checkbox" id="chk-full-collateral" onchange="runThresholdCalc()">
+              <span>屬十足擔保案件（含不動產十足擔保或信保保證十成）</span>
+            </label>
+            <label class="inline-check">
+              <input type="checkbox" id="chk-cp-guarantee" onchange="runThresholdCalc()">
+              <span>公司組織申請「本票保證」業務（不論金額均須財簽）</span>
+            </label>
+            <label class="inline-check">
+              <input type="checkbox" id="chk-transition" onchange="runThresholdCalc()">
+              <span>目前申辦時點為會計年度過渡期（1 月 1 日～5 月 31 日）</span>
+            </label>
+            <label class="inline-check">
+              <input type="checkbox" id="chk-new-corp" onchange="runThresholdCalc()">
+              <span>最近一年內新設立之授信戶（尚無完整年度營運實績）</span>
+            </label>
+          </div>
+
+          <div class="calc-output" aria-live="polite">
+            <div class="calc-output-row">
+              <span class="calc-out-label">計算後總授信金額</span>
+              <span class="calc-out-val" id="out-total-amt">3,200 萬元</span>
+            </div>
+            <div class="calc-output-row">
+              <span class="calc-out-label">適用授信資料表級別</span>
+              <span class="calc-out-val" id="out-form-type">資料表（大型／一般）</span>
+            </div>
+            <div class="calc-output-row">
+              <span class="calc-out-label">融資財簽強制義務</span>
+              <span class="calc-out-val alert" id="out-audit-req">強制徵提會計師融資簽證</span>
+            </div>
+            <div>
+              <p class="calc-out-label" style="margin: 0 0 var(--space-xs);">應備文件與實務檢核清單</p>
+              <ul class="calc-checklist" id="out-checklist"></ul>
+            </div>
+          </div>
+        </article>
+
+        <!-- Right: 徵信指標、聯徵代碼與會計師意見速查 -->
+        <article class="panel-card">
+          <div>
+            <h3 class="panel-title">徵信指標、聯徵代碼與實務警訊速查表</h3>
+            <p class="panel-desc">整合聯徵 IFRS 60 項比率、營業稅表單、JCIC 查詢代碼與會計師懲戒／查核意見處理準則。</p>
+          </div>
+
+          <div class="ref-filter-row">
+            <div class="field-group">
+              <label class="field-label" for="ref-search">檢索指標名稱、公式、代碼（如 C1、B33、N20、403）</label>
+              <input type="search" id="ref-search" class="field-input" placeholder="輸入關鍵字即時篩選…" oninput="handleRefSearch(this.value)">
+            </div>
+          </div>
+
+          <div class="ref-pills" role="group" aria-label="速查類別篩選" id="ref-pills">
+            <button type="button" class="ref-pill" data-cat="all" aria-pressed="true" onclick="setRefCategory('all')">全部項目</button>
+            <button type="button" class="ref-pill" data-cat="ratio" aria-pressed="false" onclick="setRefCategory('ratio')">財報與防衛比率</button>
+            <button type="button" class="ref-pill" data-cat="jcic" aria-pressed="false" onclick="setRefCategory('jcic')">聯徵代碼與統計</button>
+            <button type="button" class="ref-pill" data-cat="audit" aria-pressed="false" onclick="setRefCategory('audit')">會計師意見與懲戒</button>
+            <button type="button" class="ref-pill" data-cat="tax" aria-pressed="false" onclick="setRefCategory('tax')">稅務表單與特殊科目</button>
+          </div>
+
+          <div class="table-wrap">
+            <table class="ref-table">
+              <thead>
+                <tr>
+                  <th scope="col">代碼 / 名稱</th>
+                  <th scope="col">公式 / 法規定義</th>
+                  <th scope="col">判讀標準與實務警訊</th>
+                </tr>
+              </thead>
+              <tbody id="ref-table-body">
+                <!-- Rendered by JS -->
+              </tbody>
+            </table>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Section 3: Three-Chain Analysis & Teaching Case Divergence -->
+    <section id="section-analysis">
+      <div class="section-head">
+        <h2>授信審查三鏈分析法與異常訊號視覺穿透</h2>
+        <p class="section-sub">以批發商新增 300 萬週轉金教學案例演示「實數、比率、比較」之連動與成長不相稱警訊</p>
+      </div>
+
+      <div class="analysis-grid">
+        <article class="panel-card">
+          <div>
+            <h3 class="panel-title">三鏈分析思維：串聯至資金用途與還款來源</h3>
+            <p class="panel-desc">財報分析不是算完指標就結束，必須將三鏈結果導向真實訂單、收款帳齡與營業金流驗證。</p>
+          </div>
+
+          <div class="chain-steps">
+            <div class="chain-step step-1">
+              <p class="chain-num">STEP 01 · 實數分析</p>
+              <h4>看金額與增減流向</h4>
+              <p>追蹤現金、應收帳款、存貨與長短期借款的絕對金額變動，先回答「錢變動在哪裡」。</p>
+            </div>
+            <div class="chain-step step-2">
+              <p class="chain-num">STEP 02 · 比率分析</p>
+              <h4>看財務關係是否合理</h4>
+              <p>檢視毛利率、流動／速動比、負債比與週轉天期，判斷成長品質與短期償債緩衝。</p>
+            </div>
+            <div class="chain-step step-3">
+              <p class="chain-num">STEP 03 · 比較分析</p>
+              <h4>定錨自身歷期與同業</h4>
+              <p>對比去年同期、趨勢基期（100%）與聯徵同營收級距統計，區分個案異常或產業常態。</p>
+            </div>
+          </div>
+
+          <div class="case-callout">
+            <strong>實務警訊範例（營收與資金占用不相稱）：</strong>當企業營收趨勢由 100% 升至 150%（或年增 +20%），但應收帳款與存貨暴增至 250%（年增 +100%），且毛利率由 20% 降至 15%、稅前淨利反降至 80% 時，徵信應立即追查是否放寬授信條件、逾期呆帳未提列、塞貨或虛開發票，並調閱存摺對帳單驗證第一還款來源。
+          </div>
+        </article>
+
+        <article class="panel-card">
+          <div>
+            <h3 class="panel-title">趨勢與比率偏離診斷圖（教學案例對照）</h3>
+            <p class="panel-desc">比較「批發商週轉金申請案例」關鍵項目之年變動幅度與償債緩衝收斂情形。</p>
+          </div>
+          <div class="chart-box">
+            <canvas id="case-divergence-chart" aria-label="批發商週轉金案例各項指標比較圖"></canvas>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <footer class="page-footer">
+      <div><strong>Powered By Dunk</strong></div>
+      <div><strong>資料與法規參考來源：</strong>《銀行法》第 5 條之 2、《中華民國銀行公會會員徵信準則》（112 年 7 月 18 日修訂）、財團法人金融聯合徵信中心《產業分析統計資訊內容說明》（111 年 8 月版）、銀行業企業授信與財報分析實務研習講義（涵蓋公開資訊觀測站企業三書表及農信保教材案例）。</div>
+      <div>本頁面為教學與實務導航工具，具體授信核貸標準仍應依各金融機構內部授信規章及最新監理函釋辦理。</div>
+    </footer>
+  </main>
+
+  <api-shim></api-shim>
+  <script>
+    // =========================================================================
+    // 1. CURRICULUM DATA (30 Days across 5 Modules) - Template literals only
+    // =========================================================================
+    const CURRICULUM_DATA = [
+      // Module 1: Day 1 - 6
+      {
+        day: 1, mod: 1, modName: `模組一：徵信法規與基礎`,
+        title: `銀行徵信法規架構與授信核心原則`,
+        summary: `解析《銀行法》第5條之2授信範疇與《銀行公會會員徵信準則》第4條徵信定義。`,
+        focus: `釐清放款、透支、貼現、保證、承兌等授信業務類型，掌握徵信在法規體系中的法定定位。`,
+        practical: `徵信工作核心為「信用調查」與「財務分析」，並非獨立於授信之外的行政作業，而是整個銀行風險決策的資訊基石。實務中須依循「SOP、函釋、董事會及稽核注意事項」三大框架保平安。`,
+        tags: [`銀行法 §5-2`, `徵信準則 §4`, `風險基石`]
+      },
+      {
+        day: 2, mod: 1, modName: `模組一：徵信法規與基礎`,
+        title: `超然獨立牽制體系與徵信人員專業倫理`,
+        summary: `確立徵授信職能分工、公正平實撰寫報告與「不宜表示准駁意見」原則。`,
+        focus: `學習《徵信準則》第3、6、7、7條之一、8、15、28條：資料未齊不得辦理徵信，未經徵信不得核貸。`,
+        practical: `徵信人員應盡力完整呈現客觀資料，不可在徵信報告中直接批註「擬准」或「擬駁」意見（准駁權屬授信經辦與審查）；對資料負嚴格保密義務，且每年法定進修至少 3 小時永續金融（ESG）課程。`,
+        tags: [`徵信準則 §3/§7`, `AO例外`, `ESG 3小時`]
+      },
+      {
+        day: 3, mod: 1, modName: `模組一：徵信法規與基礎`,
+        title: `授信資料表分級架構與門檻判定`,
+        summary: `精準計算總授信金額，區分資料表、簡易資料表與小規模營利事業簡易資料表。`,
+        focus: `總授信金額＝最新聯徵歸戶餘額（活期、定期均計）＋本次申請額度－存單質借－進出口押匯。`,
+        practical: `三大表門檻無緩衝空間：①資料表：總額 ≥ 3,000 萬；②簡易資料表：601～2,999 萬，或十足擔保 1,501～2,999 萬；③小規模營利事業簡易資料表：≤ 600 萬，或十足擔保 ≤ 1,500 萬。注意：信保基金保證「十成」專案（如 0403 賑災、部分紓困）亦屬十足擔保，與信保八成分兩筆報送之結構不同。`,
+        tags: [`徵信準則 §16`, `三大資料表`, `十足擔保`]
+      },
+      {
+        day: 4, mod: 1, modName: `模組一：徵信法規與基礎`,
+        title: `企業身分識別與境內外法人資格審核`,
+        summary: `辨別上市櫃與非公發公司股東名簿差異，掌握境外公司存續證明與「水單」徵提實務。`,
+        focus: `國內企業以變更登記表取代設立登記表；未公發公司索取股東名簿／合夥名冊，上市櫃改自公開資訊觀測站列印前十大股東。`,
+        practical: `境外法人須查驗 Certificate of Good Standing 或 COI（依外匯 SOP 半年內有效，企業成本約 150～400 美元）；若申辦續約時正式文件尚在申請中，依準則最底線應先取得秘書公司繳交政府年費之「水單」（規費繳訖證明單據影本），並於正式對保續約前補齊。香港／大陸註冊須留意是否處於休止、撤銷或解散狀態。`,
+        tags: [`變更登記表`, `COI / Good Standing`, `水單`]
+      },
+      {
+        day: 5, mod: 1, modName: `模組一：徵信法規與基礎`,
+        title: `營業稅申報書（401/403/405 表）查核技巧`,
+        summary: `判讀 401、403、405 表適用情境，利用進銷項與發票反推真實營收與空窗期風險。`,
+        focus: `401 表為一般常規營業；403 表用於兼營免稅、處分不動產／股票或營建周邊業；405 表為不具法人資格之小規模營業人。`,
+        practical: `非公發企業 1/1–5/31 財報空窗期長達半年，須依賴雙月申報之 401 表（如 3/15 看 1–2 月、5/15 看 1–4 月）追蹤營收；但營業稅申報僅反映銷售額而非損益，須留意銷貨退回、折讓及業界常見「虛開發票（5%–8%）」現象，並與稅捐機關納稅證明相互勾稽。`,
+        tags: [`401 / 403 / 405表`, `空窗期驗證`, `納稅證明`]
+      },
+      {
+        day: 6, mod: 1, modName: `模組一：徵信法規與基礎`,
+        title: `徵信作業軌跡建立與免責要件落實`,
+        summary: `運用客觀外部資料庫交叉查證，落實列印附卷「留存徵信軌跡」與法定免責保護。`,
+        focus: `透過經濟部商工登記、財政部稅務入口網及聯徵（A08、A1、G27）進行客觀查證，強化證據力一致性。`,
+        practical: `海外聯貸或大型集團常於兩三年內發生組織重組（如平行架構「一借三保」改組為垂直「三借一保」），或因景氣反轉（如歐美商辦聯貸受疫情衝擊出租率不足三成）而申請協議展延。當下查調的組織圖與資料務必列印附卷留存軌跡，依《徵信準則》第36、37條，盡職調查並依規定辦理即可免除事後責任。`,
+        tags: [`徵信軌跡`, `徵信準則 §36/§37`, `客觀資料`]
+      },
+
+      // Module 2: Day 7 - 12
+      {
+        day: 7, mod: 2, modName: `模組二：財報與財簽`,
+        title: `3,000 萬元融資簽證門檻與法規強制規範`,
+        summary: `掌握總授信達 3,000 萬強制徵提會計師融資簽證，以及本票保證之特別規定。`,
+        focus: `《徵信準則》第18條第1項第1款規定總額 ≥ 3,000 萬須徵提財簽；公司組織申請「本票保證」不論金額一律強制財簽。`,
+        practical: `系統通常強制將聯徵 B33 餘額加計本次申請額度，導致「借新還舊」續約戶常觸發 3,000 萬控管視窗；實務可於備註欄敘明「屬借新還舊，實際總授信金額為 X,XXX 萬元（未達 3,000 萬）」，即可續用年度報稅資料。另無追索權應收帳款承購之買方額度依法免計入 3,000 萬門檻。`,
+        tags: [`徵信準則 §18`, `融資簽證`, `本票保證`]
+      },
+      {
+        day: 8, mod: 2, modName: `模組二：財報與財簽`,
+        title: `財報徵提時點與會計年度過渡期控管`,
+        summary: `區分 1/1–5/31 過渡期與 6/1 起補提作業，掌握上市櫃與興櫃報表揭露期別鐵律。`,
+        focus: `新案須近 3 年財報、年度覆查按報稅／查核完成時點重編、異常突發依第27條專案徵提最新暫結表。`,
+        practical: `① 1/1–5/31 首次達 3,000 萬：先收去年底暫結表＋自編聲明書＋會計師受託查核證明，6/1 後務必追蹤補齊財簽以防客戶「撤銷委任」。② 上市櫃一律採「3個體＋3合併」：個體鎖定年度（不加自編暫結），合併依 3/31、5/15、8/14、11/14 季報推進（大型上市櫃依金管會規定提前 3/15 揭露四大主表）。③ 興櫃僅揭露至 Q2 時，上表釘死 Q2，最新 Q3 暫結或擬制性報表（須留意四大主表是否有董事長／經辦／財務主管用印生效）僅寫於財務備註欄。`,
+        tags: [`1/1–5/31空窗`, `3個體+3合併`, `龍盤虎踞原則`]
+      },
+      {
+        day: 9, mod: 2, modName: `模組二：財報與財簽`,
+        title: `會計師查核意見類型解讀與實務處置`,
+        summary: `判別無保留、保留、無法表示與否定意見的審計意義與例外接案處置。`,
+        focus: `從公開資訊觀測站確認正式意見類型，防範會計師報告文字與標題容易混淆之誤判。`,
+        practical: `① 6/1–12/31 首次達 3,000 萬之企業，因過去未委任盤點期初存貨與現金函證，會計師常出具「保留意見」，若帳務合理實務仍可採納。② 若出現「否定意見」或「繼續經營假設疑慮」，財報會改以處分價值（PT）計價，原則不予採用；惟如遇優良企業併購（如併購後借款主體變更為母公司），徵信仍應忠實列示原報表僅供參考並轉以新母體為分析主體。`,
+        tags: [`保留意見`, `否定意見`, `繼續經營假設`]
+      },
+      {
+        day: 10, mod: 2, modName: `模組二：財報與財簽`,
+        title: `會計師適任性評估與懲戒紀錄查核`,
+        summary: `執行聯徵 N20 會計師懲戒紀錄查核，依懲戒輕重分級管控財報採認資格。`,
+        focus: `《徵信準則》第18條第1項第7款：警告／申誡 1 年內採納須特別註明；停業處分（及其2倍期間內）不予採用；除名永久不用。`,
+        practical: `N20 須於報表頁籤主動點擊查詢，常被忽略。若會計師僅係四大事務所內部輪調換簽證師屬正常現象；若確實曾因「存貨盤點不實」或「現金未函證」遭罰款警告（如罰 5 萬元），實務並非直接退件，而是針對被罰事由進行補強查證（例如調閱該客戶近期銀行函證紀錄影本附卷佐證），即可完成風險說明。`,
+        tags: [`JCIC N20`, `會計師懲戒`, `徵信準則 §18-1-7`]
+      },
+      {
+        day: 11, mod: 2, modName: `模組二：財報與財簽`,
+        title: `聯徵中心跨機構財報副本聯防機制`,
+        summary: `透過會計師副本直寄聯徵機制，防範「美化報表給銀行、真實報表報稅局」道德風險。`,
+        focus: `《徵信準則》第18條第1項第6款規定授信契約須約定由會計師將財報副本逕送 JCIC 比對。`,
+        practical: `實務上企業「報稅資料」與「會計師融資簽證」常見差異，例如投資公司買賣台積電股票（買 2,000 賣 2,500），報稅帳列進銷貨總額營收 2,500，但財簽若採單站式損益表僅列淨利 500，若直接套用「週轉金不逾營收」內規將導致額度嚴重低估，此時須搭配報稅總額資料還原實質交易規模；上市櫃因以合併財簽為主，不願提供個體報稅書時可註明未能提供。`,
+        tags: [`JCIC 副本聯防`, `單站式損益表`, `雙重報表風險`]
+      },
+      {
+        day: 12, mod: 2, modName: `模組二：財報與財簽`,
+        title: `特殊企業形態與中小企業簡化徵信實務`,
+        summary: `掌握新設公司驗資替代、600 萬以下五大項簡化徵信、OBU 彈性作法與三期科目調整。`,
+        focus: `《徵信準則》第22條：600萬以下（或十足擔保1,500萬以下）短期授信由八大項簡化為五大項。`,
+        practical: `① 新設未滿一年達 3,000 萬：以會計師驗資簽證＋附聲明書自編報表替代。② 五大項簡化免填產業概況與詳細財務分析，仍須核對加蓋收件章之所得稅報表或自編聲明書。③ OBU 非聯貸案若有十足外幣定存或關係企業連保，得以合併財簽配所得稅表或水單替代。④ 遇財簽科目跨年變動時，依《徵信準則》第24條按 GAAP 調整使三期比較維持一致性。`,
+        tags: [`徵信準則 §22/§24`, `五大項簡化`, `OBU / 驗資`]
+      },
+
+      // Module 3: Day 13 - 18
+      {
+        day: 13, mod: 3, modName: `模組三：三鏈與三大表`,
+        title: `授信審查三鏈分析法（實數、比率、比較分析）`,
+        summary: `建立「實數看金額、比率看結構、比較看差異」的連鎖審查邏輯。`,
+        focus: `實數分析找出資金變動去向；比率分析檢驗結構合理性；比較分析對焦歷期與同業定位。`,
+        practical: `記憶心法：指標算完並非終點，必須轉譯為三個授信結論——①「資金用途是否合理」（核對訂單、應收帳齡、存貨明細與付款條件）；②「還款來源是否可靠」（以存摺、對帳單與營業現金流佐證本息負擔）；③「貸款期限是否適當」（區分短期週轉或長期資本投入）。`,
+        tags: [`三鏈分析法`, `資金用途`, `第一還款來源`]
+      },
+      {
+        day: 14, mod: 3, modName: `模組三：三鏈與三大表`,
+        title: `水平動態分析：趨勢分析法實務操作`,
+        summary: `計算固定基期趨勢百分比，偵測「營收、資金占用與獲利不相稱」警訊。`,
+        focus: `公式：（當期金額 ÷ 基期金額）× 100%；選定常態代表年度為基期（100%）。`,
+        practical: `判讀關鍵在於同步性：若營收趨勢升至 150%，應收帳款卻暴衝至 250%，而稅前淨利反跌至 80%，代表可能放寬收款、發生呆帳或期末塞貨。注意事項：① 基期不可選停工、大虧或異常旺年；② 基期為零或由虧轉盈時百分比會失真，應改看絕對金額；③ 須搭配小額項目基數效應檢查。`,
+        tags: [`趨勢分析法`, `固定基期`, `成長不相稱`]
+      },
+      {
+        day: 15, mod: 3, modName: `模組三：三鏈與三大表`,
+        title: `資產負債表審核與資產流動性實質評估`,
+        summary: `解讀會計師依流動性排序邏輯、受限制資產與 IFRS 16 對償債比率的扭曲。`,
+        focus: `資負表並非純依科目代號排序，而是依「變現速度」與「有無受限」由上而下編排。`,
+        practical: `① 約當現金若含「三個月內到期定存單」卻被列於流動資產最底端，通常代表設有質押或限制條款，流動／速動比即可能失真。② 附註若揭露「法院訴訟」金額（如大同海外訴訟案），因會計準則規定僅於評估「敗訴率超過五成」時須入帳認列，見到表上列示即代表極高機率敗訴賠付。③ 本行標準「現金流量表」或財務比率表亦須注意 IFRS 16 使用權資產與租賃負債的影響。`,
+        tags: [`受限制資產`, `訴訟敗訴＞50%`, `IFRS 16`]
+      },
+      {
+        day: 16, mod: 3, modName: `模組三：三鏈與三大表`,
+        title: `損益表審核與獲利品質穿透`,
+        summary: `區分營業利益（本業本質）與業外損益，剖析家族企業利潤移轉與實質獲利能力。`,
+        focus: `營業利益率反映本業競爭力，業外收入則多具一次性或高度波動性，不可視為常態還款來源。`,
+        practical: `部分企業帳面看似本業穩健或靠業外撐盤（如文教事業靠轉投資權益法分紅獲利，或將集團大樓產權置於純家族持股公司收租；又如永豐餘家族相關生鮮品牌 Green & Safe 雖未列三書表且帳面虧損，實由關係企業輪流分攤認賠或處分大陸廠房斷尾求生），徵信須穿透「經營者如何獲利」與「公司本身是否具持續現金能力」。`,
+        tags: [`營業利益`, `業外損益`, `獲利品質`]
+      },
+      {
+        day: 17, mod: 3, modName: `模組三：三鏈與三大表`,
+        title: `現金流量表——防衛性報表與 EBITDA 還原技術`,
+        summary: `將折舊攤銷等非現金支出加回，引進國際聯貸 EBITDA 概念評估真實付息能力。`,
+        focus: `現金流量表俗稱「防衛性報表」，能排除權責發生制帳面損益干擾，揭露企業實際現金動能。`,
+        practical: `北投紅茶實例：期初投資設備裝潢 200 萬分 5 年攤銷（年攤 40 萬），若第 1 年營業淨現金流入 41 萬，損益表淨利僅 1 萬看似微薄，實則手握 41 萬現金可還款！大型製造業因重資產折舊龐大，帳面 EPS 雖虧損，只要營運現金流轉正且「T2 利息保障倍數（加回折攤／EBITDA 概念）」充足，仍具備穩健付息實力；反之若營業現金流流出卻靠處分資產獲利，風險極高。`,
+        tags: [`防衛性報表`, `EBITDA`, `折舊攤銷還原`]
+      },
+      {
+        day: 18, mod: 3, modName: `模組三：三鏈與三大表`,
+        title: `防衛性現金指標與自由現金流量計算`,
+        summary: `運用聯徵進階現金比率（C1、C211、T5）與自由現金流，深化長短期風險判斷。`,
+        focus: `重點指標：C1 現金流量比率（標準 ＞ 40% 為穩健）、現金允當比率、C211 現金再投資比率、T5 自由支配淨現金流對負債比。`,
+        practical: `本行制式財報比率表（如流動比、速動比）受存貨與應收帳款變現性影響而較不穩固；實務分析上市櫃或大型案（如比較台積電與聯電體質趨勢）時，可計算聯徵定義之 C1（營業淨現金流÷流動負債＞40%）與自由現金流量（扣除資本支出與現金股利後涵蓋總負債能力），搭配金融研訓院進階比率交叉印證企業真實造血動能。`,
+        tags: [`C1 ＞ 40%`, `自由現金流量`, `C211 / T5`]
+      },
+
+      // Module 4: Day 19 - 24
+      {
+        day: 19, mod: 4, modName: `模組四：聯徵與特殊業態`,
+        title: `聯徵中心「產業財務統計資訊」體系架構`,
+        summary: `熟悉聯徵 3.5 萬本財簽與 16 萬戶授信資料庫，精準對焦 7 大營收級距進行同業比較。`,
+        focus: `依 ROC GAAP（至104年）、IFRSs（102起公發、區分合併/個體）及 EAS（105起非公發）三大架構編製。`,
+        practical: `同業比較切忌「拿百億大廠比中小微企」：聯徵依《中華民國行業標準分類》劃分 7 個營收級距（級距1：≥100億、2：50–100億、3：10–50億、4：5–10億、5：1–5億、6：0.4–1億、7：＜0.4億）。原始檔並以紅字標示 IFRS 15/9、藍字標示 IFRS 16 新增科目，檢索「同業財務比率」時須留意合併與個體分列。`,
+        tags: [`聯徵產業統計`, `7大營收級距`, `IFRS / EAS`]
+      },
+      {
+        day: 20, mod: 4, modName: `模組四：聯徵與特殊業態`,
+        title: `產業統計指標精準解讀：集中趨勢與離散分析`,
+        summary: `區分算術平均數 A、綜合平均數 A+、中位數 M 與四分位數（U/L）、標準差 S 之應用。`,
+        focus: `A 易受極端值拉扯；A+ 為先加總科目再相除（具加權中和特異值效果）；M（樣本≥3）、L/U（≥10）、S（≥2）。`,
+        practical: `判讀心法：正常情況 A 與 A+ 相近時用 A；當 A 與 A+ 差距甚大代表該產業存在極端特異值樣本，應改採「綜合平均數 A+」或「中位數 M」，並搭配上下四分位（U/L）與標準差（S）觀察離散度。另聯徵針對極小分母比率自動設限於 ±9999.9%，且非製造業之部分週轉比率意義模糊，不可僵化套用。`,
+        tags: [`A vs A+`, `中位數 M`, `四分位 U/L`]
+      },
+      {
+        day: 21, mod: 4, modName: `模組四：聯徵與特殊業態`,
+        title: `製造業產銷營運週期與供應鏈延遲風險`,
+        summary: `拆解品牌大廠長天期驗收與票期對協力廠商存貨及應收週轉天期的結構性拉長。`,
+        focus: `檢視存貨週轉天期＋應收帳款週轉天期（營業循環），區分「收款惡化」與「供應鏈生態常態」。`,
+        practical: `大型組裝廠（如鴻海）對協力廠常採「交貨後 180 天驗收，驗收完再開立 180 天期票」，導致中小供應商應收週轉期高達 360 天；或國內電子設備廠機台已裝進客戶無塵室運轉，卻因半年後才驗收而帳列「存貨週轉期＞200 天」。徵信遇此狀況不能直接認定高風險，應重點查核其往來歷史、大廠訂單穩定度與營收起伏。`,
+        tags: [`營運週轉天期`, `360天帳期`, `電子設備驗收`]
+      },
+      {
+        day: 22, mod: 4, modName: `模組四：聯徵與特殊業態`,
+        title: `流通百貨與連鎖零售業之特殊金流剖析`,
+        summary: `破解百貨及連鎖超商「流動比＜100%、固長率＞100%」卻極度穩健的負營運資金奧秘。`,
+        focus: `高使用權資產與租賃負債、預收禮券負債及專櫃抽成結構，決定其非製造業特有的財報樣貌。`,
+        practical: `遠東百貨、統一超（7-11）、全家等零售龍頭，因預先以 94–95 折出售禮券（帳列預收／合約負債，即現金先入袋），消費後專櫃或美食街再上繳 25%–35% 抽成，或由總部對加盟主先鋪貨毛利再分潤上繳，現金流極度充沛且幾乎無應收帳款風險，故流動比、速動比常僅 0.8–0.9 仍屬極優質授信戶。`,
+        tags: [`負營運資金`, `預收禮券金流`, `使用權資產`]
+      },
+      {
+        day: 23, mod: 4, modName: `模組四：聯徵與特殊業態`,
+        title: `營建工程、合約資產與中長期資產融資審查`,
+        summary: `辨識 IFRS 15 合約資產與合約負債意涵，釐清不動產融資屬「資本支出」或「土建融」。`,
+        focus: `合約資產＝已施作尚未具無條件收款權之未開票應收款；合約負債＝預收工程款／訂金（反映在手訂單能見度）。`,
+        practical: `中長期授信常需區分性質：① 購地蓋廠自用，或「樓上企業總部自用＋樓下純出租（含租給關係企業，帳列投資性不動產）」→ 一律屬「資本性支出」分析；② 購地興建房屋對外銷售（或部分樓層銷售）→ 須進行「土建融還款銷售率分析」（如銷售達 60% 可清償本金，評估債權保障無虞）。台灣車輛等工程／工業開發商亦多具高合約負債特性。`,
+        tags: [`IFRS 15 合約負債`, `資本支出 vs 土建融`, `銷售率分析`]
+      },
+      {
+        day: 24, mod: 4, modName: `模組四：聯徵與特殊業態`,
+        title: `應收帳款承購（Factoring）業務風險架構`,
+        summary: `明確區分有追索權與無追索權（賣斷）授信主體，掌握例外回歸追索條件。`,
+        focus: `口訣：「有追看賣方，無追看買方」；無追索權（買斷）係由銀行承擔買方信用風險，買方額度免計入 3,000 萬門檻。`,
+        practical: `當鴻海等供應商將對 Apple 的應收帳款辦理「無追索權賣斷」予銀行時，實務審查重點在買方 Apple 的償付能力與承諾付款機制，原則上無權追索鴻海；惟一旦發生「賣方勞務或貨品實際未完全交付」之商業糾紛時，銀行仍得回歸向賣方追索。依《徵信準則》第16條，買方風險經 IF（承購商）或信保機構移轉者，改蒐集承購商或信保機構資訊。`,
+        tags: [`Factoring 賣斷`, `有追 vs 無追`, `徵信準則 §16-2`]
+      },
+
+      // Module 5: Day 25 - 30
+      {
+        day: 25, mod: 5, modName: `模組五：關係人與決策`,
+        title: `關係企業與集團網絡穿透查核`,
+        summary: `善用公開資訊觀測站「關係企業三書表專區」，追蹤跨國組織變動與高風險訊號。`,
+        focus: `從銀行公會統一表格出發，對大型集團改於觀測站「電子書→關係企業三書表專區」下載《關係企業合併營業報告書》。`,
+        practical: `實務上無須手抄補齊如統一、鴻海長達十餘頁的三書表，只要將下載資料與聯徵 A08、A1、G27 附卷佐證即可。須高度警覺 CRI 評等 8 或 9 分、設有境外紙上公司且「非控制權益（少數股權）」異常偏高的上市櫃集團，嚴防控股結構變動或利益輸送風險。`,
+        tags: [`關係企業三書表`, `CRI 8/9警訊`, `非控制權益`]
+      },
+      {
+        day: 26, mod: 5, modName: `模組五：關係人與決策`,
+        title: `關係人非經常性資金融通與舞弊預警`,
+        summary: `穿透「應收關係人款項」與「其他應收款—關係人」，嚴防《公司法》第15條違法挪用。`,
+        focus: `比較個體與合併報表沖銷差異：若如元太科技採垂直整合，個體龐大應收關係人款於合併報表大幅消除屬內部流轉常態。`,
+        practical: `① 貸方「應付關係人款項」多屬股東暫時墊付營運週轉款（常態），但長期掛帳流動實為非流動；② 借方「其他應收款—關係人」即「公司借錢給股東」，違反《公司法》第15條（如中小企董座挪用公司款買豪宅、超跑或占總資產50%）。徵信人員遇此務必忠實揭露並向上陳報主管決斷（協商限期改善或斷尾求生），切忌替客戶掩飾而承擔徵信不實之責。`,
+        tags: [`公司法 §15`, `其他應收關係人`, `合併沖銷`]
+      },
+      {
+        day: 27, mod: 5, modName: `模組五：關係人與決策`,
+        title: `負責人誠信與信用調查（徵信 5C vs 授信 5P）`,
+        summary: `對比 5C 首重 Character（品德）與 5P People，靈活應對負責人個人信貸與接班狀況。`,
+        focus: `徵信 5C（首重 Character 借款人品德誠信）直接連動負責人聯徵、行內黑名單與利害關係人查核。`,
+        practical: `諺語「English is beginning, character is forever」：實地與負責人或財務長洽談可洞察經營態度。若遇公股子公司高層個人信貸偏高或動用循環息（如案例中券商背景董事長主業為金融理財週轉），實務應「高舉輕放」，確認背後大股東（如中鋼）穩健且非企業來借，報告中性寫明「屬負責人個人理財週轉所致」；若遇二代接班或偶發循環紀錄（2N），則輔以協商與保證人控管。`,
+        tags: [`5C Character`, `5P People`, `利害關係人`]
+      },
+      {
+        day: 28, mod: 5, modName: `模組五：關係人與決策`,
+        title: `聯徵中心個人及企業信用報告解讀技巧`,
+        summary: `精讀聯徵 B33、B36、K33/K34 與 T70 代碼，辨識階梯式增貸與正常稅款分期差異。`,
+        focus: `「聯徵看到 123 不會見到阿里山，只會遇呆帳」：緊盯紅字遲繳、循環信用動用與密集多頭借貸。`,
+        practical: `① B33（授信餘額明細）與 B36（共同借款與保證）須交叉對照：警惕如 107 年自公司借 100 萬、108 年個人負債暴增至 4,000 萬並動用循環之崩壞前兆。② K33／K34（信用卡明細）若見「單筆大額分期」卻無循環滾存，須先查明是否為大額綜合所得稅刷卡分期（正常理財），切勿誤殺；反之若多間銀行均未全額繳清且信貸階梯式增加，即屬明確警訊。`,
+        tags: [`B33 / B36`, `K33 / K34`, `T70 / 信用警訊`]
+      },
+      {
+        day: 29, mod: 5, modName: `模組五：關係人與決策`,
+        title: `多維外部資料跨平台檢驗與實地訪查實務`,
+        summary: `整合司法院判決書、存摺對帳單與 ESG 負面新聞查證，構築徵信補正最後防線。`,
+        focus: `實地訪查企業設備規模與營運現況，以存摺、對帳單與交易憑證佐證真實資金流動。`,
+        practical: `善用司法院判決書查詢系統檢核企業或負責人有無重大工程款糾紛或票據訴訟，並對照財報訴訟揭露（敗訴率 ＞ 50% 須入帳）；同步檢視 ESG 負面新聞（工安、環保罰鍰、勞資爭議）。多表合一作業建議先輸入資產、損益、現流與財務比率頁籤，最後再回填期初資料表以維持帳務連貫。`,
+        tags: [`司法院判決書`, `實地訪查`, `ESG 負面查證`]
+      },
+      {
+        day: 30, mod: 5, modName: `模組五：關係人與決策`,
+        title: `中小企業授信綜合審查實務演練與案件決策`,
+        summary: `融合法規合規、三鏈財報、產業比較與雙重還款來源，產出具備抗辯力的徵信報告。`,
+        focus: `「把錢放進別人口袋很容易，從別人口袋收回來是一門藝術」——以合規為前提成就優質案件。`,
+        practical: `結訓總檢核三大鐵律：①「有所本」（所有數據附查證出處）；②「充分揭露」（優劣並陳，不擅自隱藏或越權批駁）；③「均依規定辦理」（落實軌跡保存）。綜合評估「資金用途合理性」、「第一還款來源（營業現金流）」與「第二還款來源（擔保品／信保基金）」，完成具專業抗辯價值之授信審查結論。`,
+        tags: [`綜合演練`, `雙重還款來源`, `徵信三大鐵律`]
+      }
+    ];
+
+    // =========================================================================
+    // 2. QUICK REFERENCE DATA (Indicators, JCIC Codes, Audit Opinions, Tax)
+    // =========================================================================
+    const REFERENCE_DATA = [
+      {
+        cat: `ratio`, catLabel: `財報與防衛比率`,
+        code: `C1 現金流量比率`,
+        formula: `營業活動之淨現金流量 ÷ 流動負債`,
+        note: `聯徵標準值 ＞ 40% 為穩健。相較流動比／速動比易受存貨變現性或限制性資產干擾，更能真實檢驗短期還款實力。`
+      },
+      {
+        cat: `ratio`, catLabel: `財報與防衛比率`,
+        code: `T2 利息保障倍數 (EBITDA)`,
+        formula: `(稅前損益 ＋ 財務成本 ＋ 折舊攤銷費用) ÷ 財務成本`,
+        note: `還原非現金折攤費用，源自國際聯貸財務承諾。重資產製造業即使帳面虧損，若本倍數高仍具實質付息現金流（不同於未還原之 T1）。`
+      },
+      {
+        cat: `ratio`, catLabel: `財報與防衛比率`,
+        code: `T5 自由支配淨現金流對負債比`,
+        formula: `(營業活動淨現金流量 － 資本支出 － 現金股利) ÷ 負債總額`,
+        note: `衡量企業在維持正常資本更新與配息後，剩餘自由現金流量對全部負債的償還涵蓋能力。`
+      },
+      {
+        cat: `ratio`, catLabel: `財報與防衛比率`,
+        code: `C211 現金再投資比率`,
+        formula: `(營業淨現金流 － 現金股利) ÷ (固定資產毛額＋投不動產＋權益法投資＋其他非流動＋營運資金)`,
+        note: `評估企業留下供資產重置與業務擴張之現金動能（聯徵另分設不含使用權資產版本）。`
+      },
+      {
+        cat: `ratio`, catLabel: `財報與防衛比率`,
+        code: `T10 槓桿倍數`,
+        formula: `總負債 ÷ EBITDA`,
+        note: `常用於聯貸案與中長期授信財務承諾（Covenants），衡量以營業現金產生能力償清總負債所需年數。`
+      },
+      {
+        cat: `ratio`, catLabel: `財報與防衛比率`,
+        code: `流動比／速動比 (百貨例外)`,
+        formula: `流動資產 ÷ 流動負債；(流動資產 － 存貨 － 預付款) ÷ 流動負債`,
+        note: `一般製造業要求安全緩衝；但百貨／連鎖超商因負營運資金、預收禮券及 IFRS 16 高租賃負債，比率常 ＜ 100% 卻極穩健。`
+      },
+      {
+        cat: `jcic`, catLabel: `聯徵代碼與統計`,
+        code: `B33 / B36`,
+        formula: `企業／個人授信餘額明細 (B33) 與 共同借款／保證明細 (B36)`,
+        note: `計算 3,000 萬總授信門檻之基準；實務緊盯是否有 123 階梯式短期密集增貸或保證負債暴增。`
+      },
+      {
+        cat: `jcic`, catLabel: `聯徵代碼與統計`,
+        code: `K33 / K34`,
+        formula: `信用卡額度、消費分期與循環信用繳款異常明細`,
+        note: `若見紅字未全額繳清、動用百萬循環息屬重大警訊；惟單筆大額刷卡分期應釐清是否屬正常綜所稅分期。`
+      },
+      {
+        cat: `jcic`, catLabel: `聯徵代碼與統計`,
+        code: `N20 會計師懲戒紀錄`,
+        formula: `聯徵中心會計師受主管機關懲戒處分查詢項目`,
+        note: `報表頁籤必填查核點。須確認受罰事由（如存貨盤點或現金函證）並據以調閱佐證資料或決定是否拒採。`
+      },
+      {
+        cat: `jcic`, catLabel: `聯徵代碼與統計`,
+        code: `A08 / A1 / G27`,
+        formula: `聯徵基本資料、董監事／主要股東及關聯戶查詢資訊`,
+        note: `用於與經濟部商工登記交叉驗證，並充當大型上市櫃集團關係企業三書表之客觀佐證附件。`
+      },
+      {
+        cat: `jcic`, catLabel: `聯徵代碼與統計`,
+        code: `A vs A+ / M / U / L / S`,
+        formula: `算術平均 A · 綜合平均 A+ (ΣX÷ΣY) · 中位數 M · 四分位 U/L · 標準差 S`,
+        note: `A 與 A+ 差距過大表示行業有極端值，改採 A+ 或 M（樣本≥3）；L/U（≥10）與 S（≥2）用於檢視離散程度，極端分母設限 ±9999.9%。`
+      },
+      {
+        cat: `jcic`, catLabel: `聯徵代碼與統計`,
+        code: `聯徵 7 大營收級距`,
+        formula: `1: ≥100億 · 2: 50~100億 · 3: 10~50億 · 4: 5~10億 · 5: 1~5億 · 6: 0.4~1億 · 7: <0.4億`,
+        note: `執行同業比較時須對齊相同新台幣億元營收級距，避免以百億大型上市櫃比率誤判中小企業體質。`
+      },
+      {
+        cat: `audit`, catLabel: `會計師意見與懲戒`,
+        code: `無保留 / 保留意見`,
+        formula: `公開資訊觀測站正式意見分類；《徵信準則》§18 審核`,
+        note: `首次達 3,000 萬之企業常因期初存貨未盤點、現金未函證而出具「保留意見」，若帳務合理可予採納並追蹤下年度改善。`
+      },
+      {
+        cat: `audit`, catLabel: `會計師意見與懲戒`,
+        code: `否定 / 無法表示意見`,
+        formula: `重大且廣泛之查核限制或繼續經營假設存有重大疑慮`,
+        note: `財報改依處分價值計價，原則不予採用；惟遇企業被併購轉換借款主體時，得列示僅供參考並改分析新母公司。`
+      },
+      {
+        cat: `audit`, catLabel: `會計師意見與懲戒`,
+        code: `懲戒處分採認規則`,
+        formula: `《徵信準則》§18 第1項第7款分級控管`,
+        note: `警告／申誡：處分起 1 年內如准採用須註明原因並審慎評估；停業處分：停止期間（及準則實務加倍期間）內一律不採用；除名：永久不採用。`
+      },
+      {
+        cat: `tax`, catLabel: `稅務表單與特殊科目`,
+        code: `401 / 403 / 405 表`,
+        formula: `營業人銷售額與稅額申報書（雙月或按月申報）`,
+        note: `401 一般營業；403 兼營免稅／處分不動產／營建周邊；405 小規模營業人。須提防銷貨退回折讓及業界虛開發票（5%–8%）。`
+      },
+      {
+        cat: `tax`, catLabel: `稅務表單與特殊科目`,
+        code: `合約資產 / 合約負債`,
+        formula: `IFRS 15「客戶合約之收入」工程與預收款項科目`,
+        note: `合約資產為尚未完成驗收程序之應收款；合約負債為已收訂金／預收工程款（顯示在手訂單能見度，非惡性負債）。`
+      },
+      {
+        cat: `tax`, catLabel: `稅務表單與特殊科目`,
+        code: `其他應收款—關係人`,
+        formula: `非營業性關係人資金融通（列於借方＝公司借錢給股東）`,
+        note: `違反《公司法》第15條規範，須嚴查是否遭負責人挪用購置私產；應於徵信報告忠實揭露並向上呈報處置。`
+      }
+    ];
+
+    // =========================================================================
+    // 3. STATE MANAGEMENT & SHIM API PERSISTENCE
+    // =========================================================================
+    let appState = {
+      completedDays: [],
+      expandedDays: [1],
+      activeModule: `all`,
+      searchQuery: ``,
+      statusFilter: `all`,
+      refCategory: `all`,
+      refSearch: ``
+    };
+
+    let caseChartInstance = null;
+
+    async function persistState() {
+      try {
+        if (window.notebookAppApi && typeof window.notebookAppApi.setAppState === `function`) {
+          await window.notebookAppApi.setAppState({
+            completedDays: appState.completedDays,
+            expandedDays: appState.expandedDays,
+            activeModule: appState.activeModule,
+            statusFilter: appState.statusFilter,
+            refCategory: appState.refCategory
+          });
+        }
+      } catch (err) {
+        // Silent fail in standalone preview if shim is inactive
+      }
+    }
+
+    async function initApp() {
+      try {
+        if (window.notebookAppApi && typeof window.notebookAppApi.getAppState === `function`) {
+          const saved = await window.notebookAppApi.getAppState();
+          if (saved && typeof saved === `object`) {
+            if (Array.isArray(saved.completedDays)) {
+              appState.completedDays = saved.completedDays.filter(function(d) { return typeof d === `number` && d >= 1 && d <= 30; });
+            }
+            if (Array.isArray(saved.expandedDays)) {
+              appState.expandedDays = saved.expandedDays.filter(function(d) { return typeof d === `number` && d >= 1 && d <= 30; });
+            }
+            if (typeof saved.activeModule === `string`) appState.activeModule = saved.activeModule;
+            if (typeof saved.statusFilter === `string`) appState.statusFilter = saved.statusFilter;
+            if (typeof saved.refCategory === `string`) appState.refCategory = saved.refCategory;
+          }
+        }
+      } catch (err) {
+        // Fallback to default state
+      }
+
+      // Sync UI controls with restored state
+      const statusSel = document.getElementById(`status-filter`);
+      if (statusSel) statusSel.value = appState.statusFilter;
+
+      syncModuleTabButtons();
+      syncRefPillButtons();
+      updateProgressUI();
+      renderCurriculum();
+      runThresholdCalc();
+      renderReferenceTable();
+      renderDivergenceChart();
+
+      if (window.notebookAppApi && typeof window.notebookAppApi.notifyAppReady === `function`) {
+        window.notebookAppApi.notifyAppReady();
+      }
+    }
+
+    // =========================================================================
+    // 4. CURRICULUM INTERACTIONS (Hoisted function declarations)
+    // =========================================================================
+    function syncModuleTabButtons() {
+      const buttons = document.querySelectorAll(`.mod-tab`);
+      buttons.forEach(function(btn) {
+        const mod = btn.getAttribute(`data-mod`);
+        btn.setAttribute(`aria-pressed`, mod === appState.activeModule ? `true` : `false`);
+      });
+    }
+
+    function setModuleFilter(mod) {
+      appState.activeModule = String(mod);
+      syncModuleTabButtons();
+      renderCurriculum();
+      persistState();
+    }
+
+    function handleSearchInput(val) {
+      appState.searchQuery = String(val || ``).trim().toLowerCase();
+      renderCurriculum();
+    }
+
+    function setStatusFilter(val) {
+      appState.statusFilter = String(val || `all`);
+      renderCurriculum();
+      persistState();
+    }
+
+    function toggleDayCompletion(dayNum) {
+      const idx = appState.completedDays.indexOf(dayNum);
+      if (idx === -1) {
+        appState.completedDays.push(dayNum);
+        appState.completedDays.sort(function(a, b) { return a - b; });
+      } else {
+        appState.completedDays.splice(idx, 1);
+      }
+      updateProgressUI();
+      renderCurriculum();
+      persistState();
+    }
+
+    function toggleDayDetails(dayNum) {
+      const idx = appState.expandedDays.indexOf(dayNum);
+      if (idx === -1) {
+        appState.expandedDays.push(dayNum);
+      } else {
+        appState.expandedDays.splice(idx, 1);
+      }
+      renderCurriculum();
+      persistState();
+    }
+
+    function toggleAllDetails(expand) {
+      if (expand) {
+        appState.expandedDays = CURRICULUM_DATA.map(function(item) { return item.day; });
+      } else {
+        appState.expandedDays = [];
+      }
+      renderCurriculum();
+      persistState();
+    }
+
+    function resetProgress(btn) {
+      if (!btn) return;
+      if (btn.dataset.armed !== `true`) {
+        btn.dataset.armed = `true`;
+        btn.textContent = `再按一次確認歸零`;
+        return;
+      }
+      btn.dataset.armed = `false`;
+      btn.textContent = `重設進度`;
+      appState.completedDays = [];
+      updateProgressUI();
+      renderCurriculum();
+      persistState();
+    }
+
+    function updateProgressUI() {
+      const total = 30;
+      const doneCount = appState.completedDays.length;
+      const pct = Math.round((doneCount / total) * 100);
+
+      const kpiText = document.getElementById(`kpi-progress-text`);
+      if (kpiText) kpiText.textContent = `${doneCount} / ${total} 天`;
+
+      const bar = document.getElementById(`main-progress-bar`);
+      if (bar) bar.setAttribute(`aria-valuenow`, String(doneCount));
+
+      const fill = document.getElementById(`main-progress-fill`);
+      if (fill) {
+        fill.style.width = `${pct}%`;
+        if (doneCount === total) {
+          fill.classList.add(`complete`);
+        } else {
+          fill.classList.remove(`complete`);
+        }
+      }
+
+      const pctLabel = document.getElementById(`kpi-progress-pct`);
+      if (pctLabel) {
+        if (doneCount === 0) {
+          pctLabel.textContent = `0% · 尚未開始標記，勾選下方卡片追蹤進度`;
+        } else if (doneCount === total) {
+          pctLabel.textContent = `100% · 已完成全部 30 天中小企業授信課綱！`;
+        } else {
+          pctLabel.textContent = `${pct}% · 尚餘 ${total - doneCount} 堂課待完成`;
+        }
+      }
+
+      // Per-module counts
+      const countAll = document.getElementById(`count-all`);
+      if (countAll) countAll.textContent = `${doneCount}/30`;
+
+      for (let m = 1; m <= 5; m++) {
+        const modDone = CURRICULUM_DATA.filter(function(item) {
+          return item.mod === m && appState.completedDays.indexOf(item.day) !== -1;
+        }).length;
+        const countEl = document.getElementById(`count-${m}`);
+        if (countEl) countEl.textContent = `${modDone}/6`;
+      }
+
+      // Next milestone hint
+      const hintEl = document.getElementById(`next-milestone-hint`);
+      if (hintEl) {
+        const nextDay = CURRICULUM_DATA.find(function(item) {
+          return appState.completedDays.indexOf(item.day) === -1;
+        });
+        if (!nextDay) {
+          hintEl.textContent = `全數課程已完成，可利用下方「徵信判定器與指標速查」複習實戰案例。`;
+        } else {
+          hintEl.textContent = `下一堂建議進度：Day ${nextDay.day}「${nextDay.title}」`;
+        }
+      }
+    }
+
+    function escapeHtml(str) {
+      return String(str)
+        .replace(/&/g, `&amp;`)
+        .replace(/</g, `&lt;`)
+        .replace(/>/g, `&gt;`)
+        .replace(/"/g, `&quot;`);
+    }
+
+    function renderCurriculum() {
+      const grid = document.getElementById(`curriculum-grid`);
+      if (!grid) return;
+
+      const filtered = CURRICULUM_DATA.filter(function(item) {
+        if (appState.activeModule !== `all` && String(item.mod) !== appState.activeModule) {
+          return false;
+        }
+        const isDone = appState.completedDays.indexOf(item.day) !== -1;
+        if (appState.statusFilter === `done` && !isDone) return false;
+        if (appState.statusFilter === `pending` && isDone) return false;
+
+        if (appState.searchQuery) {
+          const hay = `${item.title} ${item.summary} ${item.focus} ${item.practical} ${item.tags.join(` `)} day ${item.day}`.toLowerCase();
+          if (hay.indexOf(appState.searchQuery) === -1) return false;
+        }
+        return true;
+      });
+
+      const visEl = document.getElementById(`visible-count`);
+      if (visEl) visEl.textContent = String(filtered.length);
+
+      if (filtered.length === 0) {
+        grid.innerHTML = `
+          <div class="empty-state">
+            <p class="card-title">找不到符合條件的課程內容</p>
+            <p class="card-summary">目前篩選條件或關鍵字「${escapeHtml(appState.searchQuery || appState.statusFilter)}」沒有對應的課綱項目。</p>
+            <button type="button" class="btn btn-primary" onclick="clearCurriculumFilters()">重設篩選並顯示全部 30 天</button>
+          </div>
+        `;
+        return;
+      }
+
+      const cardsHtml = filtered.map(function(item) {
+        const isDone = appState.completedDays.indexOf(item.day) !== -1;
+        const isExpanded = appState.expandedDays.indexOf(item.day) !== -1;
+        const dayStr = item.day < 10 ? `0${item.day}` : String(item.day);
+        const tagsHtml = item.tags.map(function(t) {
+          return `<span class="meta-tag">${escapeHtml(t)}</span>`;
+        }).join(``);
+
+        return `
+          <article class="day-card ${isDone ? `is-done` : ``}">
+            <div class="card-top">
+              <div class="card-badges">
+                <span class="day-badge">DAY ${dayStr}</span>
+                <span class="mod-stamp">${escapeHtml(item.modName)}</span>
+              </div>
+              <button type="button" class="check-btn" role="checkbox" aria-checked="${isDone ? `true` : `false`}" onclick="toggleDayCompletion(${item.day})" aria-label="標記 Day ${item.day} ${isDone ? `已完成` : `為已完成`}">
+                <span class="check-box" aria-hidden="true">${isDone ? `<svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6.2L4.8 9L10 3" stroke="currentColor" stroke-width="2" stroke-linecap="square"/></svg>` : ``}</span>
+                <span>${isDone ? `已完成` : `標記完成`}</span>
+              </button>
+            </div>
+
+            <h3 class="card-title"><a href="Day${String(item.day).padStart(2, `0`)}.html">${escapeHtml(item.title)}</a></h3>
+            <p class="card-summary">${escapeHtml(item.summary)}</p>
+
+            <button type="button" class="card-toggle" aria-expanded="${isExpanded ? `true` : `false`}" onclick="toggleDayDetails(${item.day})">
+              <span>${isExpanded ? `收合實務要點` : `查看實務要點`}</span>
+              <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                <path d="M4 6L8 10L12 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="square"/>
+              </svg>
+            </button>
+
+            <div class="card-details ${isExpanded ? `open` : ``}">
+              <div class="detail-block">
+                <p class="detail-heading">學習重點與法規框架</p>
+                <p class="detail-text">${escapeHtml(item.focus)}</p>
+              </div>
+              <div class="detail-block practical">
+                <p class="detail-heading">實務要點與案例穿透</p>
+                <p class="detail-text">${escapeHtml(item.practical)}</p>
+              </div>
+              <div class="tag-list">${tagsHtml}</div>
+            </div>
+          </article>
+        `;
+      }).join(``);
+
+      grid.innerHTML = cardsHtml;
+    }
+
+    function clearCurriculumFilters() {
+      appState.activeModule = `all`;
+      appState.statusFilter = `all`;
+      appState.searchQuery = ``;
+      const searchEl = document.getElementById(`curriculum-search`);
+      if (searchEl) searchEl.value = ``;
+      const statusEl = document.getElementById(`status-filter`);
+      if (statusEl) statusEl.value = `all`;
+      syncModuleTabButtons();
+      renderCurriculum();
+      persistState();
+    }
+
+    // =========================================================================
+    // 5. 30M AUDIT THRESHOLD & DATA FORM CALCULATOR
+    // =========================================================================
+    function loadCalcPreset(jcic, newAmt, cd, fx, fullCol, cpGuar, transition) {
+      const elJcic = document.getElementById(`calc-jcic`);
+      const elNew = document.getElementById(`calc-new`);
+      const elCd = document.getElementById(`calc-cd`);
+      const elFx = document.getElementById(`calc-fx`);
+      const elCol = document.getElementById(`chk-full-collateral`);
+      const elCp = document.getElementById(`chk-cp-guarantee`);
+      const elTr = document.getElementById(`chk-transition`);
+      const elNc = document.getElementById(`chk-new-corp`);
+
+      if (elJcic) elJcic.value = jcic;
+      if (elNew) elNew.value = newAmt;
+      if (elCd) elCd.value = cd;
+      if (elFx) elFx.value = fx;
+      if (elCol) elCol.checked = fullCol;
+      if (elCp) elCp.checked = cpGuar;
+      if (elTr) elTr.checked = transition;
+      if (elNc) elNc.checked = false;
+
+      runThresholdCalc();
+    }
+
+    function runThresholdCalc() {
+      const jcic = Math.max(0, Number((document.getElementById(`calc-jcic`) || {}).value) || 0);
+      const newAmt = Math.max(0, Number((document.getElementById(`calc-new`) || {}).value) || 0);
+      const cd = Math.max(0, Number((document.getElementById(`calc-cd`) || {}).value) || 0);
+      const fx = Math.max(0, Number((document.getElementById(`calc-fx`) || {}).value) || 0);
+
+      const isFullCol = Boolean((document.getElementById(`chk-full-collateral`) || {}).checked);
+      const isCpGuar = Boolean((document.getElementById(`chk-cp-guarantee`) || {}).checked);
+      const isTransition = Boolean((document.getElementById(`chk-transition`) || {}).checked);
+      const isNewCorp = Boolean((document.getElementById(`chk-new-corp`) || {}).checked);
+
+      const totalCredit = Math.max(0, jcic + newAmt - cd - fx);
+      const isOver30M = totalCredit >= 3000;
+
+      // 1. Total Credit Display
+      const outTotal = document.getElementById(`out-total-amt`);
+      if (outTotal) {
+        outTotal.textContent = `${totalCredit.toLocaleString(`zh-TW`)} 萬元`;
+      }
+
+      // 2. Data Form Type (資料表 / 簡易資料表 / 小規模營利事業簡易資料表)
+      let formType = ``;
+      if (isOver30M) {
+        formType = `資料表（總額 ≥ 3,000 萬）`;
+      } else if (totalCredit <= 600 || (isFullCol && totalCredit <= 1500)) {
+        formType = `小規模營利事業簡易資料表`;
+      } else {
+        formType = `簡易資料表（601～2,999 萬${isFullCol ? ` / 十足擔保 1,501～2,999 萬` : ``}）`;
+      }
+      const outForm = document.getElementById(`out-form-type`);
+      if (outForm) outForm.textContent = formType;
+
+      // 3. Audit Requirement
+      const outAudit = document.getElementById(`out-audit-req`);
+      const needAudit = isOver30M || isCpGuar;
+      if (outAudit) {
+        if (isCpGuar && !isOver30M) {
+          outAudit.textContent = `強制融資財簽（本票保證不論金額）`;
+          outAudit.className = `calc-out-val alert`;
+        } else if (isOver30M) {
+          if (isNewCorp) {
+            outAudit.textContent = `得採驗資簽證＋聲明書自編替代`;
+            outAudit.className = `calc-out-val`;
+          } else if (isTransition) {
+            outAudit.textContent = `應徵融資財簽（過渡期暫結先行）`;
+            outAudit.className = `calc-out-val alert`;
+          } else {
+            outAudit.textContent = `強制徵提會計師融資簽證`;
+            outAudit.className = `calc-out-val alert`;
+          }
+        } else {
+          outAudit.textContent = `免強制財簽（徵提報稅或聲明自編）`;
+          outAudit.className = `calc-out-val safe`;
+        }
+      }
+
+      // 4. Checklist
+      const checklistEl = document.getElementById(`out-checklist`);
+      if (checklistEl) {
+        const items = [];
+        if (needAudit) {
+          if (isNewCorp) {
+            items.push(`新設未滿一年（§18-1-3）：徵提會計師「驗資簽證」及附聲明書之自編財報。`);
+          } else if (isTransition) {
+            items.push(`1/1–5/31 過渡期：先徵提去年度暫結表、自編聲明書及會計師受託查核證明；6/1 起務必追蹤補齊正式財簽，防範撤銷委任。`);
+          } else {
+            items.push(`徵提最近 3 年會計師財務報表查核報告（融資簽證），並於授信契約明定會計師須將副本逕送 JCIC（§18-1-6）。`);
+          }
+          items.push(`務必於報表頁籤執行 JCIC「N20 會計師懲戒紀錄」查詢，並比對營業稅 401/403 表檢驗正確性。`);
+        } else {
+          items.push(`徵提加蓋稅捐機關收件章（或網路申報）之所得稅申報書、納稅證明及近一期 401/403/405 營業稅表。`);
+          if (isTransition) {
+            items.push(`1/1–5/31 期間：先以去年度暫結表＋暫結聲明書搭配最新雙月 401 表評估，6/1 起改取今年度暫結與最新報稅資料。`);
+          }
+          if (totalCredit <= 600 || (isFullCol && totalCredit <= 1500)) {
+            items.push(`符合中小企業短期授信簡化標準（§22）：徵信範圍由八大項簡化為五大項，可免詳細產業與財報比率長篇分析。`);
+          }
+        }
+        if (jcic + newAmt >= 3000 && !isOver30M) {
+          items.push(`實務提醒：系統因 B33 加新額度（${(jcic + newAmt).toLocaleString(`zh-TW`)} 萬）若仍跳出 3,000 萬控管視窗，請於備註欄說明扣除存單質借／押匯後實額未達門檻。`);
+        }
+        checklistEl.innerHTML = items.map(function(txt) {
+          return `<li>${escapeHtml(txt)}</li>`;
+        }).join(``);
+      }
+    }
+
+    // =========================================================================
+    // 6. QUICK REFERENCE TABLE
+    // =========================================================================
+    function syncRefPillButtons() {
+      const pills = document.querySelectorAll(`.ref-pill`);
+      pills.forEach(function(btn) {
+        const cat = btn.getAttribute(`data-cat`);
+        btn.setAttribute(`aria-pressed`, cat === appState.refCategory ? `true` : `false`);
+      });
+    }
+
+    function setRefCategory(cat) {
+      appState.refCategory = String(cat || `all`);
+      syncRefPillButtons();
+      renderReferenceTable();
+      persistState();
+    }
+
+    function handleRefSearch(val) {
+      appState.refSearch = String(val || ``).trim().toLowerCase();
+      renderReferenceTable();
+    }
+
+    function renderReferenceTable() {
+      const tbody = document.getElementById(`ref-table-body`);
+      if (!tbody) return;
+
+      const filtered = REFERENCE_DATA.filter(function(row) {
+        if (appState.refCategory !== `all` && row.cat !== appState.refCategory) return false;
+        if (appState.refSearch) {
+          const hay = `${row.catLabel} ${row.code} ${row.formula} ${row.note}`.toLowerCase();
+          if (hay.indexOf(appState.refSearch) === -1) return false;
+        }
+        return true;
+      });
+
+      if (filtered.length === 0) {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="3" style="text-align: center; padding: var(--space-lg); color: var(--on-surface-variant);">
+              查無相符的徵信指標或代碼，請嘗試清空搜尋關鍵字或切換類別。
+            </td>
+          </tr>
+        `;
+        return;
+      }
+
+      tbody.innerHTML = filtered.map(function(row) {
+        return `
+          <tr>
+            <td>
+              <span class="code-mono">${escapeHtml(row.code)}</span><br>
+              <span class="cat-tag">${escapeHtml(row.catLabel)}</span>
+            </td>
+            <td>${escapeHtml(row.formula)}</td>
+            <td>${escapeHtml(row.note)}</td>
+          </tr>
+        `;
+      }).join(``);
+    }
+
+    // =========================================================================
+    // 7. TEACHING CASE DIVERGENCE CHART (Chart.js using :root tokens)
+    // =========================================================================
+    function renderDivergenceChart() {
+      const canvas = document.getElementById(`case-divergence-chart`);
+      if (!canvas || typeof Chart === `undefined`) return;
+
+      const styles = getComputedStyle(document.documentElement);
+      const colNavy = styles.getPropertyValue(`--data-1`).trim();
+      const colBrass = styles.getPropertyValue(`--data-2`).trim();
+      const colError = styles.getPropertyValue(`--error`).trim();
+      const colMuted = styles.getPropertyValue(`--on-surface-variant`).trim();
+      const colGrid = styles.getPropertyValue(`--outline-variant`).trim();
+
+      if (caseChartInstance) {
+        caseChartInstance.destroy();
+      }
+
+      caseChartInstance = new Chart(canvas, {
+        type: `bar`,
+        data: {
+          labels: [
+            `營業收入變化`,
+            `應收帳款變化`,
+            `存貨餘額變化`,
+            `毛利率變動 (點)`,
+            `流動比率變化`
+          ],
+          datasets: [
+            {
+              label: `一般穩健成長基準 (%)`,
+              data: [20, 20, 20, 0, 0],
+              backgroundColor: colNavy,
+              borderRadius: 2
+            },
+            {
+              label: `批發商風險個案實測 (%)`,
+              data: [20, 100, 100, -5, -50],
+              backgroundColor: [colNavy, colError, colError, colBrass, colError],
+              borderRadius: 2
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              position: `top`,
+              labels: {
+                color: colMuted,
+                boxWidth: 12,
+                font: { size: 12 }
+              }
+            },
+            tooltip: {
+              callbacks: {
+                label: function(ctx) {
+                  const val = ctx.parsed.y;
+                  const sign = val > 0 ? `+` : ``;
+                  return `${ctx.dataset.label}: ${sign}${val}%`;
+                }
+              }
+            }
+          },
+          scales: {
+            x: {
+              grid: { display: false },
+              ticks: { color: colMuted, font: { size: 11 } }
+            },
+            y: {
+              grid: { color: colGrid },
+              ticks: {
+                color: colMuted,
+                font: { size: 11 },
+                callback: function(value) { return `${value}%`; }
+              }
+            }
+          }
+        }
+      });
+    }
+
+    // Boot
+    document.addEventListener(`DOMContentLoaded`, function() {
+      initApp();
+    });
+  </script>
+</body>
+</html>

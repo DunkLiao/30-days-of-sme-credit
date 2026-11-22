@@ -1,0 +1,1912 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#14283a">
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="./manifest.webmanifest">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="授信實務30天">
+  <script>
+    if ("serviceWorker" in navigator && (location.protocol === "https:" || location.hostname === "localhost")) {
+      window.addEventListener("load", () => navigator.serviceWorker.register("./service-worker.js").catch((error) => console.warn("PWA offline support unavailable:", error)));
+    }
+  </script>
+  <meta name="artifact-type" content="dashboard">
+  <meta name="design-style" content="charter">
+  <title>中小企業授信與財報分析實務-Day02-超然獨立牽制體系與徵信人員專業倫理</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      color-scheme: light;
+
+      /* Charter + Fintech Theme Tokens */
+      --background: #F8FAFC;
+      --surface-container-low: #FFFFFF;
+      --surface-container: #F1F5F9;
+      --surface-container-high: #E2E8F0;
+
+      /* Primary & Secondary Palette */
+      --primary: #0F2537;
+      --primary-deep: #1E3A8A;
+      --on-primary: #FFFFFF;
+      --primary-container: #EFF6FF;
+      --on-primary-container: #1E3A8A;
+      --module-blue: #2563EB;
+      --module-blue-soft: #DBEAFE;
+
+      /* Ink & Slate */
+      --on-surface: #0F2537;
+      --on-surface-variant: #334155;
+      --on-surface-muted: #475569;
+
+      /* Accent: Champagne Gold & Amber Copper */
+      --outline: #C5A880;
+      --outline-variant: #CBD5E1;
+      --accent-amber: #D97706;
+      --accent-amber-text: #92400E;
+      --accent-amber-soft: #FEF3C7;
+      --accent-champagne-bg: #FAF6EE;
+
+      /* Risk & Status Semantics */
+      --error: #DC2626;
+      --error-soft: #FEF2F2;
+      --warning: #F59E0B;
+      --warning-soft: #FFFBEB;
+      --positive: #059669;
+      --positive-text: #065F46;
+      --positive-soft: #ECFDF5;
+      --focus: #2563EB;
+
+      /* Data & Rule Tokens */
+      --brass-rule: 2px solid var(--outline);
+      --hairline: 1px solid var(--outline-variant);
+      --card-shadow: 0 4px 12px -2px color-mix(in srgb, var(--primary) 6%, transparent);
+      --card-shadow-hover: 0 10px 24px -4px color-mix(in srgb, var(--primary) 12%, transparent);
+
+      /* Typography */
+      --font-headline: 'Noto Sans TC', 'Inter', sans-serif;
+      --font-body: 'Noto Sans TC', 'Inter', sans-serif;
+      --font-label: 'JetBrains Mono', 'Noto Sans TC', monospace;
+
+      /* Type Scale (Dashboard/Explorer) */
+      --display-size: clamp(1.5rem, 1.2rem + 1.2vw, 2.125rem);
+      --headline-size: clamp(1.2rem, 1.05rem + 0.5vw, 1.45rem);
+      --subhead-size: clamp(1.02rem, 0.96rem + 0.25vw, 1.15rem);
+      --body-size: clamp(0.9375rem, 0.9rem + 0.15vw, 1rem);
+      --label-size: 0.75rem;
+
+      /* Spacing Scale (4pt base) */
+      --space-xs: 0.25rem;
+      --space-sm: 0.5rem;
+      --space-md: 1rem;
+      --space-lg: 1.5rem;
+      --space-xl: 2.5rem;
+      --space-2xl: 4rem;
+
+      /* Radii */
+      --rounded-sm: 0.25rem;
+      --rounded: 0.5rem;
+      --rounded-lg: 0.75rem;
+      --rounded-pill: 9999px;
+
+      /* Motion */
+      --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+      --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+      --dur-micro: 140ms;
+      --dur-short: 240ms;
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+
+    html, body {
+      overflow-x: clip;
+      margin: 0;
+      padding: 0;
+      background-color: var(--background);
+      color: var(--on-surface);
+      font-family: var(--font-body);
+      font-size: var(--body-size);
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    header {
+      position: static !important;
+    }
+
+    button, input, select, textarea {
+      font-family: inherit;
+    }
+
+    :focus-visible {
+      outline: 3px solid var(--focus);
+      outline-offset: 2px;
+    }
+
+    /* Top Institutional Header Band */
+    .site-header {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-deep) 100%);
+      color: var(--on-primary);
+      border-bottom: 3px solid var(--outline);
+      padding: var(--space-lg) var(--space-lg) var(--space-xl);
+    }
+
+    .header-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      gap: var(--space-lg);
+    }
+
+    .masthead-bar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-sm) var(--space-md);
+      border-bottom: 1px solid color-mix(in srgb, var(--outline) 45%, transparent);
+      padding-bottom: var(--space-md);
+    }
+
+    .masthead-title {
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      color: var(--outline);
+      margin: 0;
+    }
+
+    .module-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-xs);
+      background-color: color-mix(in srgb, var(--module-blue) 28%, var(--primary));
+      border: 1px solid color-mix(in srgb, var(--module-blue) 70%, var(--on-primary));
+      color: var(--on-primary);
+      padding: var(--space-xs) var(--space-sm);
+      border-radius: var(--rounded-sm);
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      font-weight: 600;
+    }
+
+    .module-dot {
+      width: 0.5rem;
+      height: 0.5rem;
+      border-radius: var(--rounded-pill);
+      background-color: var(--module-blue);
+      box-shadow: 0 0 0 2px color-mix(in srgb, var(--on-primary) 40%, transparent);
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.65fr) minmax(0, 1fr);
+      gap: var(--space-lg);
+      align-items: end;
+    }
+
+    .hero-copy h1 {
+      font-family: var(--font-headline);
+      font-size: var(--display-size);
+      font-weight: 700;
+      line-height: 1.25;
+      margin: 0 0 var(--space-sm) 0;
+      color: var(--on-primary);
+    }
+
+    .hero-copy p {
+      margin: 0;
+      color: color-mix(in srgb, var(--on-primary) 86%, var(--primary));
+      max-width: 65ch;
+      font-size: var(--body-size);
+    }
+
+    /* Progress Tracker Card inside Hero */
+    .progress-panel {
+      background-color: color-mix(in srgb, var(--on-primary) 8%, var(--primary));
+      border: 1px solid color-mix(in srgb, var(--outline) 55%, transparent);
+      border-top: 3px solid var(--outline);
+      border-radius: var(--rounded);
+      padding: var(--space-md) var(--space-lg);
+      display: grid;
+      gap: var(--space-sm);
+    }
+
+    .progress-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: var(--space-sm);
+    }
+
+    .progress-label {
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      font-weight: 600;
+      color: var(--outline);
+      letter-spacing: 0.04em;
+    }
+
+    .progress-pct {
+      font-family: var(--font-label);
+      font-size: 1.75rem;
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+      color: var(--on-primary);
+      line-height: 1.1;
+    }
+
+    .progress-track {
+      width: 100%;
+      height: 0.625rem;
+      background-color: color-mix(in srgb, var(--on-primary) 16%, transparent);
+      border-radius: var(--rounded-pill);
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--outline) 0%, var(--positive) 100%);
+      border-radius: var(--rounded-pill);
+      transition: width var(--dur-short) var(--ease-out);
+    }
+
+    .progress-meta {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-sm);
+      font-size: var(--label-size);
+      color: color-mix(in srgb, var(--on-primary) 82%, var(--primary));
+    }
+
+    .btn-reset {
+      background: transparent;
+      border: 1px solid color-mix(in srgb, var(--outline) 65%, transparent);
+      color: var(--on-primary);
+      border-radius: var(--rounded-sm);
+      padding: var(--space-xs) var(--space-sm);
+      font-size: var(--label-size);
+      cursor: pointer;
+      min-height: 36px;
+      transition: background-color var(--dur-micro) var(--ease-out), border-color var(--dur-micro) var(--ease-out);
+    }
+
+    .btn-reset:hover {
+      background-color: color-mix(in srgb, var(--on-primary) 14%, transparent);
+      border-color: var(--outline);
+    }
+
+    .btn-reset[data-armed="true"] {
+      background-color: var(--error);
+      border-color: var(--error);
+      color: var(--on-primary);
+    }
+
+    /* Main Container */
+    .page-grid {
+      display: grid;
+      gap: var(--space-xl);
+      padding: var(--space-xl) var(--space-lg);
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .page-grid * {
+      min-width: 0;
+    }
+
+    /* Section Headings */
+    .section-head {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: var(--space-sm) var(--space-md);
+      border-top: var(--brass-rule);
+      border-bottom: var(--hairline);
+      padding: var(--space-md) 0 var(--space-sm);
+      margin-bottom: var(--space-md);
+    }
+
+    .section-head h2 {
+      font-family: var(--font-headline);
+      font-size: var(--headline-size);
+      font-weight: 700;
+      margin: 0;
+      color: var(--primary);
+    }
+
+    .section-kicker {
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      color: var(--on-surface-muted);
+      font-weight: 600;
+    }
+
+    /* Core Pillars Bento Summary Grid */
+    .pillars-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: var(--space-md);
+    }
+
+    .pillar-card {
+      background-color: var(--surface-container-low);
+      border: var(--hairline);
+      border-top: 3px solid var(--module-blue);
+      border-radius: var(--rounded);
+      padding: var(--space-md);
+      box-shadow: var(--card-shadow);
+      display: grid;
+      gap: var(--space-xs);
+      align-content: start;
+    }
+
+    .pillar-card.pillar-amber {
+      border-top-color: var(--accent-amber);
+    }
+
+    .pillar-card.pillar-red {
+      border-top-color: var(--error);
+    }
+
+    .pillar-card.pillar-green {
+      border-top-color: var(--positive);
+    }
+
+    .pillar-code {
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      font-weight: 600;
+      color: var(--module-blue);
+    }
+
+    .pillar-card.pillar-amber .pillar-code { color: var(--accent-amber-text); }
+    .pillar-card.pillar-red .pillar-code { color: var(--error); }
+    .pillar-card.pillar-green .pillar-code { color: var(--positive-text); }
+
+    .pillar-title {
+      font-size: var(--subhead-size);
+      font-weight: 700;
+      color: var(--primary);
+      margin: 0;
+    }
+
+    .pillar-desc {
+      font-size: 0.9rem;
+      color: var(--on-surface-variant);
+      margin: 0;
+      line-height: 1.55;
+    }
+
+    /* Search & Filter Toolbar */
+    .controls-panel {
+      background-color: var(--surface-container-low);
+      border: var(--hairline);
+      border-radius: var(--rounded);
+      padding: var(--space-md) var(--space-lg);
+      box-shadow: var(--card-shadow);
+      display: grid;
+      gap: var(--space-md);
+    }
+
+    .controls-top {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: var(--space-md);
+      align-items: end;
+    }
+
+    .field-group {
+      display: grid;
+      gap: var(--space-xs);
+    }
+
+    .field-label {
+      font-size: var(--label-size);
+      font-weight: 600;
+      color: var(--on-surface-variant);
+      display: flex;
+      align-items: center;
+      gap: var(--space-xs);
+    }
+
+    .search-input-wrap {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .search-icon {
+      position: absolute;
+      left: var(--space-sm);
+      color: var(--on-surface-muted);
+      pointer-events: none;
+      width: 1.1rem;
+      height: 1.1rem;
+    }
+
+    .search-input {
+      width: 100%;
+      min-height: 44px;
+      padding: var(--space-sm) var(--space-md) var(--space-sm) 2.25rem;
+      border: 1px solid var(--outline-variant);
+      border-radius: var(--rounded-sm);
+      background-color: var(--background);
+      color: var(--on-surface);
+      font-size: var(--body-size);
+      transition: border-color var(--dur-micro) var(--ease-out), background-color var(--dur-micro) var(--ease-out);
+    }
+
+    .search-input:focus {
+      border-color: var(--module-blue);
+      background-color: var(--surface-container-low);
+    }
+
+    .bulk-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-sm);
+    }
+
+    .btn-secondary {
+      min-height: 44px;
+      padding: var(--space-xs) var(--space-md);
+      border: 1px solid var(--outline-variant);
+      background-color: var(--surface-container-low);
+      color: var(--primary);
+      border-radius: var(--rounded-sm);
+      font-size: 0.875rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color var(--dur-micro) var(--ease-out), border-color var(--dur-micro) var(--ease-out);
+    }
+
+    .btn-secondary:hover {
+      background-color: var(--primary-container);
+      border-color: var(--module-blue);
+    }
+
+    .filter-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-sm) var(--space-md);
+      padding-top: var(--space-sm);
+      border-top: var(--hairline);
+    }
+
+    .filter-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-sm);
+    }
+
+    .chip-btn {
+      min-height: 40px;
+      padding: var(--space-xs) var(--space-md);
+      border-radius: var(--rounded-sm);
+      border: 1px solid var(--outline-variant);
+      background-color: var(--background);
+      color: var(--on-surface-variant);
+      font-size: 0.875rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background-color var(--dur-micro) var(--ease-out), color var(--dur-micro) var(--ease-out), border-color var(--dur-micro) var(--ease-out);
+    }
+
+    .chip-btn:hover {
+      border-color: var(--module-blue);
+      color: var(--primary);
+      background-color: var(--primary-container);
+    }
+
+    .chip-btn.is-active {
+      background-color: var(--primary);
+      border-color: var(--primary);
+      color: var(--on-primary);
+      font-weight: 600;
+    }
+
+    .result-counter {
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      color: var(--on-surface-muted);
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* Chapter Cards Grid */
+    .chapters-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: var(--space-lg);
+      align-items: start;
+    }
+
+    .chapter-card {
+      background-color: var(--surface-container-low);
+      border: var(--hairline);
+      border-left: 4px solid var(--module-blue);
+      border-radius: var(--rounded);
+      box-shadow: var(--card-shadow);
+      overflow: hidden;
+      transition: transform var(--dur-micro) var(--ease-out), box-shadow var(--dur-micro) var(--ease-out), border-color var(--dur-micro) var(--ease-out);
+      container-type: inline-size;
+    }
+
+    .chapter-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--card-shadow-hover);
+      border-color: var(--outline);
+      border-left-color: var(--primary-deep);
+    }
+
+    .chapter-card.is-read {
+      border-left-color: var(--positive);
+    }
+
+    .chapter-card.is-expanded {
+      grid-column: 1 / -1;
+      border-left-color: var(--accent-amber);
+    }
+
+    .chapter-header {
+      padding: var(--space-md) var(--space-lg);
+      display: grid;
+      gap: var(--space-sm);
+    }
+
+    .chapter-meta-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-sm);
+    }
+
+    .chapter-badges {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: var(--space-xs);
+    }
+
+    .ch-num {
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      font-weight: 700;
+      color: var(--module-blue);
+      background-color: var(--module-blue-soft);
+      padding: 2px var(--space-sm);
+      border-radius: var(--rounded-sm);
+    }
+
+    .tag-pill {
+      font-size: var(--label-size);
+      font-weight: 600;
+      padding: 2px var(--space-sm);
+      border-radius: var(--rounded-sm);
+      border: 1px solid var(--outline-variant);
+      background-color: var(--surface-container);
+      color: var(--on-surface-variant);
+    }
+
+    .tag-pill.tag-ethics {
+      background-color: var(--accent-champagne-bg);
+      border-color: var(--outline);
+      color: var(--accent-amber-text);
+    }
+
+    .tag-pill.tag-esg {
+      background-color: var(--positive-soft);
+      border-color: color-mix(in srgb, var(--positive) 40%, transparent);
+      color: var(--positive-text);
+    }
+
+    .tag-pill.tag-risk {
+      background-color: var(--error-soft);
+      border-color: color-mix(in srgb, var(--error) 35%, transparent);
+      color: var(--error);
+    }
+
+    /* Read Checkbox Control */
+    .read-check-label {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-xs);
+      min-height: 44px;
+      padding: 0 var(--space-sm);
+      border-radius: var(--rounded-sm);
+      cursor: pointer;
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--on-surface-variant);
+      user-select: none;
+      transition: background-color var(--dur-micro) var(--ease-out);
+    }
+
+    .read-check-label:hover {
+      background-color: var(--surface-container);
+    }
+
+    .read-checkbox {
+      width: 1.15rem;
+      height: 1.15rem;
+      accent-color: var(--positive);
+      cursor: pointer;
+    }
+
+    .chapter-card.is-read .read-check-label {
+      color: var(--positive-text);
+      background-color: var(--positive-soft);
+    }
+
+    .chapter-title-btn {
+      width: 100%;
+      text-align: left;
+      background: transparent;
+      border: 0;
+      padding: var(--space-xs) 0;
+      cursor: pointer;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: var(--space-md);
+      align-items: center;
+      color: var(--primary);
+    }
+
+    .chapter-title-btn h3 {
+      margin: 0;
+      font-size: var(--subhead-size);
+      font-weight: 700;
+      line-height: 1.4;
+      color: var(--primary);
+    }
+
+    .chapter-summary {
+      margin: 0;
+      color: var(--on-surface-variant);
+      font-size: 0.9375rem;
+      line-height: 1.6;
+    }
+
+    .expand-cue {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-xs);
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      font-weight: 600;
+      color: var(--primary-deep);
+      padding: var(--space-xs) var(--space-sm);
+      border: 1px solid var(--outline-variant);
+      border-radius: var(--rounded-sm);
+      background-color: var(--background);
+      white-space: nowrap;
+    }
+
+    .chapter-title-btn:hover .expand-cue {
+      border-color: var(--module-blue);
+      background-color: var(--primary-container);
+    }
+
+    .chevron-icon {
+      width: 1rem;
+      height: 1rem;
+      transition: transform var(--dur-short) var(--ease-out);
+    }
+
+    .chapter-card.is-expanded .chevron-icon {
+      transform: rotate(180deg);
+    }
+
+    /* Expandable Body */
+    .chapter-body {
+      display: none;
+      border-top: var(--hairline);
+      background-color: var(--background);
+      padding: var(--space-lg);
+      gap: var(--space-lg);
+    }
+
+    .chapter-card.is-expanded .chapter-body {
+      display: grid;
+    }
+
+    .detail-two-col {
+      display: grid;
+      grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+      gap: var(--space-lg);
+    }
+
+    @container (max-width: 680px) {
+      .detail-two-col {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .detail-block {
+      background-color: var(--surface-container-low);
+      border: var(--hairline);
+      border-radius: var(--rounded-sm);
+      padding: var(--space-md) var(--space-lg);
+      display: grid;
+      gap: var(--space-sm);
+      align-content: start;
+    }
+
+    .detail-block-title {
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      font-weight: 700;
+      color: var(--primary-deep);
+      letter-spacing: 0.04em;
+      margin: 0;
+      padding-bottom: var(--space-xs);
+      border-bottom: 1px solid var(--outline-variant);
+    }
+
+    .statute-quote {
+      background-color: var(--accent-champagne-bg);
+      border-left: 3px solid var(--outline);
+      padding: var(--space-sm) var(--space-md);
+      border-radius: 0 var(--rounded-sm) var(--rounded-sm) 0;
+      font-size: 0.9375rem;
+      color: var(--on-surface);
+    }
+
+    .statute-ref {
+      display: block;
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      font-weight: 700;
+      color: var(--accent-amber-text);
+      margin-bottom: var(--space-xs);
+    }
+
+    .points-list {
+      margin: 0;
+      padding-left: 1.25rem;
+      display: grid;
+      gap: var(--space-xs);
+      color: var(--on-surface-variant);
+    }
+
+    .points-list li strong {
+      color: var(--primary);
+    }
+
+    .highlight-box {
+      background-color: var(--primary-container);
+      border-left: 3px solid var(--module-blue);
+      padding: var(--space-sm) var(--space-md);
+      border-radius: 0 var(--rounded-sm) var(--rounded-sm) 0;
+      font-size: 0.92rem;
+      color: var(--on-surface);
+    }
+
+    .warning-box {
+      background-color: var(--error-soft);
+      border-left: 3px solid var(--error);
+      padding: var(--space-sm) var(--space-md);
+      border-radius: 0 var(--rounded-sm) var(--rounded-sm) 0;
+      font-size: 0.92rem;
+      color: var(--on-surface);
+    }
+
+    .gap-box {
+      background-color: var(--warning-soft);
+      border: 1px dashed var(--accent-amber);
+      padding: var(--space-sm) var(--space-md);
+      border-radius: var(--rounded-sm);
+      font-size: 0.875rem;
+      color: var(--accent-amber-text);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      gap: var(--space-xs);
+    }
+
+    .gap-badge {
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      font-weight: 700;
+      background-color: var(--accent-amber-soft);
+      color: var(--accent-amber-text);
+      border: 1px solid var(--accent-amber);
+      padding: 1px var(--space-sm);
+      border-radius: var(--rounded-sm);
+    }
+
+    /* Comparison Table */
+    .table-wrap {
+      overflow-x: auto;
+      border: var(--hairline);
+      border-radius: var(--rounded-sm);
+      background-color: var(--surface-container-low);
+    }
+
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+
+    .data-table th {
+      background-color: var(--primary);
+      color: var(--on-primary);
+      text-align: left;
+      padding: var(--space-sm) var(--space-md);
+      font-weight: 600;
+      font-size: 0.85rem;
+    }
+
+    .data-table td {
+      padding: var(--space-sm) var(--space-md);
+      border-top: var(--hairline);
+      color: var(--on-surface-variant);
+      vertical-align: top;
+    }
+
+    .data-table tr:nth-child(even) td {
+      background-color: var(--background);
+    }
+
+    /* Role Separation SVG Diagram */
+    .diagram-card {
+      background-color: var(--surface-container-low);
+      border: var(--hairline);
+      border-radius: var(--rounded);
+      padding: var(--space-lg);
+      box-shadow: var(--card-shadow);
+      display: grid;
+      gap: var(--space-md);
+    }
+
+    .workflow-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: var(--space-md);
+      align-items: stretch;
+    }
+
+    .wf-step {
+      background-color: var(--background);
+      border: var(--hairline);
+      border-top: 3px solid var(--primary-deep);
+      border-radius: var(--rounded-sm);
+      padding: var(--space-md);
+      display: grid;
+      gap: var(--space-xs);
+      align-content: start;
+      position: relative;
+    }
+
+    .wf-step.wf-gate {
+      border-top-color: var(--error);
+      background-color: var(--error-soft);
+    }
+
+    .wf-step.wf-decision {
+      border-top-color: var(--positive);
+      background-color: var(--positive-soft);
+    }
+
+    .wf-tag {
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      font-weight: 700;
+      color: var(--primary-deep);
+    }
+
+    .wf-step.wf-gate .wf-tag { color: var(--error); }
+    .wf-step.wf-decision .wf-tag { color: var(--positive-text); }
+
+    .wf-title {
+      font-weight: 700;
+      font-size: 1rem;
+      color: var(--primary);
+      margin: 0;
+    }
+
+    .wf-desc {
+      font-size: 0.875rem;
+      color: var(--on-surface-variant);
+      margin: 0;
+    }
+
+    /* Interactive Practice Drill */
+    .drill-card {
+      background-color: var(--surface-container-low);
+      border: var(--hairline);
+      border-top: 3px solid var(--accent-amber);
+      border-radius: var(--rounded);
+      padding: var(--space-lg);
+      box-shadow: var(--card-shadow);
+      display: grid;
+      gap: var(--space-md);
+    }
+
+    .drill-header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-sm);
+    }
+
+    .drill-score {
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      font-weight: 700;
+      color: var(--accent-amber-text);
+      background-color: var(--accent-amber-soft);
+      padding: var(--space-xs) var(--space-sm);
+      border-radius: var(--rounded-sm);
+    }
+
+    .drill-list {
+      display: grid;
+      gap: var(--space-md);
+    }
+
+    .drill-item {
+      background-color: var(--background);
+      border: var(--hairline);
+      border-radius: var(--rounded-sm);
+      padding: var(--space-md);
+      display: grid;
+      gap: var(--space-sm);
+    }
+
+    .drill-prompt {
+      font-weight: 600;
+      color: var(--primary);
+      margin: 0;
+    }
+
+    .drill-options {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-sm);
+    }
+
+    .drill-btn {
+      min-height: 44px;
+      padding: var(--space-xs) var(--space-md);
+      border: 1px solid var(--outline-variant);
+      background-color: var(--surface-container-low);
+      color: var(--on-surface);
+      border-radius: var(--rounded-sm);
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color var(--dur-micro) var(--ease-out), border-color var(--dur-micro) var(--ease-out);
+    }
+
+    .drill-btn:hover {
+      border-color: var(--module-blue);
+      background-color: var(--primary-container);
+    }
+
+    .drill-btn.is-correct {
+      background-color: var(--positive-soft);
+      border-color: var(--positive);
+      color: var(--positive-text);
+    }
+
+    .drill-btn.is-wrong {
+      background-color: var(--error-soft);
+      border-color: var(--error);
+      color: var(--error);
+    }
+
+    .drill-feedback {
+      display: none;
+      font-size: 0.9rem;
+      padding: var(--space-sm) var(--space-md);
+      border-radius: var(--rounded-sm);
+      border-left: 3px solid var(--outline);
+      background-color: var(--surface-container-low);
+      color: var(--on-surface-variant);
+    }
+
+    .drill-feedback.is-visible {
+      display: block;
+    }
+
+    .drill-feedback.is-pass {
+      border-left-color: var(--positive);
+      background-color: var(--positive-soft);
+      color: var(--positive-text);
+    }
+
+    .drill-feedback.is-fail {
+      border-left-color: var(--error);
+      background-color: var(--error-soft);
+      color: var(--error);
+    }
+
+    /* Empty State */
+    .empty-state {
+      display: none;
+      grid-column: 1 / -1;
+      background-color: var(--surface-container-low);
+      border: 1px dashed var(--outline-variant);
+      border-radius: var(--rounded);
+      padding: var(--space-xl);
+      text-align: center;
+      gap: var(--space-sm);
+      justify-items: center;
+    }
+
+    .empty-state.is-visible {
+      display: grid;
+    }
+
+    .empty-state h3 {
+      margin: 0;
+      color: var(--primary);
+    }
+
+    .empty-state p {
+      margin: 0;
+      color: var(--on-surface-muted);
+    }
+
+    /* Footer */
+    .site-footer {
+      background-color: var(--primary);
+      color: var(--on-primary);
+      border-top: 3px solid var(--outline);
+      padding: var(--space-lg);
+      margin-top: var(--space-xl);
+    }
+
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-sm) var(--space-md);
+      font-size: 0.875rem;
+    }
+
+    .footer-brand {
+      font-family: var(--font-label);
+      font-weight: 700;
+      color: var(--outline);
+      letter-spacing: 0.04em;
+    }
+
+    .footer-sources {
+      color: color-mix(in srgb, var(--on-primary) 78%, var(--primary));
+      font-size: var(--label-size);
+    }
+
+    /* Responsive Breakpoints */
+    @media (max-width: 960px) {
+      .hero-grid {
+        grid-template-columns: 1fr;
+      }
+      .pillars-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+      .workflow-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+      .chapters-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .site-header {
+        padding: var(--space-md);
+      }
+      .page-grid {
+        padding: var(--space-md);
+        gap: var(--space-lg);
+      }
+      .pillars-grid,
+      .workflow-grid,
+      .controls-top {
+        grid-template-columns: 1fr;
+      }
+      .chapter-header,
+      .chapter-body {
+        padding: var(--space-md);
+      }
+      .chapter-title-btn {
+        grid-template-columns: 1fr;
+        gap: var(--space-xs);
+      }
+      .expand-cue {
+        justify-self: start;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+      .home-link { display: inline-flex; align-items: center; color: var(--outline); font: inherit; font-size: var(--label-size, 0.875rem); font-weight: 600; text-decoration: none; border: 1px solid var(--outline); padding: 0.4rem 0.7rem; margin: 0 0 var(--space-sm) 0; }
+    .home-link:hover, .home-link:focus-visible { color: var(--on-primary); text-decoration: underline; text-underline-offset: 0.18em; }
+    @media (max-width: 640px) { }
+      .header-bank-label { display: inline-block; margin: 0 0 var(--space-sm); color: var(--outline); font-family: var(--font-label); font-size: var(--label-size, 0.875rem); font-weight: 700; letter-spacing: 0.08em; }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="masthead-bar">
+      <span class="header-bank-label">鎖頭銀行</span>
+        <p class="masthead-title">中小企業授信與財報分析實務-Day02-超然獨立牽制體系與徵信人員專業倫理</p>
+        <span class="module-pill">
+          <span class="module-dot" aria-hidden="true"></span>
+          模組一｜徵信法規體系與徵信作業基礎（Day 2 / 30）
+        </span>
+      </div>
+
+      <div class="hero-grid">
+        <div class="hero-copy">
+          <h1>超然獨立牽制體系與徵信人員專業倫理</h1>
+          <p>
+            依據《鎖頭銀行法》與《中華民國鎖頭銀行公會會員徵信準則》，徵信工作是授信風險決策的資訊基石。本單元系統梳理職能分工牽制、帳戶管理員（AO）制度例外規範、徵信報告公正平實與不表態准駁之職業倫理，以及每年法定 3 小時永續金融訓練與事後盡職免責防線。
+          </p>
+        </div>
+
+        <aside class="progress-panel" aria-label="學習進度追蹤">
+          <div class="progress-header">
+            <span class="progress-label">DAY 02 學習完成進度</span>
+            <span class="progress-pct" id="progress-pct">0%</span>
+          </div>
+          <div class="progress-track" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="progress-bar-wrap">
+            <div class="progress-fill" id="progress-fill"></div>
+          </div>
+          <div class="progress-meta">
+            <span id="progress-count">已讀 0 / 8 章節</span>
+            <button type="button" class="btn-reset" id="btn-reset-progress" onclick="handleResetProgress(this)">重設進度</button>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </header>
+
+  <main class="page-grid">
+    <!-- Section 1: Core Concepts Bento Summary -->
+    <section aria-labelledby="sec-summary-title">
+      <div class="section-head">
+        <h2 id="sec-summary-title">核心概念總覽：Day 2 四大法規與倫理支柱</h2>
+        <span class="section-kicker">依據《中華民國鎖頭銀行公會會員徵信準則》與授信實務講義</span>
+      </div>
+
+      <div class="pillars-grid">
+        <article class="pillar-card">
+          <span class="pillar-code">PILLAR 01 · 準則第3、8、15、28條</span>
+          <h3 class="pillar-title">超然獨立牽制原則</h3>
+          <p class="pillar-desc">
+            徵信工作（信用調查與財務分析）與授信業務原則上由不同單位或不同人員辦理；資料不齊不予徵信，未經徵信不得核貸。
+          </p>
+        </article>
+
+        <article class="pillar-card pillar-amber">
+          <span class="pillar-code">PILLAR 02 · 準則第3條但書</span>
+          <h3 class="pillar-title">AO 制度例外規範</h3>
+          <p class="pillar-desc">
+            已實施帳戶管理員（Account Officer）制度之鎖頭銀行，得豁免「不同單位或人員分辦」限制；惟各項審查要件與程序仍須完備。
+          </p>
+        </article>
+
+        <article class="pillar-card pillar-red">
+          <span class="pillar-code">PILLAR 03 · 準則第6、7條</span>
+          <h3 class="pillar-title">公正平實不表示准駁</h3>
+          <p class="pillar-desc">
+            依法嚴守秘密，依誠信原則公正平實撰寫徵信報告；<strong>不宜對授信案件直接表示准駁意見</strong>，落實調查分析與決策分離。
+          </p>
+        </article>
+
+        <article class="pillar-card pillar-green">
+          <span class="pillar-code">PILLAR 04 · 準則第7條之一、36、37條</span>
+          <h3 class="pillar-title">3 小時永續培訓與盡職免責</h3>
+          <p class="pillar-desc">
+            徵信人員每年應至少進修 3 小時永續金融課程；依準則與規定盡職揭露並留存軌跡者，事後雖發現瑕疵得免除責任。
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <!-- Section 2: Role Separation Visual Flow -->
+    <section aria-labelledby="sec-flow-title">
+      <div class="section-head">
+        <h2 id="sec-flow-title">徵授信職能分工與防線流程圖</h2>
+        <span class="section-kicker">調查分析與准駁決策分離（準則第3、7、8、15、28、36、37條）</span>
+      </div>
+
+      <div class="diagram-card">
+        <div class="workflow-grid">
+          <div class="wf-step">
+            <span class="wf-tag">STEP 01｜營業單位</span>
+            <h3 class="wf-title">受理申請與索齊資料</h3>
+            <p class="wf-desc">依據準則第8條，前端營業單位負責將財報等各項徵信資料一併索齊後，始得移送徵信單位。</p>
+          </div>
+          <div class="wf-step wf-gate">
+            <span class="wf-tag">GATE｜程序防線（第15、28條）</span>
+            <h3 class="wf-title">資料不齊不予徵信</h3>
+            <p class="wf-desc">企業資料不齊且未依限補齊者，鎖頭銀行應不予辦理徵信；未經移送徵信之案件不得核貸。</p>
+          </div>
+          <div class="wf-step">
+            <span class="wf-tag">STEP 02｜徵信單位</span>
+            <h3 class="wf-title">公正平實撰寫報告</h3>
+            <p class="wf-desc">依據準則第6、7條嚴守秘密、完整呈現事實與風險，<strong>不放入准或駁之意見</strong>，並留存查證軌跡。</p>
+          </div>
+          <div class="wf-step wf-decision">
+            <span class="wf-tag">STEP 03｜授信主辦與主管</span>
+            <h3 class="wf-title">獨立評估與准駁決策</h3>
+            <p class="wf-desc">由授信主辦依據完整徵信報告與授信 5P 進行後續准駁判斷，達成組織內部牽制制衡。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 3: Search, Filter & Chapter Cards -->
+    <section aria-labelledby="sec-chapters-title">
+      <div class="section-head">
+        <h2 id="sec-chapters-title">Day 2 互動學習章節（點選卡片展開詳解）</h2>
+        <span class="section-kicker">勾選「已讀」即自動保存學習紀錄</span>
+      </div>
+
+      <div class="controls-panel">
+        <div class="controls-top">
+          <div class="field-group">
+            <label for="search-input" class="field-label">關鍵字即時搜尋（法條編號、AO 制度、准駁意見、永續金融、軌跡等）</label>
+            <div class="search-input-wrap">
+              <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+              <input type="search" id="search-input" class="search-input" placeholder="輸入關鍵字篩選章節內容…" oninput="handleSearchInput(this.value)">
+            </div>
+          </div>
+
+          <div class="bulk-actions">
+            <button type="button" class="btn-secondary" onclick="toggleAllChapters(true)">全部展開</button>
+            <button type="button" class="btn-secondary" onclick="toggleAllChapters(false)">全部收合</button>
+          </div>
+        </div>
+
+        <div class="filter-row">
+          <div class="filter-chips" role="group" aria-label="章節標籤篩選">
+            <button type="button" class="chip-btn is-active" data-filter="all" onclick="setTagFilter('all', this)">全部章節</button>
+            <button type="button" class="chip-btn" data-filter="法規條文" onclick="setTagFilter('法規條文', this)">法規條文</button>
+            <button type="button" class="chip-btn" data-filter="制度牽制" onclick="setTagFilter('制度牽制', this)">制度牽制</button>
+            <button type="button" class="chip-btn" data-filter="專業倫理" onclick="setTagFilter('專業倫理', this)">專業倫理</button>
+            <button type="button" class="chip-btn" data-filter="ESG與永續" onclick="setTagFilter('ESG與永續', this)">ESG與永續</button>
+            <button type="button" class="chip-btn" data-filter="實務判讀" onclick="setTagFilter('實務判讀', this)">實務判讀</button>
+            <button type="button" class="chip-btn" data-filter="unread" onclick="setTagFilter('unread', this)">僅看未讀</button>
+          </div>
+          <span class="result-counter" id="result-counter">顯示 8 / 8 章節</span>
+        </div>
+      </div>
+
+      <div class="chapters-grid" id="chapters-grid"></div>
+
+      <div class="empty-state" id="empty-state">
+        <h3>找不到符合條件的章節</h3>
+        <p>目前的搜尋關鍵字或篩選標籤沒有對應內容，請清除條件後重新檢視。</p>
+        <button type="button" class="btn-secondary" onclick="clearFilters()">清除所有搜尋與篩選條件</button>
+      </div>
+    </section>
+
+    <!-- Section 4: Interactive Practice Drill -->
+    <section aria-labelledby="sec-drill-title">
+      <div class="section-head">
+        <h2 id="sec-drill-title">隨堂實務判讀：徵信報告語句與倫理界線檢核</h2>
+        <span class="section-kicker">檢驗是否符合《徵信準則》第6、7、7條之一、36、37條規範</span>
+      </div>
+
+      <div class="drill-card">
+        <div class="drill-header">
+          <p class="chapter-summary">請依 Day 2 學習重點，判斷下列實務情境或報告寫法是否符合「超然獨立牽制體系與徵信人員專業倫理」規範：</p>
+          <span class="drill-score" id="drill-score">作答進度：0 / 4 題</span>
+        </div>
+
+        <div class="drill-list" id="drill-list"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <a class="home-link" href="index.html">回首頁</a>
+      <span class="footer-brand">Powered By Dunk</span>
+      <span class="footer-sources">資料來源：《中華民國鎖頭銀行公會會員徵信準則》（112.07.18 修訂）、中小企業授信與財報分析實務課綱（Day 2）、授信徵信作業研析與實務講述講義</span>
+    </div>
+  </footer>
+
+  <api-shim></api-shim>
+  <script>
+    const CHAPTERS = [
+      {
+        id: `ch01`,
+        num: `CH 01`,
+        title: `建立超然徵信體系與職能分工原則`,
+        tags: [`法規條文`, `制度牽制`],
+        tagStyle: `default`,
+        summary: `依《中華民國鎖頭銀行公會會員徵信準則》第3至5條，鎖頭銀行原則上應建立超然徵信體系，將「信用調查與財務分析」與「授信核貸業務」交由不同單位或不同人員分別辦理。`,
+        statutes: [
+          {
+            ref: `《鎖頭銀行公會會員徵信準則》第 3 條`,
+            text: `各會員宜依本身業務之需要，建立超然徵信體系，以健全徵信工作。徵信工作與授信業務除已實施帳戶管理員之鎖頭銀行外，應由不同單位或不同人員分別辦理。`
+          },
+          {
+            ref: `《鎖頭銀行公會會員徵信準則》第 4 條 & 第 5 條`,
+            text: `第4條：本準則所稱徵信工作，係指與授信業務有關之信用調查與財務分析等工作。第5條：所稱徵信單位，係指總分支機構專責辦理徵信之單位；所稱徵信人員，係指徵信單位及營業單位辦理徵信之人員。`
+          }
+        ],
+        points: [
+          `<strong>獨立牽制與職能分工</strong>：避免業務承攬人員為了業績壓力而美化風險，透過專責徵信人員獨立查證企業信用與財務結構，成為授信風險決策的資訊基石。`,
+          `<strong>涵蓋對象明確</strong>：依第5條規範，無論配置於總分支機構專責徵信單位，或營業單位內專辦徵信之人員，均受本準則工作守則與程序約束。`,
+          `<strong>制度定位</strong>：徵信並非獨立於授信之外的孤立作業，而是提供客觀資訊讓授信主辦進行准駁判斷的前置防線。`
+        ],
+        practiceNote: `實務課堂中講師以「大代徵信、小代徵信」說明分層負責現況，提醒新進人員即便交接不完整，仍須恪守徵信準則與內控 SOP 框架，確保作業合規與職責清晰。`,
+        gapNote: `各會員鎖頭銀行依自身業務規模設置專責徵信單位之內部編制與核決分層明細，來源未提供。`
+      },
+      {
+        id: `ch02`,
+        num: `CH 02`,
+        title: `帳戶管理員（AO）制度例外規範與結構對比`,
+        tags: [`法規條文`, `制度牽制`],
+        tagStyle: `default`,
+        summary: `準則第3條明定「除已實施帳戶管理員（Account Officer, AO）之鎖頭銀行外」，為實務上徵授信職能分工的主要例外設計。`,
+        statutes: [
+          {
+            ref: `《鎖頭銀行公會會員徵信準則》第 3 條但書`,
+            text: `徵信工作與授信業務除已實施帳戶管理員之鎖頭銀行外，應由不同單位或不同人員分別辦理。`
+          }
+        ],
+        points: [
+          `<strong>例外適用前提</strong>：僅限「已實施帳戶管理員（AO）制度」之鎖頭銀行，始得例外由同一人員或同一體系兼辦與客戶相關之徵信與授信前端業務。`,
+          `<strong>不變的準則拘束</strong>：縱屬 AO 制度例外情形，徵信報告之撰寫仍應符合第7條誠信原則、公正平實要求，且第15條與第28條「資料未齊不予辦理徵信、未經徵信不得核貸」之核心風控原則依然適用。`
+        ],
+        table: {
+          headers: [`比較構面`, `傳統超然獨立牽制體系`, `帳戶管理員（AO）制度例外`],
+          rows: [
+            [`法源依據`, `徵信準則第 3 條本文`, `徵信準則第 3 條但書`],
+            [`人員配置`, `徵信工作與授信業務由不同單位或不同人員分別辦理`, `依鎖頭銀行核定之 AO 制度彈性整合辦理`],
+            [`牽制重點`, `組織分立、調查與決策雙軌制衡`, `來源未提供（具體內部替代複核細則未載於來源）`],
+            [`報告倫理`, `依誠信原則公正平實撰寫，不直接表示准駁意見`, `應遵循同準則之誠信、保密與永續金融進修規範`]
+          ]
+        },
+        practiceNote: `AO 制度屬於組織分工上的例外，但並不免除「充分揭露」、「有所本」及「依法進修永續金融課程」等徵信人員專業義務。`,
+        gapNote: `實施帳戶管理員（AO）制度鎖頭銀行之具體內部牽制替代細則、覆核層級與實務核貸績效對比數據，來源未提供。`
+      },
+      {
+        id: `ch03`,
+        num: `CH 03`,
+        title: `徵信移送程序與「未經徵信不得核貸」鐵律`,
+        tags: [`法規條文`, `實務判讀`],
+        tagStyle: `risk`,
+        summary: `依準則第8、9、10、15及28條，由營業單位索齊資料移送徵信單位；資料不齊未依限補齊應不予徵信，未經徵信之案件亦不得核貸。`,
+        statutes: [
+          {
+            ref: `《鎖頭銀行公會會員徵信準則》第 8、9、10 條`,
+            text: `第8條：客戶申請授信時，由營業單位索齊資料後，移送徵信單位辦理徵信。第9條：為謀徵信工作迅速完成，徵信單位對於經常往來客戶，得事前主動索齊資料，辦理徵信。第10條：為爭取優良廠商，徵信單位亦得主動蒐集資料辦理徵信，並將結果通知相關單位參考。`
+          }
+        ],
+        points: [
+          `<strong>資料齊備為前提（第15條）</strong>：依研究文獻引述準則第15條規範，若企業提供之資料不齊且未依限補齊，鎖頭銀行應不予辦理徵信，確保分析奠基於完整真實數據。`,
+          `<strong>核貸前置卡控（第28條）</strong>：依研究文獻引述準則第28條規範，未經移送徵信單位辦理徵信之授信案件不得核貸。`,
+          `<strong>主動式徵信機制（第9、10條）</strong>：針對經常往來客戶得事前主動索資以加速作業；為爭取優良廠商亦得主動蒐集外部資料建檔。`
+        ],
+        practiceNote: `實務上若遇上市櫃公司或大型企業不願配合提供本行格式表單（如關係戶資料表），徵信人員仍應以客觀外部資料（公開資訊觀測站、聯徵中心、商工登記）佐證補齊，不可在缺漏情況下草率結案。`,
+        gapNote: `《中華民國鎖頭銀行公會會員徵信準則》第 15 條與第 28 條之完整逐字條文原文未收錄於節錄本，僅載於研究文獻摘要，原文逐字內容標示為「來源未提供」。`
+      },
+      {
+        id: `ch04`,
+        num: `CH 04`,
+        title: `公正平實與「不宜表示准駁意見」之倫理核心`,
+        tags: [`專業倫理`, `法規條文`],
+        tagStyle: `ethics`,
+        summary: `準則第7條確立徵信人員的專業邊界：依誠信原則公正平實撰寫徵信報告，不宜對授信案件直接表示准駁之意見，將判斷權留歸授信端。`,
+        statutes: [
+          {
+            ref: `《鎖頭銀行公會會員徵信準則》第 7 條`,
+            text: `徵信人員應依誠信原則，公正平實撰寫徵信報告，不宜對授信案件表示准駁之意見。`
+          }
+        ],
+        points: [
+          `<strong>核心實務意涵</strong>：講師強調「不要在徵信報告裡面放入准或駁的意見」，徵信的重點在於「盡量收集客戶完整的資料、做完整的呈現」，後續准駁判斷應由授信主辦負責。`,
+          `<strong>徵信 5C vs 授信 5P 之差異</strong>：徵信報告著重 5C（首重 Character 借款人品德），透過查調聯徵紀錄、關係人與經營實態呈現企業真實面貌；授信 5P（People 借款人背景等）則作為授信主辦整合條件與評估准駁之基礎。`,
+          `<strong>中立客觀文字原則</strong>：避免使用「建議核准」、「應予婉拒」等結論性字眼，改以「經查該公司……謹提請授信單位卓參」呈現事實。`
+        ],
+        practiceNote: `「中小企業的財務資料僅供參考，絕對不是唯一判斷依據；徵信不是在決定借或不借，而是在符合規範的情況下，把真實狀況完整揭露。」`,
+        gapNote: `若徵信人員違反第7條直接於報告表示准駁意見時，內部稽核具體扣分權重或行政懲處標準，來源未提供。`
+      },
+      {
+        id: `ch05`,
+        num: `CH 05`,
+        title: `徵信資料依法嚴守秘密之職業義務`,
+        tags: [`專業倫理`, `法規條文`],
+        tagStyle: `ethics`,
+        summary: `依據準則第6條，徵信人員因職務取得之企業財務、稅務、關係人及個人信用資訊，負有嚴格的法定保密義務。`,
+        statutes: [
+          {
+            ref: `《鎖頭銀行公會會員徵信準則》第 6 條`,
+            text: `徵信人員對徵信資料應依法嚴守秘密。`
+          }
+        ],
+        points: [
+          `<strong>對內揭露與對外保密之分際</strong>：徵信人員在行內報告與卷宗中須對授信與審查端「充分揭露」風險；對外或對非授權人員，則必須嚴守秘密，不得洩漏客戶報稅資料、聯徵信用紀錄、訴訟狀態或商業往來明細。`,
+          `<strong>涵蓋文件範圍</strong>：包括客戶報稅書表（401/403/405表）、會計師查核報告、聯徵中心查詢結果（如 B33、B36、K33、K34）、股東名簿及實地訪查與洽談紀錄等。`
+        ],
+        practiceNote: `講師於實務分享中亦提醒，與客戶互動時（例如發現負責人二代接班時信用卡循環 2N 紀錄或評分異常），應委婉溝通請其自行了解處理，同時妥善保管聯徵與查調資料，避免資訊不當外流。`,
+        gapNote: `違反準則第6條保密義務之具體刑事、行政罰鍰數額或鎖頭銀行內部懲處等級，來源未提供。`
+      },
+      {
+        id: `ch06`,
+        num: `CH 06`,
+        title: `每年法定 3 小時永續金融培訓與 ESG 審核倫理`,
+        tags: [`ESG與永續`, `法規條文`],
+        tagStyle: `esg`,
+        summary: `依準則第7條之一，徵信人員每年應至少進修三小時永續金融相關訓練課程，將氣候風險與 ESG 資訊審慎融入授信風險評估。`,
+        statutes: [
+          {
+            ref: `《鎖頭銀行公會會員徵信準則》第 7 條之一`,
+            text: `徵信人員每年應至少進修三小時永續金融相關訓練課程。`
+          }
+        ],
+        points: [
+          `<strong>監理趨勢背景</strong>：因應永續金融發展，鎖頭銀行在傳統財務報表之外，逐步要求高額授信與中長期融資企業提供碳盤查數據、氣候風險評估報告與永續報告書，並結合氣候財務揭露（TCFD）與綠色融資指標評估長期信用風險。`,
+          `<strong>系統與 AI 帶入 ESG 表單之實務戒律</strong>：講師特別指出，目前徵信系統已將 ESG 獨立拉出成表單並介接外部資訊，但「不管是 AI 也好或系統也好，帶進來都是輔助」——徵信人員仍必須人工判斷、檢視負面新聞與事實相符度並修改後再儲存，絕不可未經判讀就直接把系統帶入文字當成最終結果。`
+        ],
+        practiceNote: `實務課中提及新進操作課程已將「ESG 表單」列為四大操作模組之一，與授信申請書建檔、報告製作、擔保品估價並列，顯示永續查證已成為日常徵信標配。`,
+        gapNote: `徵信人員未達每年 3 小時永續金融進修時數之補訓期限、停權或考績影響規定，來源未提供。`
+      },
+      {
+        id: `ch07`,
+        num: `CH 07`,
+        title: `留存徵信軌跡與《準則》第 36、37 條盡職免責防線`,
+        tags: [`實務判讀`, `法規條文`],
+        tagStyle: `default`,
+        summary: `依準則第36與37條，徵信人員就當時所能知悉狀況負責；若已依規定與一般慣例辦理並留存徵信軌跡，事後雖發現瑕疵應免除其責任。`,
+        statutes: [
+          {
+            ref: `《鎖頭銀行公會會員徵信準則》第 36 條 & 第 37 條`,
+            text: `第36條：徵信人員應對所作之徵信報告，就徵信當時狀況及其所能知悉之事項負其責任。第37條：凡依本準則、各會員有關規定及一般慣例所作之徵信報告，事後雖發現瑕疵，應免除其責任。`
+          }
+        ],
+        points: [
+          `<strong>實務作業三原則</strong>：講師總結徵信作業必須遵守「<strong>有所本、充分揭露、均依規定辦理</strong>」，並透過 SOP、函釋與董事會稽核注意事項替工作「保平安」。`,
+          `<strong>為何必須留存軌跡</strong>：集團關係企業組織與聯貸架構可能隨時間調整（如重組或增減），司法院判決書亦需列印附卷；若查證當下未列印附卷，事後案件出事時將「白口莫辯」，無法證明當時已盡職查核。`,
+          `<strong>免責門檻的現實意義</strong>：有做、有留存證據但判讀不夠完美，尚可依第36、37條說明並持續改善；但若完全未查證或看不出有做，事後即難以主張免責。`
+        ],
+        practiceNote: `善用客觀外部工具交叉檢核：經濟部商工登記、財政部稅務入口網、公開資訊觀測站（如關係企業三書表專區）、聯徵中心資料庫及司法院判決書查詢系統，並將查詢結果列印或留存於徵信卷宗。`,
+        gapNote: `各鎖頭銀行內部稽核對於「徵信軌跡」電子檔與紙本歸檔保存年限之細部規定，來源未提供。`
+      },
+      {
+        id: `ch08`,
+        num: `CH 08`,
+        title: `重大異常揭露分際與向上呈報倫理`,
+        tags: [`專業倫理`, `實務判讀`],
+        tagStyle: `ethics`,
+        summary: `面臨客戶疑似違反《公司法》第15條資金貸與股東、財報虛偽或拒不配合時，徵信人員不應與客戶站在同一陣線遮掩，也不必自行越權決策，而應忠實揭露並向經理報告。`,
+        statutes: [
+          {
+            ref: `實務倫理準繩（對應準則第 7 條及《公司法》第 15 條風險）`,
+            text: `公司資金原則上不得貸與股東或他人；發現重大異常資金往來（如非營業性其他應收關係人款項過高）或負責人信用嚴重異常時，徵信人員應忠實揭露事實。`
+          }
+        ],
+        points: [
+          `<strong>不與高風險客戶共進退</strong>：當負責人面臨多重高負債、循環動用或「最後一搏」跡象時，徵信人員切勿因人情而協助粉飾或隱匿，以免事後陷入「千錯萬錯就是徵信不實的錯」。`,
+          `<strong>呈報經理決策而非自行扛責</strong>：講師提醒「你的身分是徵信，不是經理」，遇有重大金額異常或爭議事項，無須自己承擔「斷尾求生或協商改善」的壓力，應向經理報告並於徵信報告中如實揭露，交由管理階層與授信端判斷。`,
+          `<strong>對內忠實、對外委婉</strong>：對優質客戶可視情況委婉提醒改善帳務或徵提文件（維持良性往來）；但對內撰寫報告時，所有客觀異常事實均須毫不保留地忠實表達。`
+        ],
+        practiceNote: `「把錢從自己的口袋放進別人口袋很容易，如何從別人口袋安全收回才是藝術。」徵信人員的價值在於用客觀事實守住第一道認知防線。`,
+        gapNote: `遇重大異常呈報經理後，各層級授信審議委員會之具體覆審與止損時限標準，來源未提供。`
+      }
+    ];
+
+    const DRILLS = [
+      {
+        id: `q1`,
+        prompt: `情境 1｜徵信報告撰寫結語出現：「本案借款人近年營收成長顯著，償債能力良好，建議准予核貸週轉金額度 2,000 萬元。」此寫法是否符合 Day 2 規範？`,
+        correct: `noncompliant`,
+        explanation: `不符合。依《鎖頭銀行公會會員徵信準則》第 7 條，徵信人員應依誠信原則公正平實撰寫徵信報告，「不宜對授信案件表示准駁之意見」。「建議准予核貸」屬於越權表示准駁意見，應改為客觀呈現財務與營運數據，交由授信主辦進行判斷。`
+      },
+      {
+        id: `q2`,
+        prompt: `情境 2｜某已實施帳戶管理員（AO）制度之鎖頭銀行，由該 AO 同時負責同一中小企業客戶之資料蒐集徵信作業與授信前端接洽，是否違反準則第 3 條？`,
+        correct: `compliant`,
+        explanation: `未違反（屬法規例外）。依《鎖頭銀行公會會員徵信準則》第 3 條規定：「徵信工作與授信業務除已實施帳戶管理員之鎖頭銀行外，應由不同單位或不同人員分別辦理。」故已實施 AO 制度者得適用但書例外；惟仍須遵守公正平實、保密及資料齊備等規範。`
+      },
+      {
+        id: `q3`,
+        prompt: `情境 3｜年度工作繁忙，徵信人員決定直接點選系統的「一鍵帶入 ESG 報告文字」，未經檢視或修改就直接儲存並呈送，且當年僅進修 1 小時永續金融課程。此作法是否合規？`,
+        correct: `noncompliant`,
+        explanation: `不符合。第一，依準則第 7 條之一，徵信人員每年應「至少進修 3 小時」永續金融相關訓練課程，1 小時未達法定門檻；第二，實務規範強調系統與 AI 帶入之 ESG 內容僅屬輔助，徵信人員必須親自查證判斷並經適當編修後始得儲存，不可照單全收。`
+      },
+      {
+        id: `q4`,
+        prompt: `情境 4｜徵信人員於受理當下已依準則及內部規範查證商工登記、聯徵資料、401 表及司法院判決書並將查證紀錄列印附卷，忠實呈現於報告中；惟數個月後該企業仍發生未預見之瑕疵與違約。該員是否可依準則主張免責？`,
+        correct: `compliant`,
+        explanation: `符合免責要件。依準則第 36 條及第 37 條，徵信人員僅就「徵信當時狀況及其所能知悉之事項」負責；凡依準則、各會員規定及一般慣例作成之報告，事後雖發現瑕疵，應免除其責任。完整留存「徵信軌跡」正是舉證已盡職查核的關鍵防線。`
+      }
+    ];
+
+    let appState = {
+      readChapters: [],
+      expandedChapters: [`ch01`],
+      activeFilter: `all`,
+      searchQuery: ``,
+      drillAnswers: {}
+    };
+
+    function escapeHtml(str) {
+      return String(str)
+        .replace(/&/g, `&amp;`)
+        .replace(/</g, `&lt;`)
+        .replace(/>/g, `&gt;`)
+        .replace(/"/g, `&quot;`)
+        .replace(/'/g, `&#39;`);
+    }
+
+    async function persistState() {
+      try {
+        if (window.notebookAppApi && typeof window.notebookAppApi.setAppState === `function`) {
+          await window.notebookAppApi.setAppState({
+            readChapters: appState.readChapters,
+            expandedChapters: appState.expandedChapters,
+            drillAnswers: appState.drillAnswers
+          });
+        }
+      } catch (err) {
+        console.warn(`State save skipped:`, err);
+      }
+    }
+
+    function updateProgressUI() {
+      const total = CHAPTERS.length;
+      const done = appState.readChapters.length;
+      const pct = total > 0 ? Math.round((done / total) * 100) : 0;
+
+      const pctEl = document.getElementById(`progress-pct`);
+      const fillEl = document.getElementById(`progress-fill`);
+      const countEl = document.getElementById(`progress-count`);
+      const wrapEl = document.getElementById(`progress-bar-wrap`);
+
+      if (pctEl) pctEl.textContent = `${pct}%`;
+      if (fillEl) fillEl.style.width = `${pct}%`;
+      if (countEl) countEl.textContent = `已讀 ${done} / ${total} 章節`;
+      if (wrapEl) wrapEl.setAttribute(`aria-valuenow`, String(pct));
+    }
+
+    function chapterMatches(ch) {
+      const isRead = appState.readChapters.includes(ch.id);
+      if (appState.activeFilter === `unread` && isRead) return false;
+      if (appState.activeFilter !== `all` && appState.activeFilter !== `unread`) {
+        if (!ch.tags.includes(appState.activeFilter)) return false;
+      }
+
+      const q = appState.searchQuery.trim().toLowerCase();
+      if (!q) return true;
+
+      const haystack = [
+        ch.num,
+        ch.title,
+        ch.summary,
+        ch.tags.join(` `),
+        ch.practiceNote,
+        ch.gapNote,
+        ch.points.join(` `),
+        ch.statutes.map(s => `${s.ref} ${s.text}`).join(` `),
+        ch.table ? ch.table.headers.join(` `) + ` ` + ch.table.rows.map(r => r.join(` `)).join(` `) : ``
+      ].join(` `).toLowerCase();
+
+      return haystack.includes(q);
+    }
+
+    function renderChapters() {
+      const grid = document.getElementById(`chapters-grid`);
+      const empty = document.getElementById(`empty-state`);
+      const counter = document.getElementById(`result-counter`);
+      if (!grid) return;
+
+      const filtered = CHAPTERS.filter(chapterMatches);
+      if (counter) {
+        counter.textContent = `顯示 ${filtered.length} / ${CHAPTERS.length} 章節`;
+      }
+
+      if (filtered.length === 0) {
+        grid.innerHTML = ``;
+        if (empty) empty.classList.add(`is-visible`);
+        return;
+      }
+      if (empty) empty.classList.remove(`is-visible`);
+
+      grid.innerHTML = filtered.map(ch => {
+        const isRead = appState.readChapters.includes(ch.id);
+        const isExpanded = appState.expandedChapters.includes(ch.id);
+
+        const tagsHtml = ch.tags.map(tag => {
+          let cls = `tag-pill`;
+          if (tag === `專業倫理`) cls += ` tag-ethics`;
+          else if (tag === `ESG與永續`) cls += ` tag-esg`;
+          else if (tag === `實務判讀`) cls += ` tag-risk`;
+          return `<span class="${cls}">${escapeHtml(tag)}</span>`;
+        }).join(``);
+
+        const statutesHtml = ch.statutes.map(s => `
+          <div class="statute-quote">
+            <span class="statute-ref">${escapeHtml(s.ref)}</span>
+            <span>${escapeHtml(s.text)}</span>
+          </div>
+        `).join(``);
+
+        const pointsHtml = ch.points.map(p => `<li>${p}</li>`).join(``);
+
+        let tableHtml = ``;
+        if (ch.table) {
+          const ths = ch.table.headers.map(h => `<th>${escapeHtml(h)}</th>`).join(``);
+          const trs = ch.table.rows.map(row =>
+            `<tr>${row.map(cell => `<td>${escapeHtml(cell)}</td>`).join(``)}</tr>`
+          ).join(``);
+          tableHtml = `
+            <div class="detail-block" style="grid-column: 1 / -1;">
+              <h4 class="detail-block-title">制度結構對照表</h4>
+              <div class="table-wrap">
+                <table class="data-table">
+                  <thead><tr>${ths}</tr></thead>
+                  <tbody>${trs}</tbody>
+                </table>
+              </div>
+            </div>
+          `;
+        }
+
+        return `
+          <article class="chapter-card ${isRead ? `is-read` : ``} ${isExpanded ? `is-expanded` : ``}" id="card-${ch.id}">
+            <div class="chapter-header">
+              <div class="chapter-meta-row">
+                <div class="chapter-badges">
+                  <span class="ch-num">${escapeHtml(ch.num)}</span>
+                  ${tagsHtml}
+                </div>
+                <label class="read-check-label" for="check-${ch.id}">
+                  <input
+                    type="checkbox"
+                    id="check-${ch.id}"
+                    class="read-checkbox"
+                    ${isRead ? `checked` : ``}
+                    onchange="toggleRead('${ch.id}', this.checked)"
+                  >
+                  <span>${isRead ? `已讀完成` : `標記已讀`}</span>
+                </label>
+              </div>
+
+              <button
+                type="button"
+                class="chapter-title-btn"
+                aria-expanded="${isExpanded ? `true` : `false`}"
+                aria-controls="body-${ch.id}"
+                onclick="toggleChapter('${ch.id}')"
+              >
+                <h3>${escapeHtml(ch.title)}</h3>
+                <span class="expand-cue">
+                  <span>${isExpanded ? `收合詳解` : `展開詳解`}</span>
+                  <svg class="chevron-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                    <polyline points="6 9 12 15 18 9"></polyline>
+                  </svg>
+                </span>
+              </button>
+
+              <p class="chapter-summary">${escapeHtml(ch.summary)}</p>
+            </div>
+
+            <div class="chapter-body" id="body-${ch.id}">
+              <div class="detail-two-col">
+                <div class="detail-block">
+                  <h4 class="detail-block-title">法規原文與條文準繩</h4>
+                  ${statutesHtml}
+                  <div class="highlight-box">
+                    <strong>實務備忘：</strong>${escapeHtml(ch.practiceNote)}
+                  </div>
+                </div>
+
+                <div class="detail-block">
+                  <h4 class="detail-block-title">學習重點與實務解析</h4>
+                  <ul class="points-list">
+                    ${pointsHtml}
+                  </ul>
+                  <div class="gap-box">
+                    <span class="gap-badge">來源邊界標示</span>
+                    <span>${escapeHtml(ch.gapNote)}</span>
+                  </div>
+                </div>
+                ${tableHtml}
+              </div>
+            </div>
+          </article>
+        `;
+      }).join(``);
+    }
+
+    function renderDrills() {
+      const container = document.getElementById(`drill-list`);
+      const scoreEl = document.getElementById(`drill-score`);
+      if (!container) return;
+
+      const answeredIds = Object.keys(appState.drillAnswers);
+      let correctCount = 0;
+      answeredIds.forEach(id => {
+        const q = DRILLS.find(item => item.id === id);
+        if (q && appState.drillAnswers[id] === q.correct) correctCount += 1;
+      });
+
+      if (scoreEl) {
+        scoreEl.textContent = `作答進度：${answeredIds.length} / ${DRILLS.length} 題（答對 ${correctCount} 題）`;
+      }
+
+      container.innerHTML = DRILLS.map(q => {
+        const userAns = appState.drillAnswers[q.id];
+        const isAnswered = Boolean(userAns);
+        const isRight = isAnswered && userAns === q.correct;
+
+        const compliantClass = userAns === `compliant`
+          ? (q.correct === `compliant` ? `is-correct` : `is-wrong`)
+          : ``;
+        const nonCompliantClass = userAns === `noncompliant`
+          ? (q.correct === `noncompliant` ? `is-correct` : `is-wrong`)
+          : ``;
+
+        return `
+          <div class="drill-item">
+            <p class="drill-prompt">${escapeHtml(q.prompt)}</p>
+            <div class="drill-options">
+              <button type="button" class="drill-btn ${compliantClass}" onclick="answerDrill('${q.id}', 'compliant')">符合規範</button>
+              <button type="button" class="drill-btn ${nonCompliantClass}" onclick="answerDrill('${q.id}', 'noncompliant')">不符合規範</button>
+            </div>
+            <div class="drill-feedback ${isAnswered ? `is-visible` : ``} ${isAnswered ? (isRight ? `is-pass` : `is-fail`) : ``}">
+              <strong>${isRight ? `判斷正確：` : `判讀解析：`}</strong>${escapeHtml(q.explanation)}
+            </div>
+          </div>
+        `;
+      }).join(``);
+    }
+
+    function toggleChapter(id) {
+      const idx = appState.expandedChapters.indexOf(id);
+      if (idx === -1) {
+        appState.expandedChapters.push(id);
+      } else {
+        appState.expandedChapters.splice(idx, 1);
+      }
+      renderChapters();
+      persistState();
+    }
+
+    function toggleAllChapters(expand) {
+      if (expand) {
+        appState.expandedChapters = CHAPTERS.map(ch => ch.id);
+      } else {
+        appState.expandedChapters = [];
+      }
+      renderChapters();
+      persistState();
+    }
+
+    function toggleRead(id, checked) {
+      const exists = appState.readChapters.includes(id);
+      if (checked && !exists) {
+        appState.readChapters.push(id);
+      } else if (!checked && exists) {
+        appState.readChapters = appState.readChapters.filter(item => item !== id);
+      }
+      updateProgressUI();
+      renderChapters();
+      persistState();
+    }
+
+    function handleSearchInput(val) {
+      appState.searchQuery = val || ``;
+      renderChapters();
+    }
+
+    function setTagFilter(tag, btnEl) {
+      appState.activeFilter = tag;
+      const buttons = document.querySelectorAll(`.chip-btn`);
+      buttons.forEach(btn => btn.classList.remove(`is-active`));
+      if (btnEl) btnEl.classList.add(`is-active`);
+      renderChapters();
+    }
+
+    function clearFilters() {
+      appState.searchQuery = ``;
+      appState.activeFilter = `all`;
+      const input = document.getElementById(`search-input`);
+      if (input) input.value = ``;
+      const buttons = document.querySelectorAll(`.chip-btn`);
+      buttons.forEach(btn => {
+        if (btn.dataset.filter === `all`) btn.classList.add(`is-active`);
+        else btn.classList.remove(`is-active`);
+      });
+      renderChapters();
+    }
+
+    function answerDrill(qId, choice) {
+      appState.drillAnswers[qId] = choice;
+      renderDrills();
+      persistState();
+    }
+
+    function handleResetProgress(btn) {
+      if (!btn) return;
+      if (btn.dataset.armed !== `true`) {
+        btn.dataset.armed = `true`;
+        btn.textContent = `再次點擊確認重設`;
+        return;
+      }
+      btn.dataset.armed = `false`;
+      btn.textContent = `重設進度`;
+      appState.readChapters = [];
+      appState.drillAnswers = {};
+      updateProgressUI();
+      renderChapters();
+      renderDrills();
+      persistState();
+    }
+
+    async function initApp() {
+      try {
+        if (window.notebookAppApi && typeof window.notebookAppApi.getAppState === `function`) {
+          const saved = await window.notebookAppApi.getAppState();
+          if (saved && typeof saved === `object`) {
+            if (Array.isArray(saved.readChapters)) {
+              appState.readChapters = saved.readChapters;
+            }
+            if (Array.isArray(saved.expandedChapters)) {
+              appState.expandedChapters = saved.expandedChapters;
+            }
+            if (saved.drillAnswers && typeof saved.drillAnswers === `object`) {
+              appState.drillAnswers = saved.drillAnswers;
+            }
+          }
+        }
+      } catch (err) {
+        console.warn(`State load skipped:`, err);
+      }
+
+      updateProgressUI();
+      renderChapters();
+      renderDrills();
+
+      try {
+        if (window.notebookAppApi && typeof window.notebookAppApi.notifyAppReady === `function`) {
+          window.notebookAppApi.notifyAppReady();
+        }
+      } catch (err) {
+        console.warn(`notifyAppReady skipped:`, err);
+      }
+    }
+
+    initApp();
+  </script>
+</body>
+</html>

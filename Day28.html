@@ -1,0 +1,2041 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#14283a">
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="./manifest.webmanifest">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="授信實務30天">
+  <script>
+    if ("serviceWorker" in navigator && (location.protocol === "https:" || location.hostname === "localhost")) {
+      window.addEventListener("load", () => navigator.serviceWorker.register("./service-worker.js").catch((error) => console.warn("PWA offline support unavailable:", error)));
+    }
+  </script>
+  <meta name="artifact-type" content="dashboard">
+  <meta name="design-style" content="charter">
+  <title>中小企業授信與財報分析實務-Day28-聯徵中心個人及企業信用報告解讀技巧</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Noto+Sans+TC:wght@400;500;600;700&family=Noto+Serif+TC:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      color-scheme: light;
+
+      /* Page and surfaces (THEME: 冷白基底 + 純白卡片 + 冷灰輔助底) */
+      --background: #F8FAFC;
+      --surface-container-low: #FFFFFF;
+      --surface-container: #F1F5F9;
+      --surface-container-high: #E2E8F0;
+
+      /* Ink (THEME: 深海軍藍主墨 + 金屬石板灰) */
+      --on-surface: #0F2537;
+      --on-surface-variant: #475569;
+      --slate-deep: #334155;
+
+      /* Rules (THEME: 香檳金/琥珀銅 & 冷灰細線) */
+      --outline: #C5A880;
+      --outline-amber: #D97706;
+      --outline-variant: #CBD5E1;
+
+      /* Accents (THEME: 深海軍藍 + 模組五高階風控橘 + 審計警示紅 + 穩健綠) */
+      --primary: #0F2537;
+      --primary-royal: #1E3A8A;
+      --on-primary: #F8FAFC;
+      --primary-container: #EEF2FF;
+      --on-primary-container: #1E3A8A;
+
+      --secondary: #059669;
+      --secondary-text: #047857;
+      --secondary-bg: #ECFDF5;
+      --secondary-border: #A7F3D0;
+
+      --tertiary: #B45309;
+      --tertiary-bg: #FFFBEB;
+      --tertiary-border: #FDE68A;
+
+      --risk-orange: #EA580C;
+      --risk-orange-text: #C2410C;
+      --risk-orange-bg: #FFF7ED;
+      --risk-orange-border: #FED7AA;
+
+      --error: #DC2626;
+      --error-bg: #FEF2F2;
+      --error-border: #FECACA;
+      --on-error: #FFFFFF;
+
+      --positive: #059669;
+      --warning: #D97706;
+      --focus: #1E3A8A;
+
+      /* Data series */
+      --data-1: #0F2537;
+      --data-2: #D97706;
+      --data-3: #059669;
+      --data-4: #EA580C;
+      --data-context: #94A3B8;
+
+      /* Fonts */
+      --font-headline: 'Noto Serif TC', serif;
+      --font-body: 'Noto Sans TC', 'Inter', sans-serif;
+      --font-label: 'JetBrains Mono', 'Noto Sans TC', monospace;
+
+      /* Type scale (Dashboard / Lookup dense hierarchy) */
+      --display-size: clamp(1.5rem, 1.2rem + 1.25vw, 2.125rem);
+      --headline-size: clamp(1.1875rem, 1.05rem + 0.5vw, 1.4375rem);
+      --subhead-size: clamp(1rem, 0.95rem + 0.25vw, 1.125rem);
+      --body-size: clamp(0.9375rem, 0.9rem + 0.15vw, 1rem);
+      --label-size: 0.75rem;
+
+      /* Spacing scale */
+      --space-xs: 0.25rem;
+      --space-sm: 0.5rem;
+      --space-md: 1rem;
+      --space-lg: 1.5rem;
+      --space-xl: 2.5rem;
+      --space-2xl: 4rem;
+
+      /* Shape (Charter: crisp 2px squared corners) */
+      --rounded: 0.125rem;
+      --rounded-lg: 0.1875rem;
+      --rounded-full: 0.125rem;
+
+      /* Style effects */
+      --brass-rule: 2px solid var(--outline);
+      --gold-band-rule: 3px solid var(--outline);
+      --orange-rule: 3px solid var(--risk-orange);
+      --red-rule: 3px solid var(--error);
+      --green-rule: 3px solid var(--positive);
+      --hairline: 1px solid var(--outline-variant);
+      --card-shadow: 0 1px 2px color-mix(in srgb, var(--primary) 6%, transparent);
+
+      /* Motion */
+      --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+      --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+      --dur-micro: 120ms;
+      --dur-short: 220ms;
+      --dur-long: 420ms;
+    }
+
+    /* Base reset */
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body {
+      overflow-x: clip;
+      margin: 0;
+      padding: 0;
+      background-color: var(--background);
+      color: var(--on-surface);
+      font-family: var(--font-body);
+      font-size: var(--body-size);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    header { position: static !important; }
+    button, input, select, textarea { font-family: inherit; }
+
+    :focus-visible {
+      outline: 2px solid var(--focus);
+      outline-offset: 2px;
+    }
+
+    /* Charter Navy Title Band */
+    .title-band {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-royal) 100%);
+      color: var(--on-primary);
+      padding: var(--space-xl) var(--space-lg) var(--space-lg);
+      border-bottom: var(--gold-band-rule);
+    }
+    .title-band-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .kicker-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: var(--space-sm);
+      margin-bottom: var(--space-sm);
+    }
+    .module-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-xs);
+      background-color: var(--risk-orange);
+      color: var(--on-primary);
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      font-weight: 600;
+      padding: var(--space-xs) var(--space-sm);
+      border-radius: var(--rounded);
+    }
+    .bank-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-xs);
+      border: 1px solid var(--outline);
+      color: color-mix(in srgb, var(--outline) 78%, var(--on-primary));
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      font-weight: 500;
+      padding: var(--space-xs) var(--space-sm);
+      border-radius: var(--rounded);
+    }
+    .title-band h1 {
+      font-family: var(--font-headline);
+      font-weight: 700;
+      font-size: var(--display-size);
+      line-height: 1.25;
+      margin: 0 0 var(--space-sm);
+      color: var(--on-primary);
+    }
+    .title-band .lede {
+      margin: 0;
+      max-width: 68ch;
+      color: color-mix(in srgb, var(--on-primary) 84%, var(--primary));
+      font-size: var(--body-size);
+      line-height: 1.65;
+    }
+
+    /* Main Container */
+    .page-grid {
+      display: grid;
+      gap: var(--space-lg);
+      padding: var(--space-lg);
+      max-width: 1200px;
+      margin: 0 auto;
+      overflow: hidden;
+    }
+    .page-grid * { min-width: 0; }
+
+    /* KPI / Progress Strip (Charter brass-top-ruled figure cards) */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: var(--space-md);
+    }
+    .figure-card {
+      background: var(--surface-container-low);
+      border-top: var(--brass-rule);
+      border-right: var(--hairline);
+      border-bottom: var(--hairline);
+      border-left: var(--hairline);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-md);
+      box-shadow: var(--card-shadow);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: var(--space-xs);
+    }
+    .figure-card.risk-accent {
+      border-top: var(--orange-rule);
+    }
+    .figure-label {
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      font-weight: 600;
+      color: var(--on-surface-variant);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-xs);
+    }
+    .figure-value {
+      font-family: var(--font-headline);
+      font-weight: 700;
+      font-size: clamp(1.375rem, 1.2rem + 0.6vw, 1.75rem);
+      font-variant-numeric: tabular-nums lining-nums;
+      color: var(--on-surface);
+      line-height: 1.2;
+    }
+    .figure-delta {
+      font-size: var(--label-size);
+      color: var(--on-surface-variant);
+      line-height: 1.45;
+    }
+    .figure-delta.positive {
+      color: var(--secondary-text);
+      font-weight: 600;
+    }
+    .figure-delta.orange {
+      color: var(--risk-orange-text);
+      font-weight: 600;
+    }
+
+    /* Progress Bar */
+    .progress-panel {
+      background: var(--surface-container-low);
+      border: var(--hairline);
+      border-top: var(--orange-rule);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-md) var(--space-lg);
+      display: grid;
+      gap: var(--space-sm);
+    }
+    .progress-header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-sm);
+    }
+    .progress-title {
+      font-family: var(--font-headline);
+      font-weight: 700;
+      font-size: var(--subhead-size);
+      color: var(--on-surface);
+      margin: 0;
+    }
+    .progress-stats {
+      font-family: var(--font-label);
+      font-size: var(--body-size);
+      font-weight: 600;
+      font-variant-numeric: tabular-nums;
+      color: var(--primary-royal);
+    }
+    .progress-track {
+      width: 100%;
+      height: 10px;
+      background-color: var(--surface-container-high);
+      border-radius: var(--rounded);
+      overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--primary-royal) 0%, var(--positive) 100%);
+      transition: width var(--dur-long) var(--ease-out);
+    }
+    .overview-pillars {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: var(--space-sm);
+      padding-top: var(--space-xs);
+    }
+    .pillar-btn {
+      text-align: left;
+      background: var(--surface-container);
+      border: var(--hairline);
+      border-left: 3px solid var(--outline);
+      border-radius: var(--rounded);
+      padding: var(--space-sm) var(--space-md);
+      cursor: pointer;
+      min-height: 44px;
+      transition: background-color var(--dur-micro) var(--ease-out), border-color var(--dur-micro) var(--ease-out);
+    }
+    .pillar-btn:hover {
+      background-color: var(--surface-container-high);
+      border-left-color: var(--risk-orange);
+    }
+    .pillar-btn strong {
+      display: block;
+      font-size: var(--label-size);
+      color: var(--primary);
+      font-family: var(--font-label);
+      margin-bottom: var(--space-xs);
+    }
+    .pillar-btn span {
+      display: block;
+      font-size: var(--label-size);
+      color: var(--on-surface-variant);
+      line-height: 1.4;
+    }
+
+    /* Search & Filter Toolbar */
+    .section-head {
+      border-top: var(--brass-rule);
+      padding-top: var(--space-md);
+      border-bottom: var(--hairline);
+      padding-bottom: var(--space-sm);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: var(--space-sm);
+    }
+    .section-head h2 {
+      font-family: var(--font-headline);
+      font-weight: 700;
+      font-size: var(--headline-size);
+      color: var(--on-surface);
+      margin: 0;
+    }
+    .section-head .section-note {
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      color: var(--on-surface-variant);
+    }
+
+    .toolbar {
+      background: var(--surface-container-low);
+      border: var(--hairline);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-md) var(--space-lg);
+      display: grid;
+      gap: var(--space-md);
+    }
+    .toolbar-top {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: var(--space-md);
+      align-items: end;
+    }
+    .input-group {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xs);
+    }
+    .input-label {
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      font-weight: 600;
+      color: var(--slate-deep);
+    }
+    .search-wrap {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+    .search-icon {
+      position: absolute;
+      left: var(--space-md);
+      color: var(--on-surface-variant);
+      pointer-events: none;
+    }
+    .search-input {
+      width: 100%;
+      min-height: 44px;
+      padding: var(--space-sm) var(--space-xl) var(--space-sm) 2.5rem;
+      background: var(--background);
+      border: var(--hairline);
+      border-radius: var(--rounded);
+      color: var(--on-surface);
+      font-size: var(--body-size);
+      transition: border-color var(--dur-micro) var(--ease-out), box-shadow var(--dur-micro) var(--ease-out);
+    }
+    .search-input:focus {
+      border-color: var(--primary-royal);
+      box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary-royal) 15%, transparent);
+      outline: none;
+    }
+    .clear-btn {
+      position: absolute;
+      right: var(--space-xs);
+      min-width: 36px;
+      min-height: 36px;
+      background: transparent;
+      border: none;
+      color: var(--on-surface-variant);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: var(--rounded);
+    }
+    .clear-btn:hover {
+      background-color: var(--surface-container-high);
+      color: var(--on-surface);
+    }
+
+    .action-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-sm);
+      align-items: center;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-xs);
+      min-height: 44px;
+      padding: var(--space-sm) var(--space-md);
+      border-radius: var(--rounded);
+      font-size: var(--label-size);
+      font-weight: 600;
+      cursor: pointer;
+      border: 1px solid var(--primary);
+      transition: background-color var(--dur-micro) var(--ease-out), color var(--dur-micro) var(--ease-out);
+    }
+    .btn-primary {
+      background-color: var(--primary);
+      color: var(--on-primary);
+    }
+    .btn-primary:hover {
+      background-color: var(--primary-royal);
+    }
+    .btn-secondary {
+      background-color: var(--surface-container-low);
+      color: var(--primary);
+      border-color: var(--outline-variant);
+    }
+    .btn-secondary:hover {
+      background-color: var(--primary-container);
+      border-color: var(--primary-royal);
+    }
+    .btn-danger-outline {
+      background-color: var(--surface-container-low);
+      color: var(--error);
+      border-color: var(--error-border);
+    }
+    .btn-danger-outline:hover {
+      background-color: var(--error-bg);
+    }
+    .btn-danger-armed {
+      background-color: var(--error);
+      color: var(--on-error);
+      border-color: var(--error);
+    }
+
+    .filter-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-sm);
+      align-items: center;
+    }
+    .filter-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-xs);
+      min-height: 44px;
+      padding: var(--space-xs) var(--space-md);
+      border-radius: var(--rounded);
+      border: var(--hairline);
+      background-color: var(--surface-container);
+      color: var(--slate-deep);
+      font-size: var(--label-size);
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color var(--dur-micro) var(--ease-out), color var(--dur-micro) var(--ease-out), border-color var(--dur-micro) var(--ease-out);
+    }
+    .filter-chip:hover {
+      background-color: var(--surface-container-high);
+      color: var(--on-surface);
+    }
+    .filter-chip.active {
+      background-color: var(--primary);
+      color: var(--on-primary);
+      border-color: var(--primary);
+    }
+    .filter-count {
+      font-family: var(--font-label);
+      font-variant-numeric: tabular-nums;
+      opacity: 0.85;
+    }
+
+    .status-line {
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      color: var(--on-surface-variant);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: var(--space-sm);
+    }
+
+    /* Bento Grid for Chapters */
+    .bento-grid {
+      display: grid;
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      gap: var(--space-lg);
+      align-items: start;
+    }
+    .chapter-card {
+      grid-column: span 6;
+      background: var(--surface-container-low);
+      border: var(--hairline);
+      border-top: var(--brass-rule);
+      border-radius: var(--rounded-lg);
+      box-shadow: var(--card-shadow);
+      container-type: inline-size;
+      transition: box-shadow var(--dur-short) var(--ease-out), background-color var(--dur-short) var(--ease-out);
+    }
+    .chapter-card.span-wide {
+      grid-column: span 12;
+    }
+    .chapter-card.is-risk {
+      border-top: var(--red-rule);
+    }
+    .chapter-card.is-orange {
+      border-top: var(--orange-rule);
+    }
+    .chapter-card.is-positive {
+      border-top: var(--green-rule);
+    }
+    .chapter-card.is-read {
+      background-color: color-mix(in srgb, var(--secondary-bg) 35%, var(--surface-container-low));
+    }
+
+    .card-header {
+      padding: var(--space-md) var(--space-lg);
+      display: grid;
+      gap: var(--space-sm);
+    }
+    .card-meta-bar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-sm);
+    }
+    .meta-left {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: var(--space-sm);
+    }
+    .chapter-num {
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      font-weight: 700;
+      color: var(--on-primary);
+      background-color: var(--primary);
+      padding: 2px var(--space-sm);
+      border-radius: var(--rounded);
+      font-variant-numeric: tabular-nums;
+    }
+    .cat-tag {
+      display: inline-flex;
+      align-items: center;
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      font-weight: 600;
+      padding: 2px var(--space-sm);
+      border-radius: var(--rounded);
+      border: 1px solid var(--outline-variant);
+      background-color: var(--surface-container);
+      color: var(--slate-deep);
+    }
+    .cat-tag.tag-forms {
+      background-color: var(--primary-container);
+      border-color: color-mix(in srgb, var(--primary-royal) 30%, transparent);
+      color: var(--on-primary-container);
+    }
+    .cat-tag.tag-alert {
+      background-color: var(--error-bg);
+      border-color: var(--error-border);
+      color: var(--error);
+    }
+    .cat-tag.tag-tax {
+      background-color: var(--tertiary-bg);
+      border-color: var(--tertiary-border);
+      color: var(--tertiary);
+    }
+    .cat-tag.tag-case {
+      background-color: var(--risk-orange-bg);
+      border-color: var(--risk-orange-border);
+      color: var(--risk-orange-text);
+    }
+
+    /* Read Checkbox (44px touch target) */
+    .read-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-xs);
+      min-height: 44px;
+      padding: var(--space-xs) var(--space-sm);
+      border-radius: var(--rounded);
+      cursor: pointer;
+      font-size: var(--label-size);
+      font-weight: 600;
+      color: var(--slate-deep);
+      border: 1px solid transparent;
+      user-select: none;
+      transition: background-color var(--dur-micro) var(--ease-out);
+    }
+    .read-toggle:hover {
+      background-color: var(--surface-container);
+    }
+    .read-toggle input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--positive);
+      cursor: pointer;
+      margin: 0;
+    }
+    .read-toggle.checked {
+      color: var(--secondary-text);
+      background-color: var(--secondary-bg);
+      border-color: var(--secondary-border);
+    }
+
+    .card-title-btn {
+      width: 100%;
+      background: transparent;
+      border: none;
+      padding: var(--space-xs) 0;
+      text-align: left;
+      cursor: pointer;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: var(--space-md);
+      min-height: 44px;
+      color: var(--on-surface);
+    }
+    .card-title-btn:hover .card-title {
+      color: var(--primary-royal);
+    }
+    .card-title {
+      font-family: var(--font-headline);
+      font-weight: 700;
+      font-size: var(--headline-size);
+      line-height: 1.35;
+      margin: 0;
+      transition: color var(--dur-micro) var(--ease-out);
+    }
+    .chevron-icon {
+      flex-shrink: 0;
+      margin-top: var(--space-xs);
+      color: var(--on-surface-variant);
+      transition: transform var(--dur-short) var(--ease-in-out);
+    }
+    .chapter-card.is-open .chevron-icon {
+      transform: rotate(180deg);
+      color: var(--primary-royal);
+    }
+    .card-summary {
+      margin: 0;
+      color: var(--on-surface-variant);
+      font-size: var(--body-size);
+      max-width: 65ch;
+    }
+
+    /* Expandable Body */
+    .card-body {
+      display: none;
+      padding: 0 var(--space-lg) var(--space-lg);
+      border-top: var(--hairline);
+      margin-top: var(--space-xs);
+    }
+    .chapter-card.is-open .card-body {
+      display: block;
+      animation: revealFade var(--dur-short) var(--ease-out);
+    }
+    @keyframes revealFade {
+      from { opacity: 0; transform: translateY(4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .card-content-grid {
+      padding-top: var(--space-md);
+      display: grid;
+      gap: var(--space-md);
+    }
+    .chapter-card.span-wide .card-content-grid.two-col {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .detail-block {
+      background: var(--background);
+      border: var(--hairline);
+      border-radius: var(--rounded);
+      padding: var(--space-md);
+    }
+    .detail-block h4 {
+      font-family: var(--font-body);
+      font-weight: 700;
+      font-size: var(--subhead-size);
+      color: var(--primary);
+      margin: 0 0 var(--space-sm);
+      display: flex;
+      align-items: center;
+      gap: var(--space-xs);
+    }
+    .detail-block ul {
+      margin: 0;
+      padding-left: var(--space-lg);
+      display: grid;
+      gap: var(--space-xs);
+    }
+    .detail-block li {
+      color: var(--on-surface);
+      line-height: 1.6;
+    }
+
+    /* Callouts & Audit Alerts */
+    .callout {
+      border-left: 4px solid var(--outline-amber);
+      background-color: var(--tertiary-bg);
+      padding: var(--space-md);
+      border-radius: var(--rounded);
+      font-size: var(--body-size);
+    }
+    .callout.callout-danger {
+      border-left-color: var(--error);
+      background-color: var(--error-bg);
+    }
+    .callout.callout-orange {
+      border-left-color: var(--risk-orange);
+      background-color: var(--risk-orange-bg);
+    }
+    .callout.callout-positive {
+      border-left-color: var(--positive);
+      background-color: var(--secondary-bg);
+    }
+    .callout.callout-missing {
+      border-left-color: var(--slate-deep);
+      background-color: var(--surface-container);
+    }
+    .callout-title {
+      font-weight: 700;
+      font-size: var(--label-size);
+      font-family: var(--font-label);
+      display: block;
+      margin-bottom: var(--space-xs);
+      color: var(--on-surface);
+    }
+
+    /* Code / JCIC Matrix Table */
+    .data-table-wrap {
+      width: 100%;
+      overflow-x: auto;
+      border: var(--hairline);
+      border-radius: var(--rounded);
+      background: var(--surface-container-low);
+    }
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: var(--body-size);
+      text-align: left;
+    }
+    .data-table thead th {
+      background-color: var(--surface-container-high);
+      color: var(--on-surface);
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      font-weight: 700;
+      padding: var(--space-sm) var(--space-md);
+      border-bottom: 2px solid var(--primary);
+      white-space: nowrap;
+    }
+    .data-table tbody td {
+      padding: var(--space-sm) var(--space-md);
+      border-bottom: var(--hairline);
+      vertical-align: top;
+      color: var(--on-surface);
+    }
+    .data-table tbody tr:last-child td {
+      border-bottom: none;
+    }
+    .mono-code {
+      font-family: var(--font-label);
+      font-weight: 600;
+      font-variant-numeric: tabular-nums;
+      background-color: var(--surface-container);
+      padding: 2px var(--space-xs);
+      border-radius: var(--rounded);
+      color: var(--primary-royal);
+    }
+    .mono-code.danger {
+      background-color: var(--error-bg);
+      color: var(--error);
+    }
+
+    /* Interactive JCIC Pattern Simulator */
+    .simulator-panel {
+      background: var(--surface-container-low);
+      border: var(--hairline);
+      border-top: var(--orange-rule);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-lg);
+      display: grid;
+      gap: var(--space-md);
+      box-shadow: var(--card-shadow);
+    }
+    .sim-presets {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-sm);
+    }
+    .sim-btn {
+      min-height: 44px;
+      padding: var(--space-xs) var(--space-md);
+      border-radius: var(--rounded);
+      border: var(--hairline);
+      background: var(--surface-container);
+      color: var(--on-surface);
+      font-size: var(--label-size);
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color var(--dur-micro) var(--ease-out), color var(--dur-micro) var(--ease-out);
+    }
+    .sim-btn:hover {
+      background: var(--surface-container-high);
+    }
+    .sim-btn.active {
+      background: var(--primary);
+      color: var(--on-primary);
+      border-color: var(--primary);
+    }
+    .sim-output {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr);
+      gap: var(--space-md);
+      background: var(--background);
+      border: var(--hairline);
+      border-radius: var(--rounded);
+      padding: var(--space-md);
+    }
+    .sim-screen {
+      background: var(--primary);
+      color: var(--on-primary);
+      padding: var(--space-md);
+      border-radius: var(--rounded);
+      font-family: var(--font-label);
+      display: grid;
+      gap: var(--space-sm);
+      align-content: start;
+    }
+    .sim-screen-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid color-mix(in srgb, var(--outline) 45%, transparent);
+      padding-bottom: var(--space-xs);
+      font-size: var(--label-size);
+      color: color-mix(in srgb, var(--outline) 85%, var(--on-primary));
+    }
+    .sim-flag {
+      display: inline-block;
+      padding: 2px var(--space-sm);
+      border-radius: var(--rounded);
+      font-weight: 700;
+      font-size: var(--label-size);
+    }
+    .sim-flag.flag-red {
+      background: var(--error);
+      color: var(--on-error);
+    }
+    .sim-flag.flag-orange {
+      background: var(--risk-orange);
+      color: var(--on-primary);
+    }
+    .sim-flag.flag-green {
+      background: var(--positive);
+      color: var(--on-primary);
+    }
+    .sim-flag.flag-neutral {
+      background: var(--slate-deep);
+      color: var(--on-primary);
+    }
+    .sim-digits {
+      font-size: 1.0625rem;
+      letter-spacing: 0.04em;
+      line-height: 1.6;
+      word-break: break-word;
+    }
+    .sim-analysis {
+      display: grid;
+      gap: var(--space-sm);
+      align-content: start;
+    }
+    .sim-analysis h3 {
+      margin: 0;
+      font-family: var(--font-headline);
+      font-size: var(--subhead-size);
+      color: var(--primary);
+    }
+    .sim-analysis p {
+      margin: 0;
+      font-size: var(--body-size);
+      color: var(--on-surface);
+    }
+    .sim-verdict {
+      background: var(--surface-container-low);
+      border-left: 4px solid var(--primary-royal);
+      padding: var(--space-sm) var(--space-md);
+      font-size: var(--body-size);
+    }
+
+    /* Empty search state */
+    .empty-state {
+      grid-column: span 12;
+      background: var(--surface-container-low);
+      border: var(--hairline);
+      border-top: var(--brass-rule);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-xl) var(--space-lg);
+      text-align: center;
+      display: none;
+      gap: var(--space-md);
+      justify-items: center;
+    }
+    .empty-state.visible {
+      display: grid;
+    }
+
+    /* Grounding / Source Disclosure Box */
+    .disclosure-box {
+      background: var(--surface-container);
+      border-top: var(--brass-rule);
+      border-right: var(--hairline);
+      border-bottom: var(--hairline);
+      border-left: var(--hairline);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-md) var(--space-lg);
+      display: grid;
+      gap: var(--space-sm);
+    }
+    .disclosure-box h3 {
+      margin: 0;
+      font-family: var(--font-headline);
+      font-size: var(--subhead-size);
+      color: var(--primary);
+    }
+    .disclosure-box ul {
+      margin: 0;
+      padding-left: var(--space-lg);
+      display: grid;
+      gap: var(--space-xs);
+      color: var(--on-surface-variant);
+      font-size: var(--body-size);
+    }
+
+    /* Footer */
+    footer {
+      background: var(--primary);
+      color: var(--on-primary);
+      border-top: var(--gold-band-rule);
+      padding: var(--space-lg);
+      margin-top: var(--space-xl);
+    }
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-md);
+      font-size: var(--label-size);
+    }
+    .footer-brand {
+      font-family: var(--font-label);
+      font-weight: 700;
+      color: color-mix(in srgb, var(--outline) 85%, var(--on-primary));
+    }
+    .footer-sources {
+      color: color-mix(in srgb, var(--on-primary) 78%, var(--primary));
+    }
+
+    /* Highlight search match */
+    mark {
+      background-color: var(--tertiary-border);
+      color: var(--on-surface);
+      padding: 0 2px;
+      border-radius: var(--rounded);
+    }
+
+    /* Container Queries */
+    @container (max-width: 460px) {
+      .chapter-card.span-wide .card-content-grid.two-col {
+        grid-template-columns: 1fr;
+      }
+      .card-header, .card-body {
+        padding-left: var(--space-md);
+        padding-right: var(--space-md);
+      }
+    }
+
+    /* Responsive Breakpoints */
+    @media (max-width: 960px) {
+      .kpi-grid, .overview-pillars {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+      .chapter-card {
+        grid-column: span 12;
+      }
+      .sim-output {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .page-grid {
+        padding: var(--space-md);
+        gap: var(--space-md);
+      }
+      .title-band {
+        padding: var(--space-lg) var(--space-md);
+      }
+      .kpi-grid, .overview-pillars {
+        grid-template-columns: 1fr;
+      }
+      .toolbar-top {
+        grid-template-columns: 1fr;
+      }
+      .chapter-card.span-wide .card-content-grid.two-col {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+      .home-link { display: inline-flex; align-items: center; color: var(--outline); font: inherit; font-size: var(--label-size, 0.875rem); font-weight: 600; text-decoration: none; border: 1px solid var(--outline); padding: 0.4rem 0.7rem; margin: 0 0 var(--space-sm) 0; }
+    .home-link:hover, .home-link:focus-visible { color: var(--on-primary); text-decoration: underline; text-underline-offset: 0.18em; }
+    @media (max-width: 640px) { }
+      .header-bank-label { display: inline-block; margin: 0 0 var(--space-sm); color: var(--outline); font-family: var(--font-label); font-size: var(--label-size, 0.875rem); font-weight: 700; letter-spacing: 0.08em; }
+  </style>
+</head>
+<body>
+
+  <header class="title-band">
+    <div class="title-band-inner">
+      <span class="header-bank-label">鎖頭銀行</span>
+      <div class="kicker-row">
+        <span class="module-badge">模組五：關係人穿透與授信決策</span>
+        <span class="bank-badge">鎖頭銀行企業授信實務講義</span>
+      </div>
+      <h1>中小企業授信與財報分析實務-Day28-聯徵中心個人及企業信用報告解讀技巧</h1>
+      <p class="lede">從 B33、B36 與 K33/K34 穿透企業與負責人的真實負債黑洞；精準區分「所得稅消費分期」與「惡性負債滾存」，並落實《中華民國銀行公會會員徵信準則》第 7、36、37 條作業軌跡防禦。</p>
+    </div>
+  </header>
+
+  <main class="page-grid">
+
+    <!-- KPI Top Summary Strip -->
+    <section class="kpi-grid" aria-label="課程核心指標總覽">
+      <div class="figure-card">
+        <span class="figure-label">核心聯徵查詢表單</span>
+        <span class="figure-value">B33 · B36 · K33/K34</span>
+        <span class="figure-delta">授信餘額、共同借款保證、信用卡分期循環異常</span>
+      </div>
+      <div class="figure-card risk-accent">
+        <span class="figure-label">負債密集遞增紅線</span>
+        <span class="figure-value">321 / 33231434241</span>
+        <span class="figure-delta orange">B33/B36 由左至右與 K33 由上至下警訊形態</span>
+      </div>
+      <div class="figure-card">
+        <span class="figure-label">債權憑證換發週期</span>
+        <span class="figure-value">每 5 年換發 1 次</span>
+        <span class="figure-delta">逾期催收戶「愛情證書」之法務保全防線</span>
+      </div>
+      <div class="figure-card">
+        <span class="figure-label">徵信法定免責條文</span>
+        <span class="figure-value">第 7 / 36 / 37 條</span>
+        <span class="figure-delta positive">公正平實撰寫、不表准駁、留存查核軌跡</span>
+      </div>
+    </section>
+
+    <!-- Learning Progress & Concept Overview -->
+    <section class="progress-panel" aria-label="學習進度與四大核心觀念總覽">
+      <div class="progress-header">
+        <h2 class="progress-title">學習進度追蹤與核心觀念架構</h2>
+        <span class="progress-stats" id="progress-stats">已讀 0 / 12 章（0%）</span>
+      </div>
+      <div class="progress-track" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" id="progress-bar-wrap">
+        <div class="progress-fill" id="progress-fill"></div>
+      </div>
+      <div class="overview-pillars">
+        <button type="button" class="pillar-btn" onclick="jumpToCategory('聯徵表單解析')">
+          <strong>一、聯徵表單解析</strong>
+          <span>B33、B36、K33/K34 穿透力與 5C Character 核心</span>
+        </button>
+        <button type="button" class="pillar-btn" onclick="jumpToCategory('負債警訊識別')">
+          <strong>二、負債警訊識別</strong>
+          <span>321 連續借貸、愛情證書與第 36/37 條免責軌跡</span>
+        </button>
+        <button type="button" class="pillar-btn" onclick="jumpToCategory('所得稅分期 vs 惡性循環')">
+          <strong>三、分期 vs 惡性循環</strong>
+          <span>所得稅常規消費分期與帳單循環枯竭辨析</span>
+        </button>
+        <button type="button" class="pillar-btn" onclick="jumpToCategory('實務案例研析')">
+          <strong>四、實務案例研析</strong>
+          <span>SYM、台灣車輛、二代 2N、慧洋-KY 與傳統大戶</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- Search & Filter Controls -->
+    <section aria-label="關鍵字搜尋與分類篩選">
+      <div class="section-head">
+        <h2>章節知識庫與實務研析</h2>
+        <span class="section-note">點選任一章節標題可展開或折疊詳解；勾選「已讀」即時儲存進度</span>
+      </div>
+
+      <div class="toolbar" style="margin-top: var(--space-md);">
+        <div class="toolbar-top">
+          <div class="input-group">
+            <label for="search-input" class="input-label">全文關鍵字即時搜尋（支援表單代碼、法條、案例名稱或實務關鍵詞）</label>
+            <div class="search-wrap">
+              <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+              <input type="text" id="search-input" class="search-input" placeholder="例如：B33、321、愛情證書、所得稅、台灣車輛、第37條…" oninput="handleSearch(this.value)">
+              <button type="button" class="clear-btn" id="clear-search-btn" onclick="clearSearch()" aria-label="清除搜尋文字" style="display: none;">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <line x1="18" y1="6" x2="6" y2="18"></line>
+                  <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <div class="action-row">
+            <button type="button" class="btn btn-secondary" onclick="expandAllVisible()">展開全部</button>
+            <button type="button" class="btn btn-secondary" onclick="collapseAllVisible()">折疊全部</button>
+            <button type="button" class="btn btn-danger-outline" id="reset-progress-btn" onclick="resetProgress(this)">重置已讀進度</button>
+          </div>
+        </div>
+
+        <div class="filter-row" role="group" aria-label="章節分類篩選標籤">
+          <button type="button" class="filter-chip active" data-category="ALL" onclick="setCategory('ALL')">全部章節 <span class="filter-count" id="count-ALL">(12)</span></button>
+          <button type="button" class="filter-chip" data-category="聯徵表單解析" onclick="setCategory('聯徵表單解析')">【聯徵表單解析】 <span class="filter-count" id="count-聯徵表單解析">(3)</span></button>
+          <button type="button" class="filter-chip" data-category="負債警訊識別" onclick="setCategory('負債警訊識別')">【負債警訊識別】 <span class="filter-count" id="count-負債警訊識別">(4)</span></button>
+          <button type="button" class="filter-chip" data-category="所得稅分期 vs 惡性循環" onclick="setCategory('所得稅分期 vs 惡性循環')">【所得稅分期 vs 惡性循環】 <span class="filter-count" id="count-所得稅分期 vs 惡性循環">(1)</span></button>
+          <button type="button" class="filter-chip" data-category="實務案例研析" onclick="setCategory('實務案例研析')">【實務案例研析】 <span class="filter-count" id="count-實務案例研析">(4)</span></button>
+          <button type="button" class="filter-chip" data-category="UNREAD" onclick="setCategory('UNREAD')">僅看未讀 <span class="filter-count" id="count-UNREAD">(12)</span></button>
+        </div>
+
+        <div class="status-line">
+          <span id="filter-status">目前顯示 12 / 12 個章節</span>
+          <span id="save-status">狀態同步：就緒</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Bento Grid Chapters Container -->
+    <section class="bento-grid" id="chapters-grid" aria-label="Day 28 課程章節卡片列表">
+      <!-- Rendered dynamically by JS for clean filtering, searching & state binding -->
+    </section>
+
+    <div class="empty-state" id="empty-state">
+      <p style="margin: 0; font-weight: 600; color: var(--primary);">找不到符合篩選或關鍵字條件的章節</p>
+      <p style="margin: 0; color: var(--on-surface-variant);">請嘗試更換關鍵字（例如：B33、321、分期、第 37 條），或切換回「全部章節」。</p>
+      <button type="button" class="btn btn-primary" onclick="resetFilters()">顯示全部 12 個章節</button>
+    </div>
+
+    <!-- Interactive Scenario Simulator -->
+    <section aria-label="聯徵異常代碼與實務情境判讀模擬器">
+      <div class="section-head">
+        <h2>互動演練：鎖頭銀行徵信人員聯徵情境判讀器</h2>
+        <span class="section-note">點選實務情境，檢視聯徵畫面特徵、風控判讀與報告撰寫策略</span>
+      </div>
+
+      <div class="simulator-panel" style="margin-top: var(--space-md);">
+        <div class="sim-presets" role="group" aria-label="實務情境選擇按鈕">
+          <button type="button" class="sim-btn active" data-sim="321" onclick="selectScenario('321')">情境一：B33「321」+ K33「33231434241」</button>
+          <button type="button" class="sim-btn" data-sim="sym" onclick="selectScenario('sym')">情境二：SYM 董事長分期 4,000 萬（無紅字）</button>
+          <button type="button" class="sim-btn" data-sim="trsc" onclick="selectScenario('trsc')">情境三：中鋼子公司負責人雙卡循環</button>
+          <button type="button" class="sim-btn" data-sim="2n" onclick="selectScenario('2n')">情境四：中小企業二代接班「2N」異常</button>
+          <button type="button" class="sim-btn" data-sim="blank" onclick="selectScenario('blank')">情境五：傳統南霸天全空白聯徵／航運鉅額</button>
+        </div>
+
+        <div class="sim-output" id="sim-output">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Grounding & Source Boundary Note -->
+    <section class="disclosure-box" aria-label="來源資料邊界說明">
+      <h3>資料依據與「來源未提供」透明標註清冊</h3>
+      <ul>
+        <li><strong>已依來源完整收錄</strong>：鎖頭銀行授信實務講師口述逐字稿（含 B33/B36/K33/K34 實務判讀、321 及 33231434241 密集動用警訊、愛情證書、台灣車輛、SYM 三陽工業、慧洋-KY、二代接班 2N 少康中興、106–108 年中小企業關係人借款案例）與《中華民國銀行公會會員徵信準則》第 7 條、第 36 條、第 37 條。</li>
+        <li><strong>來源未提供（嚴禁編造，特此標註）</strong>：(1) K33/K34「33、33231434241」及 B33/B36「321」之聯徵中心官方逐位數字代碼定義表；(2) T70 查詢表單之官方全稱與細部欄位架構（來源僅提及個人理財與證券副總相關超高餘額）；(3) 未具名中小企業個案（二代接班 2N 戶、106–108 年一蹶不振戶）及傳統無卡大戶之確切公司名稱與授信核貸金額。</li>
+      </ul>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <a class="home-link" href="index.html">回首頁</a>
+      <span class="footer-brand">Powered By Dunk</span>
+      <span class="footer-sources">資料來源：企業授信實務課綱（Day 28）、鎖頭銀行徵信實務課程講述記錄、中華民國銀行公會會員徵信準則</span>
+    </div>
+  </footer>
+
+  <api-shim></api-shim>
+  <script>
+    const CHAPTERS = [
+      {
+        id: `ch01`,
+        num: `01`,
+        category: `聯徵表單解析`,
+        tagClass: `tag-forms`,
+        cardAccent: ``,
+        spanWide: true,
+        title: `聯徵查詢三大核心表單定位：B33、B36 與 K33 / K34`,
+        summary: `透視全體金融機構借款明細、共同借款與對外保證責任，以及信用卡分期循環異常，是徵信人員判讀真實負債的基礎工具。`,
+        keywords: `B33 B36 K33 K34 T70 授信餘額 共同借款 保證 信用卡 循環利息 分期`,
+        contentHtml: `
+          <div class="card-content-grid">
+            <div class="data-table-wrap">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>聯徵表單代碼</th>
+                    <th>核心名稱與查詢重點</th>
+                    <th>實務穿透意義</th>
+                    <th>備註與資料邊界</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><span class="mono-code">B33</span></td>
+                    <td>授信餘額明細資訊</td>
+                    <td>揭露全體金融機構借款明細、放款類別（信貸、房貸、中長期放款等）、借款金額與餘額，用以計算總授信歸戶餘額及檢視短期增貸頻率。</td>
+                    <td>來源提及與 321 連續借款判讀連動。</td>
+                  </tr>
+                  <tr>
+                    <td><span class="mono-code">B36</span></td>
+                    <td>共同借款與保證資訊</td>
+                    <td>穿透對外連帶保證、背書保證與共同借款責任所形成的潛在負債，避免只看個人直接借款而低估實際財務負擔。</td>
+                    <td>與 B33 併同由左至右判讀連續動用變化。</td>
+                  </tr>
+                  <tr>
+                    <td><span class="mono-code">K33 / K34</span></td>
+                    <td>信用卡額度、分期與繳款異常明細資訊</td>
+                    <td><strong>K34 為 K33 之進化版</strong>，詳列各發卡行信用額度、循環利息動用金額、未全額繳清狀態、消費分期或帳單分期欠款餘額。</td>
+                    <td>實務上若見全無「全額繳清」且出現紅字或粉紅字，為重要警訊。</td>
+                  </tr>
+                  <tr>
+                    <td><span class="mono-code">T70</span></td>
+                    <td>個人理財與特定交易相關聯徵資訊</td>
+                    <td>課程實務中提及高階主管（如曾任證券副總者）若向銀行辦理個人理財周轉時，T70 餘額可能極高；目前尚未擴及企業戶。</td>
+                    <td><strong>來源未提供</strong>：T70 正式表單全稱與詳細欄位結構。</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="callout">
+              <span class="callout-title">徵信核心視角</span>
+              計算「總授信金額」時，實務上是以聯徵 B33 全體金融機構歸戶餘額加上本次申請額度（存單質借與進出口押匯得扣除）；因此判讀 B33 與 B36 不僅決定門檻，更是檢視借戶是否已多頭舉債的關鍵第一步。
+            </div>
+          </div>
+        `
+      },
+      {
+        id: `ch02`,
+        num: `02`,
+        category: `聯徵表單解析`,
+        tagClass: `tag-forms`,
+        cardAccent: ``,
+        spanWide: false,
+        title: `徵信照妖鏡思維：穿透「能力越大、負債越大」的假象`,
+        summary: `表面風光的頭銜與財務報表背後，聯徵資訊往往能照出負責人私下動用高利信貸與信用卡循環的資金黑洞。`,
+        keywords: `能力越大 負債越大 照妖鏡 5C Character 5P People 負責人 品德`,
+        contentHtml: `
+          <div class="card-content-grid">
+            <div class="detail-block">
+              <h4>為何不能只看公司財報？</h4>
+              <ul>
+                <li><strong>徵信 5C 與授信 5P 之差異</strong>：授信 5P 的 People 偏重敘述借款人背景與經歷；而徵信 5C 首重 <strong>Character（借款人品德）</strong>。</li>
+                <li>在中小企業授信實務中，負責人的經營理念、個人信用紀律與私下理財行為，往往直接決定企業未來的走向與償債意願。</li>
+                <li>切忌「只看前面公司背景順眼就照本宣科」：部分高階主管或負責人看似履歷顯赫，實際調閱 B33 與 K33/K34 卻發現「能力越大、負債越大」，背後暗藏個人週轉缺口。</li>
+              </ul>
+            </div>
+            <div class="callout callout-orange">
+              <span class="callout-title">名言警句提示</span>
+              「English is beginning, character is forever.」在中小企業洽談中，透過負責人談吐與聯徵個人信用報表相互印證，才能避開「資金黑洞」被企業外殼掩蓋的風險。
+            </div>
+          </div>
+        `
+      },
+      {
+        id: `ch03`,
+        num: `03`,
+        category: `聯徵表單解析`,
+        tagClass: `tag-forms`,
+        cardAccent: ``,
+        spanWide: false,
+        title: `鎖頭銀行徵信職責分工：《徵信準則》第 7 條公正平實原則`,
+        summary: `徵信報告著重完整蒐集並忠實呈現客觀數據，不宜在報告中直接給予核准或駁回之意見，維持審貸獨立牽制。`,
+        keywords: `徵信準則 第7條 准駁 職能分工 公正平實 誠信原則 鎖頭銀行`,
+        contentHtml: `
+          <div class="card-content-grid">
+            <div class="detail-block">
+              <h4>第 7 條與獨立牽制體系之落實</h4>
+              <ul>
+                <li>依據《中華民國銀行公會會員徵信準則》第 3 條及第 7 條，鎖頭銀行建立超然獨立之徵信體系，徵信工作與授信業務分由不同人員辦理。</li>
+                <li>徵信人員應本於誠信原則，<strong>公正平實撰寫徵信報告</strong>，重點在於盡量蒐集完整資料並充分揭露。</li>
+                <li><strong>不宜對授信案件直接表示准駁之意見</strong>：後續是否核貸、調整額度或徵提強化擔保，應由授信主辦及權責主管進行後續授信判斷。</li>
+              </ul>
+            </div>
+            <div class="callout">
+              <span class="callout-title">看見異常 ≠ 自行決定拒貸</span>
+              當聯徵出現紅字或大額負債時，徵信人員的職責不是「私下替客戶掩蓋」，也不是「越權直接否決」，而是如實記錄數據並向主管／經理報告，由業務與授審體系評估斷尾求生或協商條件。
+            </div>
+          </div>
+        `
+      },
+      {
+        id: `ch04`,
+        num: `04`,
+        category: `負債警訊識別`,
+        tagClass: `tag-alert`,
+        cardAccent: `is-risk`,
+        spanWide: true,
+        title: `B33/B36「321」與 K33「33231434241」短期密集借款警訊`,
+        summary: `聯徵畫面出現階梯式連續增貸與密集動用代碼，代表借戶正在拆東牆補西牆，隨時可能進入最後一搏或跳票倒閉。`,
+        keywords: `321 33231434241 B33 B36 K33 紅字 最後一搏 階梯式 密集借款 逾催呆`,
+        contentHtml: `
+          <div class="card-content-grid two-col">
+            <div class="detail-block">
+              <h4>聯徵異常形態兩大典型特徵</h4>
+              <ul>
+                <li><strong>B33 / B36 橫向連續增貸</strong>：從左邊看到右邊出現 <span class="mono-code danger">321</span> 形態，顯示近期在多家金融機構連續新增借款或共同借款。</li>
+                <li><strong>K33 縱向密集動用</strong>：從上面看到下面出現 <span class="mono-code danger">33、33231434241</span> 等密集負債遞增與異常動用紀錄。</li>
+                <li><strong>「聯徵看到 123，不會見到阿里山，只會遇到逾催呆」</strong>：紅字與上述密集代碼同時浮現時，代表借戶現金流已出現結構性崩壞。</li>
+              </ul>
+            </div>
+            <div class="detail-block">
+              <h4>實務判讀：防範「最後一搏」與道德風險</h4>
+              <ul>
+                <li>當負責人出現上述形態，往往正處於拆東牆補西牆的惡性循環，甚至可能準備「關門大吉（最後一搏）」。</li>
+                <li><strong>徵信原則</strong>：切勿與借戶「同進退」或幫客戶粉飾太平；必須在報告中<strong>忠實揭露</strong>聯徵紅字與多頭動用事實，避免事後演變為「千錯萬錯都是徵信不實的錯」。</li>
+              </ul>
+            </div>
+          </div>
+          <div class="callout callout-missing" style="margin-top: var(--space-md);">
+            <span class="callout-title">來源資料邊界標註</span>
+            <strong>來源未提供</strong>：「321」及「33、33231434241」在聯徵中心系統欄位中各自對應之官方逐位代碼釋義表，來源僅以實務講師口述形態與警訊意涵（連續新增借款、階梯式負債遞增）說明，故本講義不自行編造官方欄位代碼字典。
+          </div>
+        `
+      },
+      {
+        id: `ch05`,
+        num: `05`,
+        category: `負債警訊識別`,
+        tagClass: `tag-alert`,
+        cardAccent: `is-risk`,
+        spanWide: false,
+        title: `鎖頭銀行應對策略與 106–108 年 SME 崩壞實案`,
+        summary: `切勿對密集借款戶盲目續約或增貸，應及早輔導債務協商與縮額；同時警惕個人向公司反借款（違反公司法第 15 條）的惡化前兆。`,
+        keywords: `續約 增貸 協商 展延 縮額 106年 107年 108年 4000萬 應付關係人款項 公司法第15條`,
+        contentHtml: `
+          <div class="card-content-grid">
+            <div class="detail-block">
+              <h4>鎖頭銀行緊急處置四步驟</h4>
+              <ul>
+                <li><strong>停止盲目續約／增貸</strong>：在人還找得到時，不能沒事就做一般續約。</li>
+                <li><strong>啟動協商機制</strong>：評估採行改貸、展延、變更還款條件或縮額控管，勸導借戶回頭是岸，趁早處置。</li>
+                <li><strong>上報管理階層</strong>：若關係人借款或個人負債過大，應即時向分行經理報告，評估是否斷尾求生或要求下年度改善。</li>
+              </ul>
+            </div>
+            <div class="callout callout-danger">
+              <span class="callout-title">實務警世個案（106–108 年未具名中小企業）</span>
+              該非上市櫃公司於 <strong>106 年底</strong>帳列個人借給公司「應付關係人款項」2,100 多萬元；<strong>107 年</strong>還回後，反變成個人向公司借款 100 萬元（違反《公司法》第 15 條資金不得貸與股東規範）。雖至 <strong>108 年</strong>表面還款仍正常，但聯徵顯示負責人個人已借剩 4,000 多萬元且動用信用卡循環，隨後公司一蹶不振。（註：該公司名稱來源未提供）
+            </div>
+          </div>
+        `
+      },
+      {
+        id: `ch06`,
+        num: `06`,
+        category: `負債警訊識別`,
+        tagClass: `tag-alert`,
+        cardAccent: `is-orange`,
+        spanWide: false,
+        title: `催收實務與「愛情證書」：每五年向法院換發債權憑證`,
+        summary: `正常客戶一吵架就轉行，催收戶卻「翻臉比翻書快、一簽約天長地久」，銀行每五年須赴法院換發俗稱愛情證書的債權憑證。`,
+        keywords: `愛情證書 債權憑證 五年 5年 法院 催收 友情滿分 戀人未達`,
+        contentHtml: `
+          <div class="card-content-grid">
+            <div class="detail-block">
+              <h4>優質授信戶 vs 逾期催收戶之對比</h4>
+              <ul>
+                <li><strong>優質客戶（友情滿分、戀人未達）</strong>：只要條件事不合或稍有摩擦，隨時會轉往其他同業銀行。</li>
+                <li><strong>催收客戶（宛如老夫老妻）</strong>：平時大吵大鬧、翻臉比翻書還快，但契約既已簽署、陷入催收後便與銀行「天長地久直到永久」。</li>
+                <li><strong>每 5 年換發「愛情證書」</strong>：實務上鎖頭銀行每五年須向法院聲請換發一次<strong>債權憑證</strong>（講師戲稱「愛情證書」）以中斷時效、保全債權。</li>
+              </ul>
+            </div>
+            <div class="callout callout-orange">
+              <span class="callout-title">事前預警的價值</span>
+              徵信作業中及早透過聯徵 B33/K34 辨識惡性循環徵兆，正是為了防止正常往來客戶淪入漫長、高成本的催收與五年換證程序，減輕分行與催收同仁的後續負擔。
+            </div>
+          </div>
+        `
+      },
+      {
+        id: `ch07`,
+        num: `07`,
+        category: `負債警訊識別`,
+        tagClass: `tag-alert`,
+        cardAccent: `is-positive`,
+        spanWide: false,
+        title: `徵信免責護城河：《徵信準則》第 36、37 條與軌跡留存`,
+        summary: `依準則規定就徵信當時狀況盡職查核並「列印存卷、留存軌跡」，事後即使發生違約或瑕疵，依法仍可免除徵信人員責任。`,
+        keywords: `第36條 第37條 免責 徵信軌跡 列印 存卷 司法院 判決書 稽核`,
+        contentHtml: `
+          <div class="card-content-grid">
+            <div class="detail-block">
+              <h4>法定免責兩大條文核心</h4>
+              <ul>
+                <li><strong>《徵信準則》第 36 條</strong>：徵信人員應對所作之徵信報告，就<strong>徵信當時狀況及其所能知悉之事項</strong>負其責任。</li>
+                <li><strong>《徵信準則》第 37 條</strong>：凡依本準則、各會員有關規定及一般慣例所作之徵信報告，<strong>事後雖發現瑕疵，應免除其責任</strong>。</li>
+              </ul>
+            </div>
+            <div class="callout callout-positive">
+              <span class="callout-title">實務保命動作：留存徵信作業軌跡</span>
+              無論是聯徵中心信用報告（B33/B36/K33/K34）、關係企業三書表，或外部司法院判決書查詢系統，查核後務必<strong>列印存卷</strong>（證明「當時我有查」）。即使日後借戶倒閉或有漏未盡善處，稽核時仍能主張第 36、37 條之盡職抗辯。
+            </div>
+          </div>
+        `
+      },
+      {
+        id: `ch08`,
+        num: `08`,
+        category: `所得稅分期 vs 惡性循環`,
+        tagClass: `tag-tax`,
+        cardAccent: ``,
+        spanWide: true,
+        title: `常規消費分期（所得稅分期）vs 惡性負債滾存（帳單循環）`,
+        summary: `聯徵上動輒數千萬元的分期數字未必是信用危機！核心在於區分「消費分期／所得稅分期」與「帳單分期／循環利息」，並觀察系統標註顏色。`,
+        keywords: `所得稅分期 消費分期 帳單分期 循環利息 粉紅字 紅字 未全額繳清 現金流`,
+        contentHtml: `
+          <div class="card-content-grid">
+            <div class="data-table-wrap">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>比較維度</th>
+                    <th>常規消費分期（如：所得稅分期）</th>
+                    <th>惡性負債滾存（帳單分期與循環利息）</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>本質屬性</strong></td>
+                    <td>屬於一般<strong>消費分期</strong>；高資產戶利用銀行專案繳納大額綜合所得稅。</td>
+                    <td>屬於<strong>帳單分期</strong>或<strong>未全額繳清之循環信用</strong>，延後清償既已產生之帳單。</td>
+                  </tr>
+                  <tr>
+                    <td><strong>聯徵系統顏色提示</strong></td>
+                    <td>系統通常<strong>不會</strong>標註粉紅字或紅字警示。</td>
+                    <td>系統出現<strong>紅字／粉紅字</strong>警示，K34 顯示多行未全額繳清與高額循環餘額。</td>
+                  </tr>
+                  <tr>
+                    <td><strong>銀行與客戶動機</strong></td>
+                    <td>商業銀行為爭取高資產客戶大額金流與存款沉澱，主動提供之VIP服務。</td>
+                    <td>借款人短期現金流枯竭、入不敷出，靠高利率信用卡負債撐住日常開銷。</td>
+                  </tr>
+                  <tr>
+                    <td><strong>鎖頭銀行風控判讀</strong></td>
+                    <td><strong>不可誤判為信用惡化</strong>；應結合企業主身分與所得稅繳款事實合理說明。</td>
+                    <td><strong>重大信用警訊</strong>；若循環利息達上百萬元，應追查資金缺口與償債來源。</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        `
+      },
+      {
+        id: `ch09`,
+        num: `09`,
+        category: `實務案例研析`,
+        tagClass: `tag-case`,
+        cardAccent: `is-positive`,
+        spanWide: false,
+        title: `案例一｜三陽工業（SYM）董事長：4,000 萬分期的金流真相`,
+        summary: `SYM 董事長聯徵分期款項高達 4,000 多萬元卻未見紅字，實為銀行積極爭取所得稅金流下的常態操作。`,
+        keywords: `三陽工業 SYM 董事長 4000萬 所得稅分期 玉山銀行 金流 秘書 會計`,
+        contentHtml: `
+          <div class="card-content-grid">
+            <div class="detail-block">
+              <h4>案例事實與數字特徵</h4>
+              <ul>
+                <li>國內機車龍頭<strong>三陽工業（SYM）</strong>董事長聯徵顯示，信用卡分期款項高達 <strong>4,000 多萬元</strong>。</li>
+                <li>該筆分期甚至遠高於一般借款，但聯徵畫面上<strong>完全沒有標註粉紅字或紅字</strong>。</li>
+              </ul>
+            </div>
+            <div class="callout callout-positive">
+              <span class="callout-title">商業銀行搶客邏輯解析</span>
+              此為<strong>所得稅分期（消費分期）</strong>所致。商業銀行（例如同業玉山銀行）看中大老闆繳稅前，其秘書與會計必定提前數日將巨額資金存入帳戶所帶來的龐大金流與顧客服黏著度，因此主動爭取承作大額所得稅分期，完全屬高資產戶正常理財現象。
+            </div>
+          </div>
+        `
+      },
+      {
+        id: `ch10`,
+        num: `10`,
+        category: `實務案例研析`,
+        tagClass: `tag-case`,
+        cardAccent: `is-orange`,
+        spanWide: false,
+        title: `案例二｜台灣車輛（中鋼子公司）：「高拿輕放」的撰寫藝術`,
+        summary: `中鋼體系轉投資公司本業穩健，但負責人個人信貸與信用卡循環滿檔；徵信報告須兼顧股東背景與個人異常的精準平衡。`,
+        keywords: `台灣車輛 中鋼 唐榮鐵工廠 中國信託 LINE Bank 循環 100萬 400萬 60萬 高拿輕放 個人理財週轉`,
+        contentHtml: `
+          <div class="card-content-grid">
+            <div class="detail-block">
+              <h4>企業結構 vs 負責人聯徵實況</h4>
+              <ul>
+                <li><strong>企業體質</strong>：台灣車輛主要法人股東為<strong>中鋼</strong>與<strong>唐榮鐵工廠</strong>（同屬中鋼體系），具工程合約資產／負債支撐，本質穩健。</li>
+                <li><strong>負責人背景</strong>：曾任職金融業與證券副總（公股體系常見跨業派任負責人）。</li>
+                <li><strong>聯徵驚人現況</strong>：K33/K34 放紅字，最近一年均未全額繳清、循環信用達 <strong>100 多萬元</strong>；B33 顯示中國信託信貸曾借近 <strong>400 萬</strong>（餘額約 100 萬）及 <strong>LINE Bank</strong> 借款；K34 顯示無一家全額繳清，前一年借款約 30 萬，近期單中國信託即近 <strong>60 萬</strong>。</li>
+              </ul>
+            </div>
+            <div class="callout callout-orange">
+              <span class="callout-title">鎖頭銀行實務處理：「高拿輕放」</span>
+              面對背後大股東為中鋼的重要企業戶，不能輕言拒作，亦不宜直接寫負責人信用不佳；實務上採「高拿起、輕放下」，於報告中忠實揭露數據後，妥適敘明為<strong>「純係個人理財週轉所致」</strong>。
+            </div>
+          </div>
+        `
+      },
+      {
+        id: `ch11`,
+        num: `11`,
+        category: `實務案例研析`,
+        tagClass: `tag-case`,
+        cardAccent: `is-positive`,
+        spanWide: false,
+        title: `案例三｜中小企業二代接班「2N」與「少康中興」`,
+        summary: `信保案件更換負責人首年須留任原保證人；面對二代隱藏的「2N」信用卡循環異常，委婉輔導清償後順利完成接班與卸保。`,
+        keywords: `二代接班 2N 少康中興 信保 保證人 卸保 107年 108年 信用卡評分異常`,
+        contentHtml: `
+          <div class="card-content-grid">
+            <div class="detail-block">
+              <h4>信保換人規範與異常處置經過</h4>
+              <ul>
+                <li><strong>信保換保規則</strong>：信保案件更換負責人之第一年，原保證人（如前任母親）原則上須繼續擔任保證人，待隔年查無異常始得卸除。</li>
+                <li><strong>異常浮現</strong>：新接班二代名下有信用卡循環（母親事前不知情），107 年剛接班時資料尚不明顯，至 <strong>108 年</strong>畫面正式顯示 <span class="mono-code danger">2N</span> 評分異常狀態。</li>
+                <li><strong>委婉溝通成效</strong>：鎖頭銀行人員委婉向新負責人說明信用卡評分異常狀況；所幸該二代深明大義、立即自行處理清償，後續達成「少康中興」，報告綜合概述顯示全數正常且全額繳清，原保證人亦順利卸保。</li>
+              </ul>
+            </div>
+            <div class="callout callout-missing">
+              <span class="callout-title">來源資料邊界標註</span>
+              該二代接班企業之公司名稱與具體授信額度，<strong>來源未提供</strong>。
+            </div>
+          </div>
+        `
+      },
+      {
+        id: `ch12`,
+        num: `12`,
+        category: `實務案例研析`,
+        tagClass: `tag-case`,
+        cardAccent: ``,
+        spanWide: false,
+        title: `案例四｜極端大戶光譜：慧洋-KY 航運鉅額 vs 傳統無卡大戶`,
+        summary: `「貧窮限制了想像」——跨國航運董事長的驚人數字，與傳統「南霸天」全空白無卡無債的極端現金風格，皆不可直接誤判為異常。`,
+        keywords: `慧洋-KY 航運 船業 貧窮限制了想像 義聯集團 南霸天 全空白 無信用卡 紅字`,
+        contentHtml: `
+          <div class="card-content-grid">
+            <div class="detail-block">
+              <h4>光譜端點 A：慧洋-KY 董事長（極端龐大數字）</h4>
+              <ul>
+                <li>經營航運／船舶事業的<strong>慧洋-KY</strong> 董事長，其聯徵顯示的借款與分期金額極為龐大（多到幾乎數不清）。</li>
+                <li>實務判讀：<strong>數字大不等於異常、有分期不等於異常</strong>，必須理解產業規模與高資產企業主之資金配置特性（「貧窮限制了想像」）。</li>
+              </ul>
+            </div>
+            <div class="detail-block">
+              <h4>光譜端點 B：傳統「南霸天」（完全空白聯徵）</h4>
+              <ul>
+                <li>部分傳統老派企業主（課程亦談及如義聯集團等傳統南霸天風格），個人完全不使用銀行授信工具，甚至<strong>連信用卡都沒辦</strong>，聯徵呈現一片空白或因無往來紀錄而觸發系統紅字。</li>
+                <li>實務判讀：實質原因是「口袋現金太多、極度傳統霸氣」，切不可將無信用卡紀錄直接等同於信用不良。</li>
+              </ul>
+            </div>
+          </div>
+        `
+      }
+    ];
+
+    const SIM_SCENARIOS = {
+      '321': {
+        code: `B33 / B36 + K33`,
+        flagText: `系統紅字警示（高風險）`,
+        flagClass: `flag-red`,
+        digits: `B33/B36（左→右）：3 → 2 → 1 連續增貸\nK33（上→下）：33 / 33231434241 密集動用`,
+        title: `警訊判讀：拆東牆補西牆「最後一搏」前兆`,
+        desc: `借款人短期內向多家金融機構密集新增借款，且信用卡多行未全額繳清、階梯式遞增動用循環額度。此為現金流即將斷裂、隨時可能跳票倒閉的典型「逾催呆」前兆。`,
+        verdict: `鎖頭銀行對策：切勿盲目續約或增貸！在仍聯絡得到借款人時，立即介入協商（改貸、展延或縮額），並於報告中依事實充分揭露，同時留存列印查詢軌跡（依徵信準則第 36、37 條）。`
+      },
+      'sym': {
+        code: `K33 / K34 分期欄位`,
+        flagText: `無紅字／無粉紅字（常態）`,
+        flagClass: `flag-green`,
+        digits: `分期款項總額：約 4,000+ 萬元\n繳款狀態：正常繳款（消費分期—所得稅專案）`,
+        title: `判讀：三陽工業（SYM）式大額所得稅分期`,
+        desc: `雖分期金額高達四千餘萬元，但聯徵系統並未出現紅字或粉紅字警示。主因是商業銀行為爭取高資產企業主提前入帳的龐大繳稅金流與維繫顧客關係，主動承作的消費分期（所得稅分期）。`,
+        verdict: `鎖頭銀行對策：不可機械式誤判為現金流吃緊！應查明分期性質屬於「消費／所得稅分期」而非「帳單分期／循環利息」，於徵信報告中據實客觀敘明即可。`
+      },
+      'trsc': {
+        code: `B33 + K33 / K34`,
+        flagText: `系統紅字警示（個人循環）`,
+        flagClass: `flag-orange`,
+        digits: `B33：中信信貸 400 萬（餘約 100 萬）＋ LINE Bank\nK34：多行未全額繳清，循環約 100+ 萬（近期中信近 60 萬）`,
+        title: `判讀：公股／大集團子公司負責人「高拿輕放」個案`,
+        desc: `台灣車輛背後由中鋼及唐榮鐵工廠持股支持，企業基本面穩健；但外派／曾任證券副總之負責人個人信貸與信用卡循環嚴重，呈現「能力越大、負債越大」現象。`,
+        verdict: `鎖頭銀行對策：不能只因負責人個人循環就貿然斷掉優質集團子公司往來，亦不可隱匿事實。採「高拿起、輕放下」，如實陳述數據並定位為「純係個人理財週轉所致」，交由授審評估。`
+      },
+      '2n': {
+        code: `K33 / K34 年度追蹤`,
+        flagText: `系統標記 2N（評分異常）`,
+        flagClass: `flag-orange`,
+        digits: `107 年接班初查：尚不明顯\n108 年覆審畫面：出現「2N」評分異常紀錄`,
+        title: `判讀：中小企業二代接班隱性負債與信保銜接`,
+        desc: `企業主二代剛接班時常伴隨過往個人信用卡循環利息（前手父母往往不知情）。依信保基金規範，更換負責人第一年原保證人須繼續作保，隔年觀察無虞方得卸保。`,
+        verdict: `鎖頭銀行對策：委婉告知新負責人信用評分異常原因並輔導清償；待二代結清循環信用、隔年聯徵恢復正常全額繳清後（少康中興），再辦理原保證人卸保。`
+      },
+      'blank': {
+        code: `B33 / K33 兩極端樣態`,
+        flagText: `特殊樣態（非當然異常）`,
+        flagClass: `flag-neutral`,
+        digits: `類型 A（慧洋-KY）：航運業主鉅額借款與分期\n類型 B（傳統南霸天）：無卡無債、聯徵全空白（系統跳紅字）`,
+        title: `判讀：產業規模特性 vs 傳統純現金經營風格`,
+        desc: `慧洋-KY 董事長屬資本密集跨國航運業，個人金融往來規模非一般中小企業可比（「貧窮限制了想像」）；而極端傳統大戶則完全不用信用卡與融資工具，導致系統因無紀錄而跳紅字。`,
+        verdict: `鎖頭銀行對策：切忌僅憑系統紅字或單一絕對金額做表面判斷，須結合負責人所處產業規模、實際財力佐證與傳統理財習慣綜合解讀，依第 7 條公正平實呈現。`
+      }
+    };
+
+    const APP_STATE = {
+      readChapters: [],
+      expandedChapters: ['ch01', 'ch04'],
+      activeCategory: 'ALL',
+      searchQuery: '',
+      activeSim: '321'
+    };
+
+    function escapeRegExp(str) {
+      return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    }
+
+    function highlightText(htmlStr, query) {
+      if (!query || query.trim() === '') return htmlStr;
+      const safe = escapeRegExp(query.trim());
+      const regex = new RegExp(`(${safe})`, 'gi');
+      // Only highlight text outside HTML tags
+      return htmlStr.replace(/(>[^<]+<)/g, function(segment) {
+        return segment.replace(regex, '<mark>$1</mark>');
+      });
+    }
+
+    function getFilteredChapters() {
+      const q = APP_STATE.searchQuery.trim().toLowerCase();
+      return CHAPTERS.filter(function(ch) {
+        if (APP_STATE.activeCategory === 'UNREAD') {
+          if (APP_STATE.readChapters.includes(ch.id)) return false;
+        } else if (APP_STATE.activeCategory !== 'ALL') {
+          if (ch.category !== APP_STATE.activeCategory) return false;
+        }
+        if (q) {
+          const haystack = `${ch.num} ${ch.category} ${ch.title} ${ch.summary} ${ch.keywords} ${ch.contentHtml}`.replace(/<[^>]+>/g, ' ').toLowerCase();
+          if (!haystack.includes(q)) return false;
+        }
+        return true;
+      });
+    }
+
+    function renderChapters() {
+      const grid = document.getElementById('chapters-grid');
+      const emptyEl = document.getElementById('empty-state');
+      const statusEl = document.getElementById('filter-status');
+      if (!grid) return;
+
+      const filtered = getFilteredChapters();
+      if (statusEl) {
+        statusEl.textContent = `目前顯示 ${filtered.length} / ${CHAPTERS.length} 個章節`;
+      }
+
+      if (filtered.length === 0) {
+        grid.innerHTML = '';
+        if (emptyEl) emptyEl.classList.add('visible');
+        return;
+      }
+      if (emptyEl) emptyEl.classList.remove('visible');
+
+      const q = APP_STATE.searchQuery.trim();
+      const html = filtered.map(function(ch) {
+        const isRead = APP_STATE.readChapters.includes(ch.id);
+        const isOpen = APP_STATE.expandedChapters.includes(ch.id) || q.length > 0;
+        const spanClass = ch.spanWide ? 'span-wide' : '';
+        const readClass = isRead ? 'is-read' : '';
+        const openClass = isOpen ? 'is-open' : '';
+        const accentClass = ch.cardAccent || '';
+
+        const titleDisplay = q ? ch.title.replace(new RegExp(`(${escapeRegExp(q)})`, 'gi'), '<mark>$1</mark>') : ch.title;
+        const summaryDisplay = q ? ch.summary.replace(new RegExp(`(${escapeRegExp(q)})`, 'gi'), '<mark>$1</mark>') : ch.summary;
+        const bodyDisplay = q ? highlightText(ch.contentHtml, q) : ch.contentHtml;
+
+        return `
+          <article class="chapter-card ${spanClass} ${accentClass} ${readClass} ${openClass}" id="card-${ch.id}">
+            <div class="card-header">
+              <div class="card-meta-bar">
+                <div class="meta-left">
+                  <span class="chapter-num">CH.${ch.num}</span>
+                  <span class="cat-tag ${ch.tagClass}">【${ch.category}】</span>
+                </div>
+                <label class="read-toggle ${isRead ? 'checked' : ''}" for="chk-${ch.id}">
+                  <input type="checkbox" id="chk-${ch.id}" ${isRead ? 'checked' : ''} onchange="toggleRead('${ch.id}', this.checked)">
+                  <span>${isRead ? '已讀完成' : '標記已讀'}</span>
+                </label>
+              </div>
+              <button type="button" class="card-title-btn" aria-expanded="${isOpen ? 'true' : 'false'}" aria-controls="body-${ch.id}" onclick="toggleExpand('${ch.id}')">
+                <h3 class="card-title">${titleDisplay}</h3>
+                <svg class="chevron-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              </button>
+              <p class="card-summary">${summaryDisplay}</p>
+            </div>
+            <div class="card-body" id="body-${ch.id}">
+              ${bodyDisplay}
+            </div>
+          </article>
+        `;
+      }).join('');
+
+      grid.innerHTML = html;
+      updateCounts();
+    }
+
+    function updateProgressUI() {
+      const total = CHAPTERS.length;
+      const done = APP_STATE.readChapters.length;
+      const pct = total > 0 ? Math.round((done / total) * 100) : 0;
+
+      const statsEl = document.getElementById('progress-stats');
+      const fillEl = document.getElementById('progress-fill');
+      const wrapEl = document.getElementById('progress-bar-wrap');
+
+      if (statsEl) statsEl.textContent = `已讀 ${done} / ${total} 章（${pct}%）`;
+      if (fillEl) fillEl.style.width = `${pct}%`;
+      if (wrapEl) wrapEl.setAttribute('aria-valuenow', String(pct));
+    }
+
+    function updateCounts() {
+      const total = CHAPTERS.length;
+      const unreadCount = CHAPTERS.filter(function(c) {
+        return !APP_STATE.readChapters.includes(c.id);
+      }).length;
+
+      const elAll = document.getElementById('count-ALL');
+      const elUnread = document.getElementById('count-UNREAD');
+      if (elAll) elAll.textContent = `(${total})`;
+      if (elUnread) elUnread.textContent = `(${unreadCount})`;
+
+      const cats = ['聯徵表單解析', '負債警訊識別', '所得稅分期 vs 惡性循環', '實務案例研析'];
+      cats.forEach(function(cat) {
+        const cnt = CHAPTERS.filter(function(c) { return c.category === cat; }).length;
+        const el = document.getElementById(`count-${cat}`);
+        if (el) el.textContent = `(${cnt})`;
+      });
+    }
+
+    function updateFilterChips() {
+      const chips = document.querySelectorAll('.filter-chip');
+      chips.forEach(function(chip) {
+        if (chip.dataset.category === APP_STATE.activeCategory) {
+          chip.classList.add('active');
+        } else {
+          chip.classList.remove('active');
+        }
+      });
+    }
+
+    function renderSimulator() {
+      const out = document.getElementById('sim-output');
+      if (!out) return;
+      const data = SIM_SCENARIOS[APP_STATE.activeSim] || SIM_SCENARIOS['321'];
+
+      const buttons = document.querySelectorAll('.sim-btn');
+      buttons.forEach(function(btn) {
+        if (btn.dataset.sim === APP_STATE.activeSim) {
+          btn.classList.add('active');
+        } else {
+          btn.classList.remove('active');
+        }
+      });
+
+      const digitsFormatted = data.digits.replace(/\n/g, '<br>');
+
+      out.innerHTML = `
+        <div class="sim-screen">
+          <div class="sim-screen-head">
+            <span>JCIC 表單：${data.code}</span>
+            <span class="sim-flag ${data.flagClass}">${data.flagText}</span>
+          </div>
+          <div class="sim-digits">${digitsFormatted}</div>
+        </div>
+        <div class="sim-analysis">
+          <h3>${data.title}</h3>
+          <p>${data.desc}</p>
+          <div class="sim-verdict">
+            <strong>處置要領：</strong>${data.verdict}
+          </div>
+        </div>
+      `;
+    }
+
+    async function persistState() {
+      const saveEl = document.getElementById('save-status');
+      try {
+        if (window.notebookAppApi && typeof window.notebookAppApi.setAppState === 'function') {
+          await window.notebookAppApi.setAppState({
+            readChapters: APP_STATE.readChapters,
+            expandedChapters: APP_STATE.expandedChapters,
+            activeCategory: APP_STATE.activeCategory,
+            activeSim: APP_STATE.activeSim
+          });
+          if (saveEl) saveEl.textContent = `狀態同步：已儲存（${APP_STATE.readChapters.length}/${CHAPTERS.length} 已讀）`;
+        }
+      } catch (err) {
+        if (saveEl) saveEl.textContent = `狀態同步：本機工作階段有效`;
+      }
+    }
+
+    function toggleRead(id, checked) {
+      if (checked) {
+        if (!APP_STATE.readChapters.includes(id)) {
+          APP_STATE.readChapters.push(id);
+        }
+      } else {
+        APP_STATE.readChapters = APP_STATE.readChapters.filter(function(item) { return item !== id; });
+      }
+      updateProgressUI();
+      renderChapters();
+      persistState();
+    }
+
+    function toggleExpand(id) {
+      if (APP_STATE.expandedChapters.includes(id)) {
+        APP_STATE.expandedChapters = APP_STATE.expandedChapters.filter(function(item) { return item !== id; });
+      } else {
+        APP_STATE.expandedChapters.push(id);
+      }
+      renderChapters();
+      persistState();
+    }
+
+    function expandAllVisible() {
+      const filtered = getFilteredChapters();
+      filtered.forEach(function(ch) {
+        if (!APP_STATE.expandedChapters.includes(ch.id)) {
+          APP_STATE.expandedChapters.push(ch.id);
+        }
+      });
+      renderChapters();
+      persistState();
+    }
+
+    function collapseAllVisible() {
+      const visibleIds = getFilteredChapters().map(function(ch) { return ch.id; });
+      APP_STATE.expandedChapters = APP_STATE.expandedChapters.filter(function(id) {
+        return !visibleIds.includes(id);
+      });
+      renderChapters();
+      persistState();
+    }
+
+    function setCategory(cat) {
+      APP_STATE.activeCategory = cat;
+      updateFilterChips();
+      renderChapters();
+      persistState();
+    }
+
+    function jumpToCategory(cat) {
+      setCategory(cat);
+      const grid = document.getElementById('chapters-grid');
+      if (grid) {
+        grid.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+
+    function handleSearch(val) {
+      APP_STATE.searchQuery = val || '';
+      const clearBtn = document.getElementById('clear-search-btn');
+      if (clearBtn) {
+        clearBtn.style.display = APP_STATE.searchQuery.trim().length > 0 ? 'inline-flex' : 'none';
+      }
+      renderChapters();
+    }
+
+    function clearSearch() {
+      const input = document.getElementById('search-input');
+      if (input) input.value = '';
+      handleSearch('');
+    }
+
+    function resetFilters() {
+      APP_STATE.activeCategory = 'ALL';
+      clearSearch();
+      updateFilterChips();
+      renderChapters();
+      persistState();
+    }
+
+    function resetProgress(btn) {
+      if (!btn) return;
+      if (btn.dataset.armed !== 'true') {
+        btn.dataset.armed = 'true';
+        btn.textContent = '再點一次確認清空';
+        btn.classList.remove('btn-danger-outline');
+        btn.classList.add('btn-danger-armed');
+        setTimeout(function() {
+          if (btn.dataset.armed === 'true') {
+            btn.dataset.armed = 'false';
+            btn.textContent = '重置已讀進度';
+            btn.classList.remove('btn-danger-armed');
+            btn.classList.add('btn-danger-outline');
+          }
+        }, 4000);
+        return;
+      }
+      btn.dataset.armed = 'false';
+      btn.textContent = '重置已讀進度';
+      btn.classList.remove('btn-danger-armed');
+      btn.classList.add('btn-danger-outline');
+      APP_STATE.readChapters = [];
+      updateProgressUI();
+      renderChapters();
+      persistState();
+    }
+
+    function selectScenario(key) {
+      APP_STATE.activeSim = key;
+      renderSimulator();
+      persistState();
+    }
+
+    async function initApp() {
+      try {
+        if (window.notebookAppApi && typeof window.notebookAppApi.getAppState === 'function') {
+          const saved = await window.notebookAppApi.getAppState();
+          if (saved && typeof saved === 'object') {
+            if (Array.isArray(saved.readChapters)) {
+              APP_STATE.readChapters = saved.readChapters.filter(function(id) {
+                return CHAPTERS.some(function(c) { return c.id === id; });
+              });
+            }
+            if (Array.isArray(saved.expandedChapters)) {
+              APP_STATE.expandedChapters = saved.expandedChapters;
+            }
+            if (typeof saved.activeCategory === 'string') {
+              APP_STATE.activeCategory = saved.activeCategory;
+            }
+            if (typeof saved.activeSim === 'string' && SIM_SCENARIOS[saved.activeSim]) {
+              APP_STATE.activeSim = saved.activeSim;
+            }
+          }
+        }
+      } catch (e) {
+        // Fallback to default state cleanly
+      }
+
+      updateProgressUI();
+      updateFilterChips();
+      renderChapters();
+      renderSimulator();
+
+      if (window.notebookAppApi && typeof window.notebookAppApi.notifyAppReady === 'function') {
+        window.notebookAppApi.notifyAppReady();
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', initApp);
+  </script>
+</body>
+</html>

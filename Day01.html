@@ -1,0 +1,1965 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#14283a">
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="./manifest.webmanifest">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="授信實務30天">
+  <script>
+    if ("serviceWorker" in navigator && (location.protocol === "https:" || location.hostname === "localhost")) {
+      window.addEventListener("load", () => navigator.serviceWorker.register("./service-worker.js").catch((error) => console.warn("PWA offline support unavailable:", error)));
+    }
+  </script>
+  <meta name="artifact-type" content="dashboard">
+  <meta name="design-style" content="charter">
+  <title>中小企業授信與財報分析實務-Day01-鎖頭銀行徵信法規架構與授信核心原則</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&family=Libre+Caslon+Text:wght@400;700&family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      color-scheme: light;
+
+      /* 1. Charter base palette adapted to THEME */
+      --background: #F8FAFC;
+      --surface-container-low: #FFFFFF;
+      --surface-container: #F1F5F9;
+      --surface-container-high: #E2E8F0;
+
+      /* Ink */
+      --on-surface: #0F2537;
+      --on-surface-variant: #475569;
+      --secondary: #334155;
+
+      /* Rules & Accents */
+      --outline: #C5A880;
+      --outline-variant: #CBD5E1;
+      --primary: #0F2537;
+      --primary-navy-bright: #1E3A8A;
+      --on-primary: #FFFFFF;
+      --primary-container: #E0E7FF;
+      --on-primary-container: #0F2537;
+      --accent: #D97706;
+      --tertiary: #92400E;
+      --gold-on-navy: #C5A880;
+
+      /* Semantic Risk & Pass States */
+      --error: #DC2626;
+      --error-bg: #FEF2F2;
+      --error-border: #FECACA;
+      --warning: #F59E0B;
+      --warning-bg: #FFFBEB;
+      --warning-text: #78350F;
+      --positive: #059669;
+      --positive-text: #047857;
+      --positive-bg: #ECFDF5;
+      --positive-border: #A7F3D0;
+
+      /* Data Series */
+      --data-1: #0F2537;
+      --data-2: #D97706;
+      --data-3: #059669;
+      --data-4: #475569;
+      --data-context: #CBD5E1;
+
+      /* Fonts */
+      --font-headline: 'Noto Serif TC', 'Libre Caslon Text', serif;
+      --font-body: 'Noto Sans TC', 'Inter', sans-serif;
+      --font-label: 'IBM Plex Mono', 'Noto Sans TC', monospace;
+
+      /* Shape (Charter 2px architectural corners) */
+      --rounded: 0.125rem;
+      --rounded-lg: 0.25rem;
+      --rounded-full: 0.125rem;
+
+      /* Style Effects */
+      --brass-rule: 2px solid var(--outline);
+      --navy-rule: 2px solid var(--primary);
+      --hairline: 1px solid var(--outline-variant);
+      --leaf-shadow: 0 1px 2px rgba(15, 37, 55, 0.05);
+
+      /* Focus Ring */
+      --focus: #1E3A8A;
+
+      /* Type Scale (Dashboard / Study Console) */
+      --display-size: clamp(1.5rem, 1.25rem + 1vw, 2.125rem);
+      --headline-size: clamp(1.25rem, 1.1rem + 0.5vw, 1.5rem);
+      --subhead-size: clamp(1.0625rem, 1rem + 0.25vw, 1.1875rem);
+      --body-size: clamp(0.9375rem, 0.9rem + 0.15vw, 1rem);
+      --label-size: 0.75rem;
+
+      /* Spacing Scale (4pt base) */
+      --space-xs: 0.25rem;
+      --space-sm: 0.5rem;
+      --space-md: 1rem;
+      --space-lg: 1.5rem;
+      --space-xl: 2.5rem;
+      --space-2xl: 4rem;
+
+      /* Motion */
+      --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+      --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+      --dur-micro: 120ms;
+      --dur-short: 220ms;
+      --dur-long: 420ms;
+    }
+
+    /* Base reset */
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body {
+      overflow-x: clip;
+      margin: 0;
+      padding: 0;
+      background-color: var(--background);
+      color: var(--on-surface);
+      font-family: var(--font-body);
+      font-size: var(--body-size);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    header { position: static !important; }
+    button, input, select, textarea { font-family: inherit; }
+
+    :focus-visible {
+      outline: 3px solid var(--focus);
+      outline-offset: 2px;
+    }
+
+    /* Navy Title Band Header */
+    .title-band {
+      background: var(--primary);
+      color: var(--on-primary);
+      border-bottom: 3px solid var(--outline);
+      padding: var(--space-xl) var(--space-lg) var(--space-lg);
+    }
+    .title-band-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .header-kicker-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-sm);
+      margin-bottom: var(--space-sm);
+    }
+    .header-kicker {
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      color: var(--gold-on-navy);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+    .header-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-xs);
+      border: 1px solid var(--gold-on-navy);
+      color: var(--gold-on-navy);
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      padding: 0.15rem 0.55rem;
+      border-radius: var(--rounded);
+    }
+    .title-band h1 {
+      font-family: var(--font-headline);
+      font-weight: 600;
+      font-size: var(--display-size);
+      line-height: 1.25;
+      margin: 0 0 var(--space-sm) 0;
+      color: var(--on-primary);
+      word-break: keep-all;
+      overflow-wrap: break-word;
+    }
+    .title-band .lede {
+      color: var(--surface-container-high);
+      max-width: 70ch;
+      margin: 0;
+      font-size: var(--body-size);
+    }
+
+    /* Main Grid Container */
+    .page-grid {
+      display: grid;
+      gap: var(--space-xl);
+      padding: var(--space-lg);
+      max-width: 1200px;
+      margin: 0 auto;
+      overflow: hidden;
+    }
+    .page-grid * { min-width: 0; }
+
+    /* Progress Console Strip */
+    .progress-console {
+      background: var(--surface-container-low);
+      border: var(--hairline);
+      border-top: var(--brass-rule);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-md) var(--space-lg);
+      box-shadow: var(--leaf-shadow);
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: var(--space-md);
+      align-items: center;
+    }
+    .progress-meta-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: var(--space-sm);
+      margin-bottom: var(--space-xs);
+    }
+    .progress-title {
+      font-family: var(--font-body);
+      font-weight: 700;
+      font-size: var(--body-size);
+      color: var(--on-surface);
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+    }
+    .progress-stats {
+      font-family: var(--font-label);
+      font-size: 0.875rem;
+      font-weight: 600;
+      font-variant-numeric: tabular-nums;
+      color: var(--primary-navy-bright);
+    }
+    .progress-stats.is-complete {
+      color: var(--positive-text);
+    }
+    .progress-track {
+      width: 100%;
+      height: 10px;
+      background: var(--surface-container-high);
+      border-radius: var(--rounded);
+      overflow: hidden;
+      border: 1px solid var(--outline-variant);
+    }
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background: var(--accent);
+      transition: width var(--dur-long) var(--ease-out), background-color var(--dur-short) var(--ease-out);
+    }
+    .progress-fill.is-complete {
+      background: var(--positive);
+    }
+    .progress-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-sm);
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-xs);
+      min-height: 44px;
+      padding: 0 var(--space-md);
+      border-radius: var(--rounded);
+      font-size: 0.875rem;
+      font-weight: 600;
+      cursor: pointer;
+      border: 1px solid var(--primary);
+      background: transparent;
+      color: var(--primary);
+      transition: background-color var(--dur-micro) var(--ease-out), color var(--dur-micro) var(--ease-out), border-color var(--dur-micro) var(--ease-out);
+    }
+    .btn:hover {
+      background: var(--primary-container);
+    }
+    .btn-primary {
+      background: var(--primary);
+      color: var(--on-primary);
+      border-color: var(--primary);
+    }
+    .btn-primary:hover {
+      background: var(--primary-navy-bright);
+      border-color: var(--primary-navy-bright);
+    }
+    .btn-danger-outline {
+      border-color: var(--outline-variant);
+      color: var(--secondary);
+    }
+    .btn-danger-outline:hover {
+      border-color: var(--error);
+      color: var(--error);
+      background: var(--error-bg);
+    }
+    .btn-danger-outline[data-armed="true"] {
+      border-color: var(--error);
+      background: var(--error);
+      color: var(--on-primary);
+    }
+
+    /* Section Headings */
+    .section-head {
+      border-top: var(--brass-rule);
+      padding-top: var(--space-md);
+      border-bottom: var(--hairline);
+      padding-bottom: var(--space-sm);
+      margin-bottom: var(--space-lg);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: var(--space-sm);
+    }
+    .section-head h2 {
+      font-family: var(--font-headline);
+      font-weight: 600;
+      font-size: var(--headline-size);
+      margin: 0;
+      color: var(--on-surface);
+    }
+    .section-sub {
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      color: var(--on-surface-variant);
+    }
+
+    /* Core Figures Grid */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(245px, 100%), 1fr));
+      gap: var(--space-md);
+    }
+    .figure-card {
+      background: var(--surface-container-low);
+      border: var(--hairline);
+      border-top: var(--brass-rule);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-md) var(--space-lg);
+      box-shadow: var(--leaf-shadow);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: var(--space-xs);
+    }
+    .figure-label {
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      color: var(--on-surface-variant);
+      font-weight: 600;
+    }
+    .figure-value {
+      font-family: var(--font-headline);
+      font-weight: 600;
+      font-size: 1.5rem;
+      font-variant-numeric: tabular-nums lining-nums;
+      color: var(--primary);
+      line-height: 1.25;
+      margin: var(--space-xs) 0;
+    }
+    .figure-delta {
+      font-size: 0.875rem;
+      color: var(--tertiary);
+      font-weight: 600;
+    }
+    .figure-desc {
+      font-size: 0.875rem;
+      color: var(--secondary);
+      margin: 0;
+    }
+
+    /* Architecture Interactive Map */
+    .architecture-panel {
+      background: var(--surface-container-low);
+      border: var(--hairline);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-lg);
+      box-shadow: var(--leaf-shadow);
+      display: grid;
+      grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+      gap: var(--space-lg);
+      align-items: start;
+    }
+    .svg-stage {
+      background: var(--surface-container);
+      border: var(--hairline);
+      border-radius: var(--rounded);
+      padding: var(--space-md);
+      overflow-x: auto;
+    }
+    .arch-svg {
+      width: 100%;
+      min-width: 460px;
+      height: auto;
+      display: block;
+    }
+    .arch-node {
+      cursor: pointer;
+      transition: opacity var(--dur-micro) var(--ease-out);
+    }
+    .arch-node:hover .node-box {
+      stroke: var(--primary-navy-bright);
+      stroke-width: 2.5;
+    }
+    .arch-node.is-active .node-box {
+      stroke: var(--accent);
+      stroke-width: 2.5;
+      fill: var(--primary-container);
+    }
+    .arch-detail-box {
+      background: var(--background);
+      border: var(--hairline);
+      border-left: 4px solid var(--primary);
+      border-radius: var(--rounded);
+      padding: var(--space-md) var(--space-lg);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-sm);
+    }
+    .arch-detail-tag {
+      display: inline-block;
+      align-self: flex-start;
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      font-weight: 600;
+      color: var(--tertiary);
+      border: 1px solid var(--outline);
+      padding: 0.125rem 0.5rem;
+      border-radius: var(--rounded);
+      background: var(--surface-container-low);
+    }
+    .arch-detail-box h3 {
+      font-family: var(--font-headline);
+      font-size: var(--subhead-size);
+      margin: 0;
+      color: var(--primary);
+    }
+    .arch-detail-box p {
+      margin: 0;
+      font-size: 0.9375rem;
+      color: var(--secondary);
+    }
+    .arch-jump-list {
+      margin: var(--space-xs) 0 0 0;
+      padding: 0;
+      list-style: none;
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-xs);
+    }
+
+    /* Filter & Search Toolbar */
+    .filter-toolbar {
+      background: var(--surface-container-low);
+      border: var(--hairline);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-md) var(--space-lg);
+      box-shadow: var(--leaf-shadow);
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: var(--space-md);
+      align-items: end;
+    }
+    .search-field {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xs);
+    }
+    .field-label {
+      font-size: 0.8125rem;
+      font-weight: 600;
+      color: var(--on-surface);
+    }
+    .search-input-wrap {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+    .search-icon {
+      position: absolute;
+      left: 0.75rem;
+      color: var(--on-surface-variant);
+      pointer-events: none;
+    }
+    .search-input {
+      width: 100%;
+      min-height: 44px;
+      padding: 0.5rem 2.5rem 0.5rem 2.35rem;
+      border: 1px solid var(--outline-variant);
+      border-radius: var(--rounded);
+      background: var(--surface-container-low);
+      color: var(--on-surface);
+      font-size: 0.9375rem;
+      transition: border-color var(--dur-micro) var(--ease-out), box-shadow var(--dur-micro) var(--ease-out);
+    }
+    .search-input:focus {
+      border-color: var(--primary-navy-bright);
+      outline: none;
+      box-shadow: 0 0 0 3px var(--primary-container);
+    }
+    .search-clear {
+      position: absolute;
+      right: 0.25rem;
+      min-width: 36px;
+      min-height: 36px;
+      border: none;
+      background: transparent;
+      color: var(--on-surface-variant);
+      cursor: pointer;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      border-radius: var(--rounded);
+    }
+    .search-clear.is-visible { display: inline-flex; }
+    .search-clear:hover { color: var(--on-surface); background: var(--surface-container); }
+
+    .toolbar-controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-sm);
+      align-items: center;
+    }
+    .category-row {
+      grid-column: 1 / -1;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-sm);
+      padding-top: var(--space-sm);
+      border-top: var(--hairline);
+    }
+    .filter-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-xs);
+    }
+    .filter-btn {
+      min-height: 40px;
+      padding: 0 0.875rem;
+      border: 1px solid var(--outline-variant);
+      background: var(--surface-container);
+      color: var(--secondary);
+      border-radius: var(--rounded);
+      font-size: 0.875rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color var(--dur-micro) var(--ease-out), color var(--dur-micro) var(--ease-out), border-color var(--dur-micro) var(--ease-out);
+    }
+    .filter-btn:hover {
+      background: var(--surface-container-high);
+      color: var(--on-surface);
+    }
+    .filter-btn.is-active {
+      background: var(--primary);
+      color: var(--on-primary);
+      border-color: var(--primary);
+    }
+    .unread-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-xs);
+      min-height: 40px;
+      padding: 0 0.75rem;
+      border: 1px solid var(--outline-variant);
+      border-radius: var(--rounded);
+      background: var(--surface-container-low);
+      cursor: pointer;
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--secondary);
+      user-select: none;
+    }
+    .unread-toggle input {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--primary);
+      cursor: pointer;
+    }
+    .result-counter {
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      color: var(--on-surface-variant);
+    }
+
+    /* Chapter Cards List */
+    .chapters-list {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: var(--space-md);
+    }
+    .chapter-card {
+      background: var(--surface-container-low);
+      border: var(--hairline);
+      border-left: 4px solid var(--primary);
+      border-radius: var(--rounded-lg);
+      box-shadow: var(--leaf-shadow);
+      transition: box-shadow var(--dur-short) var(--ease-out), border-color var(--dur-short) var(--ease-out);
+      container-type: inline-size;
+    }
+    .chapter-card.is-read {
+      border-left-color: var(--positive);
+    }
+    .chapter-card.is-expanded {
+      box-shadow: 0 4px 14px rgba(15, 37, 55, 0.08);
+    }
+    .chapter-header {
+      padding: var(--space-md) var(--space-lg);
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr) auto;
+      gap: var(--space-md);
+      align-items: start;
+    }
+    .chapter-index {
+      font-family: var(--font-label);
+      font-weight: 600;
+      font-size: 0.875rem;
+      color: var(--primary);
+      background: var(--surface-container);
+      border: 1px solid var(--outline-variant);
+      padding: 0.25rem 0.55rem;
+      border-radius: var(--rounded);
+      font-variant-numeric: tabular-nums;
+      margin-top: 2px;
+    }
+    .chapter-card.is-read .chapter-index {
+      background: var(--positive-bg);
+      border-color: var(--positive-border);
+      color: var(--positive-text);
+    }
+    .chapter-trigger {
+      text-align: left;
+      background: transparent;
+      border: none;
+      padding: 0;
+      cursor: pointer;
+      color: inherit;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xs);
+    }
+    .chapter-meta-top {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: var(--space-xs);
+    }
+    .cat-tag {
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      font-weight: 600;
+      padding: 0.125rem 0.5rem;
+      border-radius: var(--rounded);
+      border: 1px solid var(--outline);
+      color: var(--tertiary);
+      background: var(--warning-bg);
+    }
+    .article-ref {
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      color: var(--primary-navy-bright);
+      font-weight: 600;
+    }
+    .chapter-title {
+      font-family: var(--font-headline);
+      font-size: var(--subhead-size);
+      font-weight: 600;
+      color: var(--on-surface);
+      margin: 0;
+      line-height: 1.35;
+    }
+    .chapter-trigger:hover .chapter-title {
+      color: var(--primary-navy-bright);
+    }
+    .chapter-summary {
+      margin: 0;
+      font-size: 0.9375rem;
+      color: var(--on-surface-variant);
+      max-width: 72ch;
+    }
+    .chapter-actions {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+    }
+    .read-checkbox-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      min-height: 44px;
+      padding: 0 0.75rem;
+      border: 1px solid var(--outline-variant);
+      border-radius: var(--rounded);
+      background: var(--background);
+      cursor: pointer;
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--secondary);
+      user-select: none;
+      transition: background-color var(--dur-micro) var(--ease-out), border-color var(--dur-micro) var(--ease-out), color var(--dur-micro) var(--ease-out);
+    }
+    .read-checkbox-label:hover {
+      border-color: var(--positive);
+    }
+    .read-checkbox-label.is-checked {
+      background: var(--positive-bg);
+      border-color: var(--positive);
+      color: var(--positive-text);
+    }
+    .read-checkbox-label input {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--positive);
+      cursor: pointer;
+      margin: 0;
+    }
+    .expand-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.35rem;
+      min-height: 44px;
+      min-width: 44px;
+      padding: 0 0.75rem;
+      border: 1px solid var(--outline-variant);
+      border-radius: var(--rounded);
+      background: var(--surface-container-low);
+      color: var(--primary);
+      font-size: 0.875rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color var(--dur-micro) var(--ease-out);
+    }
+    .expand-btn:hover {
+      background: var(--surface-container);
+    }
+    .expand-chevron {
+      transition: transform var(--dur-short) var(--ease-out);
+    }
+    .chapter-card.is-expanded .expand-chevron {
+      transform: rotate(180deg);
+    }
+
+    /* Expanded Detail Body */
+    .chapter-body {
+      display: none;
+      padding: 0 var(--space-lg) var(--space-lg);
+      border-top: var(--hairline);
+      background: var(--background);
+    }
+    .chapter-card.is-expanded .chapter-body {
+      display: block;
+      animation: revealFade var(--dur-short) var(--ease-out);
+    }
+    @keyframes revealFade {
+      from { opacity: 0; transform: translateY(-4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .detail-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: var(--space-md);
+      padding-top: var(--space-md);
+    }
+    @container (max-width: 660px) {
+      .detail-grid {
+        grid-template-columns: 1fr;
+      }
+      .chapter-header {
+        grid-template-columns: minmax(0, 1fr);
+      }
+      .chapter-actions {
+        justify-content: flex-start;
+      }
+    }
+    .detail-panel {
+      background: var(--surface-container-low);
+      border: var(--hairline);
+      border-radius: var(--rounded);
+      padding: var(--space-md);
+    }
+    .detail-panel h4 {
+      margin: 0 0 var(--space-sm) 0;
+      font-family: var(--font-body);
+      font-size: 0.875rem;
+      font-weight: 700;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: var(--space-xs);
+      border-bottom: var(--hairline);
+      padding-bottom: var(--space-xs);
+    }
+    .detail-panel ul {
+      margin: 0;
+      padding-left: 1.2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+      font-size: 0.9375rem;
+      color: var(--secondary);
+    }
+    .detail-panel p {
+      margin: 0;
+      font-size: 0.9375rem;
+      color: var(--secondary);
+    }
+    .detail-panel.is-full {
+      grid-column: 1 / -1;
+    }
+
+    /* Callouts inside Chapter Details */
+    .callout-risk {
+      grid-column: 1 / -1;
+      background: var(--warning-bg);
+      border: 1px solid var(--warning);
+      border-left: 4px solid var(--error);
+      border-radius: var(--rounded);
+      padding: var(--space-md);
+      color: var(--warning-text);
+      font-size: 0.9375rem;
+    }
+    .callout-risk strong {
+      color: var(--error);
+      display: block;
+      margin-bottom: 0.25rem;
+    }
+    .callout-missing {
+      grid-column: 1 / -1;
+      background: var(--surface-container);
+      border: 1px dashed var(--on-surface-variant);
+      border-radius: var(--rounded);
+      padding: var(--space-sm) var(--space-md);
+      color: var(--on-surface-variant);
+      font-size: 0.875rem;
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-sm);
+    }
+    .missing-badge {
+      flex-shrink: 0;
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      font-weight: 600;
+      background: var(--surface-container-high);
+      color: var(--on-surface);
+      padding: 0.1rem 0.45rem;
+      border-radius: var(--rounded);
+      border: 1px solid var(--outline-variant);
+    }
+
+    /* Comparison Table inside Cards */
+    .data-table-wrap {
+      overflow-x: auto;
+      margin-top: var(--space-xs);
+    }
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.875rem;
+      text-align: left;
+    }
+    .data-table th {
+      background: var(--surface-container-high);
+      color: var(--on-surface);
+      font-weight: 700;
+      padding: 0.5rem 0.75rem;
+      border-bottom: 2px solid var(--outline);
+      white-space: nowrap;
+    }
+    .data-table td {
+      padding: 0.5rem 0.75rem;
+      border-bottom: var(--hairline);
+      color: var(--secondary);
+      vertical-align: top;
+    }
+
+    /* Empty State */
+    .empty-state {
+      background: var(--surface-container-low);
+      border: var(--hairline);
+      border-top: var(--brass-rule);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-xl);
+      text-align: center;
+      display: none;
+    }
+    .empty-state.is-visible { display: block; }
+    .empty-state h3 {
+      font-family: var(--font-headline);
+      margin: 0 0 var(--space-xs) 0;
+      color: var(--primary);
+    }
+    .empty-state p {
+      color: var(--on-surface-variant);
+      margin: 0 0 var(--space-md) 0;
+    }
+
+    /* Self-Check Quiz Section */
+    .quiz-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr));
+      gap: var(--space-md);
+    }
+    .quiz-card {
+      background: var(--surface-container-low);
+      border: var(--hairline);
+      border-top: var(--navy-rule);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-md) var(--space-lg);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-sm);
+    }
+    .quiz-q {
+      font-weight: 700;
+      color: var(--on-surface);
+      margin: 0;
+      font-size: 0.9375rem;
+    }
+    .quiz-options {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xs);
+    }
+    .quiz-opt {
+      text-align: left;
+      min-height: 44px;
+      padding: 0.5rem 0.75rem;
+      border: 1px solid var(--outline-variant);
+      border-radius: var(--rounded);
+      background: var(--background);
+      color: var(--secondary);
+      font-size: 0.875rem;
+      cursor: pointer;
+      transition: background-color var(--dur-micro) var(--ease-out), border-color var(--dur-micro) var(--ease-out);
+    }
+    .quiz-opt:hover {
+      background: var(--surface-container);
+      border-color: var(--primary);
+    }
+    .quiz-opt.is-correct {
+      background: var(--positive-bg);
+      border-color: var(--positive);
+      color: var(--positive-text);
+      font-weight: 600;
+    }
+    .quiz-opt.is-wrong {
+      background: var(--error-bg);
+      border-color: var(--error);
+      color: var(--error);
+    }
+    .quiz-feedback {
+      font-size: 0.8125rem;
+      padding: 0.5rem 0.75rem;
+      border-radius: var(--rounded);
+      display: none;
+    }
+    .quiz-feedback.is-visible { display: block; }
+    .quiz-feedback.is-pass {
+      background: var(--positive-bg);
+      color: var(--positive-text);
+      border-left: 3px solid var(--positive);
+    }
+    .quiz-feedback.is-fail {
+      background: var(--error-bg);
+      color: var(--error);
+      border-left: 3px solid var(--error);
+    }
+
+    /* Footer */
+    .site-footer {
+      background: var(--primary);
+      color: var(--surface-container-high);
+      border-top: 3px solid var(--outline);
+      padding: var(--space-lg);
+      margin-top: var(--space-xl);
+    }
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-sm);
+      font-size: 0.875rem;
+    }
+    .footer-brand {
+      font-family: var(--font-label);
+      font-weight: 600;
+      color: var(--gold-on-navy);
+      letter-spacing: 0.04em;
+    }
+    .home-link {
+      color: var(--gold-on-navy);
+      font-family: var(--font-label);
+      font-size: inherit;
+      font-weight: 600;
+      text-decoration: none;
+      border: 1px solid var(--outline);
+      padding: 0.4rem 0.7rem;
+    }
+    .home-link:hover, .home-link:focus-visible { color: var(--surface-container-low); border-color: var(--gold-on-navy); }
+    .footer-source {
+      color: var(--surface-container-high);
+      font-size: 0.8125rem;
+    }
+
+    /* Responsive Mobile Breakpoint */
+    @media (max-width: 640px) {
+      .title-band { padding: var(--space-lg) var(--space-md); }
+      .page-grid { padding: var(--space-md); gap: var(--space-lg); }
+      .progress-console { grid-template-columns: 1fr; }
+      .architecture-panel { grid-template-columns: 1fr; padding: var(--space-md); }
+      .filter-toolbar { grid-template-columns: 1fr; padding: var(--space-md); }
+      .chapter-header { grid-template-columns: 1fr; padding: var(--space-md); }
+      .chapter-body { padding: 0 var(--space-md) var(--space-md); }
+    }
+
+    /* Reduced Motion */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+    @media (max-width: 640px) { }
+      .header-bank-label { display: inline-block; margin: 0 0 var(--space-sm); color: var(--outline); font-family: var(--font-label); font-size: var(--label-size, 0.875rem); font-weight: 700; letter-spacing: 0.08em; }
+  </style>
+</head>
+<body>
+
+  <header class="title-band">
+    <div class="title-band-inner">
+      <span class="header-bank-label">鎖頭銀行</span>
+      <div class="header-kicker-row">
+        <span class="header-kicker">MODULE 01 · DAY 01 · INSTITUTIONAL CREDIT &amp; RISK TRAINING</span>
+        <span class="header-tag">法規與授信基礎單元</span>
+      </div>
+      <h1>中小企業授信與財報分析實務-Day01-鎖頭銀行徵信法規架構與授信核心原則</h1>
+      <p class="lede">系統化梳理《鎖頭銀行法》授信範疇、《鎖頭銀行公會會員徵信準則》雙層規範、超然獨立牽制體系、客觀查核軌跡與第 36–37 條免責防線；所有未見於授課來源之內部細則均明確標示「來源未提供」。</p>
+    </div>
+  </header>
+
+  <main class="page-grid">
+
+    <!-- Learning Progress Console -->
+    <section class="progress-console" aria-label="學習進度追蹤">
+      <div>
+        <div class="progress-meta-row">
+          <span class="progress-title">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="M9 11l3 3L22 4"></path>
+              <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+            </svg>
+            Day 1 學習完成進度
+          </span>
+          <span id="progress-stats" class="progress-stats">0 / 8 章節已讀（0%）</span>
+        </div>
+        <div class="progress-track" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="progress-bar-role">
+          <div id="progress-fill" class="progress-fill"></div>
+        </div>
+      </div>
+      <div class="progress-actions">
+        <button type="button" class="btn" onclick="toggleAllChapters(true)">全部展開</button>
+        <button type="button" class="btn" onclick="toggleAllChapters(false)">全部收合</button>
+        <button type="button" id="reset-progress-btn" class="btn btn-danger-outline" onclick="handleResetProgress(this)">重設進度</button>
+      </div>
+    </section>
+
+    <!-- Core Pillars Overview -->
+    <section aria-labelledby="overview-heading">
+      <div class="section-head">
+        <h2 id="overview-heading">Day 1 核心定錨指標</h2>
+        <span class="section-sub">核心法條與風控基準一覽</span>
+      </div>
+      <div class="card-grid">
+        <article class="figure-card">
+          <span class="figure-label">法源依據 · 第 5 條之 2</span>
+          <div class="figure-value">5 大授信範疇</div>
+          <div class="figure-delta">放款 · 透支 · 貼現 · 保證 · 承兌</div>
+          <p class="figure-desc">《鎖頭銀行法》界定授信業務涵蓋上述五類及經主管機關指定之業務，構成徵信審查之法定起點。</p>
+        </article>
+        <article class="figure-card">
+          <span class="figure-label">徵信定位 · 第 4 條 / 第 7 條</span>
+          <div class="figure-value">調查 × 分析 · 不表准駁</div>
+          <div class="figure-delta">徵信 5C 首重 Character</div>
+          <p class="figure-desc">徵信聚焦信用調查與財務分析，依誠信公正平實揭露事實，不對授信案件直接表示准駁意見。</p>
+        </article>
+        <article class="figure-card">
+          <span class="figure-label">體系牽制 · 第 3 條 / 第 7 條之一</span>
+          <div class="figure-value">獨立分工 · 年訓 &ge; 3 小時</div>
+          <div class="figure-delta">僅 AO 制鎖頭銀行得例外合併</div>
+          <p class="figure-desc">徵信與授信由不同單位或人員分別辦理；徵信人員每年須進修至少 3 小時永續金融課程。</p>
+        </article>
+        <article class="figure-card">
+          <span class="figure-label">權責防線 · 第 36 條 / 第 37 條</span>
+          <div class="figure-value">軌跡留存 · 依規免責</div>
+          <div class="figure-delta">就當時所能知悉事項負責</div>
+          <p class="figure-desc">凡依準則、各會員內規與一般慣例完成查證並留存徵信軌跡，事後雖發現瑕疵應免除責任。</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- Interactive Architecture Schematic -->
+    <section aria-labelledby="arch-heading">
+      <div class="section-head">
+        <h2 id="arch-heading">互動式法規位階與徵授信牽制架構圖</h2>
+        <span class="section-sub">點選節點檢視法定分工與對應章節</span>
+      </div>
+      <div class="architecture-panel">
+        <div class="svg-stage">
+          <svg class="arch-svg" viewBox="0 0 640 310" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="鎖頭銀行徵信法規位階與徵授信職能分工流程圖">
+            <!-- Connectors -->
+            <line x1="170" y1="68" x2="170" y2="96" stroke="var(--outline)" stroke-width="2"></line>
+            <line x1="170" y1="146" x2="170" y2="174" stroke="var(--outline)" stroke-width="2"></line>
+            <line x1="310" y1="121" x2="358" y2="121" stroke="var(--primary)" stroke-width="2" stroke-dasharray="4 3"></line>
+            <line x1="485" y1="68" x2="485" y2="96" stroke="var(--primary)" stroke-width="2"></line>
+            <line x1="485" y1="146" x2="485" y2="174" stroke="var(--primary)" stroke-width="2"></line>
+            <line x1="485" y1="224" x2="485" y2="246" stroke="var(--positive)" stroke-width="2"></line>
+
+            <!-- Column Headers -->
+            <text x="170" y="16" text-anchor="middle" font-size="12" font-weight="700" fill="var(--tertiary)">法規雙層與實務防線</text>
+            <text x="485" y="16" text-anchor="middle" font-size="12" font-weight="700" fill="var(--primary)">超然獨立徵授信流程</text>
+
+            <!-- Left Column Nodes -->
+            <g class="arch-node is-active" id="node-law" onclick="selectArchNode('law')" tabindex="0" role="button" aria-label="檢視鎖頭銀行法層級">
+              <rect class="node-box" x="35" y="26" width="270" height="42" rx="3" fill="var(--surface-container-low)" stroke="var(--primary)" stroke-width="1.5"></rect>
+              <text x="170" y="45" text-anchor="middle" font-size="13" font-weight="700" fill="var(--on-surface)">基本法：《鎖頭銀行法》</text>
+              <text x="170" y="61" text-anchor="middle" font-size="11" fill="var(--on-surface-variant)">第 5 條之 2｜授信五大業務範疇</text>
+            </g>
+
+            <g class="arch-node" id="node-rule" onclick="selectArchNode('rule')" tabindex="0" role="button" aria-label="檢視徵信準則層級">
+              <rect class="node-box" x="35" y="96" width="270" height="50" rx="3" fill="var(--surface-container-low)" stroke="var(--primary)" stroke-width="1.5"></rect>
+              <text x="170" y="117" text-anchor="middle" font-size="13" font-weight="700" fill="var(--on-surface)">自律規範：《會員徵信準則》</text>
+              <text x="170" y="135" text-anchor="middle" font-size="11" fill="var(--on-surface-variant)">112.07 修訂｜作業一致性與獨立牽制</text>
+            </g>
+
+            <g class="arch-node" id="node-sop" onclick="selectArchNode('sop')" tabindex="0" role="button" aria-label="檢視實務三大保護框架">
+              <rect class="node-box" x="35" y="174" width="270" height="54" rx="3" fill="var(--surface-container-low)" stroke="var(--outline)" stroke-width="1.5"></rect>
+              <text x="170" y="196" text-anchor="middle" font-size="13" font-weight="700" fill="var(--on-surface)">實務護身三角框架</text>
+              <text x="170" y="214" text-anchor="middle" font-size="11" fill="var(--on-surface-variant)">SOP · 函釋公文 · 董事會稽核注意事項</text>
+            </g>
+
+            <!-- Right Column Nodes -->
+            <g class="arch-node" id="node-ao" onclick="selectArchNode('ao')" tabindex="0" role="button" aria-label="檢視營業單位受理階段">
+              <rect class="node-box" x="358" y="26" width="254" height="42" rx="3" fill="var(--surface-container-low)" stroke="var(--primary)" stroke-width="1.5"></rect>
+              <text x="485" y="45" text-anchor="middle" font-size="13" font-weight="700" fill="var(--on-surface)">1. 營業單位索齊資料（第 8 條）</text>
+              <text x="485" y="61" text-anchor="middle" font-size="11" fill="var(--error)">資料不齊未補 → 不予徵信（第 15 條）</text>
+            </g>
+
+            <g class="arch-node" id="node-credit" onclick="selectArchNode('credit')" tabindex="0" role="button" aria-label="檢視徵信單位獨立查核階段">
+              <rect class="node-box" x="358" y="96" width="254" height="50" rx="3" fill="var(--surface-container-low)" stroke="var(--primary)" stroke-width="1.5"></rect>
+              <text x="485" y="117" text-anchor="middle" font-size="13" font-weight="700" fill="var(--on-surface)">2. 徵信單位客觀查核（第 3、7 條）</text>
+              <text x="485" y="135" text-anchor="middle" font-size="11" fill="var(--tertiary)">充分揭露事實｜嚴禁表示准駁意見</text>
+            </g>
+
+            <g class="arch-node" id="node-decision" onclick="selectArchNode('decision')" tabindex="0" role="button" aria-label="檢視授信決策階段">
+              <rect class="node-box" x="358" y="174" width="254" height="50" rx="3" fill="var(--surface-container-low)" stroke="var(--primary)" stroke-width="1.5"></rect>
+              <text x="485" y="195" text-anchor="middle" font-size="13" font-weight="700" fill="var(--on-surface)">3. 授信主辦/經理核貸決策</text>
+              <text x="485" y="213" text-anchor="middle" font-size="11" fill="var(--error)">未經徵信不得核貸（第 28 條）</text>
+            </g>
+
+            <g class="arch-node" id="node-shield" onclick="selectArchNode('shield')" tabindex="0" role="button" aria-label="檢視事後追蹤與免責要件">
+              <rect class="node-box" x="358" y="246" width="254" height="46" rx="3" fill="var(--positive-bg)" stroke="var(--positive)" stroke-width="1.5"></rect>
+              <text x="485" y="266" text-anchor="middle" font-size="13" font-weight="700" fill="var(--positive-text)">4. 追蹤通報與依規免責（第 27、36–37 條）</text>
+              <text x="485" y="282" text-anchor="middle" font-size="11" fill="var(--secondary)">留存徵信軌跡｜事後瑕疵免責防線</text>
+            </g>
+          </svg>
+        </div>
+
+        <aside id="arch-detail-box" class="arch-detail-box" aria-live="polite">
+          <span class="arch-detail-tag" id="arch-detail-tag">法規層級 01</span>
+          <h3 id="arch-detail-title">基本法：《鎖頭銀行法》第 5 條之 2</h3>
+          <p id="arch-detail-desc">台灣地區鎖頭銀行業辦理企業授信與徵信作業之最高法律依據。第 5 條之 2 明定授信業務涵蓋放款、透支、貼現、保證、承兌及其他經主管機關指定之業務；一切徵信調查均服務於此五大業務之風險控制。</p>
+          <ul class="arch-jump-list" id="arch-jump-list">
+            <li><button type="button" class="btn" onclick="jumpToChapter('ch-01')">前往第 01 章詳解</button></li>
+          </ul>
+        </aside>
+      </div>
+    </section>
+
+    <!-- Search & Category Filter Toolbar -->
+    <section aria-labelledby="chapters-heading">
+      <div class="section-head">
+        <h2 id="chapters-heading">Day 1 章節重點精讀與實務解析</h2>
+        <span id="result-counter" class="result-counter">顯示 8 / 8 個章節</span>
+      </div>
+
+      <div class="filter-toolbar" role="search">
+        <div class="search-field">
+          <label for="keyword-search" class="field-label">即時關鍵字搜尋（條文編號、核心名詞、實務案例）</label>
+          <div class="search-input-wrap">
+            <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <input type="text" id="keyword-search" class="search-input" placeholder="輸入例如：第 7 條、不表准駁、AO、3 小時、免責、來源未提供..." oninput="handleSearchInput(this.value)">
+            <button type="button" id="search-clear-btn" class="search-clear" aria-label="清除搜尋關鍵字" onclick="clearSearch()">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="toolbar-controls">
+          <label class="unread-toggle">
+            <input type="checkbox" id="unread-only-checkbox" onchange="toggleUnreadOnly(this.checked)">
+            <span>僅顯示未讀章節</span>
+          </label>
+        </div>
+
+        <div class="category-row">
+          <div class="filter-pills" role="group" aria-label="章節分類篩選器">
+            <button type="button" class="filter-btn is-active" data-cat="all" onclick="setCategoryFilter('all')">全部章節 (8)</button>
+            <button type="button" class="filter-btn" data-cat="法規體系" onclick="setCategoryFilter('法規體系')">法規體系 (2)</button>
+            <button type="button" class="filter-btn" data-cat="徵授信分工" onclick="setCategoryFilter('徵授信分工')">徵授信分工 (2)</button>
+            <button type="button" class="filter-btn" data-cat="倫理與查核" onclick="setCategoryFilter('倫理與查核')">倫理與查核 (3)</button>
+            <button type="button" class="filter-btn" data-cat="免責與邊界" onclick="setCategoryFilter('免責與邊界')">免責與邊界 (1)</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Empty Search State -->
+      <div id="empty-state" class="empty-state" role="status">
+        <h3>查無符合條件的 Day 1 章節</h3>
+        <p id="empty-state-reason">目前沒有章節同時符合您的關鍵字或篩選條件。</p>
+        <button type="button" class="btn btn-primary" onclick="resetFilters()">清除所有篩選條件</button>
+      </div>
+
+      <!-- Chapter Cards Container -->
+      <div id="chapters-container" class="chapters-list" style="margin-top: var(--space-md);"></div>
+    </section>
+
+    <!-- Interactive Quick Self-Check -->
+    <section aria-labelledby="quiz-heading">
+      <div class="section-head">
+        <h2 id="quiz-heading">Day 1 實務情境隨堂檢核</h2>
+        <span class="section-sub">驗證法規記憶與徵授信界線判斷</span>
+      </div>
+      <div id="quiz-container" class="quiz-grid"></div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <a class="home-link" href="index.html">回首頁</a>
+      <span class="footer-brand">Powered By Dunk</span>
+      <span class="footer-source">內容依據：中小企業授信與財報分析實務課程講義與講授逐字稿、《中華民國鎖頭銀行公會會員徵信準則》（112.07 修訂）</span>
+    </div>
+  </footer>
+
+  <api-shim></api-shim>
+
+  <script>
+    const CHAPTERS = [
+      {
+        id: `ch-01`,
+        num: `01`,
+        category: `法規體系`,
+        articles: `《鎖頭銀行法》第 5 條之 2｜《徵信準則》第 1、2、38、39 條`,
+        title: `雙層法規架構與《鎖頭銀行法》五大授信範疇`,
+        summary: `釐清基本法《鎖頭銀行法》與自律規範《徵信準則》的位階關係，掌握五大法定授信業務與實務合規三大保護框架。`,
+        legalPoints: [
+          `基本法層級：依據《鎖頭銀行法》第 5 條之 2 規定，授信業務涵蓋「放款、透支、貼現、保證、承兌」及其他經主管機關指定之業務。`,
+          `自律規範層級：由中華民國鎖頭銀行商業同業公會全國聯合會訂定之《中華民國鎖頭銀行公會會員徵信準則》（第 1 條：提高徵信水準、發揮徵信功能、求作業一致性與合理化；第 2 條：除法令另有規定外悉依本準則辦理）。`,
+          `準則條文經理事會通過並報金融監督管理委員會核備後施行（第 39 條）；至 112 年 7 月 18 日全授字第 1120001231 號函歷經多次修訂。`,
+          `未規定事項補充（第 38 條）：本準則未規定事項，悉依有關法令、各會員有關規定及一般慣例辦理。`
+        ],
+        practicalPoints: [
+          `實務護身三大框架：授課講師強調辦理徵信作業應緊扣「SOP、函釋（公文）、董事會稽核注意事項」三大框架，確保作業合規「保平安」。`,
+          `延伸預覽：本 30 天課程以 Day 1 法規與核心原則為根基，後續接續 Day 3 三大資料表分級（資料表 &ge; 3,000 萬、簡易資料表 601–2,999 萬、小規模營利事業簡易資料表 600 萬以下）及財報分析實務。`
+        ],
+        tableHtml: `
+          <div class="data-table-wrap">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>規範層級</th>
+                  <th>名稱與修訂/依據</th>
+                  <th>核心作用</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>法律層級</strong></td>
+                  <td>《鎖頭銀行法》第 5 條之 2</td>
+                  <td>明定放款、透支、貼現、保證、承兌等法定授信業務範圍。</td>
+                </tr>
+                <tr>
+                  <td><strong>公會自律</strong></td>
+                  <td>《鎖頭銀行公會會員徵信準則》（112.07 修訂）</td>
+                  <td>統一會員鎖頭銀行徵信程序、資料徵提、分工與權責標準。</td>
+                </tr>
+                <tr>
+                  <td><strong>實務內控</strong></td>
+                  <td>SOP、函釋公文、董事會稽核注意事項</td>
+                  <td>確保第一線徵信作業有所本、留存軌跡並符合稽核檢查要求。</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        `,
+        riskNote: `稽核視角提醒：不可僅憑前手口頭交接或經驗習慣辦理徵信；當條文與前手做法衝突時，應回歸最新準則條文、行內公文函釋與 SOP 辦理。`,
+        missingNote: `《鎖頭銀行法》其他條文全文、違反《徵信準則》之具體行政處分罰鍰金額，以及個別鎖頭銀行內部稽核記點細節：來源未提供。`
+      },
+      {
+        id: `ch-02`,
+        num: `02`,
+        category: `法規體系`,
+        articles: `《徵信準則》第 4、5 條｜徵信 5C vs. 授信 5P`,
+        title: `徵信工作定位：信用調查、財務分析與 5C 核心精神`,
+        summary: `明確定界徵信工作的本質是風險決策的資訊基石，並對比徵信 5C（首重 Character 品德）與授信 5P（People）之審查差異。`,
+        legalPoints: [
+          `法定定義（第 4 條）：本準則所稱「徵信工作」，係指與授信業務有關之「信用調查」與「財務分析」等工作。`,
+          `角色邊界（第 5 條）：「徵信單位」指總分支機構專責辦理徵信之單位；「徵信人員」指徵信單位及營業單位辦理徵信之人員。`,
+          `資訊基石定位：徵信並非孤立於授信之外的單純文書作業，而是整個授信風險決策賴以成立的客觀資訊基礎。`
+        ],
+        practicalPoints: [
+          `徵信 5C 首重 Character（借款人品德）：講師以實務案例強調，5C 的核心在於透過聯徵紀錄（B33/B36/K33/K34）、內部黑名單、是否為利害關係人與實際經營獲利模式，深挖負責人的誠信與經營態度。`,
+          `5C 與 5P 的差異：授信報告常見的 5P（People 借款人背景）偏重客觀背景敘述；徵信撰寫 5C 則必須穿透表象（例如「瞎子摸象」穿透集團真實金流、觀察公司賠錢但經營者個人是否透過關係人交易或房東持股荷包滿滿）。`,
+          `實務心態調整：中小企業財報「絕對僅供參考」，非唯一判斷依據；應在符合規範前提下結合產銷與人品調查，釐清第一與第二還款來源。`
+        ],
+        tableHtml: ``,
+        riskNote: `實務誤區警示：若僅照本宣科抄錄財報數字，忽略負責人信用軌跡與實際控制人誠信（Character），極易在企業二代接班或負責人掏空（如挪用資金）時發生誤判。`,
+        missingNote: `完整 5C（除 Character 以外其餘四項）與完整 5P（除 People 以外其餘四項）之逐項教科書標準定義清單：來源未提供。`
+      },
+      {
+        id: `ch-03`,
+        num: `03`,
+        category: `徵授信分工`,
+        articles: `《徵信準則》第 3、8、15、28 條`,
+        title: `超然獨立牽制體系、AO 例外規範與受理移送防線`,
+        summary: `建立徵信與授信分離的雙重防線，釐清帳戶管理員（AO）制度例外，並確立「資料不齊不徵信、未經徵信不核貸」的法定鐵律。`,
+        legalPoints: [
+          `超然獨立原則（第 3 條）：各會員宜依本身業務之需要，建立超然徵信體系，以健全徵信工作。`,
+          `職能分工與 AO 例外（第 3 條）：徵信工作與授信業務，除「已實施帳戶管理員（Account Officer, AO）制度之鎖頭銀行」外，應由不同單位或不同人員分別辦理。`,
+          `索齊移送程序（第 8 條）：客戶申請授信時，由營業單位索齊資料後，移送徵信單位辦理徵信。`,
+          `雙重防線（第 15 條、第 28 條研析摘要）：企業提供之資料不齊且未依限補齊，應不予辦理徵信（第 15 條）；未經移送徵信單位辦理徵信之授信案件亦不得核貸（第 28 條）。`
+        ],
+        practicalPoints: [
+          `角色分工實務：營業單位（授信經辦）負責對客戶索齊基本及財務文件，並在徵提表件（如徵提目的欄）簽章；徵信人員負責客觀查核與在查核結果上蓋藍色橡皮章，形成彼此牽制。`,
+          `跨部門溝通紀律：面對特殊案件（如境外法人存續證明尚未核發時先徵提規費「水單」，或上市櫃拒絕填寫制式關係戶資料表），應依規定留存軌跡並呈報主管，不可私下跳過程序。`
+        ],
+        tableHtml: ``,
+        riskNote: `違規紅線：若未經營業單位索齊資料並正式移送徵信程序即逕行核貸，或資料明顯缺漏卻勉強送件，將直接違反獨立牽制規範並衍生重大內控缺失。`,
+        missingNote: `第 15 條與第 28 條之逐字完整條文（來源研析文章摘要引用規範意旨，準則 PDF 節錄省略該段條文），以及各鎖頭銀行實施 AO 制度之內部編制與稽核配套細則：來源未提供。`
+      },
+      {
+        id: `ch-04`,
+        num: `04`,
+        category: `徵授信分工`,
+        articles: `《徵信準則》第 9、10、20 條`,
+        title: `事前主動徵信機制與資料修正補充程序`,
+        summary: `說明常往來客戶事前準備與爭取優良廠商之主動徵信授權，並釐清資料有誤或缺漏時之通知修正管道。`,
+        legalPoints: [
+          `經常往來戶事前徵信（第 9 條）：為謀徵信工作迅速完成，徵信單位對於經常往來客戶，得事前主動索齊資料，辦理徵信。`,
+          `優良廠商主動徵信（第 10 條）：為爭取優良廠商，徵信單位亦得主動蒐集資料辦理徵信，並將結果通知相關單位參考。`,
+          `修正或補充權限（第 20 條）：徵信單位對於徵信資料之修正或補充，得通知營業單位或逕洽客戶辦理。`
+        ],
+        practicalPoints: [
+          `Maintain 為主的實務節奏：講師指出實務上大多為既有客戶續借（續約），透過年度定期覆查與事前掌握財報（如上市櫃 Q1–Q3 及年度報表、非公發 5 月底前暫結與 6 月起報稅資料），能避免額度到期前手忙腳亂。`,
+          `續借總額控管提醒：實務系統常以「聯徵 B33 餘額＋本次申請書額度」強硬加總檢核 3,000 萬門檻；遇借新還舊跳出警示視窗時，須於備註欄清楚敘明實際總授信金額，完成合規補正。`
+        ],
+        tableHtml: ``,
+        riskNote: `作業時效風險：交接期若前手未完整交付客戶資料，新任徵信人員切忌沿用過時數據，應依第 9、20 條機制主動更新票債信紀錄（含會計師懲戒紀錄 N20）。`,
+        missingNote: `第 11 條至第 14 條（徵信程序其餘條文）之完整內容：來源未提供。`
+      },
+      {
+        id: `ch-05`,
+        num: `05`,
+        category: `倫理與查核`,
+        articles: `《徵信準則》第 6 條、第 7 條`,
+        title: `職業倫理：嚴守保密義務與「不表准駁」核心鐵則`,
+        summary: `確立徵信人員「誠信、保密、公正平實、不替案件下准駁結論」之專業操守，劃清客觀調查與核貸決策之界線。`,
+        legalPoints: [
+          `法定保密義務（第 6 條）：徵信人員對徵信資料應依法嚴守秘密。`,
+          `公正平實與不表准駁（第 7 條）：徵信人員應依誠信原則，公正平實撰寫徵信報告，不宜對授信案件表示准駁之意見。`
+        ],
+        practicalPoints: [
+          `忠實揭露不代判准駁：講師於課程開宗明義強調，徵信報告的任務是「盡量蒐集客戶完整資料，做完整忠實的呈現」，不應在報告內寫出「准予核貸」或「應予駁回」等意見；最終准駁應由授信主辦或經理層級判斷。`,
+          `切忌與客戶站在同一陣線隱匿瑕疵：當發現中小企業有關係人資金貸與（違反公司法第 15 條）、負責人信用瑕疵（如循環信用或聯徵 321/4321 階梯式借款）或否定意見財報時，徵信人員不可自行替客戶遮掩，應如實揭露並上呈主管決定是否協商改善或斷尾求生。`,
+          `實務溝通藝術：揭露負面訊息時應對內忠實撰寫、對外委婉提醒（例如告知二代接班新負責人信用卡評分異常請其瞭解改善），兼顧風險防線與優質客戶關係。`
+        ],
+        tableHtml: ``,
+        riskNote: `重大禁忌：千萬不可「千錯萬錯變成徵信不實的錯」。客戶面臨經營最後一搏時可能嘗試闖關，徵信人員若為求成案而隱瞞不利事實，將自陷重大職業風險。`,
+        missingNote: `違反第 6 條保密義務或第 7 條不表准駁規範之具體刑事罰則與行內懲處條款細目：來源未提供。`
+      },
+      {
+        id: `ch-06`,
+        num: `06`,
+        category: `倫理與查核`,
+        articles: `《徵信準則》第 7 條之一｜ESG 與 AI 輔助查核實務`,
+        title: `永續金融法定培訓（3 小時）與 ESG 實務審核紀律`,
+        summary: `掌握徵信人員每年法定永續金融培訓時數要求，以及運用外部 ESG 表單與系統／AI 輔助資料時的人工複核責任。`,
+        legalPoints: [
+          `法定年度進修時數（第 7 條之一）：徵信人員每年應至少進修三小時永續金融相關訓練課程。`,
+          `監理趨勢背景：因應氣候風險與環境、社會、公司治理（ESG）資訊納入企業財務分析，高額授信與中長期融資企業正逐步需提供碳盤查數據、氣候風險評估與永續報告書，未來氣候財務揭露（TCFD）與綠色融資指標將與財報查核結合。`
+        ],
+        practicalPoints: [
+          `ESG 獨立表單化：課程揭示實務徵信報告架構已將 ESG 抽出成為獨立表格，並介接外部資料協助查證負面新聞或永續紀錄。`,
+          `系統／AI 帶入資料之人工覆核鐵律：無論系統介接外部資訊或利用 AI 工具（如整理大量財報比率或摘要文字），均僅屬「輔助工具」。徵信人員務必親自判讀文字、修改確認後再行儲存，嚴禁未經審閱直接以系統帶入字句當作最終判斷。`
+        ],
+        tableHtml: ``,
+        riskNote: `AI 與自動化依賴風險：系統自動帶入外部 ESG 或新聞摘要若未經人工查證即存檔，一旦發生誤判或漏列重大負面事件，責任仍歸屬撰寫報告之徵信人員。`,
+        missingNote: `永續金融 3 小時課程之特定認可機構清單、具體授課大綱細目，以及個別授信戶碳盤查強制適用門檻金額：來源未提供。`
+      },
+      {
+        id: `ch-07`,
+        num: `07`,
+        category: `倫理與查核`,
+        articles: `《徵信準則》第 18 條第 1 項第 5 款、第 26 條、第 27 條`,
+        title: `客觀資料交叉查證、徵信軌跡留存與突發異常通報`,
+        summary: `落實「有所本、充分揭露、均依規定辦理」查證三原則，熟悉跨平台交叉比對與專案追蹤徵信通報機制。`,
+        legalPoints: [
+          `財報與外部資料交叉檢核（第 18 條第 1 項第 5 款）：對授信戶提供之財報應審慎評估正確性與合理性，對照營業稅申報書（401/403 表）、進出口報單、海關統計或帳戶資金流水；發現顯有不符須要求說明、補充查證並詳實列示於報告。`,
+          `追蹤徵信機制（第 26 條、第 27 條）：追蹤徵信依各會員規定辦理（第 26 條）；授信客戶發生還本付息逾期、催收、未履行合約或突發事件時，營業單位與徵信單位應「立即相互通知」，及時徵提最新暫結報表辦理專案追蹤徵信（第 27 條）。`
+        ],
+        practicalPoints: [
+          `客觀查證外部工具：經濟部商工登記、財務部稅務入口網、聯徵中心（JCIC）、公開資訊觀測站（含關係企業三書表專區）、司法院判決書系統。當聯徵與經濟部資料不一致時（多為平台匯入誤差），應即時反映處理（通常次日中午可修正）。`,
+          `司法院判決書系統與鄰居糾紛查核：非上市櫃（尤其營建業）易有鄰損訴訟，可利用判決書摘要系統先判讀勝敗訴率（會計師評估敗訴率高通常才揭露於財報）並點閱判決原文。`,
+          `務必「列印附卷」留存軌跡：查詢關係企業架構或判決書後一定要印出附卷（或系統留存列印紀錄），證明「徵信當下」之狀態；若未印出，日後企業組織重組、併購或聯貸架構從「一借三保變三借一保」時將無從舉證。`
+        ],
+        tableHtml: ``,
+        riskNote: `稽核必抓地雷：漏查會計師懲戒紀錄（N20）或漏印司法院判決查詢軌跡。平時沒事看似無妨，一旦案件發生倒帳，未留存查核軌跡將使徵信人員百口莫辯。`,
+        missingNote: `第 26 條所稱「各會員有關定期追蹤徵信具體頻率（如半年/季/年細則）」除定期覆查每年重填一次外之各行內部差異規定：來源未提供。`
+      },
+      {
+        id: `ch-08`,
+        num: `08`,
+        category: `免責與邊界`,
+        articles: `《徵信準則》第 36 條、第 37 條｜課程資料邊界總盤點`,
+        title: `徵信權責界線、事後免責要件與 Day 1 資料未明項目盤點`,
+        summary: `掌握徵信人員「當下盡職負責、依規事後免責」的法律保護傘，並完整核對本單元中「來源未提供」之規範邊界。`,
+        legalPoints: [
+          `權責範圍界定（第 36 條）：徵信人員應對所作之徵信報告，就「徵信當時狀況及其所能知悉之事項」負其責任。`,
+          `法定免責要件（第 37 條）：凡依本準則、各會員有關規定及一般慣例所作之徵信報告，「事後雖發現瑕疵，應免除其責任」。`
+        ],
+        practicalPoints: [
+          `免責三要件自保清單：(1) 依循《徵信準則》、行內 SOP／函釋及一般慣例執行；(2) 就徵信當下所能知悉之客觀資訊已盡調查與交叉比對之能事；(3) 完整揭露所發現事實並「列印／存檔徵信軌跡」。`,
+          `講師金句解讀：「有做但做得不夠好，事後可依第 36、37 條解釋『雖有瑕疵但不予究責』；但若根本沒做、沒有列印查詢軌跡，則完全無法主張免責。」`
+        ],
+        tableHtml: `
+          <div class="data-table-wrap">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Day 1 相關查核項目</th>
+                  <th>來源揭露狀態</th>
+                  <th>備註說明</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>授信 5 大業務範疇與準則第 1–10、17–22、26–27、36–39 條</td>
+                  <td><strong>來源完整提供</strong></td>
+                  <td>均已完整收錄於本頁面各章節解析。</td>
+                </tr>
+                <tr>
+                  <td>準則第 11–14 條、第 23–25 條、第 28–35 條完整逐字原文</td>
+                  <td><strong>來源未提供</strong></td>
+                  <td>原始 PDF 節錄省略；僅第 15、28 條重點見於研析文摘要。</td>
+                </tr>
+                <tr>
+                  <td>鎖頭銀行內部核決權限金額表、授信利率定價公式、內部獎懲細則</td>
+                  <td><strong>來源未提供</strong></td>
+                  <td>屬各鎖頭銀行內部機密或未包含於 Day 1 教材。</td>
+                </tr>
+                <tr>
+                  <td>完整 5C / 5P 全十項逐一標準條列定義</td>
+                  <td><strong>來源未提供</strong></td>
+                  <td>課程教材僅對比 5C 首重之 Character 與 5P 之 People。</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        `,
+        riskNote: `誠實揭露底線：嚴禁為追求完美結論而自行推論或捏造未載於來源之法條與內部數字；遇到來源未提供之內部規定，應在實務中回查行內最新函釋與授信規章。`,
+        missingNote: `司法實務上援引《徵信準則》第 36、37 條判例之具體法院字號與判決金額：來源未提供。`
+      }
+    ];
+
+    const ARCH_NODES = {
+      law: {
+        tag: `法規層級 01 · 基本法`,
+        title: `基本法：《鎖頭銀行法》第 5 條之 2`,
+        desc: `台灣地區鎖頭銀行業辦理企業授信與徵信作業之最高法律依據。第 5 條之 2 明定授信業務涵蓋放款、透支、貼現、保證、承兌及其他經主管機關指定之業務；一切徵信調查均服務於此五大業務之風險控制。`,
+        jumps: [`ch-01`]
+      },
+      rule: {
+        tag: `法規層級 02 · 自律規範`,
+        title: `自律規範：《鎖頭銀行公會會員徵信準則》`,
+        desc: `經理事會通過並報金管會核備（最近一次列明修訂為 112 年 7 月 18 日），旨在提高徵信水準並求各會員鎖頭銀行作業一致性與合理化。規範涵蓋工作守則、徵信程序、資料徵提與權責免責。`,
+        jumps: [`ch-01`, `ch-02`]
+      },
+      sop: {
+        tag: `實務防線 · 三角護身框架`,
+        title: `實務護身三角：SOP · 函釋公文 · 董事會稽核`,
+        desc: `授課講師指出第一線人員「保平安」的核心在於緊扣行內 SOP、最新公文函釋以及董事會稽核注意事項；當口頭交接不明時，以此三項為唯一準繩。`,
+        jumps: [`ch-01`, `ch-07`]
+      },
+      ao: {
+        tag: `流程節點 01 · 前端受理`,
+        title: `營業單位索齊資料（第 8 條、第 15 條）`,
+        desc: `客戶申請授信時，先由營業單位負責索齊各項基本與財務資料後移送徵信單位。依第 15 條意旨，若企業提供資料不齊且未依限補齊，應不予辦理徵信。`,
+        jumps: [`ch-03`, `ch-04`]
+      },
+      credit: {
+        tag: `流程節點 02 · 獨立查核`,
+        title: `徵信單位客觀查核（第 3、6、7 條）`,
+        desc: `除已實施帳戶管理員（AO）制度之鎖頭銀行外，徵信與授信應由不同單位或人員辦理。徵信人員負保密義務（第 6 條）、年訓至少 3 小時永續金融（第 7 條之一），並依第 7 條公正平實撰寫報告，不宜表示准駁意見。`,
+        jumps: [`ch-03`, `ch-05`, `ch-06`]
+      },
+      decision: {
+        tag: `流程節點 03 · 授信決策`,
+        title: `授信主辦／經理層級進行准駁判斷（第 28 條）`,
+        desc: `徵信報告完成充分揭露後，由授信主辦或核決層級綜合評估是否核貸與條件安排。未經移送徵信單位辦理徵信之授信案件，依法不得核貸。`,
+        jumps: [`ch-03`, `ch-05`]
+      },
+      shield: {
+        tag: `流程節點 04 · 追蹤與免責`,
+        title: `突發通報與依規免責防線（第 27、36–37 條）`,
+        desc: `授信期間發生逾期或突發事件時，營業與徵信單位須立即相互通知（第 27 條）。凡依準則、內規與慣例查調並留存軌跡（列印附卷），即僅就當時所能知悉事項負責，事後發現瑕疵應免除責任。`,
+        jumps: [`ch-07`, `ch-08`]
+      }
+    };
+
+    const QUIZ_DATA = [
+      {
+        id: `q-01`,
+        question: `1. 依《鎖頭銀行公會會員徵信準則》第 7 條，徵信人員撰寫企業徵信報告時，對授信案件應採取何種立場？`,
+        options: [
+          `公正平實揭露事實，並於結論建議「准予核貸」或「應予婉拒」`,
+          `依誠信原則公正平實撰寫報告，不宜對授信案件表示准駁之意見`,
+          `若為優質老客戶，可由徵信人員代為簡化免揭露負面訴訟資訊`
+        ],
+        correctIndex: 1,
+        explanation: `正確答案為 B。第 7 條明定徵信人員應依誠信原則公正平實撰寫報告，不宜表示准駁意見；准駁決策權屬於授信主辦／核貸層級。`
+      },
+      {
+        id: `q-02`,
+        question: `2. 依《徵信準則》第 3 條規定，徵信工作與授信業務原則上應由不同單位或人員辦理，惟哪種制度之鎖頭銀行為法定例外？`,
+        options: [
+          `已實施帳戶管理員（Account Officer, AO）制度之鎖頭銀行`,
+          `總資產達特定規模以上之商業鎖頭銀行`,
+          `僅辦理中小企業信保保證案件之分行`
+        ],
+        correctIndex: 0,
+        explanation: `正確答案為 A。第 3 條明定除「已實施帳戶管理員（AO）制度之鎖頭銀行」外，徵信工作與授信業務應由不同單位或不同人員分別辦理。`
+      },
+      {
+        id: `q-03`,
+        question: `3. 依據《徵信準則》第 7 條之一規定，徵信人員每年應至少進修多少小時之「永續金融」相關訓練課程？`,
+        options: [
+          `每年至少 1 小時`,
+          `每年至少 3 小時`,
+          `來源未提供固定時數，由各分行自行決定`
+        ],
+        correctIndex: 1,
+        explanation: `正確答案為 B。第 7 條之一強制規定徵信人員每年應至少進修三小時永續金融相關訓練課程。`
+      },
+      {
+        id: `q-04`,
+        question: `4. 關於徵信人員之事後免責要件（第 36、37 條），下列實務作法何者最能有效建立防線？`,
+        options: [
+          `依準則、內規與慣例進行客觀查證，並將查詢結果列印附卷留存徵信軌跡`,
+          `請客戶簽署切結書後，免予查核外部商工與判決書資料`,
+          `使用系統 AI 自動帶入 ESG 文字後，不需檢視直接存檔`
+        ],
+        correctIndex: 0,
+        explanation: `正確答案為 A。唯有依準則、會員規定及一般慣例辦理（第 37 條），並針對當時所能知悉事項留存查證軌跡（第 36 條），事後雖有瑕疵始得主張免責。`
+      }
+    ];
+
+    const appState = {
+      readIds: [],
+      expandedIds: [`ch-01`],
+      activeCategory: `all`,
+      searchQuery: ``,
+      unreadOnly: false,
+      quizAnswers: {}
+    };
+
+    function saveState() {
+      if (window.notebookAppApi && typeof window.notebookAppApi.setAppState === 'function') {
+        window.notebookAppApi.setAppState({
+          readIds: appState.readIds,
+          expandedIds: appState.expandedIds,
+          activeCategory: appState.activeCategory,
+          unreadOnly: appState.unreadOnly,
+          quizAnswers: appState.quizAnswers
+        });
+      }
+    }
+
+    function updateProgressBar() {
+      const total = CHAPTERS.length;
+      const done = appState.readIds.length;
+      const pct = total > 0 ? Math.round((done / total) * 100) : 0;
+
+      const statsEl = document.getElementById('progress-stats');
+      const fillEl = document.getElementById('progress-fill');
+      const roleEl = document.getElementById('progress-bar-role');
+
+      if (statsEl) {
+        statsEl.textContent = `${done} / ${total} 章節已讀（${pct}%）`;
+        statsEl.classList.toggle('is-complete', pct === 100);
+      }
+      if (fillEl) {
+        fillEl.style.width = `${pct}%`;
+        fillEl.classList.toggle('is-complete', pct === 100);
+      }
+      if (roleEl) {
+        roleEl.setAttribute('aria-valuenow', String(pct));
+      }
+    }
+
+    function getFilteredChapters() {
+      const q = appState.searchQuery.trim().toLowerCase();
+      return CHAPTERS.filter((ch) => {
+        if (appState.activeCategory !== `all` && ch.category !== appState.activeCategory) {
+          return false;
+        }
+        if (appState.unreadOnly && appState.readIds.includes(ch.id)) {
+          return false;
+        }
+        if (q) {
+          const haystack = [
+            ch.num,
+            ch.category,
+            ch.articles,
+            ch.title,
+            ch.summary,
+            ch.legalPoints.join(` `),
+            ch.practicalPoints.join(` `),
+            ch.riskNote,
+            ch.missingNote
+          ].join(` `).toLowerCase();
+          return haystack.includes(q);
+        }
+        return true;
+      });
+    }
+
+    function renderChapters() {
+      const container = document.getElementById('chapters-container');
+      const emptyEl = document.getElementById('empty-state');
+      const reasonEl = document.getElementById('empty-state-reason');
+      const counterEl = document.getElementById('result-counter');
+
+      if (!container) return;
+
+      const filtered = getFilteredChapters();
+      if (counterEl) {
+        counterEl.textContent = `顯示 ${filtered.length} / ${CHAPTERS.length} 個章節`;
+      }
+
+      if (filtered.length === 0) {
+        container.innerHTML = ``;
+        if (emptyEl) emptyEl.classList.add('is-visible');
+        if (reasonEl) {
+          if (appState.unreadOnly && appState.readIds.length === CHAPTERS.length) {
+            reasonEl.textContent = `恭喜！您已將 Day 1 全部 ${CHAPTERS.length} 個章節標記為「已讀」，取消勾選「僅顯示未讀章節」即可再次瀏覽全部內容。`;
+          } else {
+            reasonEl.textContent = `目前沒有章節符合關鍵字「${appState.searchQuery || appState.activeCategory}」，請嘗試更換關鍵字或重設分類篩選。`;
+          }
+        }
+        return;
+      }
+
+      if (emptyEl) emptyEl.classList.remove('is-visible');
+
+      container.innerHTML = filtered.map((ch) => {
+        const isRead = appState.readIds.includes(ch.id);
+        const isExpanded = appState.expandedIds.includes(ch.id);
+        const legalListHtml = ch.legalPoints.map((pt) => `<li>${pt}</li>`).join(``);
+        const practicalListHtml = ch.practicalPoints.map((pt) => `<li>${pt}</li>`).join(``);
+
+        return `
+          <article id="${ch.id}" class="chapter-card ${isRead ? `is-read` : ``} ${isExpanded ? `is-expanded` : ``}">
+            <div class="chapter-header">
+              <span class="chapter-index">${ch.num}</span>
+              <button type="button" class="chapter-trigger" aria-expanded="${isExpanded ? `true` : `false`}" aria-controls="body-${ch.id}" onclick="toggleChapter('${ch.id}')">
+                <div class="chapter-meta-top">
+                  <span class="cat-tag">${ch.category}</span>
+                  <span class="article-ref">${ch.articles}</span>
+                </div>
+                <h3 class="chapter-title">${ch.title}</h3>
+                <p class="chapter-summary">${ch.summary}</p>
+              </button>
+              <div class="chapter-actions">
+                <label class="read-checkbox-label ${isRead ? `is-checked` : ``}" onclick="event.stopPropagation()">
+                  <input type="checkbox" ${isRead ? `checked` : ``} onchange="toggleRead('${ch.id}', this.checked)" aria-label="將第 ${ch.num} 章標記為已讀">
+                  <span>已讀</span>
+                </label>
+                <button type="button" class="expand-btn" aria-expanded="${isExpanded ? `true` : `false`}" aria-controls="body-${ch.id}" aria-label="${isExpanded ? `收合` : `展開`}第 ${ch.num} 章詳細解析" onclick="toggleChapter('${ch.id}')">
+                  <span>${isExpanded ? `收合` : `展開`}</span>
+                  <svg class="expand-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                    <polyline points="6 9 12 15 18 9"></polyline>
+                  </svg>
+                </button>
+              </div>
+            </div>
+            <div id="body-${ch.id}" class="chapter-body">
+              <div class="detail-grid">
+                <div class="detail-panel">
+                  <h4>法規條文與核心架構</h4>
+                  <ul>${legalListHtml}</ul>
+                </div>
+                <div class="detail-panel">
+                  <h4>實務解析與作業要點</h4>
+                  <ul>${practicalListHtml}</ul>
+                </div>
+                ${ch.tableHtml ? `<div class="detail-panel is-full"><h4>結構化對照表</h4>${ch.tableHtml}</div>` : ``}
+                <div class="callout-risk">
+                  <strong>風控警示與稽核重點</strong>
+                  ${ch.riskNote}
+                </div>
+                <div class="callout-missing">
+                  <span class="missing-badge">來源未提供</span>
+                  <span>${ch.missingNote}</span>
+                </div>
+              </div>
+            </div>
+          </article>
+        `;
+      }).join(``);
+    }
+
+    function renderQuiz() {
+      const container = document.getElementById('quiz-container');
+      if (!container) return;
+
+      container.innerHTML = QUIZ_DATA.map((item) => {
+        const chosen = appState.quizAnswers[item.id];
+        const hasChosen = typeof chosen === 'number';
+        const isCorrect = hasChosen && chosen === item.correctIndex;
+
+        const optsHtml = item.options.map((opt, idx) => {
+          let cls = `quiz-opt`;
+          if (hasChosen) {
+            if (idx === item.correctIndex) {
+              cls += ` is-correct`;
+            } else if (idx === chosen) {
+              cls += ` is-wrong`;
+            }
+          }
+          return `<button type="button" class="${cls}" onclick="answerQuiz('${item.id}', ${idx})">${String.fromCharCode(65 + idx)}. ${opt}</button>`;
+        }).join(``);
+
+        return `
+          <article class="quiz-card">
+            <p class="quiz-q">${item.question}</p>
+            <div class="quiz-options">${optsHtml}</div>
+            <div class="quiz-feedback ${hasChosen ? `is-visible ${isCorrect ? `is-pass` : `is-fail`}` : ``}" aria-live="polite">
+              ${hasChosen ? item.explanation : ``}
+            </div>
+          </article>
+        `;
+      }).join(``);
+    }
+
+    function toggleChapter(id) {
+      const idx = appState.expandedIds.indexOf(id);
+      if (idx >= 0) {
+        appState.expandedIds.splice(idx, 1);
+      } else {
+        appState.expandedIds.push(id);
+      }
+      renderChapters();
+      saveState();
+    }
+
+    function toggleAllChapters(expand) {
+      if (expand) {
+        appState.expandedIds = CHAPTERS.map((c) => c.id);
+      } else {
+        appState.expandedIds = [];
+      }
+      renderChapters();
+      saveState();
+    }
+
+    function toggleRead(id, checked) {
+      const exists = appState.readIds.includes(id);
+      if (checked && !exists) {
+        appState.readIds.push(id);
+      } else if (!checked && exists) {
+        appState.readIds = appState.readIds.filter((item) => item !== id);
+      }
+      updateProgressBar();
+      renderChapters();
+      saveState();
+    }
+
+    function setCategoryFilter(cat) {
+      appState.activeCategory = cat;
+      const btns = document.querySelectorAll('.filter-btn');
+      btns.forEach((btn) => {
+        btn.classList.toggle('is-active', btn.getAttribute('data-cat') === cat);
+      });
+      renderChapters();
+      saveState();
+    }
+
+    function handleSearchInput(val) {
+      appState.searchQuery = val;
+      const clearBtn = document.getElementById('search-clear-btn');
+      if (clearBtn) {
+        clearBtn.classList.toggle('is-visible', val.trim().length > 0);
+      }
+      renderChapters();
+    }
+
+    function clearSearch() {
+      const input = document.getElementById('keyword-search');
+      if (input) input.value = ``;
+      appState.searchQuery = ``;
+      const clearBtn = document.getElementById('search-clear-btn');
+      if (clearBtn) clearBtn.classList.remove('is-visible');
+      renderChapters();
+    }
+
+    function toggleUnreadOnly(checked) {
+      appState.unreadOnly = checked;
+      renderChapters();
+      saveState();
+    }
+
+    function resetFilters() {
+      clearSearch();
+      appState.unreadOnly = false;
+      const unreadBox = document.getElementById('unread-only-checkbox');
+      if (unreadBox) unreadBox.checked = false;
+      setCategoryFilter(`all`);
+    }
+
+    function handleResetProgress(btn) {
+      if (!btn) return;
+      if (btn.dataset.armed !== 'true') {
+        btn.dataset.armed = 'true';
+        btn.textContent = `確認清除已讀？`;
+        setTimeout(() => {
+          if (btn.dataset.armed === 'true') {
+            btn.dataset.armed = 'false';
+            btn.textContent = `重設進度`;
+          }
+        }, 3500);
+        return;
+      }
+      btn.dataset.armed = 'false';
+      btn.textContent = `重設進度`;
+      appState.readIds = [];
+      appState.quizAnswers = {};
+      updateProgressBar();
+      renderChapters();
+      renderQuiz();
+      saveState();
+    }
+
+    function selectArchNode(key) {
+      const data = ARCH_NODES[key];
+      if (!data) return;
+
+      document.querySelectorAll('.arch-node').forEach((node) => {
+        node.classList.toggle('is-active', node.id === `node-${key}`);
+      });
+
+      const tagEl = document.getElementById('arch-detail-tag');
+      const titleEl = document.getElementById('arch-detail-title');
+      const descEl = document.getElementById('arch-detail-desc');
+      const jumpEl = document.getElementById('arch-jump-list');
+
+      if (tagEl) tagEl.textContent = data.tag;
+      if (titleEl) titleEl.textContent = data.title;
+      if (descEl) descEl.textContent = data.desc;
+      if (jumpEl) {
+        jumpEl.innerHTML = data.jumps.map((chId) => {
+          const chObj = CHAPTERS.find((c) => c.id === chId);
+          const label = chObj ? `跳轉至第 ${chObj.num} 章` : `檢視章節`;
+          return `<li><button type="button" class="btn" onclick="jumpToChapter('${chId}')">${label}</button></li>`;
+        }).join(``);
+      }
+    }
+
+    function jumpToChapter(chId) {
+      if (appState.activeCategory !== `all` || appState.searchQuery.trim() !== `` || appState.unreadOnly) {
+        resetFilters();
+      }
+      if (!appState.expandedIds.includes(chId)) {
+        appState.expandedIds.push(chId);
+      }
+      renderChapters();
+      saveState();
+      const target = document.getElementById(chId);
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+
+    function answerQuiz(qId, optIdx) {
+      appState.quizAnswers[qId] = optIdx;
+      renderQuiz();
+      saveState();
+    }
+
+    function bindArchKeyboard() {
+      document.querySelectorAll('.arch-node').forEach((node) => {
+        node.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            const key = node.id.replace(`node-`, ``);
+            selectArchNode(key);
+          }
+        });
+      });
+    }
+
+    async function initApp() {
+      if (window.notebookAppApi && typeof window.notebookAppApi.getAppState === 'function') {
+        try {
+          const saved = await window.notebookAppApi.getAppState();
+          if (saved && typeof saved === 'object') {
+            if (Array.isArray(saved.readIds)) appState.readIds = saved.readIds;
+            if (Array.isArray(saved.expandedIds)) appState.expandedIds = saved.expandedIds;
+            if (typeof saved.activeCategory === 'string') appState.activeCategory = saved.activeCategory;
+            if (typeof saved.unreadOnly === 'boolean') appState.unreadOnly = saved.unreadOnly;
+            if (saved.quizAnswers && typeof saved.quizAnswers === 'object') appState.quizAnswers = saved.quizAnswers;
+          }
+        } catch (err) {
+          // Graceful fallback to default initial state
+        }
+      }
+
+      const unreadBox = document.getElementById('unread-only-checkbox');
+      if (unreadBox) unreadBox.checked = appState.unreadOnly;
+
+      document.querySelectorAll('.filter-btn').forEach((btn) => {
+        btn.classList.toggle('is-active', btn.getAttribute('data-cat') === appState.activeCategory);
+      });
+
+      bindArchKeyboard();
+      updateProgressBar();
+      renderChapters();
+      renderQuiz();
+
+      if (window.notebookAppApi && typeof window.notebookAppApi.notifyAppReady === 'function') {
+        window.notebookAppApi.notifyAppReady();
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', initApp);
+  </script>
+</body>
+</html>

@@ -1,0 +1,1961 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#14283a">
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="./manifest.webmanifest">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="授信實務30天">
+  <script>
+    if ("serviceWorker" in navigator && (location.protocol === "https:" || location.hostname === "localhost")) {
+      window.addEventListener("load", () => navigator.serviceWorker.register("./service-worker.js").catch((error) => console.warn("PWA offline support unavailable:", error)));
+    }
+  </script>
+  <meta name="artifact-type" content="narrative">
+  <meta name="design-style" content="charter">
+  <title>中小企業授信與財報分析實務-Day07-3,000萬元融資簽證門檻與法規強制規範</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700&family=Noto+Sans+TC:wght@400;500;600;700&family=Libre+Caslon+Text:wght@400;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      color-scheme: light;
+
+      /* Page and surfaces */
+      --background: #F8FAFC;
+      --surface-container-low: #FFFFFF;
+      --surface-container: #F1F5F9;
+      --surface-container-high: #E2E8F0;
+
+      /* Ink */
+      --on-surface: #0F2537;
+      --on-surface-secondary: #334155;
+      --on-surface-variant: #475569;
+
+      /* Rules & borders */
+      --outline: #C5A880;
+      --outline-variant: #CBD5E1;
+
+      /* Accents */
+      --primary: #0F2537;
+      --primary-accent: #1E3A8A;
+      --on-primary: #F8FAFC;
+      --primary-container: #E0E7FF;
+      --on-primary-container: #0F2537;
+      --secondary: #334155;
+      --accent-amber: #D97706;
+      --tertiary: #B45309;
+      --accent-soft-bg: #FEF3C7;
+
+      /* Semantic status */
+      --positive: #059669;
+      --positive-text: #047857;
+      --positive-bg: #ECFDF5;
+      --positive-border: #A7F3D0;
+      --warning: #F59E0B;
+      --warning-text: #92400E;
+      --warning-bg: #FEF3C7;
+      --warning-border: #FDE68A;
+      --error: #DC2626;
+      --error-bg: #FEF2F2;
+      --error-border: #FECACA;
+      --on-error: #FFFFFF;
+
+      /* Focus ring */
+      --focus: #1E3A8A;
+
+      /* Data series */
+      --data-1: #0F2537;
+      --data-2: #D97706;
+      --data-3: #059669;
+      --data-4: #334155;
+      --data-context: #94A3B8;
+
+      /* Fonts */
+      --font-headline: 'Noto Serif TC', 'Libre Caslon Text', serif;
+      --font-body: 'Noto Sans TC', 'Inter', sans-serif;
+      --font-label: 'Noto Sans TC', 'JetBrains Mono', monospace;
+      --font-mono: 'JetBrains Mono', 'Noto Sans TC', monospace;
+
+      /* Type scale */
+      --display-size: clamp(1.5rem, 1.15rem + 1.4vw, 2.25rem);
+      --headline-size: clamp(1.25rem, 1.05rem + 0.8vw, 1.65rem);
+      --subhead-size: clamp(1.0625rem, 1rem + 0.25vw, 1.25rem);
+      --body-size: clamp(0.95rem, 0.92rem + 0.15vw, 1.03125rem);
+      --label-size: 0.78rem;
+
+      /* Shape */
+      --rounded: 0.25rem;
+      --rounded-lg: 0.375rem;
+      --rounded-full: 9999px;
+
+      /* Style effects */
+      --brass-rule: 2px solid var(--outline);
+      --brass-rule-thick: 3px solid var(--outline);
+      --hairline: 1px solid var(--outline-variant);
+      --card-shadow: 0 1px 3px rgba(15, 37, 55, 0.06), 0 1px 2px rgba(15, 37, 55, 0.04);
+      --card-shadow-hover: 0 6px 16px rgba(15, 37, 55, 0.08);
+
+      /* Spacing scale (4pt base) */
+      --space-xs: 0.25rem;
+      --space-sm: 0.5rem;
+      --space-md: 1rem;
+      --space-lg: 1.5rem;
+      --space-xl: 2.25rem;
+      --space-2xl: 3.5rem;
+
+      /* Motion */
+      --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+      --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+      --dur-micro: 120ms;
+      --dur-short: 220ms;
+      --dur-long: 400ms;
+    }
+
+    /* Base reset */
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+
+    html, body {
+      overflow-x: clip;
+      margin: 0;
+      padding: 0;
+      background-color: var(--background);
+      color: var(--on-surface);
+      font-family: var(--font-body);
+      font-size: var(--body-size);
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    header {
+      position: static !important;
+    }
+
+    button, input, select, textarea {
+      font-family: inherit;
+    }
+
+    :focus-visible {
+      outline: 2px solid var(--focus);
+      outline-offset: 2px;
+    }
+
+    /* Header (Strict Title Band) */
+    .title-band {
+      background-color: var(--primary);
+      color: var(--on-primary);
+      border-bottom: var(--brass-rule-thick);
+      padding: var(--space-xl) var(--space-lg);
+    }
+
+    .title-band-inner {
+      max-width: 1180px;
+      margin: 0 auto;
+    }
+
+    .title-band h1 {
+      margin: 0;
+      font-family: var(--font-headline);
+      font-weight: 400;
+      font-size: var(--display-size);
+      line-height: 1.25;
+      letter-spacing: -0.01em;
+      color: var(--on-primary);
+    }
+
+    /* Main Grid Container */
+    .page-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: var(--space-xl);
+      padding: var(--space-lg);
+      max-width: 1180px;
+      margin: 0 auto;
+      overflow: hidden;
+    }
+
+    .page-grid * {
+      min-width: 0;
+    }
+
+    /* Section Headers (Charter Brass Rule) */
+    .section-head {
+      border-top: var(--brass-rule);
+      padding-top: var(--space-md);
+      border-bottom: var(--hairline);
+      padding-bottom: var(--space-sm);
+      margin-bottom: var(--space-lg);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: var(--space-sm);
+    }
+
+    .section-head h2 {
+      margin: 0;
+      font-family: var(--font-headline);
+      font-weight: 700;
+      font-size: var(--headline-size);
+      color: var(--primary);
+      line-height: 1.25;
+    }
+
+    .section-sub {
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      color: var(--on-surface-variant);
+      font-weight: 500;
+    }
+
+    /* Progress & Overview Strip */
+    .overview-panel {
+      background-color: var(--surface-container-low);
+      border: var(--hairline);
+      border-top: var(--brass-rule);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-lg);
+      box-shadow: var(--card-shadow);
+      display: grid;
+      gap: var(--space-lg);
+    }
+
+    .overview-top {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: var(--space-lg);
+    }
+
+    .overview-intro {
+      flex: 1 1 420px;
+      max-width: 68ch;
+    }
+
+    .overview-kicker {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: var(--label-size);
+      font-weight: 600;
+      color: var(--tertiary);
+      background-color: var(--accent-soft-bg);
+      padding: var(--space-xs) var(--space-sm);
+      border-radius: var(--rounded);
+      margin-bottom: var(--space-sm);
+    }
+
+    .overview-intro p {
+      margin: 0;
+      color: var(--on-surface-secondary);
+    }
+
+    /* Progress Tracker Widget */
+    .progress-box {
+      flex: 1 1 300px;
+      background-color: var(--surface-container);
+      border: var(--hairline);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-md) var(--space-lg);
+    }
+
+    .progress-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: var(--space-sm);
+      gap: var(--space-sm);
+    }
+
+    .progress-title {
+      font-size: var(--label-size);
+      font-weight: 700;
+      color: var(--secondary);
+    }
+
+    .progress-count {
+      font-family: var(--font-mono);
+      font-size: var(--subhead-size);
+      font-weight: 700;
+      color: var(--primary);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .progress-track {
+      width: 100%;
+      height: 10px;
+      background-color: var(--surface-container-high);
+      border-radius: var(--rounded-full);
+      overflow: hidden;
+      margin-bottom: var(--space-md);
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background-color: var(--positive);
+      border-radius: var(--rounded-full);
+      transition: width var(--dur-short) var(--ease-out);
+    }
+
+    .progress-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-sm);
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-xs);
+      min-height: 44px;
+      padding: var(--space-xs) var(--space-md);
+      border-radius: var(--rounded);
+      font-size: var(--label-size);
+      font-weight: 600;
+      cursor: pointer;
+      border: 1px solid transparent;
+      transition: background-color var(--dur-micro) var(--ease-out), color var(--dur-micro) var(--ease-out), border-color var(--dur-micro) var(--ease-out);
+    }
+
+    .btn-primary {
+      background-color: var(--primary);
+      color: var(--on-primary);
+    }
+
+    .btn-primary:hover {
+      background-color: var(--primary-accent);
+    }
+
+    .btn-secondary {
+      background-color: var(--surface-container-low);
+      color: var(--primary);
+      border-color: var(--outline-variant);
+    }
+
+    .btn-secondary:hover {
+      background-color: var(--surface-container-high);
+      border-color: var(--secondary);
+    }
+
+    .btn-danger-outline {
+      background-color: var(--surface-container-low);
+      color: var(--error);
+      border-color: var(--error-border);
+    }
+
+    .btn-danger-outline:hover {
+      background-color: var(--error-bg);
+    }
+
+    /* KPI Figure Cards */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(220px, 100%), 1fr));
+      gap: var(--space-md);
+    }
+
+    .figure-card {
+      background-color: var(--surface-container-low);
+      border: var(--hairline);
+      border-top: var(--brass-rule);
+      border-radius: var(--rounded);
+      padding: var(--space-md);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xs);
+    }
+
+    .figure-label {
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      font-weight: 600;
+      color: var(--on-surface-variant);
+    }
+
+    .figure-value {
+      font-family: var(--font-headline);
+      font-size: clamp(1.2rem, 1rem + 0.6vw, 1.5rem);
+      font-weight: 700;
+      color: var(--primary);
+      font-variant-numeric: tabular-nums lining-nums;
+      line-height: 1.25;
+    }
+
+    .figure-value.is-alert {
+      color: var(--error);
+    }
+
+    .figure-note {
+      font-size: 0.85rem;
+      color: var(--on-surface-secondary);
+      line-height: 1.45;
+    }
+
+    /* Summary Table */
+    .table-wrap {
+      overflow-x: auto;
+      background-color: var(--surface-container-low);
+      border: var(--hairline);
+      border-radius: var(--rounded-lg);
+      box-shadow: var(--card-shadow);
+    }
+
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.92rem;
+    }
+
+    .data-table thead th {
+      background-color: var(--surface-container);
+      color: var(--secondary);
+      font-weight: 700;
+      font-size: var(--label-size);
+      padding: var(--space-md);
+      border-bottom: var(--brass-rule);
+      white-space: nowrap;
+    }
+
+    .data-table tbody td {
+      padding: var(--space-md);
+      border-bottom: var(--hairline);
+      color: var(--on-surface-secondary);
+      vertical-align: top;
+    }
+
+    .data-table tbody tr:last-child td {
+      border-bottom: none;
+    }
+
+    .data-table tbody tr.is-highlight {
+      background-color: var(--primary-container);
+    }
+
+    .data-table tbody tr.is-highlight td {
+      color: var(--on-primary-container);
+      font-weight: 500;
+    }
+
+    .mono-num {
+      font-family: var(--font-mono);
+      font-variant-numeric: tabular-nums;
+      font-weight: 600;
+    }
+
+    /* Search & Filter Toolbar */
+    .filter-toolbar {
+      background-color: var(--surface-container-low);
+      border: var(--hairline);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-md) var(--space-lg);
+      box-shadow: var(--card-shadow);
+      display: grid;
+      gap: var(--space-md);
+    }
+
+    .search-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: end;
+      gap: var(--space-md);
+    }
+
+    .input-group {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xs);
+      flex: 1 1 280px;
+    }
+
+    .input-label {
+      font-size: var(--label-size);
+      font-weight: 700;
+      color: var(--secondary);
+    }
+
+    .search-input-wrap {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .text-input, .select-input {
+      width: 100%;
+      min-height: 44px;
+      padding: var(--space-sm) var(--space-md);
+      background-color: var(--surface-container-low);
+      color: var(--on-surface);
+      border: 1px solid var(--outline-variant);
+      border-radius: var(--rounded);
+      font-size: 0.95rem;
+      transition: border-color var(--dur-micro) var(--ease-out), box-shadow var(--dur-micro) var(--ease-out);
+    }
+
+    .select-input {
+      padding-right: var(--space-xl);
+    }
+
+    .text-input:focus, .select-input:focus {
+      border-color: var(--primary-accent);
+    }
+
+    .filter-tags-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-md);
+    }
+
+    .tag-btn-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-sm);
+    }
+
+    .tag-filter-btn {
+      min-height: 44px;
+      padding: var(--space-xs) var(--space-md);
+      border-radius: var(--rounded);
+      border: 1px solid var(--outline-variant);
+      background-color: var(--surface-container);
+      color: var(--secondary);
+      font-size: var(--label-size);
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color var(--dur-micro) var(--ease-out), color var(--dur-micro) var(--ease-out), border-color var(--dur-micro) var(--ease-out);
+    }
+
+    .tag-filter-btn:hover {
+      background-color: var(--surface-container-high);
+    }
+
+    .tag-filter-btn.is-active {
+      background-color: var(--primary);
+      color: var(--on-primary);
+      border-color: var(--primary);
+    }
+
+    .filter-status {
+      font-family: var(--font-mono);
+      font-size: var(--label-size);
+      color: var(--on-surface-variant);
+    }
+
+    /* Knowledge Cards Grid / Stack */
+    .cards-stack {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: var(--space-md);
+    }
+
+    .chapter-card {
+      background-color: var(--surface-container-low);
+      border: 1px solid var(--outline-variant);
+      border-left: 4px solid var(--primary);
+      border-radius: var(--rounded-lg);
+      box-shadow: var(--card-shadow);
+      overflow: hidden;
+      transition: box-shadow var(--dur-short) var(--ease-out), border-color var(--dur-short) var(--ease-out);
+    }
+
+    .chapter-card:hover {
+      box-shadow: var(--card-shadow-hover);
+    }
+
+    .chapter-card.is-read {
+      border-left-color: var(--positive);
+    }
+
+    .chapter-card.is-alert-card {
+      border-left-color: var(--error);
+    }
+
+    .chapter-card.is-read.is-alert-card {
+      border-left-color: var(--positive);
+    }
+
+    .card-header-bar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: stretch;
+      justify-content: space-between;
+      gap: var(--space-sm);
+      padding: var(--space-md) var(--space-lg);
+      background-color: var(--surface-container-low);
+    }
+
+    .card-toggle-btn {
+      flex: 1 1 320px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      text-align: left;
+      background: transparent;
+      border: none;
+      padding: 0;
+      cursor: pointer;
+      color: inherit;
+      gap: var(--space-xs);
+    }
+
+    .card-meta-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: var(--space-sm);
+    }
+
+    .card-index {
+      font-family: var(--font-mono);
+      font-size: var(--label-size);
+      font-weight: 700;
+      color: var(--on-primary);
+      background-color: var(--primary);
+      padding: 2px 8px;
+      border-radius: var(--rounded);
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      font-size: var(--label-size);
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: var(--rounded);
+      border: 1px solid transparent;
+    }
+
+    .badge-law {
+      background-color: var(--primary-container);
+      color: var(--on-primary-container);
+      border-color: var(--outline-variant);
+    }
+
+    .badge-calc {
+      background-color: var(--accent-soft-bg);
+      color: var(--tertiary);
+      border-color: var(--warning-border);
+    }
+
+    .badge-case {
+      background-color: var(--surface-container);
+      color: var(--secondary);
+      border-color: var(--outline-variant);
+    }
+
+    .badge-risk {
+      background-color: var(--error-bg);
+      color: var(--error);
+      border-color: var(--error-border);
+    }
+
+    .card-title {
+      margin: 0;
+      font-family: var(--font-headline);
+      font-size: var(--subhead-size);
+      font-weight: 700;
+      color: var(--primary);
+      line-height: 1.35;
+    }
+
+    .card-summary {
+      margin: 0;
+      font-size: 0.92rem;
+      color: var(--on-surface-variant);
+      max-width: 72ch;
+    }
+
+    .card-controls {
+      display: flex;
+      align-items: center;
+      gap: var(--space-md);
+      flex-shrink: 0;
+    }
+
+    /* Read Checkbox Control (44px touch target) */
+    .read-check-label {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-sm);
+      min-height: 44px;
+      padding: var(--space-xs) var(--space-md);
+      border: 1px solid var(--outline-variant);
+      border-radius: var(--rounded);
+      background-color: var(--surface-container);
+      color: var(--secondary);
+      font-size: var(--label-size);
+      font-weight: 600;
+      cursor: pointer;
+      user-select: none;
+      transition: background-color var(--dur-micro) var(--ease-out), border-color var(--dur-micro) var(--ease-out), color var(--dur-micro) var(--ease-out);
+    }
+
+    .read-check-label:hover {
+      background-color: var(--surface-container-high);
+    }
+
+    .chapter-card.is-read .read-check-label {
+      background-color: var(--positive-bg);
+      border-color: var(--positive);
+      color: var(--positive-text);
+    }
+
+    .read-checkbox {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--positive);
+      cursor: pointer;
+    }
+
+    .expand-indicator {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 44px;
+      min-height: 44px;
+      border-radius: var(--rounded);
+      border: 1px solid var(--outline-variant);
+      background-color: var(--surface-container-low);
+      color: var(--primary);
+      cursor: pointer;
+      transition: background-color var(--dur-micro) var(--ease-out);
+    }
+
+    .expand-indicator:hover {
+      background-color: var(--surface-container);
+    }
+
+    .chevron-icon {
+      width: 18px;
+      height: 18px;
+      transition: transform var(--dur-short) var(--ease-out);
+    }
+
+    .chapter-card.is-expanded .chevron-icon {
+      transform: rotate(180deg);
+    }
+
+    /* Card Expandable Body */
+    .card-body {
+      display: none;
+      padding: var(--space-md) var(--space-lg) var(--space-lg);
+      border-top: var(--hairline);
+      background-color: var(--surface-container-low);
+    }
+
+    .chapter-card.is-expanded .card-body {
+      display: block;
+    }
+
+    .card-body-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: var(--space-md);
+    }
+
+    .detail-block {
+      margin: 0;
+    }
+
+    .detail-block h4 {
+      margin: 0 0 var(--space-xs) 0;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--secondary);
+    }
+
+    .detail-block ul {
+      margin: 0;
+      padding-left: 1.25rem;
+      color: var(--on-surface-secondary);
+    }
+
+    .detail-block li {
+      margin-bottom: var(--space-xs);
+    }
+
+    .callout-box {
+      padding: var(--space-md);
+      border-radius: var(--rounded);
+      border-left: 4px solid var(--outline);
+      background-color: var(--surface-container);
+      font-size: 0.92rem;
+    }
+
+    .callout-box.is-warning {
+      background-color: var(--warning-bg);
+      border-left-color: var(--warning);
+      color: var(--warning-text);
+    }
+
+    .callout-box.is-danger {
+      background-color: var(--error-bg);
+      border-left-color: var(--error);
+      color: var(--error);
+    }
+
+    .callout-box.is-positive {
+      background-color: var(--positive-bg);
+      border-left-color: var(--positive);
+      color: var(--positive-text);
+    }
+
+    .callout-title {
+      font-weight: 700;
+      display: block;
+      margin-bottom: var(--space-xs);
+    }
+
+    .source-gap-badge {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: var(--label-size);
+      font-weight: 700;
+      background-color: var(--surface-container-high);
+      color: var(--secondary);
+      padding: 2px 6px;
+      border-radius: var(--rounded);
+    }
+
+    /* Empty State */
+    .empty-state {
+      display: none;
+      text-align: center;
+      padding: var(--space-2xl) var(--space-lg);
+      background-color: var(--surface-container-low);
+      border: var(--hairline);
+      border-radius: var(--rounded-lg);
+    }
+
+    .empty-state.is-visible {
+      display: block;
+    }
+
+    .empty-state p {
+      margin: 0 0 var(--space-md) 0;
+      color: var(--on-surface-variant);
+    }
+
+    /* Interactive Threshold Calculator */
+    .tool-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+      gap: var(--space-lg);
+      align-items: start;
+    }
+
+    .tool-panel {
+      background-color: var(--surface-container-low);
+      border: var(--hairline);
+      border-top: var(--brass-rule);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-lg);
+      box-shadow: var(--card-shadow);
+    }
+
+    .preset-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-sm);
+      margin-bottom: var(--space-lg);
+      padding-bottom: var(--space-md);
+      border-bottom: var(--hairline);
+    }
+
+    .preset-label {
+      width: 100%;
+      font-size: var(--label-size);
+      font-weight: 700;
+      color: var(--secondary);
+    }
+
+    .calc-fields {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(220px, 100%), 1fr));
+      gap: var(--space-md);
+    }
+
+    .checkbox-row {
+      grid-column: 1 / -1;
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+      min-height: 44px;
+      padding: var(--space-sm) var(--space-md);
+      background-color: var(--error-bg);
+      border: 1px solid var(--error-border);
+      border-radius: var(--rounded);
+      cursor: pointer;
+      font-size: 0.92rem;
+      font-weight: 600;
+      color: var(--error);
+    }
+
+    .checkbox-row input {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--error);
+    }
+
+    .result-verdict {
+      padding: var(--space-md);
+      border-radius: var(--rounded);
+      border-left: 5px solid var(--primary);
+      background-color: var(--surface-container);
+      margin-bottom: var(--space-md);
+    }
+
+    .result-verdict.verdict-must {
+      background-color: var(--error-bg);
+      border-left-color: var(--error);
+    }
+
+    .result-verdict.verdict-warn {
+      background-color: var(--warning-bg);
+      border-left-color: var(--warning);
+    }
+
+    .result-verdict.verdict-pass {
+      background-color: var(--positive-bg);
+      border-left-color: var(--positive);
+    }
+
+    .verdict-tag {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: var(--label-size);
+      font-weight: 700;
+      margin-bottom: var(--space-xs);
+    }
+
+    .verdict-must .verdict-tag { color: var(--error); }
+    .verdict-warn .verdict-tag { color: var(--warning-text); }
+    .verdict-pass .verdict-tag { color: var(--positive-text); }
+
+    .verdict-headline {
+      margin: 0;
+      font-family: var(--font-headline);
+      font-size: var(--subhead-size);
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    .calc-breakdown {
+      display: grid;
+      gap: var(--space-xs);
+      margin-bottom: var(--space-md);
+      padding-bottom: var(--space-md);
+      border-bottom: var(--hairline);
+      font-size: 0.9rem;
+    }
+
+    .breakdown-row {
+      display: flex;
+      justify-content: space-between;
+      gap: var(--space-md);
+      color: var(--on-surface-secondary);
+    }
+
+    .breakdown-row.is-total {
+      padding-top: var(--space-xs);
+      border-top: var(--brass-rule);
+      font-weight: 700;
+      color: var(--primary);
+      font-size: 1rem;
+    }
+
+    .checklist-out {
+      margin: 0;
+      padding-left: 1.2rem;
+      font-size: 0.9rem;
+      color: var(--on-surface-secondary);
+    }
+
+    .checklist-out li {
+      margin-bottom: var(--space-xs);
+    }
+
+    .memo-box {
+      margin-top: var(--space-md);
+      padding: var(--space-md);
+      background-color: var(--surface-container);
+      border: var(--hairline);
+      border-radius: var(--rounded);
+      font-size: 0.88rem;
+      color: var(--on-surface-secondary);
+    }
+
+    .memo-label {
+      font-family: var(--font-mono);
+      font-size: var(--label-size);
+      font-weight: 700;
+      color: var(--secondary);
+      display: block;
+      margin-bottom: var(--space-xs);
+    }
+
+    /* Sources Section */
+    .sources-panel {
+      background-color: var(--surface-container);
+      border-top: var(--brass-rule);
+      border-radius: var(--rounded);
+      padding: var(--space-lg);
+      font-size: 0.9rem;
+      color: var(--on-surface-secondary);
+    }
+
+    .sources-panel h3 {
+      margin: 0 0 var(--space-sm) 0;
+      font-family: var(--font-headline);
+      font-size: 1.05rem;
+      color: var(--primary);
+    }
+
+    .sources-panel ul {
+      margin: 0 0 var(--space-sm) 0;
+      padding-left: 1.25rem;
+    }
+
+    .sources-panel li {
+      margin-bottom: var(--space-xs);
+    }
+
+    /* Footer (Strict Format) */
+    .site-footer {
+      background-color: var(--primary);
+      color: var(--on-primary);
+      border-top: var(--brass-rule);
+      padding: var(--space-lg);
+      text-align: center;
+      margin-top: var(--space-xl);
+    }
+
+    .site-footer p {
+      margin: 0;
+      font-family: var(--font-mono);
+      font-size: var(--label-size);
+      letter-spacing: 0.04em;
+    }
+
+    /* Responsive Breakpoints */
+    @media (max-width: 900px) {
+      .tool-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    @media (max-width: 640px) {
+      .title-band {
+        padding: var(--space-lg) var(--space-md);
+      }
+      .page-grid {
+        padding: var(--space-md);
+        gap: var(--space-lg);
+      }
+      .card-header-bar {
+        padding: var(--space-md);
+      }
+      .card-controls {
+        width: 100%;
+        justify-content: space-between;
+      }
+      .card-body {
+        padding: var(--space-md);
+      }
+      .overview-panel, .filter-toolbar, .tool-panel {
+        padding: var(--space-md);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+      .home-link { display: inline-flex; align-items: center; color: var(--outline); font: inherit; font-size: var(--label-size, 0.875rem); font-weight: 600; text-decoration: none; border: 1px solid var(--outline); padding: 0.4rem 0.7rem; margin: 0 0 var(--space-sm) 0; }
+    .home-link:hover, .home-link:focus-visible { color: var(--on-primary); text-decoration: underline; text-underline-offset: 0.18em; }
+    @media (max-width: 640px) { }
+      .header-bank-label { display: inline-block; margin: 0 0 var(--space-sm); color: var(--outline); font-family: var(--font-label); font-size: var(--label-size, 0.875rem); font-weight: 700; letter-spacing: 0.08em; }
+  </style>
+</head>
+<body>
+
+  <header class="title-band">
+    <div class="title-band-inner">
+      <span class="header-bank-label">鎖頭銀行</span>
+      <h1>中小企業授信與財報分析實務-Day07-3,000萬元融資簽證門檻與法規強制規範</h1>
+    </div>
+  </header>
+
+  <main class="page-grid">
+
+    <!-- 1. 首頁總覽與學習進度追蹤 -->
+    <section aria-labelledby="overview-heading">
+      <div class="section-head">
+        <h2 id="overview-heading">課程總覽與核心法規基準</h2>
+        <span class="section-sub">DAY 07 · 《銀行公會會員徵信準則》第 18 條專章</span>
+      </div>
+
+      <div class="overview-panel">
+        <div class="overview-top">
+          <div class="overview-intro">
+            <span class="overview-kicker">核心學習目標</span>
+            <p>
+              本單元聚焦企業授信徵信作業中「新臺幣 3,000 萬元」融資簽證強制門檻之法源依據、總授信金額歸戶計算與扣除規則、「本票保證」無條件強制財簽例外、無追索權應收帳款承購免計入規範，以及跨年度報表空窗期與聯徵副本聯防之實務控管（課程個案銀行統一稱「鎖頭銀行」）。
+            </p>
+          </div>
+
+          <div class="progress-box" aria-live="polite">
+            <div class="progress-header">
+              <span class="progress-title">本單元學習進度追蹤</span>
+              <span class="progress-count" id="progress-text">0 / 8 已讀 (0%)</span>
+            </div>
+            <div class="progress-track" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="progress-bar-role">
+              <div class="progress-fill" id="progress-fill"></div>
+            </div>
+            <div class="progress-actions">
+              <button type="button" class="btn btn-secondary" onclick="expandAllVisible()">全部展開</button>
+              <button type="button" class="btn btn-secondary" onclick="collapseAllVisible()">全部收合</button>
+              <button type="button" class="btn btn-danger-outline" id="reset-progress-btn" onclick="handleResetProgress(this)">重設已讀紀錄</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="kpi-grid">
+          <article class="figure-card">
+            <span class="figure-label">強制融資簽證門檻</span>
+            <span class="figure-value">NT$ 3,000 萬元</span>
+            <span class="figure-note">全體金融機構歸戶餘額＋本次申請額度達標即強制徵提財簽（第18條第1項第1款）</span>
+          </article>
+
+          <article class="figure-card">
+            <span class="figure-label">無條件強制例外業務</span>
+            <span class="figure-value is-alert">本票保證</span>
+            <span class="figure-note">公司組織申請本票保證，不論總授信金額是否達 3,000 萬元，一律強制徵提財簽</span>
+          </article>
+
+          <article class="figure-card">
+            <span class="figure-label">法定計算扣除與免計項</span>
+            <span class="figure-value">4 大排除項目</span>
+            <span class="figure-note">存單質借、出口押匯、進口押匯得予扣除；無追索權 Factoring 買方額度免計入</span>
+          </article>
+
+          <article class="figure-card">
+            <span class="figure-label">防範雙重報表聯防</span>
+            <span class="figure-value">JCIC 副本逕送</span>
+            <span class="figure-note">契約明定會計師將查核報告副本送達聯徵中心，比對防範粉飾報表（第18條第1項第6款）</span>
+          </article>
+        </div>
+      </div>
+
+      <div class="table-wrap" style="margin-top: var(--space-lg);">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th scope="col">總授信金額區間</th>
+              <th scope="col">適用徵信資料表</th>
+              <th scope="col">財務報表徵提標準</th>
+              <th scope="col">徵信與實務要點</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="mono-num">600 萬以下（或十足擔保 1,500 萬以下）</td>
+              <td>小規模營利事業簡易資料表</td>
+              <td>加蓋稅捐機關收件章之所得稅申報書，或附聲明書之自編報表</td>
+              <td>短期授信徵信範圍由八大項簡化為五大項（第22條第1項第3款）</td>
+            </tr>
+            <tr>
+              <td class="mono-num">601 萬～2,999 萬元（或十足擔保 1,501 萬～2,999 萬元）</td>
+              <td>簡易資料表</td>
+              <td>營利事業所得稅網路申報書＋最近稅捐機關納稅證明</td>
+              <td>若申辦「本票保證」仍須強制徵提會計師財簽；注意 1–5 月空窗期暫結表</td>
+            </tr>
+            <tr class="is-highlight">
+              <td class="mono-num">3,000 萬元以上（含）</td>
+              <td>資料表（一般企業）</td>
+              <td>強制徵提會計師財務報表查核報告（融資簽證）</td>
+              <td>非上市櫃須同時徵提「報稅資料＋融資簽證」；契約應約定副本逕送聯徵中心</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 2. 關鍵字搜尋與標籤篩選 -->
+    <section aria-labelledby="chapters-heading">
+      <div class="section-head">
+        <h2 id="chapters-heading">知識點章節與法規實務解析</h2>
+        <span class="section-sub">點擊卡片標題展開詳細條文與案例，勾選「已讀」即時儲存進度</span>
+      </div>
+
+      <div class="filter-toolbar" role="search">
+        <div class="search-row">
+          <div class="input-group">
+            <label for="keyword-search" class="input-label">即時關鍵字搜尋（法條、概念、案例關鍵字）</label>
+            <input
+              type="search"
+              id="keyword-search"
+              class="text-input"
+              placeholder="例如：本票保證、借新還舊、5月31日、JCIC、Apple、B33..."
+              oninput="handleSearchInput(this.value)"
+            >
+          </div>
+          <button type="button" class="btn btn-secondary" onclick="clearSearchAndFilters()">重設篩選條件</button>
+        </div>
+
+        <div class="filter-tags-row">
+          <div class="tag-btn-group" role="group" aria-label="分類標籤篩選">
+            <button type="button" class="tag-filter-btn is-active" data-tag="ALL" onclick="setTagFilter('ALL', this)">全部顯示</button>
+            <button type="button" class="tag-filter-btn" data-tag="法規規範" onclick="setTagFilter('法規規範', this)">【法規規範】</button>
+            <button type="button" class="tag-filter-btn" data-tag="計算認定" onclick="setTagFilter('計算認定', this)">【計算認定】</button>
+            <button type="button" class="tag-filter-btn" data-tag="實務案例" onclick="setTagFilter('實務案例', this)">【實務案例】</button>
+            <button type="button" class="tag-filter-btn" data-tag="風控警訊" onclick="setTagFilter('風控警訊', this)">【風控警訊】</button>
+          </div>
+          <span class="filter-status" id="filter-status-text">顯示 8 / 8 個章節</span>
+        </div>
+      </div>
+
+      <div class="cards-stack" id="cards-container" style="margin-top: var(--space-lg);"></div>
+
+      <div class="empty-state" id="empty-state">
+        <p>找不到符合目前搜尋關鍵字或分類標籤的章節內容。</p>
+        <button type="button" class="btn btn-primary" onclick="clearSearchAndFilters()">顯示全部章節</button>
+      </div>
+    </section>
+
+    <!-- 3. 互動式門檻計算與財簽判定模擬器 -->
+    <section aria-labelledby="calculator-heading">
+      <div class="section-head">
+        <h2 id="calculator-heading">總授信金額與融資簽證判定實作試算器</h2>
+        <span class="section-sub">依《徵信準則》第 16、18 條公式與鎖頭銀行實務控管邏輯即時判定</span>
+      </div>
+
+      <div class="tool-grid">
+        <div class="tool-panel">
+          <div class="preset-bar">
+            <span class="preset-label">快速套用實務教學情境（來自課程講義與授信錄音案例）：</span>
+            <button type="button" class="btn btn-secondary" onclick="applyPreset('refinance')">情境 A：借新還舊誤觸 3,000 萬</button>
+            <button type="button" class="btn btn-secondary" onclick="applyPreset('window')">情境 B：2 月空窗期擴廠破門檻</button>
+            <button type="button" class="btn btn-secondary" onclick="applyPreset('cp')">情境 C：500 萬小額本票保證</button>
+          </div>
+
+          <div class="calc-fields">
+            <div class="input-group">
+              <label for="calc-jcic" class="input-label">聯徵全體機構歸戶餘額 (萬元)</label>
+              <input type="number" id="calc-jcic" class="text-input" min="0" step="100" value="1800" oninput="recalculateThreshold()">
+            </div>
+
+            <div class="input-group">
+              <label for="calc-new" class="input-label">本次新申請授信額度 (萬元)</label>
+              <input type="number" id="calc-new" class="text-input" min="0" step="100" value="1600" oninput="recalculateThreshold()">
+            </div>
+
+            <div class="input-group">
+              <label for="calc-cd" class="input-label">扣除：本行存單質借金額 (萬元)</label>
+              <input type="number" id="calc-cd" class="text-input" min="0" step="50" value="0" oninput="recalculateThreshold()">
+            </div>
+
+            <div class="input-group">
+              <label for="calc-trade" class="input-label">扣除：進／出口押匯金額 (萬元)</label>
+              <input type="number" id="calc-trade" class="text-input" min="0" step="50" value="0" oninput="recalculateThreshold()">
+            </div>
+
+            <div class="input-group">
+              <label for="calc-rollover" class="input-label">排除：借新還舊重複計算金額 (萬元)</label>
+              <input type="number" id="calc-rollover" class="text-input" min="0" step="100" value="1000" oninput="recalculateThreshold()">
+            </div>
+
+            <div class="input-group">
+              <label for="calc-factoring" class="input-label">免計入：無追索權 Factoring 買方額度 (萬元)</label>
+              <input type="number" id="calc-factoring" class="text-input" min="0" step="100" value="0" oninput="recalculateThreshold()">
+            </div>
+
+            <div class="input-group" style="grid-column: 1 / -1;">
+              <label for="calc-context" class="input-label">申請時點與企業特殊條件</label>
+              <select id="calc-context" class="select-input" onchange="recalculateThreshold()">
+                <option value="regular">一般期間申辦（6月1日至12月31日）</option>
+                <option value="window">財報空窗期首次達門檻（1月1日至5月31日）</option>
+                <option value="new_co">最近一年內新設立之授信戶</option>
+                <option value="full_col">具備十足擔保（含不動產或信保十成保證）</option>
+              </select>
+            </div>
+
+            <label class="checkbox-row" for="calc-cp">
+              <input type="checkbox" id="calc-cp" onchange="recalculateThreshold()">
+              <span>本案為公司組織申請「本票保證」業務（不論金額強制財簽）</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="tool-panel" aria-live="polite">
+          <div class="result-verdict" id="result-verdict-box">
+            <span class="verdict-tag" id="verdict-tag">判定結果</span>
+            <h3 class="verdict-headline" id="verdict-headline">計算中…</h3>
+          </div>
+
+          <div class="calc-breakdown" id="calc-breakdown"></div>
+
+          <div class="detail-block">
+            <h4>應徵提文件與適用資料表</h4>
+            <ul class="checklist-out" id="calc-checklist"></ul>
+          </div>
+
+          <div class="memo-box">
+            <span class="memo-label">徵信系統 / 報告實務備註建議</span>
+            <div id="calc-memo"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. 資料來源聲明 -->
+    <section class="sources-panel" aria-labelledby="sources-heading">
+      <h3 id="sources-heading">本單元引用來源與資料忠實聲明</h3>
+      <ul>
+        <li>《中華民國銀行公會會員徵信準則》（民國 112 年 7 月 18 日全授字第 1120001231 號函修訂全文）</li>
+        <li>《台灣地區銀行企業授信與徵信作業中財務報表徵提時點與規範之深度研析》</li>
+        <li>《企業授信實務：30 天「中小企業授信與財報分析實務」精實課綱（Day 7 單元）》</li>
+        <li>《授信徵信實務課程錄音逐字稿》（檔案 R20261120-085524、R20261120-095556、R20261120-105506；課程個案銀行依指定規範代稱為「鎖頭銀行」）</li>
+      </ul>
+      <p style="margin: 0;">
+        資料忠實原則：所有法條數字、扣除規則與實務判例均直接取自上述筆記本來源；凡來源中未明確記載之銀行內部罰則細節（例如已動用後逾期未補提財簽之具體降額或停用罰則），均於相關章節明確標註為「來源未提供」。
+      </p>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+      <a class="home-link" href="index.html">回首頁</a>
+    <p>Powered By Dunk</p>
+  </footer>
+
+  <api-shim></api-shim>
+
+  <script>
+    const CHAPTER_DATA = [
+      {
+        id: `ch-01`,
+        num: `01`,
+        title: `3,000 萬元融資簽證門檻與法源架構`,
+        tags: [`法規規範`, `計算認定`],
+        isAlert: false,
+        summary: `總授信金額達新臺幣 3,000 萬元以上強制徵提會計師財務報表查核報告（融資簽證），並據此區分三大授信資料表與報稅資料並呈原則。`,
+        points: [
+          `<strong>法源依據</strong>：依《銀行法》第 5 條之 2 界定授信業務（放款、透支、貼現、保證、承兌等），並依《銀行公會會員徵信準則》第 18 條第 1 項第 1 款規定，企業於全體金融機構之總授信金額達新臺幣 3,000 萬元以上者，辦理徵信時必須強制徵提會計師財務報表查核報告（俗稱「融資簽證」）。`,
+          `<strong>西瓜切一半的報表分界</strong>：總授信金額 3,000 萬元以下原則向客戶徵提報稅資料（營所稅網路申報書＋最近稅捐機關納稅證明）即可；達 3,000 萬元以上則因企業向銀行申貸需要外部客觀檢驗，強制要求會計師查核報告。`,
+          `<strong>非上市櫃雙軌徵提</strong>：3,000 萬元以上之非上市櫃公司，必須同時徵提「報稅資料」與「會計師查核簽證」。兩者經常完全不同（例如投資公司採用單站式損益表僅列淨損益 500，但報稅資料會呈現進銷總額 2,500），配合鎖頭銀行內規「週轉金要在營收範圍內核予額度」，報稅資料可避免額度錯估。`,
+          `<strong>上市櫃公司彈性</strong>：上市櫃公司絕大多數採合併報表為主，若公司橫豎不願提供報稅資料，無須硬要，於表格填寫「公司未能提供」即可，但會計師查核報告（三期個體＋三期合併）必須下載。`
+        ],
+        callout: {
+          type: `positive`,
+          title: `三大授信資料表分級基準`,
+          text: `資料表（總額 ≥ 3,000 萬元）｜簡易資料表（601 萬～2,999 萬元，或十足擔保 1,501 萬～2,999 萬元）｜小規模營利事業簡易資料表（600 萬元以下，或十足擔保 1,500 萬元以下，徵信範圍簡化為五大項）。`
+        }
+      },
+      {
+        id: `ch-02`,
+        num: `02`,
+        title: `總授信金額定義、排除項目與「借新還舊」實務排除`,
+        tags: [`計算認定`, `實務案例`],
+        isAlert: false,
+        summary: `釐清「聯徵歸戶餘額＋本次申請額度」之剛性算法、三大法定扣除項，以及鎖頭銀行系統暴力加總導致借新還舊跳出控管視窗的處理方式。`,
+        points: [
+          `<strong>法定計算公式（第 16 條、第 18 條）</strong>：總授信金額 ＝「聯徵中心（JCIC）全體金融機構歸戶餘額」＋「本次新申請授信額度」－「本行定期存款單質借金額、出口押匯金額及進口押匯金額」。`,
+          `<strong>毫無緩衝空間的「餘額」概念</strong>：歸戶部位認定係「餘額」，無論該筆借款屬於活期或定期授信，只要有餘額一律計入；加上本次申請之新額度（非僅計預計動用數），足額達 3,000 萬元即觸發門檻。`,
+          `<strong>鎖頭銀行系統控管機制</strong>：系統背後採取「暴力相加」控管——直接抓取聯徵 B33 歸戶餘額，加上本次在申請書建檔之額度（無論活期、定期、續借、改貸或增貸，一律硬性加總），合計 ≥ 3,000 萬元即跳出強制財簽檢核視窗。`,
+          `<strong>借新還舊實務處置</strong>：續約客戶若屬「借新還舊」，舊餘額與新額度相加容易誤觸 3,000 萬控管視窗。徵信人員無須緊張，只需於視窗下方敘明原因：「本案係借新還舊，扣除重複部分後實際總授信金額為 ○○ 萬元（例如 2,600 萬元）」，即可繼續採用年度報稅資料。`
+        ],
+        callout: {
+          type: `warning`,
+          title: `實務提醒：別忘了聯徵同步檢核與納稅證明`,
+          text: `除金額計算外，續約與日常徵信常遺漏聯徵 N20（會計師懲戒紀錄）及最近稅捐機關納稅證明（證明有報稅且有實際繳稅）。`
+        }
+      },
+      {
+        id: `ch-03`,
+        num: `03`,
+        title: `「本票保證」絕對例外：不論金額一律強制徵提財簽`,
+        tags: [`法規規範`, `風控警訊`],
+        isAlert: true,
+        summary: `公司組織向金融機構申請辦理「本票保證」業務時，不適用 3,000 萬元免簽證門檻，無論申請金額多寡，依法均須強制徵提財簽。`,
+        points: [
+          `<strong>剛性例外條款</strong>：依據《銀行公會會員徵信準則》第 18 條相關規定（研析報告與 Day 7 課綱強調要點），公司組織向金融機構申請辦理「<strong>本票保證</strong>」業務時，即使總授信金額未達新臺幣 3,000 萬元（例如僅申請 500 萬元），依法仍應強制徵提會計師查核簽證之財務報表。`,
+          `<strong>與其他保證業務之區別</strong>：在銀行授信考試與實務審查中，關稅記帳保證、發行公司債保證、工程預付款保證等均依一般 3,000 萬元門檻判斷；唯獨「本票保證」屬於不論金額皆須強制徵提財簽之項目。`,
+          `<strong>風險意涵</strong>：商業本票流通性與信用替代性高，銀行一旦出具本票保證即須承擔到期無條件墊付之直接信用風險，因此監理規範要求必須有獨立會計師財務查核簽證作為防線。`
+        ],
+        callout: {
+          type: `danger`,
+          title: `資料邊界揭露（來源查證）`,
+          text: `來源已明確載明「公司組織申請本票保證不論金額一律強制徵提財簽」；至於是否另有特定行業免除或非公司組織（如行號）辦本票保證之作業細節，來源未提供。`
+        }
+      },
+      {
+        id: `ch-04`,
+        num: `04`,
+        title: `無追索權應收帳款承購（Factoring）買方額度免計入規定`,
+        tags: [`計算認定`, `實務案例`],
+        isAlert: false,
+        summary: `依《徵信準則》第 18 條第 1 項第 8 款，辦理應收帳款承購業務之買方額度，免計入 3,000 萬元應徵提會計師財簽之授信總額中。`,
+        points: [
+          `<strong>法規免計入依據</strong>：《徵信準則》第 18 條第 1 項第 8 款明定，辦理應收帳款承購業務之「買方」，該買方額度免計入授信金額達新臺幣 3,000 萬元應徵提會計師財務報表查核報告之金額中。`,
+          `<strong>有追 vs 無追（賣斷）核心判別</strong>：應收帳款承購實務口訣為「<strong>有追看賣方，無追看買方</strong>」。當上市櫃財務長詢問「應收帳款賣斷」，即指無追索權應收帳款承購。`,
+          `<strong>實務案例（鴻海銷售予 Apple）</strong>：企業已提供商品或勞務後產生應收帳款，若採無追索權賣斷給鎖頭銀行（例如鴻海將對 Apple 的應收帳款權利賣給銀行），銀行只需等待買方（Apple）付款，有事只能找買方，除非賣方服務未完整提供才能回頭追索賣方。`,
+          `<strong>第 16 條基本資料徵提簡化</strong>：無追索權業務對賣方雖應瞭解概況，但「作無預支價金業務時，得不索取」及「買方有承諾付款時，得酌情索取」；買方則視是否經 IF 或信保機構移轉風險，取得外部評等或相關資訊。`
+        ],
+        callout: {
+          type: `positive`,
+          title: `記憶口訣`,
+          text: `「有追索權看賣方資信；無追索權（賣斷）看買方信用，且買方額度免計入賣方 3,000 萬財簽門檻。」`
+        }
+      },
+      {
+        id: `ch-05`,
+        num: `05`,
+        title: `年度過渡期（1/1–5/31）與首次破 3,000 萬之實務處置`,
+        tags: [`實務案例`, `風控警訊`],
+        isAlert: true,
+        summary: `1 月至 5 月為報稅與查核空窗期，首次突破 3,000 萬須憑暫結報表、聲明書與會計師受託證明放行，並於 6 月起嚴密追蹤防範客戶撤銷委託。`,
+        points: [
+          `<strong>1 月 1 日至 5 月 31 日（空窗期首次破 3,000 萬）</strong>：假設借戶原授信 1,000 萬元，2 月因資本性支出申貸後總額突破 3,000 萬元。因前一會計年度剛結束、會計師於年底尚未受託查核，此時絕對無法產出融資簽證報告。實務解套方式為徵提「<strong>去年度暫結報表 ＋ 自編聲明書 ＋ 會計師受託查核證明（承諾於 5/31 前出具財報）</strong>」。`,
+          `<strong>高度警訊：防範「撤銷委託」道德風險</strong>：客戶 2 月取得銀行撥貸後，法律上仍可向會計師「撤銷查核委託」以節省簽證成本！因此徵信與營業單位務必於 <strong>6 月 1 日起全面追蹤補提</strong>正式財簽報告。`,
+          `<strong>6 月 1 日至 12 月 31 日（年度中首次破 3,000 萬）</strong>：已過 5/31 報稅截止日，企業依規定必須花錢委託會計師補簽財報。因會計師未於年初執行存貨實地盤點，且現金及約當現金無法回溯函證，該份首度補簽報告通常會出具「<strong>保留意見</strong>」（無法取得足夠及適切之查核證據）。只要帳務合理合規，銀行端仍可接受。`
+        ],
+        callout: {
+          type: `warning`,
+          title: `查核意見類型處置速查`,
+          text: `保留意見（首次達 3,000 萬因存貨盤點受限者可接受）｜無法表示意見（多項無法處理，風險極高）｜否定意見（原則不予採用，除非如海外聯貸主體遭併購改以處分價值計價並轉而分析母公司）。`
+        }
+      },
+      {
+        id: `ch-06`,
+        num: `06`,
+        title: `融資簽證法規目的：外部確信、交叉核對與 JCIC 副本聯防`,
+        tags: [`法規規範`, `風控警訊`],
+        isAlert: false,
+        summary: `會計師長式報告建立獨立第三方確信，並透過契約強制「查核報告副本逕送聯徵中心（JCIC）」機制，杜絕給銀行與給稅局兩套報表的道德風險。`,
+        points: [
+          `<strong>第 18 條第 1 項第 6 款（跨機構副本聯防）</strong>：強制要求銀行應於授信契約中與借款人約定，請授信戶要求受託查核簽證之會計師，將財務報表查核報告副本<strong>直接送達財團法人金融聯合徵信中心（JCIC）</strong>。`,
+          `<strong>防範雙重報表道德風險</strong>：藉由此跨銀行共享資料庫（Shared Repository），各銀行得比對客戶交給本行之財簽正本與送交聯徵中心之副本是否一致，杜絕「一套美化財報給銀行借錢、一套真實報表向稅局報稅」的舞弊空間。`,
+          `<strong>第 18 條第 1 項第 5 款（交叉檢核義務）</strong>：徵信人員不得僅靜態收件，必須將財報營收、應收帳款與存貨對照營業稅申報書（401/403 表）、進出口報單、海關統計或帳戶資金流水。業內常有 5%～8% 虛開發票或銷貨退回折讓情況，發現不符應要求說明並詳實列示。`,
+          `<strong>會計師適任性與懲戒查核（聯徵 N20）</strong>：受警告／申誡處分一年內如准予採用須註明原因並審慎評估（並針對受懲戒原因如盤點或函證補強佐證）；受停業處分期間內（研析報告指二倍期間且不少於一年）不予採用；受除名或撤銷核准者永久不予採用。`
+        ],
+        callout: {
+          type: `positive`,
+          title: `何謂完整生效之會計師查核報告？`,
+          text: `課程提醒：不僅是會計師於報告末頁蓋章即生效，四大主表下方須經公司「董事長、經理人、財務主管」簽章承認才屬正式生效財報；若僅有會計師蓋章而主表未經公司簽認，頂多視為「擬制性報表」或「草稿」。`
+        }
+      },
+      {
+        id: `ch-07`,
+        num: `07`,
+        title: `新設立企業、十足擔保、OBU 與海外分行之特殊替代規範`,
+        tags: [`法規規範`, `計算認定`],
+        isAlert: false,
+        summary: `彙整第 18 條第 1 項第 3 款新設戶驗資簽證替代、鎖頭銀行早年函文「十足擔保」豁免要件，以及 OBU 與海外分行實務彈性。`,
+        points: [
+          `<strong>新設立未滿一年且達 3,000 萬元以上（第 18 條第 1 項第 3 款）</strong>：因公司設立未滿一年尚無完整年度營運實績，得以「<strong>會計師驗資簽證 ＋ 已附聲明書之自編財務報表</strong>」替代會計師財簽報告。`,
+          `<strong>鎖頭銀行早年函文「十足擔保」豁免實務</strong>：總歸戶金額達 3,000 萬元時，早年函文列示六大審查要件（組織、信用良好無票債信逾期、連續經營一年以上、財務狀況良好等），但只要符合第 6 點「<strong>十足擔保</strong>」，即使公司剛成立或財務比率不佳，仍可豁免財簽要求（十足擔保不限不動產，亦含信保基金十成保證案件）。`,
+          `<strong>OBU 非國際聯貸案件彈性（第 17 條）</strong>：若提供十足外幣定存單等合格資產擔保，或由國內外關係企業連帶保證／本票背書／共同發票，得以「國內外企業合併報表」或「揭露投資關係之財簽＋所得稅報表」替代（設於免稅地得改徵提自編報表＋最近年度政府規費繳訖證明單據，即實務俗稱「水單」）。`,
+          `<strong>海外分行授信案件（第 17 條）</strong>：得依當地法令規定與實務慣例辦理；若無財簽報告，仍應徵提向當地稅務機關申報之所得稅報表。`
+        ],
+        callout: {
+          type: `warning`,
+          title: `境外法人「水單」與存續證明提醒`,
+          text: `境外公司之存續證明（Certificate of Good Standing / COI）依外匯 SOP 須於半年內有效且申請費用約 150～400 美元；續約若文件尚未備齊，依徵信準則起碼須先取得「水單」（政府規費繳費證明），惟正式續約仍須補齊完整證明。`
+        }
+      },
+      {
+        id: `ch-08`,
+        num: `08`,
+        title: `未徵提或未能補提財報之實務處置與權責界線`,
+        tags: [`風控警訊`, `法規規範`],
+        isAlert: true,
+        summary: `依《徵信準則》第 15、28 條，資料不齊未依限補齊應不予辦理徵信且不得核貸；並就「事後逾期未補提之具體處分」區分來源已載明與未提供範圍。`,
+        points: [
+          `<strong>核貸前資料不齊之處置（第 15 條、第 28 條）</strong>：企業提供之財務報表等徵信資料不齊且未依限補齊者，銀行「<strong>應不予辦理徵信</strong>」；未經移送徵信單位辦理徵信之授信案件，「<strong>不得核貸</strong>」。`,
+          `<strong>徵信人員之職能分際（第 7 條、第 36/37 條）</strong>：徵信人員應公正平實撰寫報告，「<strong>不宜對授信案件直接表示准駁意見</strong>」，准駁判斷應交由授信主辦或審查單位執行。徵信人員若依規定查證並妥善留存徵信軌跡，事後雖發現瑕疵，依第 37 條應免除其責任。`,
+          `<strong>來源已載明之追蹤與補強手段</strong>：(1) 1/1–5/31 暫結放行者，6/1 起追蹤補提正式財簽；(2) 若授信戶發生逾期、退票、未履行合約或突發事件，依第 27 條營業與徵信單位應立即相互通知，並徵提最新暫結財報辦理專案追蹤徵信；(3) 依早年函文邏輯，若補強擔保至「十足擔保」可適用豁免條件。`,
+          `<strong>事後未補提之具體罰則處置（降額、加強擔保、停止動用等）</strong>：<span class="source-gap-badge">來源未提供</span> 經檢視《徵信準則全文11207.pdf》、深度研析文章、30 天課綱及課程錄音逐字稿，來源並未載明「已核貸或已動用案件事後逾期未補提財簽時，強制降額比例、停止動用或加徵擔保之具體作業條款」，實務上須依各授信契約約定及機構內部覆審規定辦理。`
+        ],
+        callout: {
+          type: `danger`,
+          title: `嚴格忠於來源聲明`,
+          text: `上述「已動用後逾期未補提之降額、停止動用具體處分標準」因筆記本來源均未提供明細條文，本頁嚴格標示為「來源未提供」，絕不自行編造法條或比例數字。`
+        }
+      }
+    ];
+
+    let appState = {
+      readIds: [],
+      expandedIds: [`ch-01`],
+      activeTag: `ALL`,
+      searchQuery: ``
+    };
+
+    function getBadgeClass(tag) {
+      if (tag === `法規規範`) return `badge-law`;
+      if (tag === `計算認定`) return `badge-calc`;
+      if (tag === `實務案例`) return `badge-case`;
+      if (tag === `風控警訊`) return `badge-risk`;
+      return `badge-case`;
+    }
+
+    function getFilteredChapters() {
+      const q = appState.searchQuery.trim().toLowerCase();
+      return CHAPTER_DATA.filter(function(ch) {
+        const tagMatch = appState.activeTag === `ALL` || ch.tags.indexOf(appState.activeTag) !== -1;
+        if (!tagMatch) return false;
+        if (!q) return true;
+        const searchableText = (
+          ch.title + ` ` +
+          ch.summary + ` ` +
+          ch.tags.join(` `) + ` ` +
+          ch.points.join(` `) + ` ` +
+          ch.callout.title + ` ` +
+          ch.callout.text
+        ).toLowerCase();
+        return searchableText.indexOf(q) !== -1;
+      });
+    }
+
+    function renderChapters() {
+      const container = document.getElementById(`cards-container`);
+      const emptyState = document.getElementById(`empty-state`);
+      const statusText = document.getElementById(`filter-status-text`);
+      if (!container || !emptyState) return;
+
+      const filtered = getFilteredChapters();
+      if (statusText) {
+        statusText.textContent = `顯示 ${filtered.length} / ${CHAPTER_DATA.length} 個章節`;
+      }
+
+      if (filtered.length === 0) {
+        container.innerHTML = ``;
+        emptyState.classList.add(`is-visible`);
+        return;
+      }
+
+      emptyState.classList.remove(`is-visible`);
+
+      const htmlParts = filtered.map(function(ch) {
+        const isRead = appState.readIds.indexOf(ch.id) !== -1;
+        const isExpanded = appState.expandedIds.indexOf(ch.id) !== -1;
+        const cardClasses = [
+          `chapter-card`,
+          isRead ? `is-read` : ``,
+          isExpanded ? `is-expanded` : ``,
+          ch.isAlert ? `is-alert-card` : ``
+        ].filter(Boolean).join(` `);
+
+        const badgesHtml = ch.tags.map(function(tag) {
+          return `<span class="badge ${getBadgeClass(tag)}">${tag}</span>`;
+        }).join(``);
+
+        const pointsHtml = ch.points.map(function(pt) {
+          return `<li>${pt}</li>`;
+        }).join(``);
+
+        const calloutClass = ch.callout.type === `danger`
+          ? `is-danger`
+          : (ch.callout.type === `warning` ? `is-warning` : `is-positive`);
+
+        return `
+          <article class="${cardClasses}" id="card-${ch.id}">
+            <div class="card-header-bar">
+              <button
+                type="button"
+                class="card-toggle-btn"
+                aria-expanded="${isExpanded ? `true` : `false`}"
+                aria-controls="body-${ch.id}"
+                onclick="toggleChapter('${ch.id}')"
+              >
+                <div class="card-meta-row">
+                  <span class="card-index">${ch.num}</span>
+                  ${badgesHtml}
+                </div>
+                <h3 class="card-title">${ch.title}</h3>
+                <p class="card-summary">${ch.summary}</p>
+              </button>
+
+              <div class="card-controls">
+                <label class="read-check-label" for="chk-${ch.id}">
+                  <input
+                    type="checkbox"
+                    id="chk-${ch.id}"
+                    class="read-checkbox"
+                    ${isRead ? `checked` : ``}
+                    onchange="toggleRead('${ch.id}', this.checked)"
+                  >
+                  <span>${isRead ? `已讀` : `標記已讀`}</span>
+                </label>
+
+                <button
+                  type="button"
+                  class="expand-indicator"
+                  aria-label="${isExpanded ? `收合章節` : `展開章節`}"
+                  aria-expanded="${isExpanded ? `true` : `false`}"
+                  onclick="toggleChapter('${ch.id}')"
+                >
+                  <svg class="chevron-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <polyline points="6 9 12 15 18 9"></polyline>
+                  </svg>
+                </button>
+              </div>
+            </div>
+
+            <div class="card-body" id="body-${ch.id}">
+              <div class="card-body-grid">
+                <div class="detail-block">
+                  <h4>重點法規與實務解析</h4>
+                  <ul>${pointsHtml}</ul>
+                </div>
+                <div class="callout-box ${calloutClass}">
+                  <span class="callout-title">${ch.callout.title}</span>
+                  <div>${ch.callout.text}</div>
+                </div>
+              </div>
+            </div>
+          </article>
+        `;
+      });
+
+      container.innerHTML = htmlParts.join(``);
+      updateProgressUI();
+    }
+
+    function updateProgressUI() {
+      const total = CHAPTER_DATA.length;
+      const done = appState.readIds.length;
+      const pct = total > 0 ? Math.round((done / total) * 100) : 0;
+
+      const textEl = document.getElementById(`progress-text`);
+      const fillEl = document.getElementById(`progress-fill`);
+      const roleEl = document.getElementById(`progress-bar-role`);
+
+      if (textEl) textEl.textContent = `${done} / ${total} 已讀 (${pct}%)`;
+      if (fillEl) fillEl.style.width = `${pct}%`;
+      if (roleEl) roleEl.setAttribute(`aria-valuenow`, String(pct));
+    }
+
+    async function persistState() {
+      if (window.notebookAppApi && typeof window.notebookAppApi.setAppState === `function`) {
+        try {
+          await window.notebookAppApi.setAppState({
+            readIds: appState.readIds,
+            expandedIds: appState.expandedIds
+          });
+        } catch (err) {
+          /* Silently ignore sandbox storage errors */
+        }
+      }
+    }
+
+    function toggleChapter(id) {
+      const idx = appState.expandedIds.indexOf(id);
+      if (idx === -1) {
+        appState.expandedIds.push(id);
+      } else {
+        appState.expandedIds.splice(idx, 1);
+      }
+      renderChapters();
+      persistState();
+    }
+
+    function toggleRead(id, isChecked) {
+      const idx = appState.readIds.indexOf(id);
+      if (isChecked && idx === -1) {
+        appState.readIds.push(id);
+      } else if (!isChecked && idx !== -1) {
+        appState.readIds.splice(idx, 1);
+      }
+      const resetBtn = document.getElementById(`reset-progress-btn`);
+      if (resetBtn) {
+        resetBtn.dataset.armed = `false`;
+        resetBtn.textContent = `重設已讀紀錄`;
+      }
+      renderChapters();
+      persistState();
+    }
+
+    function expandAllVisible() {
+      const filtered = getFilteredChapters();
+      filtered.forEach(function(ch) {
+        if (appState.expandedIds.indexOf(ch.id) === -1) {
+          appState.expandedIds.push(ch.id);
+        }
+      });
+      renderChapters();
+      persistState();
+    }
+
+    function collapseAllVisible() {
+      const filteredIds = getFilteredChapters().map(function(ch) { return ch.id; });
+      appState.expandedIds = appState.expandedIds.filter(function(id) {
+        return filteredIds.indexOf(id) === -1;
+      });
+      renderChapters();
+      persistState();
+    }
+
+    function handleResetProgress(btn) {
+      if (!btn) return;
+      if (btn.dataset.armed !== `true`) {
+        btn.dataset.armed = `true`;
+        btn.textContent = `再次點擊確認清空 (${appState.readIds.length} 筆)`;
+        return;
+      }
+      btn.dataset.armed = `false`;
+      btn.textContent = `重設已讀紀錄`;
+      appState.readIds = [];
+      renderChapters();
+      persistState();
+    }
+
+    function handleSearchInput(val) {
+      appState.searchQuery = val || ``;
+      renderChapters();
+    }
+
+    function setTagFilter(tag, btnEl) {
+      appState.activeTag = tag;
+      const allBtns = document.querySelectorAll(`.tag-filter-btn`);
+      allBtns.forEach(function(b) {
+        b.classList.remove(`is-active`);
+      });
+      if (btnEl) btnEl.classList.add(`is-active`);
+      renderChapters();
+    }
+
+    function clearSearchAndFilters() {
+      appState.searchQuery = ``;
+      appState.activeTag = `ALL`;
+      const searchEl = document.getElementById(`keyword-search`);
+      if (searchEl) searchEl.value = ``;
+      const allBtns = document.querySelectorAll(`.tag-filter-btn`);
+      allBtns.forEach(function(b) {
+        if (b.dataset.tag === `ALL`) {
+          b.classList.add(`is-active`);
+        } else {
+          b.classList.remove(`is-active`);
+        }
+      });
+      renderChapters();
+    }
+
+    function applyPreset(presetKey) {
+      const jcic = document.getElementById(`calc-jcic`);
+      const newAmt = document.getElementById(`calc-new`);
+      const cd = document.getElementById(`calc-cd`);
+      const trade = document.getElementById(`calc-trade`);
+      const rollover = document.getElementById(`calc-rollover`);
+      const factoring = document.getElementById(`calc-factoring`);
+      const ctx = document.getElementById(`calc-context`);
+      const cp = document.getElementById(`calc-cp`);
+
+      if (!jcic || !newAmt || !cd || !trade || !rollover || !factoring || !ctx || !cp) return;
+
+      if (presetKey === `refinance`) {
+        jcic.value = `1800`;
+        newAmt.value = `1600`;
+        cd.value = `0`;
+        trade.value = `0`;
+        rollover.value = `1000`;
+        factoring.value = `0`;
+        ctx.value = `regular`;
+        cp.checked = false;
+      } else if (presetKey === `window`) {
+        jcic.value = `1000`;
+        newAmt.value = `2500`;
+        cd.value = `0`;
+        trade.value = `0`;
+        rollover.value = `0`;
+        factoring.value = `0`;
+        ctx.value = `window`;
+        cp.checked = false;
+      } else if (presetKey === `cp`) {
+        jcic.value = `0`;
+        newAmt.value = `500`;
+        cd.value = `0`;
+        trade.value = `0`;
+        rollover.value = `0`;
+        factoring.value = `0`;
+        ctx.value = `regular`;
+        cp.checked = true;
+      }
+      recalculateThreshold();
+    }
+
+    function readNum(id) {
+      const el = document.getElementById(id);
+      if (!el) return 0;
+      const val = parseFloat(el.value);
+      return isNaN(val) || val < 0 ? 0 : val;
+    }
+
+    function recalculateThreshold() {
+      const jcic = readNum(`calc-jcic`);
+      const newAmt = readNum(`calc-new`);
+      const cd = readNum(`calc-cd`);
+      const trade = readNum(`calc-trade`);
+      const rollover = readNum(`calc-rollover`);
+      const factoring = readNum(`calc-factoring`);
+
+      const ctxEl = document.getElementById(`calc-context`);
+      const cpEl = document.getElementById(`calc-cp`);
+      const ctxVal = ctxEl ? ctxEl.value : `regular`;
+      const isCp = cpEl ? cpEl.checked : false;
+
+      const systemRawTotal = jcic + newAmt;
+      const netTotal = Math.max(0, jcic + newAmt - cd - trade - rollover - factoring);
+
+      const breakdownEl = document.getElementById(`calc-breakdown`);
+      const verdictBox = document.getElementById(`result-verdict-box`);
+      const verdictTag = document.getElementById(`verdict-tag`);
+      const verdictHeadline = document.getElementById(`verdict-headline`);
+      const checklistEl = document.getElementById(`calc-checklist`);
+      const memoEl = document.getElementById(`calc-memo`);
+
+      if (!breakdownEl || !verdictBox || !verdictTag || !verdictHeadline || !checklistEl || !memoEl) return;
+
+      breakdownEl.innerHTML = `
+        <div class="breakdown-row"><span>聯徵 B33 歸戶餘額 ＋ 本次申請額度</span><span class="mono-num">${systemRawTotal.toLocaleString()} 萬元</span></div>
+        <div class="breakdown-row"><span>扣除：定存單質借及進出口押匯</span><span class="mono-num">- ${(cd + trade).toLocaleString()} 萬元</span></div>
+        <div class="breakdown-row"><span>排除：借新還舊重複計算</span><span class="mono-num">- ${rollover.toLocaleString()} 萬元</span></div>
+        <div class="breakdown-row"><span>免計入：無追索權 Factoring 買方額度</span><span class="mono-num">- ${factoring.toLocaleString()} 萬元</span></div>
+        <div class="breakdown-row is-total"><span>核算後總授信金額</span><span class="mono-num">${netTotal.toLocaleString()} 萬元</span></div>
+      `;
+
+      let formName = `資料表（3,000 萬元以上）`;
+      if (netTotal <= 600 || (ctxVal === `full_col` && netTotal <= 1500)) {
+        formName = `小規模營利事業簡易資料表`;
+      } else if (netTotal < 3000) {
+        formName = `簡易資料表（601 萬～2,999 萬元）`;
+      }
+
+      verdictBox.className = `result-verdict`;
+      let checklistItems = [];
+      let memoText = ``;
+
+      if (isCp) {
+        verdictBox.classList.add(`verdict-must`);
+        verdictTag.textContent = `強制徵提財簽（本票保證例外）`;
+        verdictHeadline.textContent = `不論金額是否達 3,000 萬元，一律強制徵提會計師融資簽證`;
+        checklistItems = [
+          `適用表格：${formName}`,
+          `必備報表：會計師財務報表查核報告（公司組織申請本票保證無金額門檻豁免）`,
+          `聯徵聯防：於授信契約約定會計師將財報副本逕送聯徵中心（JCIC），並查詢會計師 N20 懲戒紀錄`
+        ];
+        memoText = `本案屬公司組織申請本票保證業務，依《銀行公會會員徵信準則》第 18 條規定，雖核算總授信金額為 ${netTotal.toLocaleString()} 萬元，仍強制徵提會計師查核簽證財務報表。`;
+      } else if (netTotal >= 3000) {
+        if (ctxVal === `full_col`) {
+          verdictBox.classList.add(`verdict-warn`);
+          verdictTag.textContent = `具備十足擔保豁免條件`;
+          verdictHeadline.textContent = `總額達 3,000 萬元，得依早年函文「十足擔保」要件評估豁免`;
+          checklistItems = [
+            `適用表格：${formName}`,
+            `替代檢視：確認擔保品為合格十足擔保（不動產或信保十成保證），仍應徵提年度報稅資料及納稅證明`,
+            `風險提醒：仍須確認聯徵 N20 及營業稅 401/403 表交叉勾稽`
+          ];
+          memoText = `本案總授信金額 ${netTotal.toLocaleString()} 萬元達 3,000 萬元門檻，惟全案具備十足擔保，依鎖頭銀行早年函文第 6 點要件辦理並檢附報稅資料佐證。`;
+        } else if (ctxVal === `window`) {
+          verdictBox.classList.add(`verdict-warn`);
+          verdictTag.textContent = `1/1–5/31 空窗期過渡放行・務必追蹤`;
+          verdictHeadline.textContent = `先徵提暫結與會計師受託證明，6 月 1 日起強制追蹤補提正式財簽`;
+          checklistItems = [
+            `適用表格：${formName}`,
+            `當下必備：去年度暫結財務報表 ＋ 暫結自編聲明書 ＋ 會計師受託查核證明（承諾 5/31 前編製）`,
+            `後續控管：6 月 1 日起追蹤補提正式會計師查核報告，防範借戶撤銷對會計師之委託`
+          ];
+          memoText = `本案總授信金額 ${netTotal.toLocaleString()} 萬元首次達 3,000 萬元，因處 1/1 至 5/31 財報空窗期，先行徵提去年度暫結表、自編聲明書及會計師受託查核證明，並設定 6/1 起追蹤補齊正式查核報告。`;
+        } else if (ctxVal === `new_co`) {
+          verdictBox.classList.add(`verdict-warn`);
+          verdictTag.textContent = `新設企業替代規範（第 18 條第 1 項第 3 款）`;
+          verdictHeadline.textContent = `設立未滿一年且達 3,000 萬元，得以驗資簽證與聲明書自編表替代`;
+          checklistItems = [
+            `適用表格：${formName}`,
+            `法定替代：會計師驗資簽證 ＋ 已附聲明書之自編財務報表`,
+            `交叉查核：搭配 401/403 營業稅申報書與帳戶流水檢視實際營運`
+          ];
+          memoText = `借戶係最近一年內新設立企業，總授信金額 ${netTotal.toLocaleString()} 萬元達門檻，依《徵信準則》第 18 條第 1 項第 3 款以會計師驗資簽證及附聲明書之自編財務報表替代。`;
+        } else {
+          verdictBox.classList.add(`verdict-must`);
+          verdictTag.textContent = `強制徵提會計師融資簽證`;
+          verdictHeadline.textContent = `總授信金額 ${netTotal.toLocaleString()} 萬元（≥ 3,000 萬），應強制徵提融資簽證`;
+          checklistItems = [
+            `適用表格：${formName}`,
+            `非上市櫃：報稅資料（營所稅申報書＋納稅證明）＋ 會計師財務報表查核報告；若為 6/1–12/31 首次破門檻，因未盤點函證出具之「保留意見」可接受`,
+            `上市櫃：下載「三期個體＋三期合併」查核報告；若拒絕提供報稅資料可註明「公司未能提供」`,
+            `契約與聯防：約定副本逕送 JCIC、核對 N20 懲戒紀錄，資料不齊依第 15、28 條不得核貸`
+          ];
+          memoText = `核算後總授信金額為 ${netTotal.toLocaleString()} 萬元，已達新臺幣 3,000 萬元門檻，依《徵信準則》第 18 條強制徵提會計師財務報表查核報告，並契約約定副本逕送聯徵中心。`;
+        }
+      } else {
+        verdictBox.classList.add(`verdict-pass`);
+        verdictTag.textContent = `未達 3,000 萬門檻・免徵提財簽`;
+        verdictHeadline.textContent = `核算總授信金額 ${netTotal.toLocaleString()} 萬元，採年度報稅資料辦理`;
+        checklistItems = [
+          `適用表格：${formName}`,
+          `應徵提財報：營利事業所得稅網路申報書 ＋ 最近稅捐機關納稅證明（1/1–5/31 則徵提去年度暫結及聲明書）`,
+          systemRawTotal >= 3000
+            ? `系統視窗處理：因系統暴力加總達 ${systemRawTotal.toLocaleString()} 萬元將跳出控管視窗，須於下方說明欄敘明實際排除原因`
+            : `控管狀態：未觸發 3,000 萬元系統控管視窗`
+        ];
+        if (rollover > 0 && systemRawTotal >= 3000) {
+          memoText = `本案系統歸戶加總雖達 ${systemRawTotal.toLocaleString()} 萬元並跳出控管視窗，惟其中 ${rollover.toLocaleString()} 萬元係「借新還舊」重複計算（另有扣除項目 ${(cd + trade + factoring).toLocaleString()} 萬元），實際總授信金額為 ${netTotal.toLocaleString()} 萬元（未達 3,000 萬元），續採年度報稅資料辦理。`;
+        } else {
+          memoText = `核算後總授信金額為 ${netTotal.toLocaleString()} 萬元，未達 3,000 萬元門檻，免徵提會計師融資簽證，依適用資料表徵提年度報稅資料及納稅證明。`;
+        }
+      }
+
+      checklistEl.innerHTML = checklistItems.map(function(item) {
+        return `<li>${item}</li>`;
+      }).join(``);
+      memoEl.textContent = memoText;
+    }
+
+    async function initApp() {
+      if (window.notebookAppApi && typeof window.notebookAppApi.getAppState === `function`) {
+        try {
+          const saved = await window.notebookAppApi.getAppState();
+          if (saved && typeof saved === `object`) {
+            if (Array.isArray(saved.readIds)) {
+              appState.readIds = saved.readIds.filter(function(id) {
+                return CHAPTER_DATA.some(function(ch) { return ch.id === id; });
+              });
+            }
+            if (Array.isArray(saved.expandedIds)) {
+              appState.expandedIds = saved.expandedIds.filter(function(id) {
+                return CHAPTER_DATA.some(function(ch) { return ch.id === id; });
+              });
+            }
+          }
+        } catch (err) {
+          /* Fall back to default state */
+        }
+      }
+
+      renderChapters();
+      recalculateThreshold();
+
+      if (window.notebookAppApi && typeof window.notebookAppApi.notifyAppReady === `function`) {
+        window.notebookAppApi.notifyAppReady();
+      }
+    }
+
+    document.addEventListener(`DOMContentLoaded`, function() {
+      initApp();
+    });
+  </script>
+</body>
+</html>

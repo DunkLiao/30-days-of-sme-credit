@@ -1,0 +1,2055 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#14283a">
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="./manifest.webmanifest">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="授信實務30天">
+  <script>
+    if ("serviceWorker" in navigator && (location.protocol === "https:" || location.hostname === "localhost")) {
+      window.addEventListener("load", () => navigator.serviceWorker.register("./service-worker.js").catch((error) => console.warn("PWA offline support unavailable:", error)));
+    }
+  </script>
+  <meta name="artifact-type" content="dashboard">
+  <meta name="design-style" content="charter">
+  <title>中小企業授信與財報分析實務-Day10-會計師適任性評估與懲戒紀錄查核</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&family=Noto+Sans+TC:wght@400;500;600;700&family=Noto+Serif+TC:wght@500;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@1.43.0/dist/umd/lucide.min.js"></script>
+  <style>
+    :root {
+      color-scheme: light;
+
+      /* User-defined Institutional Trust & Risk Alert Theme Tokens */
+      --primary: #0F2537;
+      --primary-bright: #1E3A8A;
+      --on-primary: #FFFFFF;
+      --primary-container: #E8EEF5;
+      --on-primary-container: #0F2537;
+
+      --secondary: #334155;
+      --secondary-muted: #475569;
+
+      --accent: #D97706;
+      --accent-champagne: #C5A880;
+      --accent-text: #B45309;
+      --accent-soft: #FEF3C7;
+
+      --background: #F8FAFC;
+      --surface-container-low: #FFFFFF;
+      --surface-container: #F1F5F9;
+      --surface-container-high: #E2E8F0;
+
+      --on-surface: #0F2537;
+      --on-surface-variant: #475569;
+
+      --outline: #C5A880;
+      --outline-variant: #CBD5E1;
+
+      /* Semantic Risk & Healthy Colors */
+      --error: #DC2626;
+      --error-text: #991B1B;
+      --error-bg: #FEF2F2;
+      --error-border: #FECACA;
+
+      --warning: #F59E0B;
+      --warning-text: #92400E;
+      --warning-bg: #FFFBEB;
+      --warning-border: #FDE68A;
+
+      --positive: #059669;
+      --positive-text: #065F46;
+      --positive-bg: #ECFDF5;
+      --positive-border: #A7F3D0;
+
+      --neutral-bg: #F1F5F9;
+      --neutral-border: #CBD5E1;
+
+      /* Data series */
+      --data-1: #0F2537;
+      --data-2: #D97706;
+      --data-3: #059669;
+      --data-4: #1E3A8A;
+      --data-context: #94A3B8;
+
+      /* Focus */
+      --focus: #1E3A8A;
+
+      /* Typography */
+      --font-headline: 'Noto Serif TC', 'Libre Caslon Text', serif;
+      --font-body: 'Noto Sans TC', 'Inter', sans-serif;
+      --font-label: 'Noto Sans TC', 'IBM Plex Mono', monospace;
+      --font-mono: 'IBM Plex Mono', 'Noto Sans TC', monospace;
+
+      /* Type scale (Dashboard / Learning Workbench) */
+      --display-size: clamp(1.5rem, 1.2rem + 1.3vw, 2.125rem);
+      --headline-size: clamp(1.1875rem, 1.05rem + 0.45vw, 1.4375rem);
+      --subhead-size: clamp(1rem, 0.95rem + 0.2vw, 1.125rem);
+      --body-size: clamp(0.9375rem, 0.9rem + 0.12vw, 1rem);
+      --label-size: 0.78rem;
+
+      /* Shape & Charter Effects */
+      --rounded: 0.25rem;
+      --rounded-lg: 0.375rem;
+      --brass-rule: 2px solid var(--accent-champagne);
+      --navy-rule: 3px solid var(--primary);
+      --hairline: 1px solid var(--outline-variant);
+      --card-shadow: 0 1px 2px rgba(15, 37, 55, 0.05);
+      --card-shadow-hover: 0 6px 18px rgba(15, 37, 55, 0.08);
+
+      /* Spacing scale (4pt base) */
+      --space-xs: 0.25rem;
+      --space-sm: 0.5rem;
+      --space-md: 1rem;
+      --space-lg: 1.5rem;
+      --space-xl: 2.25rem;
+      --space-2xl: 3.25rem;
+
+      /* Motion */
+      --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+      --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+      --dur-micro: 140ms;
+      --dur-short: 240ms;
+      --dur-long: 380ms;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+
+    html, body {
+      overflow-x: clip;
+      margin: 0;
+      padding: 0;
+      background-color: var(--background);
+      color: var(--on-surface);
+      font-family: var(--font-body);
+      font-size: var(--body-size);
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    header { position: static !important; }
+
+    button, input, select, textarea {
+      font-family: inherit;
+      font-size: inherit;
+      color: inherit;
+    }
+
+    :focus-visible {
+      outline: 3px solid var(--focus);
+      outline-offset: 2px;
+    }
+
+    /* Title Band (Charter Style) */
+    .title-band {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-bright) 100%);
+      color: var(--on-primary);
+      padding: var(--space-xl) var(--space-lg) var(--space-lg);
+      border-bottom: 4px solid var(--accent-champagne);
+    }
+
+    .title-band-inner {
+      max-width: 1240px;
+      margin: 0 auto;
+    }
+
+    .title-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-sm);
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      font-weight: 600;
+      color: var(--accent-champagne);
+      letter-spacing: 0;
+      margin-bottom: var(--space-sm);
+    }
+
+    .title-band h1 {
+      font-family: var(--font-headline);
+      font-size: var(--display-size);
+      font-weight: 700;
+      line-height: 1.25;
+      margin: 0 0 var(--space-sm) 0;
+      color: var(--on-primary);
+    }
+
+    .title-lede {
+      margin: 0;
+      max-width: 68ch;
+      color: var(--primary-container);
+      font-size: var(--body-size);
+      line-height: 1.6;
+    }
+
+    /* Main Container */
+    .page-shell {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: var(--space-lg);
+      display: grid;
+      gap: var(--space-lg);
+    }
+    .page-shell * { min-width: 0; }
+
+    /* Section Headings */
+    .section-head {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: var(--space-sm);
+      border-top: var(--brass-rule);
+      padding-top: var(--space-md);
+      border-bottom: var(--hairline);
+      padding-bottom: var(--space-sm);
+    }
+
+    .section-head h2 {
+      font-family: var(--font-headline);
+      font-size: var(--headline-size);
+      font-weight: 700;
+      margin: 0;
+      color: var(--primary);
+    }
+
+    .section-meta {
+      font-family: var(--font-mono);
+      font-size: var(--label-size);
+      color: var(--on-surface-variant);
+    }
+
+    /* Bento Overview Grid */
+    .bento-grid {
+      display: grid;
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      gap: var(--space-md);
+    }
+
+    .bento-card {
+      background: var(--surface-container-low);
+      border: var(--hairline);
+      border-top: var(--brass-rule);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-lg);
+      box-shadow: var(--card-shadow);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-sm);
+    }
+
+    .bento-span-7 { grid-column: span 7; }
+    .bento-span-5 { grid-column: span 5; }
+    .bento-span-4 { grid-column: span 4; }
+    .bento-span-12 { grid-column: span 12; }
+
+    .bento-card.kpi-alert { border-top-color: var(--error); }
+    .bento-card.kpi-warn { border-top-color: var(--warning); }
+    .bento-card.kpi-navy { border-top-color: var(--primary-bright); }
+
+    .card-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-xs);
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      font-weight: 600;
+      color: var(--secondary-muted);
+    }
+
+    .bento-card h3 {
+      font-family: var(--font-headline);
+      font-size: var(--subhead-size);
+      font-weight: 700;
+      margin: 0;
+      color: var(--primary);
+    }
+
+    .kpi-value {
+      font-family: var(--font-headline);
+      font-size: clamp(1.375rem, 1.15rem + 0.9vw, 1.85rem);
+      font-weight: 700;
+      font-variant-numeric: tabular-nums lining-nums;
+      color: var(--primary);
+      line-height: 1.2;
+    }
+
+    .kpi-value.is-alert { color: var(--error-text); }
+    .kpi-value.is-warn { color: var(--accent-text); }
+    .kpi-value.is-healthy { color: var(--positive-text); }
+
+    .kpi-desc {
+      margin: 0;
+      font-size: 0.9rem;
+      color: var(--on-surface-variant);
+    }
+
+    .overview-list {
+      margin: var(--space-xs) 0 0 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: var(--space-sm);
+    }
+
+    .overview-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-sm);
+      font-size: 0.9375rem;
+      color: var(--secondary);
+    }
+
+    .overview-list .bullet-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 2px;
+      background: var(--accent);
+      margin-top: 0.5rem;
+      flex-shrink: 0;
+    }
+
+    /* Progress Dashboard inside Bento */
+    .progress-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: var(--space-sm);
+    }
+
+    .progress-percent {
+      font-family: var(--font-mono);
+      font-size: 1.85rem;
+      font-weight: 600;
+      font-variant-numeric: tabular-nums;
+      color: var(--primary-bright);
+    }
+
+    .progress-track {
+      width: 100%;
+      height: 12px;
+      background: var(--surface-container-high);
+      border-radius: var(--rounded);
+      overflow: hidden;
+      border: 1px solid var(--outline-variant);
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--primary-bright) 0%, var(--positive) 100%);
+      transition: width var(--dur-long) var(--ease-out);
+    }
+
+    .progress-stats {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-sm);
+      font-size: 0.875rem;
+      color: var(--on-surface-variant);
+    }
+
+    .progress-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-sm);
+      margin-top: auto;
+      padding-top: var(--space-sm);
+    }
+
+    /* Interactive Decision Simulator */
+    .sim-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
+      gap: var(--space-lg);
+      align-items: start;
+    }
+
+    .sim-controls {
+      display: grid;
+      gap: var(--space-md);
+    }
+
+    .field-group {
+      display: grid;
+      gap: var(--space-xs);
+    }
+
+    .field-label {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--primary);
+    }
+
+    .field-select,
+    .field-input {
+      width: 100%;
+      min-height: 44px;
+      padding: 0.5rem 0.75rem;
+      background: var(--surface-container-low);
+      border: 1px solid var(--outline-variant);
+      border-radius: var(--rounded);
+      color: var(--on-surface);
+      transition: border-color var(--dur-micro) var(--ease-out), box-shadow var(--dur-micro) var(--ease-out);
+    }
+
+    .field-select {
+      padding-right: 2rem;
+    }
+
+    .field-select:focus,
+    .field-input:focus {
+      border-color: var(--primary-bright);
+    }
+
+    .sim-output {
+      border-radius: var(--rounded-lg);
+      padding: var(--space-lg);
+      border: 1px solid var(--outline-variant);
+      border-left-width: 5px;
+      background: var(--surface-container);
+      display: grid;
+      gap: var(--space-sm);
+    }
+
+    .sim-output.state-healthy {
+      background: var(--positive-bg);
+      border-color: var(--positive-border);
+      border-left-color: var(--positive);
+    }
+
+    .sim-output.state-warn {
+      background: var(--warning-bg);
+      border-color: var(--warning-border);
+      border-left-color: var(--warning);
+    }
+
+    .sim-output.state-alert {
+      background: var(--error-bg);
+      border-color: var(--error-border);
+      border-left-color: var(--error);
+    }
+
+    .sim-status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-xs);
+      font-weight: 700;
+      font-size: 0.85rem;
+      padding: 0.25rem 0.625rem;
+      border-radius: var(--rounded);
+      width: fit-content;
+    }
+
+    .state-healthy .sim-status-badge { background: var(--surface-container-low); color: var(--positive-text); border: 1px solid var(--positive-border); }
+    .state-warn .sim-status-badge { background: var(--surface-container-low); color: var(--warning-text); border: 1px solid var(--warning-border); }
+    .state-alert .sim-status-badge { background: var(--surface-container-low); color: var(--error-text); border: 1px solid var(--error-border); }
+
+    .sim-title {
+      font-family: var(--font-headline);
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin: 0;
+      color: var(--on-surface);
+    }
+
+    .sim-detail-list {
+      margin: 0;
+      padding-left: 1.25rem;
+      display: grid;
+      gap: var(--space-xs);
+      font-size: 0.92rem;
+      color: var(--secondary);
+    }
+
+    /* Filter & Search Toolbar */
+    .toolbar-panel {
+      background: var(--surface-container-low);
+      border: var(--hairline);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-md) var(--space-lg);
+      box-shadow: var(--card-shadow);
+      display: grid;
+      gap: var(--space-md);
+    }
+
+    .toolbar-top {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: var(--space-md);
+      align-items: end;
+    }
+
+    .search-wrap {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 0.8rem;
+      color: var(--secondary-muted);
+      pointer-events: none;
+      display: inline-flex;
+    }
+
+    .search-input {
+      width: 100%;
+      min-height: 44px;
+      padding: 0.5rem 2.75rem 0.5rem 2.5rem;
+      border: 1px solid var(--outline-variant);
+      border-radius: var(--rounded);
+      background: var(--background);
+    }
+
+    .clear-search-btn {
+      position: absolute;
+      right: 0.35rem;
+      min-width: 36px;
+      min-height: 36px;
+      border: none;
+      background: transparent;
+      color: var(--secondary-muted);
+      cursor: pointer;
+      border-radius: var(--rounded);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .clear-search-btn:hover {
+      background: var(--surface-container-high);
+      color: var(--primary);
+    }
+
+    .toolbar-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-sm);
+    }
+
+    .filter-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-sm);
+      align-items: center;
+    }
+
+    .filter-label {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--secondary-muted);
+      margin-right: var(--space-xs);
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-xs);
+      min-height: 44px;
+      padding: 0.5rem 1rem;
+      border-radius: var(--rounded);
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+      border: 1px solid transparent;
+      transition: background-color var(--dur-micro) var(--ease-out), color var(--dur-micro) var(--ease-out), box-shadow var(--dur-micro) var(--ease-out);
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: var(--on-primary);
+    }
+    .btn-primary:hover {
+      background: var(--primary-bright);
+    }
+
+    .btn-secondary {
+      background: var(--surface-container);
+      color: var(--primary);
+      border-color: var(--outline-variant);
+    }
+    .btn-secondary:hover {
+      background: var(--surface-container-high);
+    }
+
+    .btn-chip {
+      min-height: 44px;
+      padding: 0.45rem 0.9rem;
+      background: var(--background);
+      color: var(--secondary);
+      border: 1px solid var(--outline-variant);
+      border-radius: var(--rounded);
+      font-weight: 500;
+      font-size: 0.875rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-xs);
+      transition: background-color var(--dur-micro) var(--ease-out), color var(--dur-micro) var(--ease-out);
+    }
+
+    .btn-chip:hover {
+      background: var(--primary-container);
+      color: var(--primary);
+    }
+
+    .btn-chip.is-active {
+      background: var(--primary);
+      color: var(--on-primary);
+      border-color: var(--primary);
+      font-weight: 600;
+    }
+
+    .btn-danger-ghost {
+      background: transparent;
+      color: var(--error-text);
+      border: 1px solid var(--error-border);
+    }
+    .btn-danger-ghost:hover {
+      background: var(--error-bg);
+    }
+
+    /* Chapter Cards Bento Stack */
+    .chapters-grid {
+      display: grid;
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      gap: var(--space-lg);
+    }
+
+    .chapter-card {
+      grid-column: span 12;
+      background: var(--surface-container-low);
+      border: 1px solid var(--outline-variant);
+      border-top: 3px solid var(--primary);
+      border-radius: var(--rounded-lg);
+      box-shadow: var(--card-shadow);
+      overflow: hidden;
+      transition: box-shadow var(--dur-short) var(--ease-out), background-color var(--dur-short) var(--ease-out);
+    }
+
+    .chapter-card:hover {
+      box-shadow: var(--card-shadow-hover);
+    }
+
+    .chapter-card.is-read {
+      border-top-color: var(--positive);
+    }
+
+    .chapter-card.is-hidden {
+      display: none;
+    }
+
+    .chapter-header {
+      padding: var(--space-lg);
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: var(--space-md);
+      align-items: start;
+      background: var(--surface-container-low);
+    }
+
+    .chapter-header-main {
+      display: grid;
+      gap: var(--space-xs);
+    }
+
+    .chapter-tags {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: var(--space-sm);
+    }
+
+    .tag-stamp {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      padding: 0.15rem 0.5rem;
+      border: 1px solid var(--accent-champagne);
+      border-radius: var(--rounded);
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--accent-text);
+      background: var(--background);
+    }
+
+    .tag-cat {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.15rem 0.5rem;
+      border-radius: var(--rounded);
+      font-size: 0.75rem;
+      font-weight: 600;
+      background: var(--primary-container);
+      color: var(--primary);
+    }
+
+    .chapter-title-btn {
+      text-align: left;
+      background: transparent;
+      border: none;
+      padding: 0.25rem 0;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-md);
+      width: 100%;
+    }
+
+    .chapter-title-btn h3 {
+      font-family: var(--font-headline);
+      font-size: clamp(1.125rem, 1.02rem + 0.35vw, 1.35rem);
+      font-weight: 700;
+      margin: 0;
+      color: var(--primary);
+      line-height: 1.35;
+    }
+
+    .chapter-summary {
+      margin: 0;
+      color: var(--on-surface-variant);
+      font-size: 0.9375rem;
+      max-width: 72ch;
+    }
+
+    .chapter-controls {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+      flex-shrink: 0;
+    }
+
+    /* Accessible Checkbox Label >= 44px */
+    .read-check-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      min-height: 44px;
+      padding: 0.35rem 0.75rem;
+      border: 1px solid var(--outline-variant);
+      border-radius: var(--rounded);
+      background: var(--background);
+      cursor: pointer;
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--secondary);
+      user-select: none;
+      transition: background-color var(--dur-micro) var(--ease-out), color var(--dur-micro) var(--ease-out), border-color var(--dur-micro) var(--ease-out);
+    }
+
+    .read-check-label:hover {
+      background: var(--primary-container);
+      color: var(--primary);
+    }
+
+    .read-check-label.checked {
+      background: var(--positive-bg);
+      color: var(--positive-text);
+      border-color: var(--positive-border);
+    }
+
+    .read-checkbox {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--positive);
+      cursor: pointer;
+      margin: 0;
+    }
+
+    .toggle-btn {
+      min-height: 44px;
+      min-width: 44px;
+      padding: 0.4rem 0.75rem;
+      background: var(--surface-container);
+      border: 1px solid var(--outline-variant);
+      border-radius: var(--rounded);
+      color: var(--primary);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-size: 0.85rem;
+      font-weight: 600;
+      transition: background-color var(--dur-micro) var(--ease-out);
+    }
+
+    .toggle-btn:hover {
+      background: var(--surface-container-high);
+    }
+
+    .toggle-icon {
+      transition: transform var(--dur-short) var(--ease-out);
+      display: inline-flex;
+    }
+
+    .chapter-card.is-expanded .toggle-icon {
+      transform: rotate(180deg);
+    }
+
+    /* Expandable Body */
+    .chapter-body {
+      display: none;
+      border-top: var(--hairline);
+      padding: var(--space-lg);
+      background: var(--background);
+      gap: var(--space-lg);
+    }
+
+    .chapter-card.is-expanded .chapter-body {
+      display: grid;
+    }
+
+    .sub-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr));
+      gap: var(--space-md);
+    }
+
+    .panel-box {
+      background: var(--surface-container-low);
+      border: var(--hairline);
+      border-radius: var(--rounded);
+      padding: var(--space-md) var(--space-lg);
+      display: grid;
+      gap: var(--space-sm);
+      align-content: start;
+    }
+
+    .panel-box h4 {
+      font-family: var(--font-headline);
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin: 0;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: var(--space-xs);
+    }
+
+    .panel-box p, .panel-box li {
+      font-size: 0.9375rem;
+      color: var(--secondary);
+      margin: 0;
+    }
+
+    .panel-box ul, .panel-box ol {
+      margin: 0;
+      padding-left: 1.25rem;
+      display: grid;
+      gap: 0.45rem;
+    }
+
+    /* Callouts */
+    .callout {
+      padding: var(--space-md) var(--space-lg);
+      border-radius: var(--rounded);
+      border: 1px solid var(--outline-variant);
+      border-left: 5px solid var(--primary);
+      background: var(--surface-container-low);
+      display: grid;
+      gap: var(--space-xs);
+    }
+
+    .callout.is-warn {
+      background: var(--warning-bg);
+      border-color: var(--warning-border);
+      border-left-color: var(--warning);
+    }
+
+    .callout.is-alert {
+      background: var(--error-bg);
+      border-color: var(--error-border);
+      border-left-color: var(--error);
+    }
+
+    .callout.is-healthy {
+      background: var(--positive-bg);
+      border-color: var(--positive-border);
+      border-left-color: var(--positive);
+    }
+
+    .callout.is-missing {
+      background: var(--neutral-bg);
+      border-color: var(--neutral-border);
+      border-left-color: var(--secondary-muted);
+    }
+
+    .callout-title {
+      font-weight: 700;
+      font-size: 0.9375rem;
+      display: flex;
+      align-items: center;
+      gap: var(--space-xs);
+      color: var(--primary);
+    }
+
+    .callout.is-warn .callout-title { color: var(--warning-text); }
+    .callout.is-alert .callout-title { color: var(--error-text); }
+    .callout.is-healthy .callout-title { color: var(--positive-text); }
+    .callout.is-missing .callout-title { color: var(--secondary); }
+
+    /* Tables (Charter style: clean rows, no vertical rules) */
+    .table-wrap {
+      width: 100%;
+      overflow-x: auto;
+      background: var(--surface-container-low);
+      border: var(--hairline);
+      border-radius: var(--rounded);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.9rem;
+    }
+
+    thead th {
+      background: var(--surface-container-high);
+      color: var(--primary);
+      font-weight: 700;
+      padding: 0.75rem 1rem;
+      border-bottom: var(--brass-rule);
+      white-space: nowrap;
+    }
+
+    tbody td {
+      padding: 0.85rem 1rem;
+      border-bottom: 1px solid var(--surface-container-high);
+      color: var(--secondary);
+      vertical-align: top;
+    }
+
+    tbody tr:last-child td {
+      border-bottom: none;
+    }
+
+    tbody tr:hover td {
+      background: var(--background);
+    }
+
+    .pill-status {
+      display: inline-block;
+      padding: 0.2rem 0.55rem;
+      border-radius: var(--rounded);
+      font-size: 0.78rem;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .pill-warn { background: var(--warning-bg); color: var(--warning-text); border: 1px solid var(--warning-border); }
+    .pill-alert { background: var(--error-bg); color: var(--error-text); border: 1px solid var(--error-border); }
+    .pill-healthy { background: var(--positive-bg); color: var(--positive-text); border: 1px solid var(--positive-border); }
+    .pill-missing { background: var(--neutral-bg); color: var(--secondary); border: 1px solid var(--neutral-border); }
+
+    .mono-code {
+      font-family: var(--font-mono);
+      font-size: 0.85em;
+      background: var(--surface-container);
+      padding: 0.1rem 0.35rem;
+      border-radius: 3px;
+      color: var(--primary-bright);
+    }
+
+    /* Chapter Footer Bar inside expanded body */
+    .chapter-bottom-bar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-sm);
+      padding-top: var(--space-md);
+      border-top: var(--hairline);
+    }
+
+    .source-note {
+      font-size: 0.82rem;
+      color: var(--on-surface-variant);
+    }
+
+    /* Empty search state */
+    .empty-state {
+      display: none;
+      text-align: center;
+      padding: var(--space-2xl) var(--space-lg);
+      background: var(--surface-container-low);
+      border: 1px dashed var(--outline-variant);
+      border-radius: var(--rounded-lg);
+      gap: var(--space-md);
+    }
+
+    .empty-state.is-visible {
+      display: grid;
+      justify-items: center;
+    }
+
+    /* Page Footer */
+    .site-footer {
+      margin-top: var(--space-xl);
+      background: var(--primary);
+      color: var(--on-primary);
+      border-top: 3px solid var(--accent-champagne);
+      padding: var(--space-lg);
+    }
+
+    .site-footer-inner {
+      max-width: 1240px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-md);
+      font-size: 0.875rem;
+    }
+
+    .footer-brand {
+      font-family: var(--font-mono);
+      font-weight: 600;
+      color: var(--accent-champagne);
+    }
+
+    .footer-sources {
+      color: var(--primary-container);
+      font-size: 0.82rem;
+    }
+
+    /* Responsive Breakpoints */
+    @media (max-width: 960px) {
+      .bento-span-7,
+      .bento-span-5,
+      .bento-span-4 {
+        grid-column: span 12;
+      }
+      .sim-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .title-band {
+        padding: var(--space-lg) var(--space-md);
+      }
+      .page-shell {
+        padding: var(--space-md);
+        gap: var(--space-md);
+      }
+      .toolbar-top {
+        grid-template-columns: 1fr;
+      }
+      .chapter-header {
+        grid-template-columns: 1fr;
+        padding: var(--space-md);
+      }
+      .chapter-controls {
+        justify-content: space-between;
+        width: 100%;
+      }
+      .chapter-body {
+        padding: var(--space-md);
+      }
+      .bento-card {
+        padding: var(--space-md);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+      .home-link { display: inline-flex; align-items: center; color: var(--outline); font: inherit; font-size: var(--label-size, 0.875rem); font-weight: 600; text-decoration: none; border: 1px solid var(--outline); padding: 0.4rem 0.7rem; margin: 0 0 var(--space-sm) 0; }
+    .home-link:hover, .home-link:focus-visible { color: var(--on-primary); text-decoration: underline; text-underline-offset: 0.18em; }
+    @media (max-width: 640px) { }
+      .header-bank-label { display: inline-block; margin: 0 0 var(--space-sm); color: var(--outline); font-family: var(--font-label); font-size: var(--label-size, 0.875rem); font-weight: 700; letter-spacing: 0.08em; }
+  </style>
+</head>
+<body>
+
+  <!-- 頁首 (嚴格遵守指定格式) -->
+  <header class="title-band">
+    <div class="title-band-inner">
+      <span class="header-bank-label">鎖頭銀行</span>
+      <div class="title-kicker">
+        <i data-lucide="shield-check" style="width:16px;height:16px;" aria-hidden="true"></i>
+        <span>鎖頭銀行企業徵授信培訓體系 · 模組二：財報徵提規範與會計師簽證審核</span>
+      </div>
+      <h1>中小企業授信與財報分析實務-Day10-會計師適任性評估與懲戒紀錄查核</h1>
+      <p class="title-lede">
+        依據《中華民國銀行公會會員徵信準則》第 18 條與鎖頭銀行徵信實務指引，彙整聯徵中心（JCIC）N20 會計師懲戒紀錄查核、三大處分分級採用標準、申誡案件實質審查評估要領，以及防止雙重報表與未承認草稿之風控牽制防線。
+      </p>
+    </div>
+  </header>
+
+  <main class="page-shell">
+
+    <!-- 首頁核心概念總覽 (Bento Grid) -->
+    <section aria-labelledby="overview-heading">
+      <div class="section-head">
+        <h2 id="overview-heading">主題與核心概念總覽</h2>
+        <span class="section-meta">法源基準：徵信準則第 18 條第 1 項第 5–7 款 · 第 36、37 條</span>
+      </div>
+
+      <div class="bento-grid" style="margin-top: var(--space-md);">
+        <!-- Bento Card 1: 核心架構摘要 -->
+        <article class="bento-card bento-span-7">
+          <div class="card-kicker">
+            <i data-lucide="landmark" style="width:16px;height:16px;" aria-hidden="true"></i>
+            <span>Day 10 授信風控定位</span>
+          </div>
+          <h3>為何會計師適任性決定財報可信度？</h3>
+          <p class="kpi-desc">
+            企業總授信金額達新臺幣 3,000 萬元以上（或申請公司組織本票保證）須徵提會計師財務報表查核報告（融資簽證）。然簽證品質直接影響財報公信力，徵信人員須透過「聯徵 N20 查證＋外部交叉核對＋軌跡留存」，確保鎖頭銀行不採信失格或高風險簽證報告。
+          </p>
+          <ul class="overview-list">
+            <li><span class="bullet-dot" aria-hidden="true"></span><span><strong>事前必查 N20：</strong>於聯徵財報頁籤主動點選查詢 <span class="mono-code">N20</span> 會計師懲戒紀錄，配合鎖頭銀行系統後台控管避免遺漏。</span></li>
+            <li><span class="bullet-dot" aria-hidden="true"></span><span><strong>分級嚴格處置：</strong>依「警告／申誡」、「停止執行業務」、「除名」三種處分等級，決定有條件評估採用、加倍期間禁採或永久禁用。</span></li>
+            <li><span class="bullet-dot" aria-hidden="true"></span><span><strong>雙重防弊機制：</strong>透過契約約定會計師將查核報告副本逕送聯徵中心，並查驗四大主表用印承認，防堵粉飾報表與假草稿。</span></li>
+          </ul>
+        </article>
+
+        <!-- Bento Card 2: 動態學習進度儀表板 -->
+        <article class="bento-card bento-span-5 kpi-navy" aria-live="polite">
+          <div class="card-kicker">
+            <i data-lucide="bar-chart-3" style="width:16px;height:16px;" aria-hidden="true"></i>
+            <span>學習完成度追蹤</span>
+          </div>
+          <div class="progress-header">
+            <h3>Day 10 研習進度</h3>
+            <span class="progress-percent" id="progress-percent-text">0%</span>
+          </div>
+          <div class="progress-track" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="progress-bar-role">
+            <div class="progress-fill" id="progress-fill"></div>
+          </div>
+          <div class="progress-stats">
+            <span id="progress-count-text">已完成 0 / 5 個核心章節</span>
+            <span id="progress-status-hint">請勾選各章節「已讀」方塊紀錄進度</span>
+          </div>
+          <div class="progress-actions">
+            <button type="button" class="btn btn-primary" onclick="markAllRead()">
+              <i data-lucide="check-square" style="width:16px;height:16px;" aria-hidden="true"></i>
+              <span>全部標記已讀</span>
+            </button>
+            <button type="button" class="btn btn-danger-ghost" id="reset-progress-btn" onclick="handleResetProgress(this)">
+              <i data-lucide="rotate-ccw" style="width:16px;height:16px;" aria-hidden="true"></i>
+              <span>重設進度</span>
+            </button>
+          </div>
+        </article>
+
+        <!-- Bento KPI Cards Row -->
+        <article class="bento-card bento-span-4 kpi-navy">
+          <div class="card-kicker">
+            <i data-lucide="database" style="width:16px;height:16px;" aria-hidden="true"></i>
+            <span>聯徵中心查核代碼</span>
+          </div>
+          <div class="kpi-value">JCIC N20</div>
+          <p class="kpi-desc">位於報表頁籤之會計師懲戒紀錄查詢項目；系統另設控管防呆，且授信契約須約定查核報告副本逕送聯徵中心。</p>
+        </article>
+
+        <article class="bento-card bento-span-4 kpi-warn">
+          <div class="card-kicker">
+            <i data-lucide="alert-triangle" style="width:16px;height:16px;" aria-hidden="true"></i>
+            <span>警告或申誡處分門檻</span>
+          </div>
+          <div class="kpi-value is-warn">1 年內須專案評估</div>
+          <p class="kpi-desc">自處分確定日起 1 年內，鎖頭銀行欲採用其簽證財報，須由徵信人員針對懲戒原因查證並出具評估報告陳核。</p>
+        </article>
+
+        <article class="bento-card bento-span-4 kpi-alert">
+          <div class="card-kicker">
+            <i data-lucide="ban" style="width:16px;height:16px;" aria-hidden="true"></i>
+            <span>停業與除名禁止規範</span>
+          </div>
+          <div class="kpi-value is-alert">停業 2 倍期 / 除名永久</div>
+          <p class="kpi-desc">受停業處分於停業期間（實務為 2 倍期間且不少於 1 年）不予採用；受除名或撤銷核准者，自處分日起永久禁用。</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- 互動模擬器：會計師處分適任性即時判別器 -->
+    <section aria-labelledby="sim-heading">
+      <div class="section-head">
+        <h2 id="sim-heading">實務情境試算：會計師處分適任性與查證指引模擬器</h2>
+        <span class="section-meta">互動判定工具 · 依據徵信準則第 18 條與課程規範</span>
+      </div>
+
+      <article class="bento-card bento-span-12" style="margin-top: var(--space-md);">
+        <div class="sim-grid">
+          <div class="sim-controls">
+            <div class="field-group">
+              <label class="field-label" for="sim-sanction-type">1. 聯徵 N20 查得會計師懲戒／異動情形</label>
+              <select id="sim-sanction-type" class="field-select" onchange="updateSimulator()">
+                <option value="none">無懲戒紀錄（或四大／雙簽事務所內部輪調）</option>
+                <option value="warning" selected>警告或申誡處分（含輕微罰鍰處分）</option>
+                <option value="suspend">停止執行業務／停止辦理公發查核簽證</option>
+                <option value="expel">除名或撤銷公開發行公司查核簽證核准</option>
+              </select>
+            </div>
+
+            <div class="field-group" id="sim-months-group">
+              <label class="field-label" for="sim-elapsed-months">2. 距離處分（確定）日經過月數（或設定停業處分月數）</label>
+              <input type="number" id="sim-elapsed-months" class="field-input" min="0" max="120" value="6" oninput="updateSimulator()">
+            </div>
+
+            <div class="field-group" id="sim-reason-group">
+              <label class="field-label" for="sim-reason-type">3. N20 顯示之懲戒事由（適用於警告／申誡）</label>
+              <select id="sim-reason-type" class="field-select" onchange="updateSimulator()">
+                <option value="inventory">存貨盤點程序不確實</option>
+                <option value="cash">現金及約當現金未確實函證</option>
+                <option value="other">其他程序疏失（非屬存貨或現金函證）</option>
+              </select>
+            </div>
+          </div>
+
+          <div id="sim-output-panel" class="sim-output state-warn" aria-live="polite">
+            <!-- Dynamic Content -->
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <!-- 搜尋與分類篩選列 -->
+    <section aria-labelledby="chapters-heading">
+      <div class="section-head">
+        <h2 id="chapters-heading">章節詳解與實務查證指引</h2>
+        <span class="section-meta" id="visible-count-meta">顯示全部 5 個章節</span>
+      </div>
+
+      <div class="toolbar-panel" style="margin-top: var(--space-md);">
+        <div class="toolbar-top">
+          <div class="field-group">
+            <label class="field-label" for="keyword-search">關鍵字即時搜尋（例如：N20、申誡、函證、副本、來源未提供）</label>
+            <div class="search-wrap">
+              <span class="search-icon" aria-hidden="true">
+                <i data-lucide="search" style="width:18px;height:18px;"></i>
+              </span>
+              <input type="text" id="keyword-search" class="search-input" placeholder="輸入法條、懲戒類型、佐證文件或實務關鍵字…" oninput="handleSearchInput(this.value)">
+              <button type="button" class="clear-search-btn" id="clear-search-btn" onclick="clearSearch()" aria-label="清除搜尋關鍵字" style="display:none;">
+                <i data-lucide="x" style="width:16px;height:16px;" aria-hidden="true"></i>
+              </button>
+            </div>
+          </div>
+          <div class="toolbar-buttons">
+            <button type="button" class="btn btn-secondary" onclick="expandAllChapters()">
+              <i data-lucide="chevrons-down" style="width:16px;height:16px;" aria-hidden="true"></i>
+              <span>全部展開</span>
+            </button>
+            <button type="button" class="btn btn-secondary" onclick="collapseAllChapters()">
+              <i data-lucide="chevrons-up" style="width:16px;height:16px;" aria-hidden="true"></i>
+              <span>全部收合</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="filter-chips" role="group" aria-label="章節分類篩選">
+          <span class="filter-label">分類標籤快速篩選：</span>
+          <button type="button" class="btn-chip is-active" data-filter="all" onclick="setCategoryFilter('all', this)">全部章節</button>
+          <button type="button" class="btn-chip" data-filter="n20" onclick="setCategoryFilter('n20', this)">N20 查核機制</button>
+          <button type="button" class="btn-chip" data-filter="sanctions" onclick="setCategoryFilter('sanctions', this)">處分分級規範</button>
+          <button type="button" class="btn-chip" data-filter="report" onclick="setCategoryFilter('report', this)">評估報告要領</button>
+          <button type="button" class="btn-chip" data-filter="risk" onclick="setCategoryFilter('risk', this)">風控防線與缺漏標示</button>
+        </div>
+      </div>
+
+      <!-- 搜尋無結果空狀態 -->
+      <div id="empty-search-state" class="empty-state" style="margin-top: var(--space-md);">
+        <i data-lucide="file-search" style="width:40px;height:40px;color:var(--secondary-muted);" aria-hidden="true"></i>
+        <div>
+          <h3 style="margin:0 0 0.25rem 0;color:var(--primary);">找不到符合條件的章節內容</h3>
+          <p style="margin:0;color:var(--on-surface-variant);">請嘗試更換關鍵字或重設分類篩選條件，以檢視所有 Day 10 徵信教學內容。</p>
+        </div>
+        <button type="button" class="btn btn-primary" onclick="resetFilters()">顯示全部章節</button>
+      </div>
+
+      <!-- 5 大可展開收合章節卡片 -->
+      <div class="chapters-grid" style="margin-top: var(--space-md);">
+
+        <!-- 章節 1 -->
+        <article class="chapter-card is-expanded" id="card-ch1" data-chapter-id="ch1" data-category="n20">
+          <div class="chapter-header">
+            <div class="chapter-header-main">
+              <div class="chapter-tags">
+                <span class="tag-stamp">CHAPTER 01</span>
+                <span class="tag-cat">N20 查核機制</span>
+              </div>
+              <button type="button" class="chapter-title-btn" onclick="toggleChapter('ch1')" aria-expanded="true" aria-controls="body-ch1">
+                <h3>一、聯徵中心 N20 會計師懲戒紀錄查核機制與資訊介接</h3>
+              </button>
+              <p class="chapter-summary">
+                解析 JCIC N20 產品代碼於徵信作業中的位置、常見漏查風險、鎖頭銀行系統後台控管防呆，以及會計師輪調與聯徵副本聯防機制。
+              </p>
+            </div>
+            <div class="chapter-controls">
+              <label class="read-check-label" id="label-read-ch1">
+                <input type="checkbox" class="read-checkbox" id="chk-ch1" onchange="toggleRead('ch1', this.checked)">
+                <span>已讀</span>
+              </label>
+              <button type="button" class="toggle-btn" onclick="toggleChapter('ch1')" aria-expanded="true" aria-controls="body-ch1" id="btn-toggle-ch1">
+                <span class="toggle-text">收合</span>
+                <span class="toggle-icon" aria-hidden="true"><i data-lucide="chevron-down" style="width:16px;height:16px;"></i></span>
+              </button>
+            </div>
+          </div>
+
+          <div class="chapter-body" id="body-ch1">
+            <div class="sub-grid">
+              <div class="panel-box">
+                <h4><i data-lucide="search-check" style="width:18px;height:18px;" aria-hidden="true"></i> JCIC N20 實務查證程序</h4>
+                <ul>
+                  <li><strong>查詢位置與常見疏漏：</strong>講師於課程中特別提醒，在聯徵查詢作業裡，最常被徵信人員遺漏的項目即為會計師懲戒紀錄 <span class="mono-code">N20</span>。因 <span class="mono-code">N20</span> 並非自動帶入於主頁，而是在<strong>「報表頁籤」</strong>內需手動點按查詢，實務上極易漏查。</li>
+                  <li><strong>系統後台控管防呆：</strong>為防止前端人員漏查，鎖頭銀行於徵信系統背後針對 <span class="mono-code">N20</span> 設有控管機制，未完成查證或有異動紀錄時將受系統檢核管制。</li>
+                  <li><strong>雙簽輪調之常態判斷：</strong>於四大會計師事務所或上市櫃公司雙簽會計師案件中，若僅更換簽證會計師姓名而<strong>未更換會計師事務所</strong>，通常屬事務所內部定期輪調所致，屬於較正常之現象；真正需要高度警戒的是 <span class="mono-code">N20</span> 查得懲戒紀錄。</li>
+                </ul>
+              </div>
+
+              <div class="panel-box">
+                <h4><i data-lucide="shield-alert" style="width:18px;height:18px;" aria-hidden="true"></i> 聯徵跨機構財報副本聯防機制</h4>
+                <ul>
+                  <li><strong>法源依據：</strong>《銀行公會會員徵信準則》第 18 條第 1 項第 6 款。</li>
+                  <li><strong>契約明文約定：</strong>鎖頭銀行應於授信契約中與借款人約定，請授信戶要求受託查核簽證之會計師，將財務報表查核報告副本直接送達<strong>財團法人金融聯合徵信中心（JCIC）</strong>。</li>
+                  <li><strong>核心防弊目的：</strong>建置跨銀行間的財報資料共享聯防庫，讓各金融機構能比對企業提供之財報正本與聯徵中心副本是否一致，有效杜絕「向銀行提供美化粉飾報表、向稅捐機關申報真實報表」之雙重報表道德風險。</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="callout is-missing">
+              <div class="callout-title">
+                <i data-lucide="info" style="width:18px;height:18px;" aria-hidden="true"></i>
+                <span>資訊介接技術規格標註：來源未提供</span>
+              </div>
+              <p style="margin:0;font-size:0.92rem;color:var(--secondary);">
+                關於聯徵中心（JCIC）<span class="mono-code">N20</span> 產品之完整欄位代碼結構、API 資訊介接技術規格書，以及鎖頭銀行內部系統建檔畫面與專屬作業代碼明細，<strong>來源未提供</strong>，請依鎖頭銀行內部實際系統操作手冊辦理，嚴禁自行推估編造。
+              </p>
+            </div>
+
+            <div class="chapter-bottom-bar">
+              <span class="source-note">資料來源：課程講解 R20261120-085524 / 095556、徵信準則第 18 條第 1 項第 6 款、財報徵提規範研析</span>
+              <label class="read-check-label read-sync-label" id="label-read-bottom-ch1">
+                <input type="checkbox" class="read-checkbox" id="chk-bottom-ch1" onchange="toggleRead('ch1', this.checked)">
+                <span>標記本章節為已讀</span>
+              </label>
+            </div>
+          </div>
+        </article>
+
+        <!-- 章節 2 -->
+        <article class="chapter-card" id="card-ch2" data-chapter-id="ch2" data-category="sanctions">
+          <div class="chapter-header">
+            <div class="chapter-header-main">
+              <div class="chapter-tags">
+                <span class="tag-stamp">CHAPTER 02</span>
+                <span class="tag-cat">處分分級規範</span>
+              </div>
+              <button type="button" class="chapter-title-btn" onclick="toggleChapter('ch2')" aria-expanded="false" aria-controls="body-ch2">
+                <h3>二、會計師受處分之三大類型與法定規範</h3>
+              </button>
+              <p class="chapter-summary">
+                依據《會計師法》及《證券交易法》懲戒結果，對比警告或申誡、停止執行業務（含公發簽證停止）、除名或撤銷核准之法定管制期間與鎖頭銀行應對規範。
+              </p>
+            </div>
+            <div class="chapter-controls">
+              <label class="read-check-label" id="label-read-ch2">
+                <input type="checkbox" class="read-checkbox" id="chk-ch2" onchange="toggleRead('ch2', this.checked)">
+                <span>已讀</span>
+              </label>
+              <button type="button" class="toggle-btn" onclick="toggleChapter('ch2')" aria-expanded="false" aria-controls="body-ch2" id="btn-toggle-ch2">
+                <span class="toggle-text">展開</span>
+                <span class="toggle-icon" aria-hidden="true"><i data-lucide="chevron-down" style="width:16px;height:16px;"></i></span>
+              </button>
+            </div>
+          </div>
+
+          <div class="chapter-body" id="body-ch2">
+            <div class="callout is-warn">
+              <div class="callout-title">
+                <i data-lucide="scale" style="width:18px;height:18px;" aria-hidden="true"></i>
+                <span>法規條文核心：《銀行公會會員徵信準則》第 18 條第 1 項第 7 款</span>
+              </div>
+              <p style="margin:0;font-size:0.92rem;color:var(--secondary);">
+                會計師依《會計師法》或《證券交易法》受處分者，其簽發財務報表查核報告之採納受到分級限制；實務作業並結合鎖頭銀行與課程培訓所列之加嚴評估／禁用期間規範。
+              </p>
+            </div>
+
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>處分類型</th>
+                    <th>適用狀態</th>
+                    <th>法規原文（徵信準則第 18 條第 1 項第 7 款）</th>
+                    <th>鎖頭銀行實務管制與課程規範</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>警告或申誡處分</strong><br><span style="font-size:0.8rem;color:var(--on-surface-variant);">（含實務輕微罰鍰提醒）</span></td>
+                    <td><span class="pill-status pill-warn">有條件評估採用</span></td>
+                    <td>其簽發之財務報表查核報告<strong>自處分日起一年內</strong>如准予採用，應註明採用之原因並審慎評估。</td>
+                    <td>處分確定之日起 <strong>1 年內</strong>，鎖頭銀行如欲採用其簽證財報，應由徵信人員針對懲戒原因出具專業評估報告，說明採用理由與風險評估並陳核核可。</td>
+                  </tr>
+                  <tr>
+                    <td><strong>停止執行業務／停止辦理公發公司查核簽證</strong></td>
+                    <td><span class="pill-status pill-alert">一定期間不予採用</span></td>
+                    <td>其簽發之財務報表查核報告自處分日起<strong>於受處分停止執行業務期間內</strong>不予採用。</td>
+                    <td>自處分日起於受處分停止執行業務期間之<strong>二倍期間內（最低不少於一年）</strong>一律不予採用（例如停業 1 年則 2 年內不予採用）。停業期間簽發之報告嚴禁採信。</td>
+                  </tr>
+                  <tr>
+                    <td><strong>除名或撤銷公發公司查核簽證核准</strong></td>
+                    <td><span class="pill-status pill-alert">永久禁止採用</span></td>
+                    <td>其簽發之財務報表查核報告自處分日起<strong>不予採用</strong>。</td>
+                    <td>自處分日起<strong>永久不得採用</strong>其出具之財務報表查核報告，無例外評估空間。</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="panel-box">
+              <h4><i data-lucide="message-square-quote" style="width:18px;height:18px;" aria-hidden="true"></i> 講師實務觀點補充</h4>
+              <p>
+                若會計師受<strong>停業處分</strong>，徵信端直接不能採用；但若僅屬<strong>被罰錢（如公會處罰 5 萬元）或警告／申誡</strong>，其意義在於監理機關／公會提醒「下次注意」。實務上並非遇到罰鍰或申誡就一律拒絕整件授信，而是必須針對「當初為何被懲戒」逐一檢驗本次授信客戶的帳務是否已確實補正，並留存客觀佐證。
+              </p>
+            </div>
+
+            <div class="chapter-bottom-bar">
+              <span class="source-note">資料來源：徵信準則第 18 條第 1 項第 7 款、課程講解 R20261120-095556、課程課綱 Day 10、財報徵提規範深度研析</span>
+              <label class="read-check-label read-sync-label" id="label-read-bottom-ch2">
+                <input type="checkbox" class="read-checkbox" id="chk-bottom-ch2" onchange="toggleRead('ch2', this.checked)">
+                <span>標記本章節為已讀</span>
+              </label>
+            </div>
+          </div>
+        </article>
+
+        <!-- 章節 3 -->
+        <article class="chapter-card" id="card-ch3" data-chapter-id="ch3" data-category="report">
+          <div class="chapter-header">
+            <div class="chapter-header-main">
+              <div class="chapter-tags">
+                <span class="tag-stamp">CHAPTER 03</span>
+                <span class="tag-cat">評估報告要領</span>
+              </div>
+              <button type="button" class="chapter-title-btn" onclick="toggleChapter('ch3')" aria-expanded="false" aria-controls="body-ch3">
+                <h3>三、會計師懲戒評估報告撰寫要領與核決層級</h3>
+              </button>
+              <p class="chapter-summary">
+                受警告或申誡處分案件之實質審查指標、對症下藥的佐證文件調閱（存貨盤點與銀行函證）、查核意見連動判讀，以及核決層級之資料盤點標註。
+              </p>
+            </div>
+            <div class="chapter-controls">
+              <label class="read-check-label" id="label-read-ch3">
+                <input type="checkbox" class="read-checkbox" id="chk-ch3" onchange="toggleRead('ch3', this.checked)">
+                <span>已讀</span>
+              </label>
+              <button type="button" class="toggle-btn" onclick="toggleChapter('ch3')" aria-expanded="false" aria-controls="body-ch3" id="btn-toggle-ch3">
+                <span class="toggle-text">展開</span>
+                <span class="toggle-icon" aria-hidden="true"><i data-lucide="chevron-down" style="width:16px;height:16px;"></i></span>
+              </button>
+            </div>
+          </div>
+
+          <div class="chapter-body" id="body-ch3">
+            <div class="sub-grid">
+              <div class="panel-box">
+                <h4><i data-lucide="file-text" style="width:18px;height:18px;" aria-hidden="true"></i> 申誡／警告案件「對症查核」兩大實務範例</h4>
+                <p>撰寫評估報告的核心原則為<strong>「針對懲戒事由，驗證本案現況並附卷佐證」</strong>：</p>
+                <ol>
+                  <li><strong>事由為「存貨盤點不確實」：</strong>徵信人員須特別查明本次授信申請企業之期末存貨是否已確實執行實地盤點，並於評估報告中載明盤點查核情形。</li>
+                  <li><strong>事由為「現金及約當現金未函證」：</strong>須確認該企業本年度財務報表是否已完成確實之銀行函證程序；實務上可透過本行（鎖頭銀行）存匯單位或請客戶提供<strong>當年度銀行函證影本</strong>列印附卷，作為已確實函證之客觀佐證，即可完整交代並結案。</li>
+                </ol>
+              </div>
+
+              <div class="panel-box">
+                <h4><i data-lucide="clipboard-check" style="width:18px;height:18px;" aria-hidden="true"></i> 簽證品質交叉檢核與查核意見連動</h4>
+                <ul>
+                  <li><strong>外部資料勾稽（準則第 18 條第 1 項第 5 款）：</strong>將財報營業額、應收帳款、存貨餘額與營業稅申報書（401／403 表）、進出口報單、海關數據或銀行帳戶資金流水比對；顯有不符者須要求借戶說明並於徵信報告詳實揭露。</li>
+                  <li><strong>會計師查核意見判讀：</strong>首次達 3,000 萬門檻於 6/1 後補提財簽時，因期初存貨無法盤點及現金未及實地查核，會計師常出具「保留意見」，若帳務合理仍可依規處置；但若屬「無法表示意見」或「否定意見」（除特殊併購改採處分價值且改以母公司為主體分析外），原則不予採用。</li>
+                  <li><strong>公正平實與免責原則（第 7、36、37 條）：</strong>徵信人員應註明採用原因與風險評估，<strong>不宜直接對授信案表示准駁意見</strong>；已依當時情況與規範盡責查證並留存軌跡者，事後若仍發現瑕疵得免除責任。</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="callout is-missing">
+              <div class="callout-title">
+                <i data-lucide="alert-circle" style="width:18px;height:18px;" aria-hidden="true"></i>
+                <span>特定項目明確標註：核決層級職稱與授權分層明細「來源未提供」</span>
+              </div>
+              <p style="margin:0;font-size:0.92rem;color:var(--secondary);">
+                來源僅載明受警告或申誡處分一年內欲採用其財報時，「應由徵信人員出具專業評估報告（註明採用原因並審慎評估）並陳核核可」，以及依《徵信準則》第 3、7、8 條徵信與授信職能分離、由授信端進行後續准駁判斷。至於鎖頭銀行內部之<strong>具體核決層級職稱（例如襄理、經理、審查部或特定授權額度分層對照表）及固定制式評估報告表單編號</strong>，<strong>來源未提供</strong>，實務應遵循鎖頭銀行現行授信授權分層規定辦理。
+              </p>
+            </div>
+
+            <div class="chapter-bottom-bar">
+              <span class="source-note">資料來源：課程講解 R20261120-085524 / 095556、徵信準則第 7、18、36、37 條、財報徵提規範深度研析</span>
+              <label class="read-check-label read-sync-label" id="label-read-bottom-ch3">
+                <input type="checkbox" class="read-checkbox" id="chk-bottom-ch3" onchange="toggleRead('ch3', this.checked)">
+                <span>標記本章節為已讀</span>
+              </label>
+            </div>
+          </div>
+        </article>
+
+        <!-- 章節 4 -->
+        <article class="chapter-card" id="card-ch4" data-chapter-id="ch4" data-category="risk">
+          <div class="chapter-header">
+            <div class="chapter-header-main">
+              <div class="chapter-tags">
+                <span class="tag-stamp">CHAPTER 04</span>
+                <span class="tag-cat">風控防線與缺漏標示</span>
+              </div>
+              <button type="button" class="chapter-title-btn" onclick="toggleChapter('ch4')" aria-expanded="false" aria-controls="body-ch4">
+                <h3>四、鎖頭銀行內部風控防線、四大主表承認檢核與舞弊牽制</h3>
+              </button>
+              <p class="chapter-summary">
+                檢視防範雙重報表、辨識未經公司用印承認之財報草稿、異常營業稅與虛開發票警訊、獨立牽制分工，並嚴謹標註來源未載明之黑名單與借牌細則。
+              </p>
+            </div>
+            <div class="chapter-controls">
+              <label class="read-check-label" id="label-read-ch4">
+                <input type="checkbox" class="read-checkbox" id="chk-ch4" onchange="toggleRead('ch4', this.checked)">
+                <span>已讀</span>
+              </label>
+              <button type="button" class="toggle-btn" onclick="toggleChapter('ch4')" aria-expanded="false" aria-controls="body-ch4" id="btn-toggle-ch4">
+                <span class="toggle-text">展開</span>
+                <span class="toggle-icon" aria-hidden="true"><i data-lucide="chevron-down" style="width:16px;height:16px;"></i></span>
+              </button>
+            </div>
+          </div>
+
+          <div class="chapter-body" id="body-ch4">
+            <div class="sub-grid">
+              <div class="panel-box">
+                <h4><i data-lucide="stamp" style="width:18px;height:18px;" aria-hidden="true"></i> 查核簽證生效要件：四大主表用印防線</h4>
+                <p>
+                  講師特別提醒，實務審核會計師查核報告時，絕不可只看最後一頁有會計師蓋大章就誤以為報告生效：
+                </p>
+                <ul>
+                  <li><strong>正式生效要件：</strong>財報前段之<strong>四大主表</strong>（資產負債表、綜合損益表、權益變動表、現金流量表）下方，必須蓋有公司<strong>董事長、經理人、財務主管（或會計主管）</strong>簽章，代表經公司正式承認該份報告。</li>
+                  <li><strong>未用印風險：</strong>若僅後面有會計師章而四大主表無公司三長用印，該文件頂多僅能稱為<strong>「擬制性報表」</strong>或<strong>「草稿（Draft）」</strong>，尚未具備正式查核報告效力。</li>
+                </ul>
+              </div>
+
+              <div class="panel-box">
+                <h4><i data-lucide="lock" style="width:18px;height:18px;" aria-hidden="true"></i> 組織牽制與財報舞弊防堵機制</h4>
+                <ul>
+                  <li><strong>徵授信獨立牽制（第 3、8、15、28 條）：</strong>徵信與授信原則由不同單位／人員辦理；營業單位未索齊資料或未送徵信前，<strong>不得核貸</strong>。</li>
+                  <li><strong>防止雙重報表（第 18 條第 1 項第 6 款）：</strong>強制要求會計師將查核報告副本逕送聯徵中心，跨行比對消除「銀行美化版 vs 稅局真實版」之兩套帳風險。</li>
+                  <li><strong>交易真實性與資金流穿透：</strong>比對 401／403 表（注意銷貨退回、折讓與業界約 5%–8% 虛開發票潛規則警訊）、存摺對帳單及《公司法》第 15 條關係人非營業性資金融通，防堵資金挪用。</li>
+                  <li><strong>行內黑名單與客觀查證：</strong>針對負責人／保證人查詢行內黑名單與利害關係人資料，並留存商工登記、稅務入口網及判決書系統查證軌跡。</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="callout is-missing">
+              <div class="callout-title">
+                <i data-lucide="alert-triangle" style="width:18px;height:18px;" aria-hidden="true"></i>
+                <span>以下鎖頭銀行內部黑名單與細部防杜規範「來源未提供」</span>
+              </div>
+              <ul style="margin:0;padding-left:1.25rem;display:grid;gap:0.35rem;font-size:0.92rem;color:var(--secondary);">
+                <li><strong>「空頭查核」與「借牌簽證」之內部定義與專責檢核細則：</strong>來源檔案與逐字稿僅提及「雙重報表、未承認草稿、未盤點存貨／未函證現金及 N20 懲戒查詢」等實務防弊面向，並未出現「空頭查核」或「借牌簽證」之具體條文定義、認定標準或查核流程，屬<strong>來源未提供</strong>。</li>
+                <li><strong>鎖頭銀行內部會計師風控黑名單明細與即時通報系統介面：</strong>來源僅提及徵信時會查詢「行內黑名單」及聯徵 N20 設有系統後台控管，至於黑名單之建置名單來源、剔除條件、列管欄位及即時預警通報流程細節，均屬<strong>來源未提供</strong>。</li>
+              </ul>
+            </div>
+
+            <div class="chapter-bottom-bar">
+              <span class="source-note">資料來源：課程講解 R20261120-085524 / 095556 / 105506、徵信準則第 3、8、15、18、28 條</span>
+              <label class="read-check-label read-sync-label" id="label-read-bottom-ch4">
+                <input type="checkbox" class="read-checkbox" id="chk-bottom-ch4" onchange="toggleRead('ch4', this.checked)">
+                <span>標記本章節為已讀</span>
+              </label>
+            </div>
+          </div>
+        </article>
+
+        <!-- 章節 5 -->
+        <article class="chapter-card" id="card-ch5" data-chapter-id="ch5" data-category="n20 report risk">
+          <div class="chapter-header">
+            <div class="chapter-header-main">
+              <div class="chapter-tags">
+                <span class="tag-stamp">CHAPTER 05</span>
+                <span class="tag-cat">徵提時點連動與實務查核清單</span>
+              </div>
+              <button type="button" class="chapter-title-btn" onclick="toggleChapter('ch5')" aria-expanded="false" aria-controls="body-ch5">
+                <h3>五、3,000 萬元簽證門檻、過渡期追蹤與徵信人員實務檢核表</h3>
+              </button>
+              <p class="chapter-summary">
+                彙整 N20 查核時機與 3,000 萬融資簽證計算口徑（扣除存單質借與押匯）、1/1–5/31 過渡期暫結追蹤，提供一線徵信人員上機前之完整核對清單。
+              </p>
+            </div>
+            <div class="chapter-controls">
+              <label class="read-check-label" id="label-read-ch5">
+                <input type="checkbox" class="read-checkbox" id="chk-ch5" onchange="toggleRead('ch5', this.checked)">
+                <span>已讀</span>
+              </label>
+              <button type="button" class="toggle-btn" onclick="toggleChapter('ch5')" aria-expanded="false" aria-controls="body-ch5" id="btn-toggle-ch5">
+                <span class="toggle-text">展開</span>
+                <span class="toggle-icon" aria-hidden="true"><i data-lucide="chevron-down" style="width:16px;height:16px;"></i></span>
+              </button>
+            </div>
+          </div>
+
+          <div class="chapter-body" id="body-ch5">
+            <div class="sub-grid">
+              <div class="panel-box">
+                <h4><i data-lucide="calculator" style="width:18px;height:18px;" aria-hidden="true"></i> 總授信金額計算與過渡期控管</h4>
+                <ul>
+                  <li><strong>3,000 萬融資簽證門檻：</strong>全體金融機構聯徵歸戶餘額（<span class="mono-code">B33</span>）＋ 本次申請額度（不區分活期／定期／續借／改增借，系統強制加總控管），得扣除本行存單質借、進出口押匯及無追索權應收帳款承購買方額度。</li>
+                  <li><strong>本票保證例外：</strong>公司組織申請辦理本票保證業務時，不論總授信金額是否達 3,000 萬元，一律強制徵提會計師財簽報告。</li>
+                  <li><strong>1/1–5/31 空窗期解方：</strong>若於 1 月 1 日至 5 月 31 日首次突破 3,000 萬，可先徵提去年度暫結表、自編聲明書及會計師受託查核證明；但<strong>6 月 1 日起務必追蹤補提正式財簽報告</strong>（因企業可能於核貸後撤銷會計師委任）。</li>
+                </ul>
+              </div>
+
+              <div class="panel-box">
+                <h4><i data-lucide="list-checks" style="width:18px;height:18px;" aria-hidden="true"></i> Day 10 上機前 5 項必查動作清單</h4>
+                <ol>
+                  <li><strong>查核 N20：</strong>進入聯徵財報頁籤點選查詢 <span class="mono-code">N20</span>，確認簽證會計師無懲戒紀錄或已列印懲戒明細。</li>
+                  <li><strong>核對四大主表用印：</strong>確認財報前段四大主表下方具備董事長、經理人、財務主管簽章，排除未承認草稿。</li>
+                  <li><strong>比對處分級距：</strong>屬停業（含 2 倍期間／最低 1 年）或除名者立即拒絕採用；屬 1 年內警告／申誡者啟動專案評估。</li>
+                  <li><strong>針對懲戒事由取證：</strong>如存貨盤點或現金函證缺失，調取當期盤點紀錄或銀行函證影本列印附卷。</li>
+                  <li><strong>留存徵信軌跡：</strong>依準則第 36、37 條將所有 N20 查詢、函證佐證、報稅交叉勾稽資料完整歸檔於徵信卷宗。</li>
+                </ol>
+              </div>
+            </div>
+
+            <div class="callout is-healthy">
+              <div class="callout-title">
+                <i data-lucide="check-circle-2" style="width:18px;height:18px;" aria-hidden="true"></i>
+                <span>合規免責核心提醒</span>
+              </div>
+              <p style="margin:0;font-size:0.92rem;color:var(--secondary);">
+                徵信工作之本質在於「有所本、充分揭露、均依規定辦理」。凡已依《徵信準則》及鎖頭銀行規範完成 N20 查詢與佐證歸檔者，即使事後案件發生變化，亦得依第 36、37 條釐清並免除事後責任；反之若漏查 N20 且無軌跡可循，事後將難以交代。
+              </p>
+            </div>
+
+            <div class="chapter-bottom-bar">
+              <span class="source-note">資料來源：課程講解 R20261120-085524 / 095556 / 105506、徵信準則第 18、36、37 條、財報徵提規範深度研析</span>
+              <label class="read-check-label read-sync-label" id="label-read-bottom-ch5">
+                <input type="checkbox" class="read-checkbox" id="chk-bottom-ch5" onchange="toggleRead('ch5', this.checked)">
+                <span>標記本章節為已讀</span>
+              </label>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- 頁腳 (嚴格遵守指定格式) -->
+  <footer class="site-footer">
+      <a class="home-link" href="index.html">回首頁</a>
+    <div class="site-footer-inner">
+      <div class="footer-brand">Powered By Dunk</div>
+      <div class="footer-sources">
+        資料來源：授信實務課程講解（R20261120 系列）、《中華民國銀行公會會員徵信準則》（112.7 修訂）、《台灣地區銀行企業授信與徵信作業中財務報表徵提時點與規範之深度研析》、企業授信實務課綱筆記
+      </div>
+    </div>
+  </footer>
+
+  <api-shim></api-shim>
+
+  <script>
+    const CHAPTER_IDS = ['ch1', 'ch2', 'ch3', 'ch4', 'ch5'];
+
+    let appState = {
+      readChapters: [],
+      expandedChapters: ['ch1'],
+      activeFilter: 'all',
+      searchQuery: '',
+      simulator: {
+        sanctionType: 'warning',
+        elapsedMonths: 6,
+        reasonType: 'inventory'
+      }
+    };
+
+    async function persistState() {
+      if (window.notebookAppApi && typeof window.notebookAppApi.setAppState === 'function') {
+        try {
+          await window.notebookAppApi.setAppState(appState);
+        } catch (err) {
+          // Graceful fallback if host rejects
+        }
+      }
+    }
+
+    function updateProgressUI() {
+      const total = CHAPTER_IDS.length;
+      const readSet = new Set(appState.readChapters);
+      const completed = CHAPTER_IDS.filter(id => readSet.has(id)).length;
+      const pct = Math.round((completed / total) * 100);
+
+      const pctText = document.getElementById('progress-percent-text');
+      const fill = document.getElementById('progress-fill');
+      const roleBar = document.getElementById('progress-bar-role');
+      const countText = document.getElementById('progress-count-text');
+      const hintText = document.getElementById('progress-status-hint');
+
+      if (pctText) pctText.textContent = `${pct}%`;
+      if (fill) fill.style.width = `${pct}%`;
+      if (roleBar) roleBar.setAttribute('aria-valuenow', String(pct));
+      if (countText) countText.textContent = `已完成 ${completed} / ${total} 個核心章節`;
+      if (hintText) {
+        if (completed === 0) {
+          hintText.textContent = `請勾選各章節「已讀」方塊紀錄進度`;
+        } else if (completed < total) {
+          hintText.textContent = `尚餘 ${total - completed} 個章節待研習`;
+        } else {
+          hintText.textContent = `Day 10 全部章節已研習完成`;
+        }
+      }
+
+      CHAPTER_IDS.forEach(id => {
+        const isRead = readSet.has(id);
+        const card = document.getElementById(`card-${id}`);
+        const chkTop = document.getElementById(`chk-${id}`);
+        const chkBottom = document.getElementById(`chk-bottom-${id}`);
+        const lblTop = document.getElementById(`label-read-${id}`);
+        const lblBottom = document.getElementById(`label-read-bottom-${id}`);
+
+        if (card) card.classList.toggle('is-read', isRead);
+        if (chkTop) chkTop.checked = isRead;
+        if (chkBottom) chkBottom.checked = isRead;
+        if (lblTop) lblTop.classList.toggle('checked', isRead);
+        if (lblBottom) lblBottom.classList.toggle('checked', isRead);
+      });
+    }
+
+    function toggleRead(chapterId, isChecked) {
+      const set = new Set(appState.readChapters);
+      if (isChecked) {
+        set.add(chapterId);
+      } else {
+        set.delete(chapterId);
+      }
+      appState.readChapters = Array.from(set);
+      updateProgressUI();
+      persistState();
+    }
+
+    function markAllRead() {
+      appState.readChapters = [...CHAPTER_IDS];
+      updateProgressUI();
+      persistState();
+    }
+
+    function handleResetProgress(btn) {
+      if (!btn) return;
+      if (btn.dataset.armed !== 'true') {
+        btn.dataset.armed = 'true';
+        const span = btn.querySelector('span');
+        if (span) span.textContent = `再次點擊確認重設`;
+        setTimeout(() => {
+          if (btn.dataset.armed === 'true') {
+            btn.dataset.armed = 'false';
+            if (span) span.textContent = `重設進度`;
+          }
+        }, 4000);
+        return;
+      }
+      btn.dataset.armed = 'false';
+      const span = btn.querySelector('span');
+      if (span) span.textContent = `重設進度`;
+      appState.readChapters = [];
+      updateProgressUI();
+      persistState();
+    }
+
+    function applyExpandState() {
+      const expandedSet = new Set(appState.expandedChapters);
+      CHAPTER_IDS.forEach(id => {
+        const isExpanded = expandedSet.has(id);
+        const card = document.getElementById(`card-${id}`);
+        const toggleBtn = document.getElementById(`btn-toggle-${id}`);
+        const titleBtn = card ? card.querySelector('.chapter-title-btn') : null;
+
+        if (card) card.classList.toggle('is-expanded', isExpanded);
+        if (toggleBtn) {
+          toggleBtn.setAttribute('aria-expanded', isExpanded ? 'true' : 'false');
+          const txt = toggleBtn.querySelector('.toggle-text');
+          if (txt) txt.textContent = isExpanded ? `收合` : `展開`;
+        }
+        if (titleBtn) {
+          titleBtn.setAttribute('aria-expanded', isExpanded ? 'true' : 'false');
+        }
+      });
+    }
+
+    function toggleChapter(chapterId) {
+      const set = new Set(appState.expandedChapters);
+      if (set.has(chapterId)) {
+        set.delete(chapterId);
+      } else {
+        set.add(chapterId);
+      }
+      appState.expandedChapters = Array.from(set);
+      applyExpandState();
+      persistState();
+    }
+
+    function expandAllChapters() {
+      appState.expandedChapters = [...CHAPTER_IDS];
+      applyExpandState();
+      persistState();
+    }
+
+    function collapseAllChapters() {
+      appState.expandedChapters = [];
+      applyExpandState();
+      persistState();
+    }
+
+    function applyFilters() {
+      const filter = appState.activeFilter || 'all';
+      const query = (appState.searchQuery || '').trim().toLowerCase();
+      let visibleCount = 0;
+
+      CHAPTER_IDS.forEach(id => {
+        const card = document.getElementById(`card-${id}`);
+        if (!card) return;
+        const cats = (card.getAttribute('data-category') || '').split(/\s+/);
+        const matchesCat = filter === 'all' || cats.includes(filter);
+        const fullText = (card.textContent || '').toLowerCase();
+        const matchesQuery = !query || fullText.includes(query);
+
+        const show = matchesCat && matchesQuery;
+        card.classList.toggle('is-hidden', !show);
+        if (show) {
+          visibleCount += 1;
+          if (query && !appState.expandedChapters.includes(id)) {
+            card.classList.add('is-expanded');
+            const toggleBtn = document.getElementById(`btn-toggle-${id}`);
+            if (toggleBtn) {
+              toggleBtn.setAttribute('aria-expanded', 'true');
+              const txt = toggleBtn.querySelector('.toggle-text');
+              if (txt) txt.textContent = `收合`;
+            }
+          }
+        }
+      });
+
+      const meta = document.getElementById('visible-count-meta');
+      if (meta) {
+        meta.textContent = `目前顯示 ${visibleCount} / ${CHAPTER_IDS.length} 個章節`;
+      }
+
+      const emptyState = document.getElementById('empty-search-state');
+      if (emptyState) {
+        emptyState.classList.toggle('is-visible', visibleCount === 0);
+      }
+
+      const clearBtn = document.getElementById('clear-search-btn');
+      if (clearBtn) {
+        clearBtn.style.display = query ? 'inline-flex' : 'none';
+      }
+    }
+
+    function handleSearchInput(val) {
+      appState.searchQuery = val;
+      applyFilters();
+      persistState();
+    }
+
+    function clearSearch() {
+      const input = document.getElementById('keyword-search');
+      if (input) input.value = '';
+      appState.searchQuery = '';
+      applyExpandState();
+      applyFilters();
+      persistState();
+    }
+
+    function setCategoryFilter(category, clickedBtn) {
+      appState.activeFilter = category;
+      const allChips = document.querySelectorAll('.filter-chips .btn-chip');
+      allChips.forEach(chip => chip.classList.remove('is-active'));
+      if (clickedBtn) clickedBtn.classList.add('is-active');
+      applyFilters();
+      persistState();
+    }
+
+    function resetFilters() {
+      const input = document.getElementById('keyword-search');
+      if (input) input.value = '';
+      appState.searchQuery = '';
+      appState.activeFilter = 'all';
+      const allChips = document.querySelectorAll('.filter-chips .btn-chip');
+      allChips.forEach(chip => {
+        chip.classList.toggle('is-active', chip.getAttribute('data-filter') === 'all');
+      });
+      applyExpandState();
+      applyFilters();
+      persistState();
+    }
+
+    function updateSimulator() {
+      const sanctionEl = document.getElementById('sim-sanction-type');
+      const monthsEl = document.getElementById('sim-elapsed-months');
+      const reasonEl = document.getElementById('sim-reason-type');
+      const monthsGroup = document.getElementById('sim-months-group');
+      const reasonGroup = document.getElementById('sim-reason-group');
+      const outEl = document.getElementById('sim-output-panel');
+
+      if (!sanctionEl || !monthsEl || !reasonEl || !outEl) return;
+
+      const sanction = sanctionEl.value;
+      const months = Math.max(0, parseInt(monthsEl.value || '0', 10));
+      const reason = reasonEl.value;
+
+      appState.simulator = {
+        sanctionType: sanction,
+        elapsedMonths: months,
+        reasonType: reason
+      };
+      persistState();
+
+      if (monthsGroup) {
+        monthsGroup.style.display = (sanction === 'warning' || sanction === 'suspend') ? 'grid' : 'none';
+      }
+      if (reasonGroup) {
+        reasonGroup.style.display = (sanction === 'warning') ? 'grid' : 'none';
+      }
+
+      let stateClass = 'state-healthy';
+      let badgeText = ``;
+      let titleText = ``;
+      let bullets = [];
+
+      if (sanction === 'none') {
+        stateClass = 'state-healthy';
+        badgeText = `穩健通過 · 可正常採用`;
+        titleText = `無懲戒紀錄（含事務所內部雙簽輪調）`;
+        bullets = [
+          `聯徵 N20 查無懲戒紀錄；若屬四大或上市櫃雙簽更換會計師但未更換事務所，屬內部輪調常態。`,
+          `仍須依一般程序核對四大主表是否具備董事長、經理人、財務主管用印承認，並落實 401/403 表等交叉勾稽。`,
+          `列印 N20 查詢結果並歸檔留存徵信軌跡。`
+        ];
+      } else if (sanction === 'warning') {
+        if (months <= 12) {
+          stateClass = 'state-warn';
+          badgeText = `一年內須出具評估報告陳核`;
+          titleText = `警告或申誡處分（處分確定日起第 ${months} 個月）`;
+
+          let reasonAction = `針對 N20 所列具體懲戒事由逐項查明本授信戶帳務現況，檢附相關佐證文件並於徵信報告詳實評估。`;
+          if (reason === 'inventory') {
+            reasonAction = `懲戒事由為「存貨盤點不確實」：須確認本次授信企業之期末存貨是否已確實辦理實地盤點，並將盤點查證結果載入評估報告。`;
+          } else if (reason === 'cash') {
+            reasonAction = `懲戒事由為「現金與約當現金未函證」：須確認目前是否已確實函證，並可向存匯單位或客戶取得當年度銀行函證影本列印附卷佐證。`;
+          }
+
+          bullets = [
+            `法規依據：依《徵信準則》第 18 條第 1 項第 7 款，自處分日起 1 年內如准予採用，應註明採用原因並審慎評估。`,
+            `實務程序：須由徵信人員出具專業評估報告並陳核核可（註：具體核決層級職稱「來源未提供」，依鎖頭銀行分層授權規定辦理）。`,
+            reasonAction,
+            `徵信人員應公正平實撰寫，不宜對授信案件直接表示准駁意見（準則第 7 條）。`
+          ];
+        } else {
+          stateClass = 'state-healthy';
+          badgeText = `已逾一年管制期 · 仍應審慎核對`;
+          titleText = `警告或申誡處分（已逾處分日起 12 個月：第 ${months} 個月）`;
+          bullets = [
+            `已超過《徵信準則》第 18 條第 1 項第 7 款所定「自處分日起一年內」之特別註明期間。`,
+            `實務仍建議檢視 N20 歷史懲戒項目是否已改善、核對四大主表用印及銀行函證／盤點合理性，並留存查詢軌跡。`
+          ];
+        }
+      } else if (sanction === 'suspend') {
+        stateClass = 'state-alert';
+        const doubleMonths = Math.max(12, months * 2);
+        badgeText = `風控禁止 · 停業管制期間不予採用`;
+        titleText = `停止執行業務／停止辦理公發查核簽證`;
+        bullets = [
+          `《徵信準則》第 18 條第 1 項第 7 款原文：自處分日起於受處分停止執行業務期間內不予採用。`,
+          `課程與研析規範：自處分日起於停業期間之二倍期間內（最低不少於 1 年），鎖頭銀行一律不予採用。若以輸入之 ${months} 個月計算，二倍管制期間（含最低 1 年下限）為 ${doubleMonths} 個月內不予採用。`,
+          `處置建議：請通知營業單位請授信戶改委任適任且無禁止情事之會計師重新查核簽證，未補正前不得依該報告核貸。`
+        ];
+      } else if (sanction === 'expel') {
+        stateClass = 'state-alert';
+        badgeText = `最高風控警示 · 永久不予採用`;
+        titleText = `除名或撤銷公開發行公司查核簽證核准`;
+        bullets = [
+          `法規依據：《徵信準則》第 18 條第 1 項第 7 款，受處分除名或撤銷公開發行公司查核簽證核准者，自處分日起永久不予採用。`,
+          `鎖頭銀行規範：無評估例外空間，嚴禁採納其出具之任何查核簽證報告，並應即刻通報相關單位及留存 N20 查證紀錄。`
+        ];
+      }
+
+      outEl.className = `sim-output ${stateClass}`;
+      outEl.innerHTML = `
+        <span class="sim-status-badge">${badgeText}</span>
+        <h3 class="sim-title">${titleText}</h3>
+        <ul class="sim-detail-list">
+          ${bullets.map(b => `<li>${b}</li>`).join('')}
+        </ul>
+      `;
+    }
+
+    async function initApp() {
+      if (window.notebookAppApi && typeof window.notebookAppApi.getAppState === 'function') {
+        try {
+          const saved = await window.notebookAppApi.getAppState();
+          if (saved && typeof saved === 'object') {
+            if (Array.isArray(saved.readChapters)) appState.readChapters = saved.readChapters;
+            if (Array.isArray(saved.expandedChapters)) appState.expandedChapters = saved.expandedChapters;
+            if (typeof saved.activeFilter === 'string') appState.activeFilter = saved.activeFilter;
+            if (typeof saved.searchQuery === 'string') appState.searchQuery = saved.searchQuery;
+            if (saved.simulator && typeof saved.simulator === 'object') {
+              appState.simulator = {
+                sanctionType: saved.simulator.sanctionType || 'warning',
+                elapsedMonths: typeof saved.simulator.elapsedMonths === 'number' ? saved.simulator.elapsedMonths : 6,
+                reasonType: saved.simulator.reasonType || 'inventory'
+              };
+            }
+          }
+        } catch (err) {
+          // Proceed with defaults
+        }
+      }
+
+      const searchInput = document.getElementById('keyword-search');
+      if (searchInput) searchInput.value = appState.searchQuery || '';
+
+      const allChips = document.querySelectorAll('.filter-chips .btn-chip');
+      allChips.forEach(chip => {
+        chip.classList.toggle('is-active', chip.getAttribute('data-filter') === appState.activeFilter);
+      });
+
+      const sanctionEl = document.getElementById('sim-sanction-type');
+      const monthsEl = document.getElementById('sim-elapsed-months');
+      const reasonEl = document.getElementById('sim-reason-type');
+      if (sanctionEl) sanctionEl.value = appState.simulator.sanctionType;
+      if (monthsEl) monthsEl.value = String(appState.simulator.elapsedMonths);
+      if (reasonEl) reasonEl.value = appState.simulator.reasonType;
+
+      updateProgressUI();
+      applyExpandState();
+      applyFilters();
+      updateSimulator();
+
+      if (window.lucide && typeof window.lucide.createIcons === 'function') {
+        window.lucide.createIcons();
+      }
+
+      if (window.notebookAppApi && typeof window.notebookAppApi.notifyAppReady === 'function') {
+        window.notebookAppApi.notifyAppReady();
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', initApp);
+  </script>
+</body>
+</html>

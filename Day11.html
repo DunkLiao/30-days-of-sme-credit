@@ -1,0 +1,2013 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#14283a">
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="./manifest.webmanifest">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="授信實務30天">
+  <script>
+    if ("serviceWorker" in navigator && (location.protocol === "https:" || location.hostname === "localhost")) {
+      window.addEventListener("load", () => navigator.serviceWorker.register("./service-worker.js").catch((error) => console.warn("PWA offline support unavailable:", error)));
+    }
+  </script>
+  <meta name="artifact-type" content="narrative">
+  <meta name="design-style" content="charter">
+  <title>中小企業授信與財報分析實務-Day11-聯徵中心跨機構財報副本聯防機制</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Noto+Sans+TC:wght@400;500;600;700&family=Noto+Serif+TC:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      color-scheme: light;
+
+      /* Page and surfaces (THEME + Charter light ground) */
+      --background: #F8FAFC;
+      --surface-container-low: #FFFFFF;
+      --surface-container: #F1F5F9;
+      --surface-container-high: #E2E8F0;
+
+      /* Ink */
+      --on-surface: #0F2537;
+      --on-surface-variant: #475569;
+      --ink-secondary: #334155;
+
+      /* Rules & Borders */
+      --outline: #C5A880;
+      --outline-variant: #CBD5E1;
+
+      /* Primary & Accents (THEME Navy + Champagne Brass + Audit Purple) */
+      --primary: #0F2537;
+      --primary-deep: #1E3A8A;
+      --on-primary: #F8FAFC;
+      --primary-container: #EFF6FF;
+      --on-primary-container: #1E3A8A;
+      --secondary: #334155;
+      --tertiary: #92400E;
+      --accent-gold: #D97706;
+      --accent-champagne: #C5A880;
+      --module-purple: #7C3AED;
+      --module-purple-wash: #F5F3FF;
+      --module-purple-border: #DDD6FE;
+
+      /* Semantic Risk & Status Colors */
+      --positive: #047857;
+      --positive-fill: #059669;
+      --positive-wash: #ECFDF5;
+      --positive-border: #A7F3D0;
+      --warning: #B45309;
+      --warning-fill: #F59E0B;
+      --warning-wash: #FFFBEB;
+      --warning-border: #FDE68A;
+      --error: #DC2626;
+      --on-error: #FFFFFF;
+      --error-wash: #FEF2F2;
+      --error-border: #FECACA;
+
+      /* Data series */
+      --data-1: #0F2537;
+      --data-2: #D97706;
+      --data-3: #059669;
+      --data-4: #7C3AED;
+      --data-context: #94A3B8;
+
+      /* Focus ring */
+      --focus: #1E3A8A;
+
+      /* Fonts */
+      --font-headline: 'Noto Serif TC', serif;
+      --font-body: 'Noto Sans TC', sans-serif;
+      --font-label: 'Noto Sans TC', 'JetBrains Mono', monospace;
+      --font-mono: 'JetBrains Mono', 'Noto Sans TC', monospace;
+
+      /* Type scale (Narrative) */
+      --display-size: clamp(1.625rem, 1.25rem + 1.6vw, 2.375rem);
+      --headline-size: clamp(1.25rem, 1.05rem + 0.8vw, 1.625rem);
+      --subhead-size: clamp(1.0625rem, 1rem + 0.35vw, 1.25rem);
+      --body-size: clamp(0.96875rem, 0.94rem + 0.15vw, 1.03125rem);
+      --label-size: 0.75rem;
+
+      /* Shape (Charter sharp 2px institutional corners) */
+      --rounded: 0.125rem;
+      --rounded-lg: 0.125rem;
+
+      /* Style effects */
+      --brass-rule: 2px solid var(--outline);
+      --navy-rule: 2px solid var(--primary);
+      --hairline: 1px solid var(--outline-variant);
+      --leaf-shadow: 0 1px 2px rgba(15, 37, 55, 0.06);
+
+      /* Spacing scale (4pt base) */
+      --space-xs: 0.25rem;
+      --space-sm: 0.5rem;
+      --space-md: 1rem;
+      --space-lg: 1.5rem;
+      --space-xl: 2.5rem;
+      --space-2xl: 3.5rem;
+
+      /* Motion */
+      --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+      --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+      --dur-micro: 120ms;
+      --dur-short: 220ms;
+      --dur-long: 380ms;
+    }
+
+    /* Base reset */
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body {
+      overflow-x: clip;
+      margin: 0;
+      padding: 0;
+      background-color: var(--background);
+      color: var(--on-surface);
+      font-family: var(--font-body);
+      font-size: var(--body-size);
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    header { position: static !important; }
+
+    button, input, select, textarea {
+      font-family: inherit;
+      font-size: inherit;
+    }
+
+    :focus-visible {
+      outline: 3px solid var(--focus);
+      outline-offset: 2px;
+    }
+
+    /* Charter Navy Title Band */
+    .title-band {
+      background-color: var(--primary);
+      color: var(--on-primary);
+      border-bottom: 3px solid var(--outline);
+      padding: var(--space-xl) var(--space-lg) var(--space-xl);
+    }
+
+    .title-band-inner {
+      max-width: 1140px;
+      margin: 0 auto;
+    }
+
+    .brand-eyebrow {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: var(--space-sm);
+      margin-bottom: var(--space-md);
+    }
+
+    .module-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-xs);
+      background-color: var(--module-purple);
+      color: var(--on-primary);
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      font-weight: 600;
+      padding: 0.25rem 0.625rem;
+      border-radius: var(--rounded);
+      letter-spacing: 0.02em;
+    }
+
+    .bank-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-xs);
+      border: 1px solid var(--outline);
+      color: var(--outline);
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      font-weight: 600;
+      padding: 0.2rem 0.6rem;
+      border-radius: var(--rounded);
+    }
+
+    .title-band h1 {
+      font-family: var(--font-headline);
+      font-weight: 400;
+      font-size: var(--display-size);
+      line-height: 1.25;
+      color: var(--on-primary);
+      margin: 0 0 var(--space-md) 0;
+      padding-bottom: var(--space-md);
+      border-bottom: 1px solid var(--outline);
+      max-width: 48ch;
+    }
+
+    .title-band .lede {
+      font-size: var(--subhead-size);
+      line-height: 1.6;
+      color: var(--surface-container-high);
+      max-width: 68ch;
+      margin: 0;
+    }
+
+    /* Main Page Grid */
+    .page-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: var(--space-xl);
+      padding: var(--space-xl) var(--space-lg);
+      max-width: 1140px;
+      margin: 0 auto;
+      overflow: hidden;
+    }
+    .page-grid * { min-width: 0; }
+
+    /* Intro / Executive Briefing Section */
+    .intro-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+      gap: var(--space-lg);
+      align-items: start;
+    }
+
+    .briefing-panel {
+      background-color: var(--surface-container-low);
+      border-top: var(--brass-rule);
+      border-right: var(--hairline);
+      border-bottom: var(--hairline);
+      border-left: var(--hairline);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-lg);
+      box-shadow: var(--leaf-shadow);
+    }
+
+    .section-kicker {
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      font-weight: 600;
+      color: var(--tertiary);
+      margin-bottom: var(--space-xs);
+      display: block;
+    }
+
+    .briefing-panel h2 {
+      font-family: var(--font-headline);
+      font-weight: 700;
+      font-size: var(--headline-size);
+      color: var(--primary);
+      margin: 0 0 var(--space-md) 0;
+      line-height: 1.3;
+    }
+
+    .briefing-panel p {
+      margin: 0 0 var(--space-md) 0;
+      color: var(--ink-secondary);
+      max-width: 65ch;
+    }
+
+    .briefing-panel p:last-child {
+      margin-bottom: 0;
+    }
+
+    /* Key Figures Grid */
+    .figures-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: var(--space-md);
+    }
+
+    .figure-card {
+      background-color: var(--surface-container-low);
+      border-top: var(--brass-rule);
+      border-right: var(--hairline);
+      border-bottom: var(--hairline);
+      border-left: var(--hairline);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-md);
+      box-shadow: var(--leaf-shadow);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .figure-card.is-progress {
+      border-top-color: var(--module-purple);
+    }
+
+    .figure-label {
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      font-weight: 600;
+      color: var(--on-surface-variant);
+      margin-bottom: var(--space-xs);
+    }
+
+    .figure-value {
+      font-family: var(--font-headline);
+      font-weight: 700;
+      font-size: clamp(1.375rem, 1.15rem + 0.8vw, 1.75rem);
+      font-variant-numeric: tabular-nums lining-nums;
+      color: var(--primary);
+      line-height: 1.2;
+      margin-bottom: var(--space-xs);
+    }
+
+    .figure-note {
+      font-size: 0.8125rem;
+      color: var(--on-surface-variant);
+      line-height: 1.45;
+    }
+
+    .progress-bar-track {
+      width: 100%;
+      height: 8px;
+      background-color: var(--surface-container-high);
+      border-radius: var(--rounded);
+      overflow: hidden;
+      margin-top: var(--space-sm);
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      width: 0%;
+      background-color: var(--module-purple);
+      transition: width var(--dur-short) var(--ease-out);
+    }
+
+    /* Interactive Control Workbench */
+    .controls-section {
+      background-color: var(--surface-container-low);
+      border-top: var(--navy-rule);
+      border-right: var(--hairline);
+      border-bottom: var(--hairline);
+      border-left: var(--hairline);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-lg);
+      box-shadow: var(--leaf-shadow);
+    }
+
+    .controls-top-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1.5fr);
+      gap: var(--space-lg);
+      align-items: end;
+    }
+
+    .input-group {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xs);
+    }
+
+    .input-label {
+      font-size: 0.8125rem;
+      font-weight: 600;
+      color: var(--primary);
+    }
+
+    .search-input-wrap {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+    }
+
+    .search-input {
+      width: 100%;
+      min-height: 44px;
+      padding: 0.5rem 0.875rem;
+      background-color: var(--surface-container-low);
+      border: 1px solid var(--outline-variant);
+      border-radius: var(--rounded);
+      color: var(--on-surface);
+      transition: border-color var(--dur-micro) var(--ease-out), box-shadow var(--dur-micro) var(--ease-out);
+    }
+
+    .search-input:focus {
+      outline: none;
+      border-color: var(--primary-deep);
+      box-shadow: 0 0 0 3px var(--primary-container);
+    }
+
+    .btn-secondary {
+      min-height: 44px;
+      padding: 0.5rem 0.9rem;
+      background-color: var(--surface-container-low);
+      color: var(--primary);
+      border: 1px solid var(--primary);
+      border-radius: var(--rounded);
+      font-weight: 600;
+      font-size: 0.875rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-xs);
+      white-space: nowrap;
+      transition: background-color var(--dur-micro) var(--ease-out);
+    }
+
+    .btn-secondary:hover {
+      background-color: var(--primary-container);
+    }
+
+    .btn-primary {
+      min-height: 44px;
+      padding: 0.5rem 1rem;
+      background-color: var(--primary);
+      color: var(--on-primary);
+      border: 1px solid var(--primary);
+      border-radius: var(--rounded);
+      font-weight: 600;
+      font-size: 0.875rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-xs);
+      white-space: nowrap;
+      transition: background-color var(--dur-micro) var(--ease-out);
+    }
+
+    .btn-primary:hover {
+      background-color: var(--primary-deep);
+      border-color: var(--primary-deep);
+    }
+
+    .btn-danger-outline {
+      min-height: 44px;
+      padding: 0.5rem 0.9rem;
+      background-color: var(--surface-container-low);
+      color: var(--error);
+      border: 1px solid var(--error);
+      border-radius: var(--rounded);
+      font-weight: 600;
+      font-size: 0.875rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-xs);
+      white-space: nowrap;
+      transition: background-color var(--dur-micro) var(--ease-out);
+    }
+
+    .btn-danger-outline:hover {
+      background-color: var(--error-wash);
+    }
+
+    .filter-group {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xs);
+    }
+
+    .filter-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-sm);
+    }
+
+    .filter-btn {
+      min-height: 44px;
+      padding: 0.45rem 0.9rem;
+      background-color: var(--surface-container);
+      color: var(--ink-secondary);
+      border: 1px solid var(--outline-variant);
+      border-radius: var(--rounded);
+      font-size: 0.875rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color var(--dur-micro) var(--ease-out), color var(--dur-micro) var(--ease-out), border-color var(--dur-micro) var(--ease-out);
+    }
+
+    .filter-btn:hover {
+      background-color: var(--surface-container-high);
+      color: var(--primary);
+    }
+
+    .filter-btn.is-active {
+      background-color: var(--primary);
+      color: var(--on-primary);
+      border-color: var(--primary);
+    }
+
+    .controls-bottom-row {
+      margin-top: var(--space-md);
+      padding-top: var(--space-md);
+      border-top: var(--hairline);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: var(--space-md);
+    }
+
+    .status-summary {
+      font-size: 0.875rem;
+      color: var(--on-surface-variant);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .status-summary strong {
+      color: var(--primary);
+    }
+
+    .bulk-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-sm);
+    }
+
+    /* Chapters Container */
+    .chapters-header {
+      border-top: var(--brass-rule);
+      padding-top: var(--space-md);
+      border-bottom: var(--hairline);
+      padding-bottom: var(--space-sm);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: var(--space-sm);
+    }
+
+    .chapters-header h2 {
+      font-family: var(--font-headline);
+      font-weight: 400;
+      font-size: var(--headline-size);
+      color: var(--primary);
+      margin: 0;
+    }
+
+    .chapters-list {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: var(--space-lg);
+    }
+
+    .chapter-card {
+      background-color: var(--surface-container-low);
+      border-top: 3px solid var(--primary);
+      border-right: var(--hairline);
+      border-bottom: var(--hairline);
+      border-left: var(--hairline);
+      border-radius: var(--rounded-lg);
+      box-shadow: var(--leaf-shadow);
+      overflow: hidden;
+      transition: border-top-color var(--dur-short) var(--ease-out);
+    }
+
+    .chapter-card.is-read {
+      border-top-color: var(--positive-fill);
+    }
+
+    .chapter-card-header {
+      padding: var(--space-lg);
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: var(--space-md);
+      align-items: start;
+      cursor: pointer;
+    }
+
+    .chapter-card-header:hover {
+      background-color: var(--background);
+    }
+
+    .chapter-meta {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: var(--space-sm);
+      margin-bottom: var(--space-sm);
+    }
+
+    .chapter-num {
+      font-family: var(--font-mono);
+      font-size: var(--label-size);
+      font-weight: 600;
+      background-color: var(--primary-container);
+      color: var(--primary-deep);
+      padding: 0.2rem 0.55rem;
+      border-radius: var(--rounded);
+      border: 1px solid var(--outline-variant);
+    }
+
+    .tag-stamp {
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      font-weight: 600;
+      padding: 0.15rem 0.5rem;
+      border-radius: var(--rounded);
+      border: 1px solid var(--outline);
+      color: var(--tertiary);
+      background-color: var(--surface-container-low);
+    }
+
+    .tag-stamp.tag-law {
+      border-color: var(--module-purple-border);
+      color: var(--module-purple);
+      background-color: var(--module-purple-wash);
+    }
+
+    .tag-stamp.tag-risk {
+      border-color: var(--error-border);
+      color: var(--error);
+      background-color: var(--error-wash);
+    }
+
+    .tag-stamp.tag-sys {
+      border-color: var(--outline-variant);
+      color: var(--primary-deep);
+      background-color: var(--primary-container);
+    }
+
+    .chapter-title {
+      font-family: var(--font-headline);
+      font-weight: 700;
+      font-size: var(--subhead-size);
+      color: var(--primary);
+      margin: 0 0 var(--space-xs) 0;
+      line-height: 1.4;
+    }
+
+    .chapter-summary {
+      margin: 0;
+      color: var(--on-surface-variant);
+      font-size: 0.9375rem;
+      max-width: 68ch;
+    }
+
+    .chapter-actions {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+    }
+
+    .read-checkbox-label {
+      min-height: 44px;
+      padding: 0.35rem 0.75rem;
+      border: 1px solid var(--outline-variant);
+      border-radius: var(--rounded);
+      background-color: var(--surface-container-low);
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-sm);
+      cursor: pointer;
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--ink-secondary);
+      user-select: none;
+      transition: background-color var(--dur-micro) var(--ease-out), border-color var(--dur-micro) var(--ease-out);
+    }
+
+    .read-checkbox-label:hover {
+      background-color: var(--surface-container);
+    }
+
+    .read-checkbox-label.checked {
+      background-color: var(--positive-wash);
+      border-color: var(--positive-border);
+      color: var(--positive);
+    }
+
+    .read-checkbox {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--positive-fill);
+      cursor: pointer;
+      margin: 0;
+    }
+
+    .toggle-btn {
+      min-height: 44px;
+      min-width: 44px;
+      padding: 0.4rem 0.8rem;
+      background-color: var(--surface-container);
+      color: var(--primary);
+      border: 1px solid var(--outline-variant);
+      border-radius: var(--rounded);
+      font-size: 0.875rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-xs);
+      transition: background-color var(--dur-micro) var(--ease-out);
+    }
+
+    .toggle-btn:hover {
+      background-color: var(--surface-container-high);
+    }
+
+    .toggle-icon {
+      width: 16px;
+      height: 16px;
+      transition: transform var(--dur-short) var(--ease-out);
+    }
+
+    .chapter-card.is-expanded .toggle-icon {
+      transform: rotate(180deg);
+    }
+
+    /* Expandable Body */
+    .chapter-body {
+      display: none;
+      padding: 0 var(--space-lg) var(--space-lg);
+      border-top: var(--hairline);
+      background-color: var(--surface-container-low);
+    }
+
+    .chapter-card.is-expanded .chapter-body {
+      display: block;
+      animation: fadeSlideIn var(--dur-short) var(--ease-out);
+    }
+
+    @keyframes fadeSlideIn {
+      from { opacity: 0; transform: translateY(-4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .chapter-content-grid {
+      padding-top: var(--space-lg);
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: var(--space-lg);
+    }
+
+    .statute-quote {
+      background-color: var(--primary-container);
+      border-left: 4px solid var(--primary-deep);
+      padding: var(--space-md) var(--space-lg);
+      border-radius: var(--rounded);
+    }
+
+    .statute-quote-title {
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      font-weight: 700;
+      color: var(--primary-deep);
+      margin-bottom: var(--space-xs);
+      display: block;
+    }
+
+    .statute-quote blockquote {
+      margin: 0;
+      font-family: var(--font-headline);
+      font-size: 1.0625rem;
+      color: var(--primary);
+      line-height: 1.7;
+    }
+
+    .detail-block h4 {
+      font-family: var(--font-headline);
+      font-weight: 700;
+      font-size: 1.03125rem;
+      color: var(--primary);
+      margin: 0 0 var(--space-sm) 0;
+      padding-bottom: var(--space-xs);
+      border-bottom: var(--hairline);
+    }
+
+    .detail-block p {
+      margin: 0 0 var(--space-sm) 0;
+      color: var(--ink-secondary);
+      max-width: 68ch;
+    }
+
+    .detail-list {
+      margin: 0;
+      padding-left: 1.25rem;
+      color: var(--ink-secondary);
+      display: grid;
+      gap: var(--space-sm);
+    }
+
+    .detail-list li strong {
+      color: var(--primary);
+    }
+
+    /* Charter Tables */
+    .table-scroll {
+      overflow-x: auto;
+      border: var(--hairline);
+      border-radius: var(--rounded);
+    }
+
+    .charter-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+      text-align: left;
+    }
+
+    .charter-table thead th {
+      background-color: var(--surface-container-high);
+      color: var(--primary);
+      font-weight: 700;
+      font-size: 0.8125rem;
+      padding: 0.7rem 0.9rem;
+      border-bottom: var(--brass-rule);
+      white-space: nowrap;
+    }
+
+    .charter-table tbody td {
+      padding: 0.75rem 0.9rem;
+      border-bottom: var(--hairline);
+      color: var(--ink-secondary);
+      vertical-align: top;
+    }
+
+    .charter-table tbody tr:last-child td {
+      border-bottom: none;
+    }
+
+    .charter-table .num-col {
+      font-family: var(--font-mono);
+      font-variant-numeric: tabular-nums;
+      text-align: right;
+      white-space: nowrap;
+    }
+
+    /* Callouts & Source Gap Notices */
+    .callout-box {
+      padding: var(--space-md);
+      border-radius: var(--rounded);
+      border-left: 4px solid var(--outline);
+      background-color: var(--background);
+    }
+
+    .callout-box.callout-warning {
+      background-color: var(--warning-wash);
+      border-left-color: var(--warning-fill);
+      border-top: 1px solid var(--warning-border);
+      border-right: 1px solid var(--warning-border);
+      border-bottom: 1px solid var(--warning-border);
+    }
+
+    .callout-box.callout-error {
+      background-color: var(--error-wash);
+      border-left-color: var(--error);
+      border-top: 1px solid var(--error-border);
+      border-right: 1px solid var(--error-border);
+      border-bottom: 1px solid var(--error-border);
+    }
+
+    .callout-box.callout-positive {
+      background-color: var(--positive-wash);
+      border-left-color: var(--positive-fill);
+      border-top: 1px solid var(--positive-border);
+      border-right: 1px solid var(--positive-border);
+      border-bottom: 1px solid var(--positive-border);
+    }
+
+    .callout-title {
+      font-weight: 700;
+      font-size: 0.9rem;
+      margin: 0 0 var(--space-xs) 0;
+      color: var(--primary);
+    }
+
+    .callout-warning .callout-title { color: var(--warning); }
+    .callout-error .callout-title { color: var(--error); }
+    .callout-positive .callout-title { color: var(--positive); }
+
+    .callout-box p {
+      margin: 0;
+      font-size: 0.9rem;
+      color: var(--ink-secondary);
+    }
+
+    .missing-badge {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 0.1rem 0.45rem;
+      background-color: var(--warning-wash);
+      color: var(--warning);
+      border: 1px solid var(--warning-border);
+      border-radius: var(--rounded);
+      vertical-align: middle;
+    }
+
+    /* Interactive Scenario Switcher inside Chapter 2 */
+    .scenario-box {
+      background-color: var(--background);
+      border: var(--hairline);
+      border-radius: var(--rounded);
+      padding: var(--space-md);
+    }
+
+    .scenario-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-sm);
+      margin-bottom: var(--space-md);
+    }
+
+    .scenario-tab {
+      min-height: 44px;
+      padding: 0.45rem 0.85rem;
+      background-color: var(--surface-container-low);
+      border: 1px solid var(--outline-variant);
+      border-radius: var(--rounded);
+      color: var(--ink-secondary);
+      font-weight: 600;
+      font-size: 0.875rem;
+      cursor: pointer;
+    }
+
+    .scenario-tab.is-active {
+      background-color: var(--primary-deep);
+      color: var(--on-primary);
+      border-color: var(--primary-deep);
+    }
+
+    .scenario-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: var(--space-md);
+    }
+
+    .scenario-card {
+      background-color: var(--surface-container-low);
+      border: var(--hairline);
+      border-radius: var(--rounded);
+      padding: var(--space-md);
+    }
+
+    .scenario-card h5 {
+      margin: 0 0 var(--space-xs) 0;
+      font-size: 0.9375rem;
+      color: var(--primary);
+    }
+
+    .scenario-verdict {
+      margin-top: var(--space-md);
+      padding: var(--space-sm) var(--space-md);
+      border-radius: var(--rounded);
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+
+    /* SVG Diagram Container inside Chapter 3 */
+    .diagram-frame {
+      background-color: var(--background);
+      border: var(--hairline);
+      border-radius: var(--rounded);
+      padding: var(--space-md);
+      overflow-x: auto;
+    }
+
+    .diagram-svg {
+      width: 100%;
+      min-width: 620px;
+      height: auto;
+      display: block;
+    }
+
+    .svg-box-navy { fill: var(--primary); stroke: var(--primary); }
+    .svg-box-white { fill: var(--surface-container-low); stroke: var(--outline-variant); stroke-width: 1.5; }
+    .svg-box-purple { fill: var(--module-purple-wash); stroke: var(--module-purple); stroke-width: 1.5; }
+    .svg-box-warn { fill: var(--error-wash); stroke: var(--error); stroke-width: 1.5; }
+    .svg-text-light { fill: var(--on-primary); font-family: var(--font-body); font-size: 13px; font-weight: 600; }
+    .svg-text-dark { fill: var(--primary); font-family: var(--font-body); font-size: 13px; font-weight: 700; }
+    .svg-text-sub { fill: var(--on-surface-variant); font-family: var(--font-body); font-size: 11px; }
+    .svg-text-purple { fill: var(--module-purple); font-family: var(--font-body); font-size: 12px; font-weight: 700; }
+    .svg-text-red { fill: var(--error); font-family: var(--font-body); font-size: 11.5px; font-weight: 700; }
+    .svg-line { stroke: var(--primary-deep); stroke-width: 2; fill: none; }
+    .svg-line-gold { stroke: var(--accent-gold); stroke-width: 2; stroke-dasharray: 5 4; fill: none; }
+    .svg-line-green { stroke: var(--positive-fill); stroke-width: 2; fill: none; }
+
+    /* Interactive Audit Checklist inside Chapter 4 */
+    .audit-sim-box {
+      background-color: var(--background);
+      border: var(--hairline);
+      border-radius: var(--rounded);
+      padding: var(--space-md);
+    }
+
+    .audit-step-list {
+      display: grid;
+      gap: var(--space-sm);
+      margin-top: var(--space-sm);
+    }
+
+    .audit-step-item {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-sm);
+      padding: 0.625rem 0.75rem;
+      background-color: var(--surface-container-low);
+      border: var(--hairline);
+      border-radius: var(--rounded);
+      cursor: pointer;
+    }
+
+    .audit-step-item:hover {
+      background-color: var(--primary-container);
+    }
+
+    .audit-step-item input {
+      width: 18px;
+      height: 18px;
+      margin-top: 2px;
+      accent-color: var(--primary-deep);
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    .audit-sim-status {
+      margin-top: var(--space-md);
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--primary);
+    }
+
+    /* Empty State */
+    .empty-state {
+      display: none;
+      background-color: var(--surface-container-low);
+      border: 1px dashed var(--outline);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-xl);
+      text-align: center;
+    }
+
+    .empty-state.is-visible {
+      display: block;
+    }
+
+    .empty-state h3 {
+      font-family: var(--font-headline);
+      color: var(--primary);
+      margin: 0 0 var(--space-xs) 0;
+    }
+
+    .empty-state p {
+      color: var(--on-surface-variant);
+      margin: 0 0 var(--space-md) 0;
+    }
+
+    /* Sources & Transparency Appendix */
+    .sources-section {
+      background-color: var(--surface-container);
+      border-top: var(--brass-rule);
+      border-right: var(--hairline);
+      border-bottom: var(--hairline);
+      border-left: var(--hairline);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-lg);
+    }
+
+    .sources-section h3 {
+      font-family: var(--font-headline);
+      font-size: var(--subhead-size);
+      color: var(--primary);
+      margin: 0 0 var(--space-sm) 0;
+    }
+
+    .sources-section p, .sources-section li {
+      font-size: 0.875rem;
+      color: var(--ink-secondary);
+    }
+
+    /* Footer */
+    .site-footer {
+      background-color: var(--primary);
+      color: var(--on-primary);
+      border-top: 3px solid var(--outline);
+      padding: var(--space-lg);
+      text-align: center;
+      font-family: var(--font-label);
+      font-size: 0.875rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+    }
+
+    mark.search-hit {
+      background-color: var(--warning-wash);
+      color: var(--warning);
+      padding: 0 2px;
+      border-bottom: 2px solid var(--warning-fill);
+    }
+
+    /* Responsive Breakpoints */
+    @media (max-width: 860px) {
+      .intro-layout {
+        grid-template-columns: minmax(0, 1fr);
+      }
+      .controls-top-row {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    @media (max-width: 640px) {
+      .title-band {
+        padding: var(--space-lg) var(--space-md);
+      }
+      .page-grid {
+        padding: var(--space-lg) var(--space-md);
+        gap: var(--space-lg);
+      }
+      .figures-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+      .chapter-card-header {
+        grid-template-columns: minmax(0, 1fr);
+        padding: var(--space-md);
+      }
+      .chapter-actions {
+        justify-content: flex-start;
+        flex-wrap: wrap;
+      }
+      .chapter-body {
+        padding: 0 var(--space-md) var(--space-md);
+      }
+      .scenario-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+      .home-link { display: inline-flex; align-items: center; color: var(--outline); font: inherit; font-size: var(--label-size, 0.875rem); font-weight: 600; text-decoration: none; border: 1px solid var(--outline); padding: 0.4rem 0.7rem; margin: 0 0 var(--space-sm) 0; }
+    .home-link:hover, .home-link:focus-visible { color: var(--on-primary); text-decoration: underline; text-underline-offset: 0.18em; }
+    @media (max-width: 640px) { }
+      .header-bank-label { display: inline-block; margin: 0 0 var(--space-sm); color: var(--outline); font-family: var(--font-label); font-size: var(--label-size, 0.875rem); font-weight: 700; letter-spacing: 0.08em; }
+  </style>
+</head>
+<body>
+  <header class="title-band">
+    <div class="title-band-inner">
+      <span class="header-bank-label">鎖頭銀行</span>
+      <div class="brand-eyebrow">
+        <span class="module-pill">模組二：財報徵提與會計師簽證（Day 7–12）</span>
+        <span class="bank-badge">鎖頭銀行徵信實務教材</span>
+      </div>
+      <h1>中小企業授信與財報分析實務-Day11-聯徵中心跨機構財報副本聯防機制</h1>
+      <p class="lede">解析《中華民國銀行公會會員徵信準則》第 18 條第 1 項第 6 款之強制規範，拆解「雙重報表」道德風險，並建構鎖頭銀行與財團法人金融聯合徵信中心（JCIC）跨機構正副本勾稽與徵信軌跡防線。</p>
+    </div>
+  </header>
+
+  <main class="page-grid">
+    <!-- 前言與核心數據儀表區塊 -->
+    <section class="intro-layout" aria-label="課程前言與關鍵指標">
+      <article class="briefing-panel">
+        <span class="section-kicker">DAY 11 核心導讀｜跨機構風險聯防</span>
+        <h2>為何單一銀行的財報審查，必須升級為跨機構副本聯防？</h2>
+        <p>在企業授信審查中，財務報表是評估企業財務結構與償債能力的核心依據。然而在資訊不對稱的環境下，若借戶分別向稅捐稽徵機關與各家金融機構提供不同版本的財務數據，單靠個別銀行關起門來審核正本，極易誤入「粉飾報表」的授信陷阱。</p>
+        <p>為建立跨機構資訊聯防，主管機關與銀行公會透過《中華民國銀行公會會員徵信準則》第 18 條第 1 項第 6 款明文規範：<strong>授信契約必須約定請授信戶要求受託查核簽證之會計師，將財務報表查核報告副本逕送財團法人金融聯合徵信中心（JCIC）</strong>。鎖頭銀行徵信人員於取得客戶正本後，即須透過聯徵中心跨機構共享平台交叉比對正副本一致性，確保審計公信力與徵信軌跡完整。</p>
+      </article>
+
+      <div class="figures-grid">
+        <div class="figure-card">
+          <div class="figure-label">強制融資簽證門檻</div>
+          <div class="figure-value">3,000 萬</div>
+          <div class="figure-note">新臺幣總授信金額達此門檻，或公司組織申辦本票保證（不論金額），均須徵提會計師財簽。</div>
+        </div>
+
+        <div class="figure-card">
+          <div class="figure-label">聯徵中心年蒐集財報量</div>
+          <div class="figure-value">約 3.5 萬本</div>
+          <div class="figure-note">全國唯一相對完整蒐集建置會計師簽證財報之機構（另含約 16 萬企業戶月報授信餘額）。</div>
+        </div>
+
+        <div class="figure-card">
+          <div class="figure-label">核心法定依據</div>
+          <div class="figure-value">第 18 條</div>
+          <div class="figure-note">《徵信準則》第 18 條第 1 項第 6 款強制契約約定副本逕送，配合第 5 款查證與第 7 款懲戒過濾。</div>
+        </div>
+
+        <div class="figure-card is-progress">
+          <div class="figure-label">本日學習完成進度</div>
+          <div class="figure-value" id="progress-percent">0%</div>
+          <div class="figure-note" id="progress-count-text">已完成 0 / 4 個核心章節</div>
+          <div class="progress-bar-track" aria-hidden="true">
+            <div class="progress-bar-fill" id="progress-bar-fill"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 互動搜尋、篩選與進度控制列 -->
+    <section class="controls-section" aria-label="課程檢索與篩選控制">
+      <div class="controls-top-row">
+        <div class="input-group">
+          <label for="keyword-search" class="input-label">即時關鍵字搜尋（支援法條、風險關鍵字、作業步驟檢索）</label>
+          <div class="search-input-wrap">
+            <input type="search" id="keyword-search" class="search-input" placeholder="例如：雙重報表、N20、401、第18條、軌跡" oninput="handleSearchInput(this.value)">
+            <button type="button" class="btn-secondary" onclick="clearSearch()">清除</button>
+          </div>
+        </div>
+
+        <div class="filter-group">
+          <span class="input-label">章節分類標籤篩選</span>
+          <div class="filter-buttons" role="group" aria-label="章節分類篩選">
+            <button type="button" class="filter-btn is-active" data-filter="all" onclick="setCategoryFilter('all')">全部章節</button>
+            <button type="button" class="filter-btn" data-filter="法規規範" onclick="setCategoryFilter('法規規範')">【法規規範】</button>
+            <button type="button" class="filter-btn" data-filter="風控實務" onclick="setCategoryFilter('風控實務')">【風控實務】</button>
+            <button type="button" class="filter-btn" data-filter="系統機制" onclick="setCategoryFilter('系統機制')">【系統機制】</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="controls-bottom-row">
+        <div class="status-summary" id="filter-status-text">顯示全部 <strong>4</strong> 個章節（點擊章節標題即可展開或收合詳細說明）</div>
+        <div class="bulk-actions">
+          <button type="button" class="btn-secondary" onclick="expandAllVisible()">全部展開</button>
+          <button type="button" class="btn-secondary" onclick="collapseAllVisible()">全部收合</button>
+          <button type="button" class="btn-danger-outline" id="reset-progress-btn" onclick="resetLearningProgress(this)">重設已讀紀錄</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 章節卡片區域 -->
+    <section aria-label="核心學習章節">
+      <div class="chapters-header">
+        <h2>四大核心學習章節</h2>
+        <span class="section-kicker">點擊卡片展開細部規範與稽核實務，完成後請勾選「已讀」累計進度</span>
+      </div>
+
+      <div class="chapters-list" id="chapters-list" style="margin-top: var(--space-lg);">
+
+        <!-- 章節一 -->
+        <article class="chapter-card is-expanded" id="card-ch1" data-chapter-id="ch1" data-tags="法規規範,風控實務">
+          <div class="chapter-card-header" onclick="toggleChapter('ch1', event)" role="button" tabindex="0" aria-expanded="true" onkeydown="handleHeaderKeydown(event, 'ch1')">
+            <div>
+              <div class="chapter-meta">
+                <span class="chapter-num">CH 01</span>
+                <span class="tag-stamp tag-law">【法規規範】</span>
+                <span class="tag-stamp tag-risk">【風控實務】</span>
+              </div>
+              <h3 class="chapter-title">《徵信準則》第 18 條第 1 項第 6 款之法定強制要求</h3>
+              <p class="chapter-summary">規範鎖頭銀行應於授信契約中明文約定，請授信戶要求受託查核簽證之會計師，將財務報表查核報告副本逕送聯徵中心（JCIC）。</p>
+            </div>
+            <div class="chapter-actions" onclick="event.stopPropagation()">
+              <label class="read-checkbox-label" id="label-read-ch1">
+                <input type="checkbox" class="read-checkbox" id="read-ch1" onchange="toggleReadState('ch1', this.checked)">
+                <span>已讀</span>
+              </label>
+              <button type="button" class="toggle-btn" id="btn-toggle-ch1" onclick="toggleChapter('ch1', event)" aria-expanded="true" aria-controls="body-ch1">
+                <span id="toggle-text-ch1">收合</span>
+                <svg class="toggle-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
+              </button>
+            </div>
+          </div>
+
+          <div class="chapter-body" id="body-ch1">
+            <div class="chapter-content-grid">
+              <div class="statute-quote">
+                <span class="statute-quote-title">法條原文｜《中華民國銀行公會會員徵信準則》第 18 條第 1 項第 6 款</span>
+                <blockquote>「會員應於授信契約中約定，請授信戶要求受託查核簽證之會計師將財務報表查核報告副本送達財團法人金融聯合徵信中心。」</blockquote>
+              </div>
+
+              <div class="detail-block">
+                <h4>條文執行架構與融資簽證適用邊界</h4>
+                <p>本款並非由鎖頭銀行直接向會計師索取副本，而是透過<strong>「授信契約約定」</strong>建立法律傳導鏈：鎖頭銀行於授信契約納入約定條款，由授信戶負契約義務，責成其委任之簽證會計師將查核報告副本直接送交聯徵中心，以確保第三方專業獨立性。</p>
+                <ul class="detail-list">
+                  <li><strong>3,000 萬元強制財簽門檻（第 18 條第 1 項第 1 款）：</strong>企業於全體金融機構之總授信金額（聯徵歸戶餘額＋本次申貸額度，得扣除本行存單質借、出口押匯及進口押匯；另依第 8 款免計入無追索權應收帳款承購買方額度）達新臺幣 3,000 萬元以上者，必須強制徵提會計師財務報表查核報告（融資簽證）。</li>
+                  <li><strong>本票保證例外全額納管：</strong>公司組織向金融機構申請「本票保證」業務時，不論總授信金額是否達 3,000 萬元，一律強制徵提會計師查核簽證財務報表。</li>
+                  <li><strong>何謂有效生效之會計師查核報告（課堂實務補充）：</strong>會計師查核完畢後，四大主表下方須經公司董事長、經理人、財務主管簽章承認始正式生效。若僅有會計師最後一頁用印而主表未經公司承認，僅屬「擬制性報表」或「草稿」，不得視同完整生效之查核報告。</li>
+                  <li><strong>會計師懲戒排除條款（第 18 條第 1 項第 7 款）：</strong>受警告或申誡處分者，一年內如准予採用須註明採用原因並審慎評估；受停止執行業務或停止辦理公開發行公司查核簽證處分者，於處分停止期間（深度研析補充實務亦見二倍期間且不少於一年之嚴格規定）不予採用；受除名或撤銷核准者永久不予採用。</li>
+                </ul>
+              </div>
+
+              <div class="callout-box callout-warning">
+                <p class="callout-title">資料來源邊界揭露</p>
+                <p>本單元來源未載明：<span class="missing-badge">來源未提供</span> 鎖頭銀行授信契約中之具體制式條文全文與違約罰則；<span class="missing-badge">來源未提供</span> 會計師將查核報告副本送達聯徵中心之法定日數期限及電子傳檔規格。</p>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- 章節二 -->
+        <article class="chapter-card" id="card-ch2" data-tags="風控實務,法規規範">
+          <div class="chapter-card-header" onclick="toggleChapter('ch2', event)" role="button" tabindex="0" aria-expanded="false" onkeydown="handleHeaderKeydown(event, 'ch2')">
+            <div>
+              <div class="chapter-meta">
+                <span class="chapter-num">CH 02</span>
+                <span class="tag-stamp tag-risk">【風控實務】</span>
+                <span class="tag-stamp tag-law">【法規規範】</span>
+              </div>
+              <h3 class="chapter-title">防範「雙重報表」道德風險：美化報表 vs 稅務虧損報表</h3>
+              <p class="chapter-summary">剖析借戶向鎖頭銀行提供粉飾財報爭取授信、同時向稅捐機關申報真實或虧損報表之道德風險，並區辨實務上之合法編製差異。</p>
+            </div>
+            <div class="chapter-actions" onclick="event.stopPropagation()">
+              <label class="read-checkbox-label" id="label-read-ch2">
+                <input type="checkbox" class="read-checkbox" id="read-ch2" onchange="toggleReadState('ch2', this.checked)">
+                <span>已讀</span>
+              </label>
+              <button type="button" class="toggle-btn" id="btn-toggle-ch2" onclick="toggleChapter('ch2', event)" aria-expanded="false" aria-controls="body-ch2">
+                <span id="toggle-text-ch2">展開</span>
+                <svg class="toggle-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
+              </button>
+            </div>
+          </div>
+
+          <div class="chapter-body" id="body-ch2">
+            <div class="chapter-content-grid">
+              <div class="detail-block">
+                <h4>「雙重報表（兩套帳）」道德風險結構對照</h4>
+                <p>中小企業與未公開發行公司因財務資訊透明度較低，實務上存在借戶為滿足不同對象目的而編製兩套報表之道德風險：</p>
+                <div class="table-scroll">
+                  <table class="charter-table">
+                    <thead>
+                      <tr>
+                        <th>比較維度</th>
+                        <th>送交鎖頭銀行版本（粉飾／美化財報）</th>
+                        <th>申報稅捐機關版本（真實／壓縮盈餘報表）</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td><strong>編製動機</strong></td>
+                        <td>拉高營收、淨利與流動比率，爭取較高授信額度、較低利率或避免額度遭縮減。</td>
+                        <td>反映實際較低之獲利甚至虧損，或壓低課稅所得以減少營利事業所得稅負擔。</td>
+                      </tr>
+                      <tr>
+                        <td><strong>徵信風險</strong></td>
+                        <td>鎖頭銀行依失真之償債指標核貸，低估違約風險，造成資金用途與還款來源誤判。</td>
+                        <td>若未查核稅務申報與納稅證明，無法掌握企業真實現金流與稅負承擔狀態。</td>
+                      </tr>
+                      <tr>
+                        <td><strong>聯防制衡</strong></td>
+                        <td colspan="2">透過第 18 條第 1 項第 6 款要求會計師將查核報告副本逕送聯徵中心，使正副本可跨機構驗證；並依第 5 款交叉比對營業稅申報書（401/403）、納稅證明及銀行資金流水。</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              <!-- 互動情境比對器 -->
+              <div class="detail-block">
+                <h4>實務情境辨識器：異常粉飾差異 vs 合法會計編製差異</h4>
+                <p>課堂實務特別提醒：報稅資料與會計師查核報告「長得不一樣」，未必全屬舞弊！徵信人員必須精準區分兩者成因（點擊切換情境）：</p>
+                <div class="scenario-box">
+                  <div class="scenario-tabs" role="tablist" aria-label="報表差異情境切換">
+                    <button type="button" class="scenario-tab is-active" id="tab-fraud" onclick="switchScenario('fraud')">情境 A：雙重報表與虛假營運警訊</button>
+                    <button type="button" class="scenario-tab" id="tab-legal" onclick="switchScenario('legal')">情境 B：投資公司合法編製差異</button>
+                    <button type="button" class="scenario-tab" id="tab-window" onclick="switchScenario('window')">情境 C：1/1–5/31 空窗期與發票風險</button>
+                  </div>
+
+                  <div id="scenario-content">
+                    <div class="scenario-grid">
+                      <div class="scenario-card">
+                        <h5>表象異常指標</h5>
+                        <p>客戶送交鎖頭銀行之報表顯示營收穩健、獲利良好；但調閱 401 表、納稅證明或存摺流水時，營業額與稅額明顯偏低，或「其他應收關係人款項」異常龐大（實為違反《公司法》第 15 條資金貸與股東／負責人購買私人資產）。</p>
+                      </div>
+                      <div class="scenario-card">
+                        <h5>鎖頭銀行徵信處置</h5>
+                        <p>立即調閱聯徵中心財報副本核對正本是否遭抽換或變造；要求客戶對營收、應收帳款與存貨差異提出說明及交易憑證（訂單、進出口報單、存摺收款紀錄），並於徵信報告忠實揭露，切勿替客戶隱匿。</p>
+                      </div>
+                    </div>
+                    <div class="scenario-verdict callout-error">
+                      <strong>風控判定：</strong>屬高度道德風險或違規資金挪用警訊，須啟動補充查證並由授信端評估准駁與債權保全。
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="callout-box callout-warning">
+                <p class="callout-title">資料來源邊界揭露</p>
+                <p>關於財團法人金融聯合徵信中心系統內部是否直接與財政部國稅局稅務申報資料庫建立「自動比對連線」，<span class="missing-badge">來源未提供</span>；目前來源明確載明之機制為：聯徵中心提供各金融機構比對財報「正本與副本」之一致性，並由鎖頭銀行徵信人員自行將財報與 401/403 表、納稅證明、海關資料及銀行流水進行交叉檢核。</p>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- 章節三 -->
+        <article class="chapter-card" id="card-ch3" data-tags="系統機制,法規規範">
+          <div class="chapter-card-header" onclick="toggleChapter('ch3', event)" role="button" tabindex="0" aria-expanded="false" onkeydown="handleHeaderKeydown(event, 'ch3')">
+            <div>
+              <div class="chapter-meta">
+                <span class="chapter-num">CH 03</span>
+                <span class="tag-stamp tag-sys">【系統機制】</span>
+                <span class="tag-stamp tag-law">【法規規範】</span>
+              </div>
+              <h3 class="chapter-title">聯徵中心跨機構財報共享平台機制（JCIC Shared Repository）</h3>
+              <p class="chapter-summary">全國唯一相對完整蒐集年約 3.5 萬本會計師簽證財報之平台，串聯跨機構正副本比對、N20 懲戒防線與 7 大營收級距產業基準。</p>
+            </div>
+            <div class="chapter-actions" onclick="event.stopPropagation()">
+              <label class="read-checkbox-label" id="label-read-ch3">
+                <input type="checkbox" class="read-checkbox" id="read-ch3" onchange="toggleReadState('ch3', this.checked)">
+                <span>已讀</span>
+              </label>
+              <button type="button" class="toggle-btn" id="btn-toggle-ch3" onclick="toggleChapter('ch3', event)" aria-expanded="false" aria-controls="body-ch3">
+                <span id="toggle-text-ch3">展開</span>
+                <svg class="toggle-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
+              </button>
+            </div>
+          </div>
+
+          <div class="chapter-body" id="body-ch3">
+            <div class="chapter-content-grid">
+              <div class="detail-block">
+                <h4>跨機構財報副本聯防運作架構圖</h4>
+                <p>透過會計師副本逕送機制，鎖頭銀行與全體金融機構得以共用單一可信之副本基準庫，消除資訊孤島：</p>
+                <div class="diagram-frame">
+                  <svg class="diagram-svg" viewBox="0 0 760 270" role="img" aria-label="聯徵中心跨機構財報副本聯防機制流程圖">
+                    <defs>
+                      <marker id="arrow-navy" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                        <path d="M 0 1 L 10 5 L 0 9 z" fill="currentColor" style="color: var(--primary-deep);" />
+                      </marker>
+                      <marker id="arrow-green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                        <path d="M 0 1 L 10 5 L 0 9 z" fill="currentColor" style="color: var(--positive-fill);" />
+                      </marker>
+                      <marker id="arrow-gold" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                        <path d="M 0 1 L 10 5 L 0 9 z" fill="currentColor" style="color: var(--accent-gold);" />
+                      </marker>
+                    </defs>
+
+                    <!-- 左側：借戶與會計師 -->
+                    <rect x="16" y="24" width="170" height="68" rx="3" class="svg-box-white" />
+                    <text x="101" y="50" text-anchor="middle" class="svg-text-dark">授信借戶（企業）</text>
+                    <text x="101" y="70" text-anchor="middle" class="svg-text-sub">簽訂授信契約・指示會計師</text>
+
+                    <rect x="16" y="156" width="170" height="76" rx="3" class="svg-box-purple" />
+                    <text x="101" y="182" text-anchor="middle" class="svg-text-purple">受託簽證會計師</text>
+                    <text x="101" y="201" text-anchor="middle" class="svg-text-sub">出具融資簽證查核報告</text>
+                    <text x="101" y="218" text-anchor="middle" class="svg-text-sub">（受 N20 懲戒紀錄檢核）</text>
+
+                    <!-- 中央：聯徵中心共享平台 -->
+                    <rect x="275" y="138" width="210" height="106" rx="3" class="svg-box-navy" />
+                    <text x="380" y="166" text-anchor="middle" class="svg-text-light">財團法人金融聯合徵信中心</text>
+                    <text x="380" y="186" text-anchor="middle" class="svg-text-light">（JCIC 財報副本共享平台）</text>
+                    <text x="380" y="208" text-anchor="middle" class="svg-text-light" style="font-size: 11px; opacity: 0.9;">年蒐集約 3.5 萬本財簽報告</text>
+                    <text x="380" y="226" text-anchor="middle" class="svg-text-light" style="font-size: 11px; opacity: 0.9;">建置跨機構一致性與同業統計基準</text>
+
+                    <!-- 右側：鎖頭銀行與跨行聯防 -->
+                    <rect x="560" y="24" width="184" height="82" rx="3" class="svg-box-white" />
+                    <text x="652" y="48" text-anchor="middle" class="svg-text-dark">鎖頭銀行徵信單位</text>
+                    <text x="652" y="67" text-anchor="middle" class="svg-text-sub">1. 收取財報正本（查公司簽章）</text>
+                    <text x="652" y="84" text-anchor="middle" class="svg-text-sub">2. 調閱 JCIC 副本比對・勾稽 401</text>
+
+                    <rect x="560" y="156" width="184" height="76" rx="3" class="svg-box-warn" />
+                    <text x="652" y="182" text-anchor="middle" class="svg-text-red">防堵雙重報表與異動</text>
+                    <text x="652" y="201" text-anchor="middle" class="svg-text-sub">全體會員金融機構共享副本</text>
+                    <text x="652" y="218" text-anchor="middle" class="svg-text-sub">阻斷跨行抽換或美化報表空間</text>
+
+                    <!-- 連線 -->
+                    <!-- 借戶送正本給鎖頭銀行 -->
+                    <path d="M 186 48 L 552 48" class="svg-line" marker-end="url(#arrow-navy)" />
+                    <text x="370" y="40" text-anchor="middle" class="svg-text-dark" style="font-size: 11.5px;">送交財報正本（防範私自抽換或美化）</text>
+
+                    <!-- 借戶契約要求會計師 -->
+                    <path d="M 101 92 L 101 148" class="svg-line-gold" marker-end="url(#arrow-gold)" />
+                    <text x="108" y="124" class="svg-text-sub" style="font-weight: 600;">第18條第1項第6款約定</text>
+
+                    <!-- 會計師副本逕送 JCIC -->
+                    <path d="M 186 194 L 267 194" class="svg-line-green" marker-end="url(#arrow-green)" />
+                    <text x="226" y="185" text-anchor="middle" class="svg-text-sub" style="font-weight: 700;">副本逕送</text>
+
+                    <!-- JCIC 提供鎖頭銀行調閱比對 -->
+                    <path d="M 435 138 L 560 88" class="svg-line-green" marker-end="url(#arrow-green)" />
+                    <text x="480" y="102" text-anchor="middle" class="svg-text-sub" style="font-weight: 700;">線上調閱比對</text>
+
+                    <!-- JCIC 至 跨行聯防 -->
+                    <path d="M 485 194 L 552 194" class="svg-line" marker-end="url(#arrow-navy)" />
+                  </svg>
+                </div>
+              </div>
+
+              <div class="detail-block">
+                <h4>聯徵中心資料庫之雙重風控價值</h4>
+                <ul class="detail-list">
+                  <li><strong>全國唯一規模化資料庫：</strong>依《產業財務統計資訊內容說明》，聯徵中心為全國唯一相對完整蒐集建置會計師簽證企業財務報告之機構，每年資料量約 <strong>3 萬 5 千本財報</strong>；另依「銀行間徵信資料處理交換服務事業許可及管理辦法」第 26 條，每月蒐集金融機構報送約 <strong>16 萬企業戶</strong> 授信餘額與違約率資訊。</li>
+                  <li><strong>消除跨行資訊不對稱：</strong>借戶即使同時向多家金融機構申貸，也無法對甲銀行交付版本一、對鎖頭銀行交付版本二，因為所有會員機構在聯徵中心調閱到的會計師簽證副本皆為同一基準。</li>
+                  <li><strong>延伸「產業財務統計」同業對標基準：</strong>聯徵中心將上述簽證財報彙編為 ROC GAAP（45 項比率，至 104 年度）、IFRSs 與 EAS（58 或 60 項比率）之產業統計，並依企業規模切分為 <strong>7 大營收級距</strong>（級距 1：≧100 億元；級距 2：50–100 億元；級距 3：10–50 億元；級距 4：5–10 億元；級距 5：1–5 億元；級距 6：0.4–1 億元；級距 7：<0.4 億元），協助鎖頭銀行避免以大型企業指標誤判中小企業體質。</li>
+                </ul>
+              </div>
+
+              <div class="callout-box callout-warning">
+                <p class="callout-title">資料來源邊界揭露</p>
+                <p>聯徵中心查詢系統中「調閱會計師財報副本」之具體交易查詢代號名稱（相對於文中已明確記載之 B33、B36、K33、K34、N20），以及副本自會計師寄達至聯徵中心完成建檔上線之處理天數，<span class="missing-badge">來源未提供</span>。</p>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- 章節四 -->
+        <article class="chapter-card" id="card-ch4" data-tags="風控實務,系統機制">
+          <div class="chapter-card-header" onclick="toggleChapter('ch4', event)" role="button" tabindex="0" aria-expanded="false" onkeydown="handleHeaderKeydown(event, 'ch4')">
+            <div>
+              <div class="chapter-meta">
+                <span class="chapter-num">CH 04</span>
+                <span class="tag-stamp tag-risk">【風控實務】</span>
+                <span class="tag-stamp tag-sys">【系統機制】</span>
+              </div>
+              <h3 class="chapter-title">鎖頭銀行徵信實務核對、勾稽作業與留存軌跡防線</h3>
+              <p class="chapter-summary">建立收到正本後的五步查核 SOP：正副本比對、N20 會計師懲戒核查、401/流水勾稽、差異處置，以及第 36/37 條免責軌跡存證。</p>
+            </div>
+            <div class="chapter-actions" onclick="event.stopPropagation()">
+              <label class="read-checkbox-label" id="label-read-ch4">
+                <input type="checkbox" class="read-checkbox" id="read-ch4" onchange="toggleReadState('ch4', this.checked)">
+                <span>已讀</span>
+              </label>
+              <button type="button" class="toggle-btn" id="btn-toggle-ch4" onclick="toggleChapter('ch4', event)" aria-expanded="false" aria-controls="body-ch4">
+                <span id="toggle-text-ch4">展開</span>
+                <svg class="toggle-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
+              </button>
+            </div>
+          </div>
+
+          <div class="chapter-body" id="body-ch4">
+            <div class="chapter-content-grid">
+              <div class="detail-block">
+                <h4>鎖頭銀行徵信職能邊界與五步核對 SOP</h4>
+                <p>依《徵信準則》第 3、7、8、15、28 條，鎖頭銀行採行超然獨立之徵信體系：前端營業單位索齊資料後始得移送徵信單位，資料不齊且未補齊者不予辦理徵信；徵信人員應公正平實撰寫報告，<strong>不宜對授信案件直接表示准駁意見</strong>，而是以客觀證據與充分揭露作為授信決策基石。</p>
+                <div class="table-scroll">
+                  <table class="charter-table">
+                    <thead>
+                      <tr>
+                        <th>作業階段</th>
+                        <th>鎖頭銀行實務核對與勾稽重點</th>
+                        <th>依據條文 / 系統工具</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td><strong>1. 正副本比對</strong></td>
+                        <td>確認正本四大主表經公司董事長、經理人、財務主管簽章承認後，至聯徵系統調閱會計師逕送副本，核對報表金額、附註及查核意見類型是否完全一致。</td>
+                        <td>第 18 條第 1 項第 6 款<br>JCIC 財報副本系統</td>
+                      </tr>
+                      <tr>
+                        <td><strong>2. 會計師審查</strong></td>
+                        <td>查核聯徵 N20 會計師懲戒紀錄（課堂提醒極易漏查）。若受罰鍰或警告／申誡且一年內擬採用，須針對受懲原因（如存貨盤點、現金函證）補提銀行函證或盤點佐證並註明採用理由；停業或除名則不予採用。</td>
+                        <td>第 18 條第 1 項第 7 款<br>聯徵 N20 紀錄</td>
+                      </tr>
+                      <tr>
+                        <td><strong>3. 跨維度勾稽</strong></td>
+                        <td>將財報營收、應收帳款、存貨與外部客觀資料交叉核對：營業稅申報書（401/403/405 表）、最近年度納稅證明（確認有報稅且有繳款）、進出口報單、海關數據、銀行存摺流水、公開資訊觀測站（關係企業三書表）、商工登記與司法院判決書。</td>
+                        <td>第 18 條第 1 項第 5 款<br>外部客觀查調平台</td>
+                      </tr>
+                      <tr>
+                        <td><strong>4. 差異與調整</strong></td>
+                        <td>若正副本不一致或財報與佐證資料顯有不符，應要求借戶合理說明並補充查證，將過程與結果詳實列示於徵信報告。若三期科目分類不一致，得依一般公認會計原則調整編製以利比較。</td>
+                        <td>第 18 條第 1 項第 5 款<br>第 24 條</td>
+                      </tr>
+                      <tr>
+                        <td><strong>5. 留存徵信軌跡</strong></td>
+                        <td>所有查調畫面（關係企業三書表、判決書檢索結果、存匯函證、N20 查核等）均須列印附卷存證，建立完整徵信軌跡，確保已就當時所能知悉事項盡職調查。</td>
+                        <td>第 36 條、第 37 條<br>徵信卷宗歸檔</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              <div class="callout-box callout-positive">
+                <p class="callout-title">第 36 條與第 37 條核心防線：留存軌跡才能免責</p>
+                <p>《徵信準則》第 36 條明定徵信人員就徵信當時狀況及所能知悉事項負責；第 37 條規定凡依準則、鎖頭銀行規定及一般慣例所作之徵信報告，事後雖發現瑕疵應免除其責任。課堂特別強調：實務稽核抽查或發生呆帳時，唯有當下將聯徵比對、N20 紀錄與外部佐證「列印附卷」，才能證明「我有做且依規辦理」；若無軌跡留存，將白口莫辯。</p>
+              </div>
+
+              <!-- 互動式實務檢核模擬器 -->
+              <div class="detail-block">
+                <h4>鎖頭銀行徵信人員案頭檢核清單（互動模擬）</h4>
+                <p>審核總授信金額達 3,000 萬元以上案件時，請逐項演練確認您已完成以下關鍵動作（勾選狀態將自動保存）：</p>
+                <div class="audit-sim-box">
+                  <div class="audit-step-list">
+                    <label class="audit-step-item">
+                      <input type="checkbox" id="sim-step-1" onchange="toggleAuditSimStep(0, this.checked)">
+                      <span><strong>Step 1：</strong>檢視借戶檢送之財簽正本，確認四大主表已有董事長、經理人及財務主管簽章承認（非僅會計師單方用印草稿）。</span>
+                    </label>
+                    <label class="audit-step-item">
+                      <input type="checkbox" id="sim-step-2" onchange="toggleAuditSimStep(1, this.checked)">
+                      <span><strong>Step 2：</strong>查詢聯徵中心 N20 會計師懲戒紀錄；若有懲戒紀錄且依規得採認，已針對懲戒缺失項目補強佐證（如函證紀錄）並於報告敘明。</span>
+                    </label>
+                    <label class="audit-step-item">
+                      <input type="checkbox" id="sim-step-3" onchange="toggleAuditSimStep(2, this.checked)">
+                      <span><strong>Step 3：</strong>至聯徵中心系統調閱會計師逕送之「財報副本」，逐項比對正本與副本之數字、意見類型及附註完全相符。</span>
+                    </label>
+                    <label class="audit-step-item">
+                      <input type="checkbox" id="sim-step-4" onchange="toggleAuditSimStep(3, this.checked)">
+                      <span><strong>Step 4：</strong>將財報數據與 401/403 營業稅申報書、納稅證明、海關資料及銀行存摺流水交叉勾稽，差異部分已要求書面說明並附佐證。</span>
+                    </label>
+                    <label class="audit-step-item">
+                      <input type="checkbox" id="sim-step-5" onchange="toggleAuditSimStep(4, this.checked)">
+                      <span><strong>Step 5：</strong>將上述比對畫面、外部查證資料與說明文件列印附卷，完整留存徵信軌跡，確保符合第 36、37 條免責要件。</span>
+                    </label>
+                  </div>
+                  <div class="audit-sim-status" id="audit-sim-status">檢核進度：尚未開始勾選（0 / 5 項完成）</div>
+                </div>
+              </div>
+
+              <div class="callout-box callout-warning">
+                <p class="callout-title">資料來源邊界揭露</p>
+                <p>鎖頭銀行內部徵信資訊系統之具體螢幕欄位截圖、內部表單編號及行內作業懲處細則，<span class="missing-badge">來源未提供</span>。</p>
+              </div>
+            </div>
+          </div>
+        </article>
+
+      </div>
+
+      <!-- 搜尋無結果空狀態 -->
+      <div class="empty-state" id="empty-state">
+        <h3>查無符合條件之章節</h3>
+        <p id="empty-state-reason">目前的搜尋關鍵字或分類標籤篩選未匹配到任何章節內容。</p>
+        <button type="button" class="btn-primary" onclick="resetAllFilters()">顯示全部章節並清除搜尋</button>
+      </div>
+    </section>
+
+    <!-- 資料來源與編製透明說明 -->
+    <section class="sources-section" aria-label="資料來源說明">
+      <h3>教材資料依據與資訊邊界聲明</h3>
+      <p>本互動學習網頁內容嚴格依據提供之課程與法規資料彙編，不作未經來源佐證之臆測：</p>
+      <ul>
+        <li><strong>法規原文：</strong>中華民國銀行商業同業公會全國聯合會《中華民國銀行公會會員徵信準則》（修訂至 112 年 7 月 18 日全授字第 1120001231 號函），涵蓋第 3、4、6、7、7 條之 1、8、15、16、18、22、24、27、28、36、37 條。</li>
+        <li><strong>聯徵中心數據規範：</strong>財團法人金融聯合徵信中心《產業分析統計資訊內容說明》（民國 111 年 8 月）。</li>
+        <li><strong>課程實務與筆記脈絡：</strong>《中小企業授信與財報分析實務》課綱 Day 11、深度研析講義與課程實務講解逐字稿（R20261120 場次）。</li>
+        <li><strong>嚴格命名與缺失揭露：</strong>全頁統一以「鎖頭銀行」代稱授信與徵信實務承作銀行；凡來源未提供之內部表單代號、契約制式條文範本、JCIC 副本交易代號及作業天數均已明確標註「來源未提供」。</li>
+      </ul>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+      <a class="home-link" href="index.html">回首頁</a>
+    Powered By Dunk
+  </footer>
+
+  <api-shim></api-shim>
+  <script>
+    const CHAPTER_META = [
+      { id: `ch1`, tags: [`法規規範`, `風控實務`] },
+      { id: `ch2`, tags: [`風控實務`, `法規規範`] },
+      { id: `ch3`, tags: [`系統機制`, `法規規範`] },
+      { id: `ch4`, tags: [`風控實務`, `系統機制`] }
+    ];
+
+    const SCENARIO_DATA = {
+      fraud: {
+        leftTitle: `表象異常指標`,
+        leftText: `客戶送交鎖頭銀行之報表顯示營收穩健、獲利良好；但調閱 401 表、納稅證明或存摺流水時，營業額與稅額明顯偏低，或「其他應收關係人款項」異常龐大（實為違反《公司法》第 15 條資金貸與股東／負責人購買私人資產）。`,
+        rightTitle: `鎖頭銀行徵信處置`,
+        rightText: `立即調閱聯徵中心財報副本核對正本是否遭抽換或變造；要求客戶對營收、應收帳款與存貨差異提出說明及交易憑證（訂單、進出口報單、存摺收款紀錄），並於徵信報告忠實揭露，切勿替客戶隱匿。`,
+        verdictClass: `callout-error`,
+        verdictLabel: `風控判定：`,
+        verdictText: `屬高度道德風險或違規資金挪用警訊，須啟動補充查證並由授信端評估准駁與債權保全。`
+      },
+      legal: {
+        leftTitle: `表象差異現象`,
+        leftText: `以投資公司為例：報稅資料依總額申報進銷貨成本（買進 2,000、賣出 2,500，營收認列 2,500），但會計師查核報告若採「單站式（單階式）損益表」，僅列示淨收益 500，造成兩份報表數字「完全不同」。`,
+        rightTitle: `鎖頭銀行徵信處置`,
+        rightText: `因授信內規常以營收規模核給週轉金額度，若僅看查核報告的淨收入 500 會嚴重低估實際交易資金需求（2,000～2,500）。此時須併同報稅資料與會計師查核報告相互補充解讀，確認合法差異原因並載明於報告。`,
+        verdictClass: `callout-positive`,
+        verdictLabel: `風控判定：`,
+        verdictText: `屬會計表達方式所致之合法結構差異，非雙重報表造假；惟仍應核對正副本一致性並詳實敘明。`
+      },
+      window: {
+        leftTitle: `空窗期與申報書盲點`,
+        leftText: `非上市櫃公司每年 1 月 1 日至 5 月 31 日處於報稅財報空窗期，僅能取得去年度暫結表、自編聲明書及會計師受託證明；另 401/403 營業稅申報書僅列銷售申報而非損益，且實務偶有銷貨退回、折讓或虛開發票（課堂提及業界約 5%～8%）狀況。`,
+        rightTitle: `鎖頭銀行徵信處置`,
+        rightText: `空窗期承作達 3,000 萬元新案須先取具暫結表、自編聲明書及會計師委任證明，並於 6 月 1 日起務必追蹤補提正式財簽（防範客戶中途撤銷會計師委任）；同時輔以存摺資金流水及開立發票紀錄反推真實營運。`,
+        verdictClass: `callout-warning`,
+        verdictLabel: `風控判定：`,
+        verdictText: `屬高度時點風險管控情境，須落實期後追蹤與多維度流水佐證，避免空窗期風險裸露。`
+      }
+    };
+
+    let appState = {
+      readChapters: [],
+      expandedChapters: [`ch1`],
+      activeFilter: `all`,
+      searchQuery: ``,
+      activeScenario: `fraud`,
+      auditSimSteps: [false, false, false, false, false]
+    };
+
+    const originalBodyHtml = {};
+
+    function saveState() {
+      if (window.notebookAppApi && typeof window.notebookAppApi.setAppState === `function`) {
+        window.notebookAppApi.setAppState(appState).catch(function() {});
+      }
+    }
+
+    function applyExpandedUI() {
+      CHAPTER_META.forEach(function(item) {
+        const card = document.getElementById(`card-${item.id}`);
+        const header = card ? card.querySelector(`.chapter-card-header`) : null;
+        const btn = document.getElementById(`btn-toggle-${item.id}`);
+        const textEl = document.getElementById(`toggle-text-${item.id}`);
+        const isExpanded = appState.expandedChapters.indexOf(item.id) !== -1;
+        if (card) {
+          if (isExpanded) {
+            card.classList.add(`is-expanded`);
+          } else {
+            card.classList.remove(`is-expanded`);
+          }
+        }
+        if (header) header.setAttribute(`aria-expanded`, isExpanded ? `true` : `false`);
+        if (btn) btn.setAttribute(`aria-expanded`, isExpanded ? `true` : `false`);
+        if (textEl) textEl.textContent = isExpanded ? `收合` : `展開`;
+      });
+    }
+
+    function applyReadUI() {
+      const total = CHAPTER_META.length;
+      let readCount = 0;
+
+      CHAPTER_META.forEach(function(item) {
+        const isRead = appState.readChapters.indexOf(item.id) !== -1;
+        if (isRead) readCount += 1;
+        const card = document.getElementById(`card-${item.id}`);
+        const checkbox = document.getElementById(`read-${item.id}`);
+        const label = document.getElementById(`label-read-${item.id}`);
+
+        if (card) {
+          if (isRead) card.classList.add(`is-read`);
+          else card.classList.remove(`is-read`);
+        }
+        if (checkbox) checkbox.checked = isRead;
+        if (label) {
+          if (isRead) label.classList.add(`checked`);
+          else label.classList.remove(`checked`);
+        }
+      });
+
+      const pct = Math.round((readCount / total) * 100);
+      const pctEl = document.getElementById(`progress-percent`);
+      const textEl = document.getElementById(`progress-count-text`);
+      const barEl = document.getElementById(`progress-bar-fill`);
+
+      if (pctEl) pctEl.textContent = `${pct}%`;
+      if (textEl) textEl.textContent = `已完成 ${readCount} / ${total} 個核心章節`;
+      if (barEl) barEl.style.width = `${pct}%`;
+    }
+
+    function applyFilterAndSearch() {
+      const query = (appState.searchQuery || ``).trim();
+      const lowerQuery = query.toLowerCase();
+      let visibleCount = 0;
+
+      CHAPTER_META.forEach(function(item) {
+        const card = document.getElementById(`card-${item.id}`);
+        if (!card) return;
+
+        const matchesTag = appState.activeFilter === `all` || item.tags.indexOf(appState.activeFilter) !== -1;
+        const rawText = (card.textContent || ``).toLowerCase();
+        const matchesQuery = !lowerQuery || rawText.indexOf(lowerQuery) !== -1;
+
+        if (matchesTag && matchesQuery) {
+          card.style.display = ``;
+          visibleCount += 1;
+          if (lowerQuery && appState.expandedChapters.indexOf(item.id) === -1) {
+            appState.expandedChapters.push(item.id);
+          }
+        } else {
+          card.style.display = `none`;
+        }
+      });
+
+      applyExpandedUI();
+
+      const filterBtns = document.querySelectorAll(`.filter-btn`);
+      filterBtns.forEach(function(btn) {
+        if (btn.getAttribute(`data-filter`) === appState.activeFilter) {
+          btn.classList.add(`is-active`);
+        } else {
+          btn.classList.remove(`is-active`);
+        }
+      });
+
+      const statusEl = document.getElementById(`filter-status-text`);
+      if (statusEl) {
+        const filterLabel = appState.activeFilter === `all` ? `全部分類` : `【${appState.activeFilter}】`;
+        if (query) {
+          statusEl.innerHTML = `篩選「${escapeHtml(filterLabel)}」・搜尋「<strong>${escapeHtml(query)}</strong>」：共顯示 <strong>${visibleCount}</strong> / 4 個章節`;
+        } else {
+          statusEl.innerHTML = `目前顯示「${escapeHtml(filterLabel)}」：共 <strong>${visibleCount}</strong> / 4 個章節（點擊章節標題即可展開或收合詳細說明）`;
+        }
+      }
+
+      const emptyEl = document.getElementById(`empty-state`);
+      if (emptyEl) {
+        if (visibleCount === 0) emptyEl.classList.add(`is-visible`);
+        else emptyEl.classList.remove(`is-visible`);
+      }
+    }
+
+    function escapeHtml(str) {
+      return String(str)
+        .replace(/&/g, `&amp;`)
+        .replace(/</g, `&lt;`)
+        .replace(/>/g, `&gt;`)
+        .replace(/"/g, `&quot;`);
+    }
+
+    function applyScenarioUI() {
+      const key = SCENARIO_DATA[appState.activeScenario] ? appState.activeScenario : `fraud`;
+      const data = SCENARIO_DATA[key];
+
+      const tabs = [`fraud`, `legal`, `window`];
+      tabs.forEach(function(t) {
+        const el = document.getElementById(`tab-${t}`);
+        if (el) {
+          if (t === key) el.classList.add(`is-active`);
+          else el.classList.remove(`is-active`);
+        }
+      });
+
+      const container = document.getElementById(`scenario-content`);
+      if (container) {
+        container.innerHTML = `
+          <div class="scenario-grid">
+            <div class="scenario-card">
+              <h5>${escapeHtml(data.leftTitle)}</h5>
+              <p>${escapeHtml(data.leftText)}</p>
+            </div>
+            <div class="scenario-card">
+              <h5>${escapeHtml(data.rightTitle)}</h5>
+              <p>${escapeHtml(data.rightText)}</p>
+            </div>
+          </div>
+          <div class="scenario-verdict ${data.verdictClass}">
+            <strong>${escapeHtml(data.verdictLabel)}</strong>${escapeHtml(data.verdictText)}
+          </div>
+        `;
+      }
+    }
+
+    function applyAuditSimUI() {
+      let doneCount = 0;
+      for (let i = 0; i < 5; i++) {
+        const checked = Boolean(appState.auditSimSteps[i]);
+        if (checked) doneCount += 1;
+        const cb = document.getElementById(`sim-step-${i + 1}`);
+        if (cb) cb.checked = checked;
+      }
+      const statusEl = document.getElementById(`audit-sim-status`);
+      if (statusEl) {
+        if (doneCount === 5) {
+          statusEl.textContent = `檢核進度：5 / 5 項全數完成！鎖頭銀行徵信軌跡與正副本勾稽已達《徵信準則》第 36、37 條要求。`;
+          statusEl.style.color = `var(--positive)`;
+        } else {
+          statusEl.textContent = `檢核進度：已完成 ${doneCount} / 5 項（請依序完成全部五步稽核程序）`;
+          statusEl.style.color = `var(--primary)`;
+        }
+      }
+    }
+
+    /* Hoisted UI Event Handlers */
+    function toggleChapter(chapterId, evt) {
+      if (evt) evt.stopPropagation();
+      const idx = appState.expandedChapters.indexOf(chapterId);
+      if (idx === -1) {
+        appState.expandedChapters.push(chapterId);
+      } else {
+        appState.expandedChapters.splice(idx, 1);
+      }
+      applyExpandedUI();
+      saveState();
+    }
+
+    function handleHeaderKeydown(evt, chapterId) {
+      if (evt.key === `Enter` || evt.key === ` `) {
+        evt.preventDefault();
+        toggleChapter(chapterId, evt);
+      }
+    }
+
+    function toggleReadState(chapterId, isChecked) {
+      const idx = appState.readChapters.indexOf(chapterId);
+      if (isChecked && idx === -1) {
+        appState.readChapters.push(chapterId);
+      } else if (!isChecked && idx !== -1) {
+        appState.readChapters.splice(idx, 1);
+      }
+      applyReadUI();
+      saveState();
+    }
+
+    function setCategoryFilter(filterVal) {
+      appState.activeFilter = filterVal;
+      applyFilterAndSearch();
+      saveState();
+    }
+
+    function handleSearchInput(val) {
+      appState.searchQuery = val;
+      applyFilterAndSearch();
+      saveState();
+    }
+
+    function clearSearch() {
+      const input = document.getElementById(`keyword-search`);
+      if (input) input.value = ``;
+      appState.searchQuery = ``;
+      applyFilterAndSearch();
+      saveState();
+    }
+
+    function resetAllFilters() {
+      const input = document.getElementById(`keyword-search`);
+      if (input) input.value = ``;
+      appState.searchQuery = ``;
+      appState.activeFilter = `all`;
+      applyFilterAndSearch();
+      saveState();
+    }
+
+    function expandAllVisible() {
+      CHAPTER_META.forEach(function(item) {
+        const card = document.getElementById(`card-${item.id}`);
+        if (card && card.style.display !== `none`) {
+          if (appState.expandedChapters.indexOf(item.id) === -1) {
+            appState.expandedChapters.push(item.id);
+          }
+        }
+      });
+      applyExpandedUI();
+      saveState();
+    }
+
+    function collapseAllVisible() {
+      CHAPTER_META.forEach(function(item) {
+        const card = document.getElementById(`card-${item.id}`);
+        if (card && card.style.display !== `none`) {
+          const idx = appState.expandedChapters.indexOf(item.id);
+          if (idx !== -1) appState.expandedChapters.splice(idx, 1);
+        }
+      });
+      applyExpandedUI();
+      saveState();
+    }
+
+    function resetLearningProgress(btn) {
+      if (!btn) return;
+      if (btn.dataset.armed !== `true`) {
+        btn.dataset.armed = `true`;
+        btn.textContent = `再次點擊確認重設`;
+        setTimeout(function() {
+          if (btn.dataset.armed === `true`) {
+            btn.dataset.armed = `false`;
+            btn.textContent = `重設已讀紀錄`;
+          }
+        }, 4000);
+        return;
+      }
+      btn.dataset.armed = `false`;
+      btn.textContent = `重設已讀紀錄`;
+      appState.readChapters = [];
+      appState.auditSimSteps = [false, false, false, false, false];
+      applyReadUI();
+      applyAuditSimUI();
+      saveState();
+    }
+
+    function switchScenario(key) {
+      appState.activeScenario = key;
+      applyScenarioUI();
+      saveState();
+    }
+
+    function toggleAuditSimStep(index, checked) {
+      appState.auditSimSteps[index] = Boolean(checked);
+      applyAuditSimUI();
+      saveState();
+    }
+
+    async function initApp() {
+      try {
+        if (window.notebookAppApi && typeof window.notebookAppApi.getAppState === `function`) {
+          const saved = await window.notebookAppApi.getAppState();
+          if (saved && typeof saved === `object`) {
+            if (Array.isArray(saved.readChapters)) appState.readChapters = saved.readChapters;
+            if (Array.isArray(saved.expandedChapters)) appState.expandedChapters = saved.expandedChapters;
+            if (typeof saved.activeFilter === `string`) appState.activeFilter = saved.activeFilter;
+            if (typeof saved.searchQuery === `string`) appState.searchQuery = saved.searchQuery;
+            if (typeof saved.activeScenario === `string`) appState.activeScenario = saved.activeScenario;
+            if (Array.isArray(saved.auditSimSteps) && saved.auditSimSteps.length === 5) {
+              appState.auditSimSteps = saved.auditSimSteps;
+            }
+          }
+        }
+      } catch (e) {
+        // Fallback silently to default state
+      }
+
+      const searchInput = document.getElementById(`keyword-search`);
+      if (searchInput) searchInput.value = appState.searchQuery || ``;
+
+      applyReadUI();
+      applyScenarioUI();
+      applyAuditSimUI();
+      applyFilterAndSearch();
+
+      if (window.notebookAppApi && typeof window.notebookAppApi.notifyAppReady === `function`) {
+        window.notebookAppApi.notifyAppReady();
+      }
+    }
+
+    document.addEventListener(`DOMContentLoaded`, initApp);
+  </script>
+</body>
+</html>

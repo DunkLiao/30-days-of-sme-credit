@@ -1,0 +1,2212 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#14283a">
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="./manifest.webmanifest">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="授信實務30天">
+  <script>
+    if ("serviceWorker" in navigator && (location.protocol === "https:" || location.hostname === "localhost")) {
+      window.addEventListener("load", () => navigator.serviceWorker.register("./service-worker.js").catch((error) => console.warn("PWA offline support unavailable:", error)));
+    }
+  </script>
+  <meta name="artifact-type" content="dashboard">
+  <meta name="design-style" content="charter">
+  <title>中小企業授信與財報分析實務-Day25-關係企業與集團網絡穿透查核</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Libre+Caslon+Text:wght@400;700&family=Noto+Sans+TC:wght@400;500;600;700&family=Noto+Serif+TC:wght@400;600;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@1.43.0/dist/umd/lucide.min.js"></script>
+  <style>
+    :root {
+      color-scheme: light;
+
+      /* Charter base surfaces adapted to user THEME */
+      --background: #F8FAFC;
+      --surface-container-low: #FFFFFF;
+      --surface-container: #F1F5F9;
+      --surface-container-high: #E2E8F0;
+
+      /* Ink & Typography */
+      --on-surface: #0F2537;
+      --on-surface-variant: #475569;
+      --slate-deep: #334155;
+
+      /* Rules & Borders */
+      --outline: #C5A880;
+      --outline-variant: #CBD5E1;
+
+      /* Primary & Secondary THEME Tokens */
+      --primary: #0F2537;
+      --primary-indigo: #1E3A8A;
+      --on-primary: #F8FAFC;
+      --primary-container: #E0E7FF;
+      --on-primary-container: #0F2537;
+      --secondary: #334155;
+      --tertiary: #B45309;          /* Contrast-safe amber-copper text on light ground */
+      --accent-copper: #D97706;
+      --accent-champagne: #C5A880;
+
+      /* Module 5 Identity: High-Risk Control Orange */
+      --mod5-orange: #EA580C;
+      --mod5-orange-text: #C2410C;  /* >= 4.5:1 on white/cool-white */
+      --mod5-orange-bg: #FFF7ED;
+      --mod5-orange-border: #FDBA74;
+
+      /* Semantic Status Colors */
+      --positive: #059669;
+      --positive-text: #047857;     /* >= 4.5:1 on white */
+      --positive-bg: #ECFDF5;
+      --positive-border: #A7F3D0;
+
+      --warning: #F59E0B;
+      --warning-text: #92400E;
+      --warning-bg: #FFFBEB;
+      --warning-border: #FDE68A;
+
+      --error: #DC2626;
+      --error-text: #B91C1C;
+      --error-bg: #FEF2F2;
+      --error-border: #FECACA;
+      --on-error: #FFFFFF;
+
+      /* Data Series */
+      --data-1: #0F2537;
+      --data-2: #EA580C;
+      --data-3: #059669;
+      --data-4: #1E3A8A;
+      --data-context: #94A3B8;
+
+      /* Focus Ring */
+      --focus: #1E3A8A;
+
+      /* Fonts */
+      --font-headline: 'Noto Serif TC', 'Libre Caslon Text', serif;
+      --font-body: 'Noto Sans TC', 'Inter', sans-serif;
+      --font-label: 'JetBrains Mono', 'Noto Sans TC', monospace;
+
+      /* Type Scale (Dashboard / Explorer) */
+      --display-size: clamp(1.5rem, 1.2rem + 1.25vw, 2.15rem);
+      --headline-size: clamp(1.1875rem, 1.05rem + 0.45vw, 1.4rem);
+      --subhead-size: clamp(1rem, 0.95rem + 0.25vw, 1.125rem);
+      --body-size: clamp(0.9375rem, 0.9rem + 0.15vw, 1rem);
+      --label-size: 0.75rem;
+
+      /* Spacing Scale (4pt base) */
+      --space-xs: 0.25rem;
+      --space-sm: 0.5rem;
+      --space-md: 1rem;
+      --space-lg: 1.5rem;
+      --space-xl: 2.5rem;
+      --space-2xl: 4rem;
+
+      /* Shape (Charter 2px-4px crisp architectural corners) */
+      --rounded: 0.125rem;
+      --rounded-md: 0.25rem;
+      --rounded-lg: 0.25rem;
+
+      /* Effects */
+      --brass-rule: 2px solid var(--accent-champagne);
+      --mod5-rule: 3px solid var(--mod5-orange);
+      --hairline: 1px solid var(--outline-variant);
+      --card-shadow: 0 1px 2px rgba(15, 37, 55, 0.05);
+
+      /* Motion */
+      --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+      --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+      --dur-micro: 120ms;
+      --dur-short: 220ms;
+      --dur-long: 380ms;
+    }
+
+    /* Base Reset */
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body {
+      overflow-x: clip;
+      margin: 0;
+      padding: 0;
+      background-color: var(--background);
+      color: var(--on-surface);
+      font-family: var(--font-body);
+      font-size: var(--body-size);
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+    }
+    header { position: static !important; }
+    button, input, select, textarea { font-family: inherit; }
+
+    /* Focus Accessibility */
+    :focus-visible {
+      outline: 2px solid var(--focus);
+      outline-offset: 2px;
+    }
+
+    /* Charter Full-Bleed Navy Title Band */
+    .title-band {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-indigo) 100%);
+      color: var(--on-primary);
+      border-bottom: var(--mod5-rule);
+      padding: var(--space-xl) var(--space-lg) var(--space-lg);
+    }
+    .title-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .band-kicker-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-sm);
+      margin-bottom: var(--space-md);
+      padding-bottom: var(--space-sm);
+      border-bottom: 1px solid color-mix(in srgb, var(--accent-champagne) 45%, transparent);
+    }
+    .mod-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-xs);
+      background-color: var(--mod5-orange);
+      color: var(--on-primary);
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      font-weight: 600;
+      padding: var(--space-xs) var(--space-sm);
+      border-radius: var(--rounded);
+    }
+    .mod-meta {
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      color: var(--accent-champagne);
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-xs);
+    }
+    .title-band h1 {
+      font-family: var(--font-headline);
+      font-weight: 600;
+      font-size: var(--display-size);
+      line-height: 1.25;
+      margin: 0 0 var(--space-sm) 0;
+      color: var(--on-primary);
+    }
+    .title-lede {
+      color: color-mix(in srgb, var(--on-primary) 86%, var(--primary));
+      max-width: 68ch;
+      margin: 0 0 var(--space-lg) 0;
+      font-size: var(--body-size);
+    }
+
+    /* Progress & Objectives Panel inside Header */
+    .hero-panel {
+      display: grid;
+      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+      gap: var(--space-lg);
+      background: color-mix(in srgb, var(--primary) 68%, var(--on-primary) 8%);
+      border: 1px solid color-mix(in srgb, var(--accent-champagne) 45%, transparent);
+      border-top: 2px solid var(--accent-champagne);
+      border-radius: var(--rounded);
+      padding: var(--space-md) var(--space-lg);
+    }
+    .hero-objectives h2 {
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      color: var(--accent-champagne);
+      margin: 0 0 var(--space-sm) 0;
+      font-weight: 600;
+    }
+    .obj-list {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: var(--space-xs);
+    }
+    .obj-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-sm);
+      font-size: 0.9rem;
+      color: var(--on-primary);
+    }
+    .obj-dot {
+      flex-shrink: 0;
+      width: 6px;
+      height: 6px;
+      margin-top: 0.55rem;
+      background-color: var(--mod5-orange);
+      border-radius: var(--rounded);
+    }
+
+    .progress-box {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: var(--space-sm);
+      border-left: 1px solid color-mix(in srgb, var(--accent-champagne) 35%, transparent);
+      padding-left: var(--space-lg);
+    }
+    .progress-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: var(--space-sm);
+    }
+    .progress-label {
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      color: var(--accent-champagne);
+    }
+    .progress-stat {
+      font-family: var(--font-headline);
+      font-size: 1.5rem;
+      font-weight: 600;
+      font-variant-numeric: tabular-nums;
+      color: var(--on-primary);
+    }
+    .progress-track {
+      width: 100%;
+      height: 10px;
+      background: color-mix(in srgb, var(--on-primary) 16%, transparent);
+      border-radius: var(--rounded);
+      overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background-color: var(--mod5-orange);
+      transition: width var(--dur-long) var(--ease-out), background-color var(--dur-short) var(--ease-out);
+    }
+    .progress-fill.is-complete {
+      background-color: var(--positive);
+    }
+    .progress-sub {
+      font-size: 0.8125rem;
+      color: color-mix(in srgb, var(--on-primary) 78%, var(--primary));
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-sm);
+      flex-wrap: wrap;
+    }
+    .header-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-sm);
+      margin-top: var(--space-xs);
+    }
+    .btn-ghost-light {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-xs);
+      min-height: 36px;
+      padding: var(--space-xs) var(--space-sm);
+      background: transparent;
+      color: var(--on-primary);
+      border: 1px solid color-mix(in srgb, var(--on-primary) 38%, transparent);
+      border-radius: var(--rounded);
+      font-size: 0.8125rem;
+      cursor: pointer;
+      transition: background-color var(--dur-micro) var(--ease-out), border-color var(--dur-micro) var(--ease-out);
+    }
+    .btn-ghost-light:hover {
+      background: color-mix(in srgb, var(--on-primary) 12%, transparent);
+      border-color: var(--accent-champagne);
+    }
+
+    /* Main Page Grid */
+    .page-grid {
+      display: grid;
+      gap: var(--space-lg);
+      padding: var(--space-lg);
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .page-grid * { min-width: 0; }
+
+    /* KPI Summary Cards (Charter Brass Rule) */
+    .kpi-strip {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: var(--space-md);
+    }
+    .figure-card {
+      background: var(--surface-container-low);
+      border: var(--hairline);
+      border-top: var(--brass-rule);
+      border-radius: var(--rounded);
+      padding: var(--space-md);
+      box-shadow: var(--card-shadow);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xs);
+    }
+    .figure-card.is-mod5 {
+      border-top: var(--mod5-rule);
+    }
+    .figure-kicker {
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      color: var(--on-surface-variant);
+      font-weight: 500;
+    }
+    .figure-value {
+      font-family: var(--font-headline);
+      font-size: 1.125rem;
+      font-weight: 700;
+      color: var(--on-surface);
+      font-variant-numeric: tabular-nums;
+      line-height: 1.35;
+    }
+    .figure-note {
+      font-size: 0.8125rem;
+      color: var(--on-surface-variant);
+      margin: 0;
+    }
+
+    /* Search & Filter Control Bar */
+    .control-bar {
+      background: var(--surface-container-low);
+      border: var(--hairline);
+      border-top: 2px solid var(--primary);
+      border-radius: var(--rounded);
+      padding: var(--space-md) var(--space-lg);
+      display: grid;
+      grid-template-columns: minmax(220px, 1.2fr) minmax(0, 2fr) auto;
+      gap: var(--space-md);
+      align-items: end;
+      box-shadow: var(--card-shadow);
+    }
+    .field-group {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xs);
+    }
+    .field-label {
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      font-weight: 600;
+      color: var(--secondary);
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-xs);
+    }
+    .search-wrap {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+    .search-icon {
+      position: absolute;
+      left: 0.75rem;
+      color: var(--on-surface-variant);
+      pointer-events: none;
+      display: inline-flex;
+    }
+    .search-input {
+      width: 100%;
+      min-height: 44px;
+      padding: 0.5rem 2.25rem 0.5rem 2.25rem;
+      background: var(--background);
+      color: var(--on-surface);
+      border: 1px solid var(--outline-variant);
+      border-radius: var(--rounded);
+      font-size: 0.9375rem;
+      transition: border-color var(--dur-micro) var(--ease-out), box-shadow var(--dur-micro) var(--ease-out);
+    }
+    .search-input:focus {
+      outline: none;
+      border-color: var(--primary-indigo);
+      box-shadow: 0 0 0 2px color-mix(in srgb, var(--primary-indigo) 20%, transparent);
+    }
+    .clear-search-btn {
+      position: absolute;
+      right: 0.5rem;
+      background: transparent;
+      border: none;
+      color: var(--on-surface-variant);
+      cursor: pointer;
+      min-width: 32px;
+      min-height: 32px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: var(--rounded);
+    }
+    .clear-search-btn:hover {
+      background: var(--surface-container-high);
+      color: var(--on-surface);
+    }
+
+    .filter-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-xs);
+    }
+    .filter-btn {
+      min-height: 44px;
+      padding: 0.375rem 0.75rem;
+      background: var(--surface-container);
+      color: var(--secondary);
+      border: 1px solid var(--outline-variant);
+      border-radius: var(--rounded);
+      font-size: 0.8125rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background-color var(--dur-micro) var(--ease-out), color var(--dur-micro) var(--ease-out), border-color var(--dur-micro) var(--ease-out);
+    }
+    .filter-btn:hover {
+      background: var(--surface-container-high);
+      color: var(--on-surface);
+    }
+    .filter-btn.is-active {
+      background: var(--primary);
+      color: var(--on-primary);
+      border-color: var(--primary);
+    }
+
+    .status-select {
+      min-height: 44px;
+      padding: 0.5rem 2rem 0.5rem 0.75rem;
+      background: var(--background);
+      color: var(--on-surface);
+      border: 1px solid var(--outline-variant);
+      border-radius: var(--rounded);
+      font-size: 0.875rem;
+      cursor: pointer;
+    }
+
+    .result-bar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-sm);
+      padding-bottom: var(--space-xs);
+      border-bottom: var(--hairline);
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      color: var(--on-surface-variant);
+    }
+
+    /* Bento Grid of Unit Cards */
+    .bento-grid {
+      display: grid;
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      gap: var(--space-lg);
+      align-items: start;
+    }
+    .unit-card {
+      grid-column: span 6;
+      background: var(--surface-container-low);
+      border: var(--hairline);
+      border-top: var(--mod5-rule);
+      border-radius: var(--rounded);
+      box-shadow: var(--card-shadow);
+      transition: box-shadow var(--dur-short) var(--ease-out), border-top-color var(--dur-short) var(--ease-out);
+      container-type: inline-size;
+    }
+    .unit-card.span-12 { grid-column: span 12; }
+    .unit-card.span-7 { grid-column: span 7; }
+    .unit-card.span-5 { grid-column: span 5; }
+    .unit-card.is-read {
+      border-top-color: var(--positive);
+    }
+    .unit-card.is-hidden {
+      display: none;
+    }
+
+    .unit-header {
+      padding: var(--space-md) var(--space-lg);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-sm);
+    }
+    .unit-meta-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-sm);
+    }
+    .unit-tags {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: var(--space-xs);
+    }
+    .unit-num {
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      font-weight: 600;
+      color: var(--mod5-orange-text);
+      background: var(--mod5-orange-bg);
+      border: 1px solid var(--mod5-orange-border);
+      padding: 0.125rem 0.5rem;
+      border-radius: var(--rounded);
+    }
+    .unit-card.is-read .unit-num {
+      color: var(--positive-text);
+      background: var(--positive-bg);
+      border-color: var(--positive-border);
+    }
+    .cat-tag {
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      color: var(--tertiary);
+      border: 1px solid var(--accent-champagne);
+      background: transparent;
+      padding: 0.125rem 0.5rem;
+      border-radius: var(--rounded);
+    }
+
+    /* Read Checkbox Control */
+    .read-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-xs);
+      min-height: 44px;
+      padding: 0 var(--space-sm);
+      border: 1px solid var(--outline-variant);
+      border-radius: var(--rounded);
+      background: var(--background);
+      cursor: pointer;
+      font-size: 0.8125rem;
+      font-weight: 600;
+      color: var(--secondary);
+      user-select: none;
+      transition: background-color var(--dur-micro) var(--ease-out), border-color var(--dur-micro) var(--ease-out);
+    }
+    .read-toggle:hover {
+      background: var(--surface-container);
+    }
+    .read-toggle input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--positive);
+      cursor: pointer;
+      margin: 0;
+    }
+    .unit-card.is-read .read-toggle {
+      background: var(--positive-bg);
+      border-color: var(--positive-border);
+      color: var(--positive-text);
+    }
+
+    .unit-title {
+      font-family: var(--font-headline);
+      font-size: var(--headline-size);
+      font-weight: 700;
+      color: var(--on-surface);
+      margin: 0;
+      line-height: 1.35;
+    }
+    .unit-summary {
+      margin: 0;
+      color: var(--on-surface-variant);
+      font-size: 0.9375rem;
+    }
+
+    .unit-trigger {
+      width: 100%;
+      min-height: 44px;
+      padding: var(--space-sm) var(--space-lg);
+      background: var(--surface-container);
+      border: none;
+      border-top: var(--hairline);
+      color: var(--primary);
+      font-size: 0.875rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      transition: background-color var(--dur-micro) var(--ease-out);
+    }
+    .unit-trigger:hover {
+      background: var(--surface-container-high);
+    }
+    .unit-trigger .chevron {
+      transition: transform var(--dur-short) var(--ease-out);
+      display: inline-flex;
+    }
+    .unit-trigger[aria-expanded="true"] .chevron {
+      transform: rotate(180deg);
+    }
+
+    /* Expandable Body */
+    .unit-body {
+      display: none;
+      padding: var(--space-lg);
+      border-top: var(--hairline);
+      background: var(--surface-container-low);
+    }
+    .unit-body.is-open {
+      display: block;
+      animation: panelReveal var(--dur-short) var(--ease-out);
+    }
+    @keyframes panelReveal {
+      from { opacity: 0; transform: translateY(-4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .content-block {
+      margin-bottom: var(--space-lg);
+    }
+    .content-block:last-child {
+      margin-bottom: 0;
+    }
+    .sub-heading {
+      font-family: var(--font-headline);
+      font-size: var(--subhead-size);
+      font-weight: 700;
+      color: var(--primary);
+      margin: 0 0 var(--space-sm) 0;
+      padding-bottom: var(--space-xs);
+      border-bottom: 1px solid var(--outline-variant);
+      display: flex;
+      align-items: center;
+      gap: var(--space-xs);
+    }
+
+    /* Callouts & Alert Boxes */
+    .callout {
+      padding: var(--space-md);
+      border-radius: var(--rounded);
+      border: 1px solid var(--outline-variant);
+      border-left: 4px solid var(--primary);
+      background: var(--background);
+      margin: var(--space-sm) 0;
+    }
+    .callout.is-alert {
+      background: var(--error-bg);
+      border-color: var(--error-border);
+      border-left-color: var(--error);
+    }
+    .callout.is-alert .callout-title { color: var(--error-text); }
+    .callout.is-warn {
+      background: var(--warning-bg);
+      border-color: var(--warning-border);
+      border-left-color: var(--warning);
+    }
+    .callout.is-warn .callout-title { color: var(--warning-text); }
+    .callout.is-mod5 {
+      background: var(--mod5-orange-bg);
+      border-color: var(--mod5-orange-border);
+      border-left-color: var(--mod5-orange);
+    }
+    .callout.is-mod5 .callout-title { color: var(--mod5-orange-text); }
+    .callout.is-pass {
+      background: var(--positive-bg);
+      border-color: var(--positive-border);
+      border-left-color: var(--positive);
+    }
+    .callout.is-pass .callout-title { color: var(--positive-text); }
+
+    .callout-title {
+      font-weight: 700;
+      font-size: 0.9375rem;
+      margin: 0 0 var(--space-xs) 0;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: var(--space-xs);
+    }
+    .callout p, .callout ul {
+      margin: 0;
+      font-size: 0.9rem;
+    }
+    .callout ul { padding-left: 1.25rem; margin-top: var(--space-xs); }
+
+    /* Tables (Charter style) */
+    .table-scroll {
+      overflow-x: auto;
+      border: var(--hairline);
+      border-radius: var(--rounded);
+    }
+    table.data-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.875rem;
+      background: var(--surface-container-low);
+    }
+    table.data-table th {
+      background: var(--surface-container);
+      color: var(--primary);
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      font-weight: 600;
+      text-align: left;
+      padding: var(--space-sm) var(--space-md);
+      border-bottom: 2px solid var(--accent-champagne);
+      white-space: nowrap;
+    }
+    table.data-table td {
+      padding: var(--space-sm) var(--space-md);
+      border-bottom: var(--hairline);
+      vertical-align: top;
+      color: var(--on-surface);
+    }
+    table.data-table tr:last-child td { border-bottom: none; }
+
+    /* Missing Data Badge */
+    .source-missing {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-xs);
+      font-family: var(--font-label);
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--warning-text);
+      background: var(--warning-bg);
+      border: 1px dashed var(--warning);
+      padding: 0.125rem 0.5rem;
+      border-radius: var(--rounded);
+    }
+
+    /* Interactive Tabs / Toggles inside Units */
+    .seg-controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-xs);
+      margin-bottom: var(--space-md);
+    }
+    .seg-btn {
+      min-height: 44px;
+      padding: 0.375rem 0.875rem;
+      background: var(--surface-container);
+      color: var(--secondary);
+      border: 1px solid var(--outline-variant);
+      border-radius: var(--rounded);
+      font-size: 0.875rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color var(--dur-micro) var(--ease-out), color var(--dur-micro) var(--ease-out);
+    }
+    .seg-btn:hover { background: var(--surface-container-high); }
+    .seg-btn.is-active {
+      background: var(--primary);
+      color: var(--on-primary);
+      border-color: var(--primary);
+    }
+    .seg-btn.is-danger-active {
+      background: var(--error);
+      color: var(--on-error);
+      border-color: var(--error);
+    }
+
+    /* SVG Diagram Containers */
+    .diagram-stage {
+      background: var(--background);
+      border: var(--hairline);
+      border-radius: var(--rounded);
+      padding: var(--space-md);
+      margin-bottom: var(--space-md);
+    }
+    .diagram-stage svg {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    .svg-box-primary { fill: var(--primary); stroke: var(--primary); stroke-width: 1.5; }
+    .svg-box-indigo { fill: var(--primary-indigo); stroke: var(--primary-indigo); stroke-width: 1.5; }
+    .svg-box-leaf { fill: var(--surface-container-low); stroke: var(--primary); stroke-width: 1.5; }
+    .svg-box-warn { fill: var(--mod5-orange-bg); stroke: var(--mod5-orange); stroke-width: 2; }
+    .svg-box-danger { fill: var(--error-bg); stroke: var(--error); stroke-width: 2; }
+    .svg-box-pass { fill: var(--positive-bg); stroke: var(--positive); stroke-width: 1.5; }
+    .svg-line-solid { stroke: var(--primary); stroke-width: 2; fill: none; }
+    .svg-line-mod5 { stroke: var(--mod5-orange); stroke-width: 2; fill: none; }
+    .svg-line-dashed { stroke: var(--error); stroke-width: 2; stroke-dasharray: 5 4; fill: none; }
+    .svg-line-pass { stroke: var(--positive); stroke-width: 2; fill: none; }
+    .svg-text-light { fill: var(--on-primary); font-family: var(--font-body); font-size: 13px; font-weight: 600; }
+    .svg-text-dark { fill: var(--on-surface); font-family: var(--font-body); font-size: 13px; font-weight: 600; }
+    .svg-text-sub { fill: var(--on-surface-variant); font-family: var(--font-body); font-size: 11px; }
+    .svg-text-danger { fill: var(--error-text); font-family: var(--font-body); font-size: 12px; font-weight: 700; }
+    .svg-text-mod5 { fill: var(--mod5-orange-text); font-family: var(--font-body); font-size: 12px; font-weight: 700; }
+
+    /* Two-column internal split inside container query */
+    .split-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--space-md);
+    }
+    @container (min-width: 580px) {
+      .split-grid {
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      }
+    }
+
+    .pillar-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(210px, 100%), 1fr));
+      gap: var(--space-sm);
+    }
+    .pillar-item {
+      background: var(--background);
+      border: var(--hairline);
+      border-top: 2px solid var(--mod5-orange);
+      padding: var(--space-md);
+      border-radius: var(--rounded);
+    }
+    .pillar-item strong {
+      display: block;
+      color: var(--primary);
+      margin-bottom: var(--space-xs);
+    }
+
+    /* Interactive Decision Simulator (Unit 5) */
+    .scenario-box {
+      background: var(--background);
+      border: var(--hairline);
+      border-radius: var(--rounded);
+      padding: var(--space-md);
+    }
+    .scenario-answer {
+      margin-top: var(--space-sm);
+      padding: var(--space-md);
+      background: var(--surface-container-low);
+      border-left: 4px solid var(--positive);
+      border-top: var(--hairline);
+      border-right: var(--hairline);
+      border-bottom: var(--hairline);
+      border-radius: var(--rounded);
+      font-size: 0.9rem;
+    }
+
+    /* Self-Check Quiz Section */
+    .quiz-section {
+      background: var(--surface-container-low);
+      border: var(--hairline);
+      border-top: var(--brass-rule);
+      border-radius: var(--rounded);
+      padding: var(--space-lg);
+      box-shadow: var(--card-shadow);
+    }
+    .quiz-head {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-sm);
+      padding-bottom: var(--space-sm);
+      border-bottom: var(--hairline);
+      margin-bottom: var(--space-md);
+    }
+    .quiz-head h2 {
+      font-family: var(--font-headline);
+      font-size: var(--headline-size);
+      margin: 0;
+      color: var(--primary);
+    }
+    .quiz-score-badge {
+      font-family: var(--font-label);
+      font-size: 0.875rem;
+      font-weight: 600;
+      padding: var(--space-xs) var(--space-sm);
+      background: var(--primary-container);
+      color: var(--on-primary-container);
+      border-radius: var(--rounded);
+      font-variant-numeric: tabular-nums;
+    }
+    .quiz-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr));
+      gap: var(--space-md);
+    }
+    .quiz-card {
+      background: var(--background);
+      border: var(--hairline);
+      border-radius: var(--rounded);
+      padding: var(--space-md);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-sm);
+    }
+    .quiz-q {
+      font-weight: 600;
+      color: var(--on-surface);
+      margin: 0;
+      font-size: 0.9375rem;
+    }
+    .quiz-opts {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xs);
+    }
+    .quiz-opt-btn {
+      text-align: left;
+      min-height: 44px;
+      padding: var(--space-sm);
+      background: var(--surface-container-low);
+      color: var(--on-surface);
+      border: 1px solid var(--outline-variant);
+      border-radius: var(--rounded);
+      font-size: 0.875rem;
+      cursor: pointer;
+      transition: background-color var(--dur-micro) var(--ease-out), border-color var(--dur-micro) var(--ease-out);
+    }
+    .quiz-opt-btn:hover { background: var(--surface-container); }
+    .quiz-opt-btn.is-correct {
+      background: var(--positive-bg);
+      border-color: var(--positive);
+      color: var(--positive-text);
+      font-weight: 600;
+    }
+    .quiz-opt-btn.is-wrong {
+      background: var(--error-bg);
+      border-color: var(--error);
+      color: var(--error-text);
+    }
+    .quiz-feedback {
+      font-size: 0.85rem;
+      color: var(--on-surface-variant);
+      padding-top: var(--space-xs);
+      border-top: var(--hairline);
+      display: none;
+    }
+    .quiz-feedback.is-visible { display: block; }
+
+    /* Empty State */
+    .empty-state {
+      display: none;
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: var(--space-2xl) var(--space-lg);
+      background: var(--surface-container-low);
+      border: var(--hairline);
+      border-radius: var(--rounded);
+    }
+    .empty-state.is-visible { display: block; }
+    .btn-primary {
+      min-height: 44px;
+      padding: 0.5rem 1.25rem;
+      background: var(--primary);
+      color: var(--on-primary);
+      border: none;
+      border-radius: var(--rounded);
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .btn-primary:hover { background: var(--primary-indigo); }
+
+    /* Strict Footer */
+    .site-footer {
+      background: var(--primary);
+      color: var(--on-primary);
+      border-top: var(--brass-rule);
+      padding: var(--space-lg);
+      margin-top: var(--space-xl);
+    }
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-sm);
+    }
+    .footer-brand {
+      font-family: var(--font-label);
+      font-weight: 600;
+      color: var(--accent-champagne);
+      font-size: 0.9375rem;
+    }
+    .footer-note {
+      font-size: 0.8125rem;
+      color: color-mix(in srgb, var(--on-primary) 78%, var(--primary));
+      margin: 0;
+    }
+
+    /* Mobile Responsive Breakpoint */
+    @media (max-width: 900px) {
+      .hero-panel { grid-template-columns: 1fr; }
+      .progress-box {
+        border-left: none;
+        border-top: 1px solid color-mix(in srgb, var(--accent-champagne) 35%, transparent);
+        padding-left: 0;
+        padding-top: var(--space-md);
+      }
+      .kpi-strip { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .control-bar { grid-template-columns: 1fr; }
+      .unit-card, .unit-card.span-7, .unit-card.span-5, .unit-card.span-12 {
+        grid-column: span 12;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .title-band { padding: var(--space-lg) var(--space-md); }
+      .page-grid { padding: var(--space-md); gap: var(--space-md); }
+      .kpi-strip { grid-template-columns: 1fr; }
+      .unit-header, .unit-body { padding: var(--space-md); }
+      .unit-trigger { padding: var(--space-sm) var(--space-md); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+      .home-link { display: inline-flex; align-items: center; color: var(--outline); font: inherit; font-size: var(--label-size, 0.875rem); font-weight: 600; text-decoration: none; border: 1px solid var(--outline); padding: 0.4rem 0.7rem; margin: 0 0 var(--space-sm) 0; }
+    .home-link:hover, .home-link:focus-visible { color: var(--on-primary); text-decoration: underline; text-underline-offset: 0.18em; }
+    @media (max-width: 640px) { }
+      .header-bank-label { display: inline-block; margin: 0 0 var(--space-sm); color: var(--outline); font-family: var(--font-label); font-size: var(--label-size, 0.875rem); font-weight: 700; letter-spacing: 0.08em; }
+  </style>
+</head>
+<body>
+
+  <header class="title-band">
+      <span class="header-bank-label">鎖頭銀行</span>
+    <div class="title-inner">
+      <div class="band-kicker-row">
+        <span class="mod-badge">
+          <i data-lucide="shield-alert" aria-hidden="true" width="14" height="14"></i>
+          模組五：高階風控與舞弊穿透防線（Day 25 / 30）
+        </span>
+        <span class="mod-meta">
+          <i data-lucide="landmark" aria-hidden="true" width="14" height="14"></i>
+          鎖頭銀行授信徵信實務專題
+        </span>
+      </div>
+
+      <h1>中小企業授信與財報分析實務-Day25-關係企業與集團網絡穿透查核</h1>
+      <p class="title-lede">
+        聚焦集團企業之實質控制關聯、關係企業三書表調閱與「留存徵信軌跡」法理防線，穿透跨國聯貸保證架構脫節與家族隱蔽性股權分散風險，確立鎖頭銀行徵信作業之「有所本、充分揭露、依規定辦理」鐵律。
+      </p>
+
+      <div class="hero-panel">
+        <div class="hero-objectives">
+          <h2>模組五．Day 25 核心學習目標</h2>
+          <ul class="obj-list">
+            <li>
+              <span class="obj-dot" aria-hidden="true"></span>
+              <span>釐清《銀行公會徵信準則》第 21 條與「同一關係企業及集團資料表」於中小企業與大型上市櫃企業之差異化建檔標準。</span>
+            </li>
+            <li>
+              <span class="obj-dot" aria-hidden="true"></span>
+              <span>熟練公開資訊觀測站（MOPS）電子書調閱「關係企業三書表」路徑，落實即時印出附卷的「留存徵信軌跡」機制。</span>
+            </li>
+            <li>
+              <span class="obj-dot" aria-hidden="true"></span>
+              <span>辨識跨國組織異動引發之「一借三保變三借一保」連帶保證脫節風險，掌握第 36、37 條免責要件與實質控制人查核。</span>
+            </li>
+            <li>
+              <span class="obj-dot" aria-hidden="true"></span>
+              <span>拆解「未列入三書表」之家族分散持股與集團輪流分攤虧損手法，貫徹鎖頭銀行徵信防線與對保補正實務。</span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="progress-box">
+          <div>
+            <div class="progress-header">
+              <span class="progress-label">DAY 25 學習進度追蹤</span>
+              <span class="progress-stat" id="progress-pct">0%</span>
+            </div>
+            <div class="progress-track" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="progress-bar-aria">
+              <div class="progress-fill" id="progress-fill"></div>
+            </div>
+          </div>
+          <div class="progress-sub">
+            <span id="progress-count">已完成 0 / 5 單元（勾選各單元「已讀」即時更新）</span>
+          </div>
+          <div class="header-actions">
+            <button type="button" class="btn-ghost-light" onclick="toggleAllUnits(true)">
+              <i data-lucide="chevrons-down" aria-hidden="true" width="14" height="14"></i>
+              展開全部解析
+            </button>
+            <button type="button" class="btn-ghost-light" onclick="toggleAllUnits(false)">
+              <i data-lucide="chevrons-up" aria-hidden="true" width="14" height="14"></i>
+              收合全部單元
+            </button>
+            <button type="button" class="btn-ghost-light" id="btn-reset-progress" onclick="handleResetProgress(this)">
+              <i data-lucide="rotate-ccw" aria-hidden="true" width="14" height="14"></i>
+              重設已讀紀錄
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="page-grid">
+
+    <!-- Top KPI / Core Concept Strip -->
+    <section aria-label="核心概念概覽" class="kpi-strip">
+      <div class="figure-card">
+        <span class="figure-kicker">核心法源依據</span>
+        <span class="figure-value">徵信準則 第 21、36、37 條</span>
+        <p class="figure-note">洽索關係企業資料之授權，以及依當時狀況盡職調查後之事後免責防線。</p>
+      </div>
+      <div class="figure-card is-mod5">
+        <span class="figure-kicker">關鍵書證防禦</span>
+        <span class="figure-value">留存徵信軌跡（即時印出附卷）</span>
+        <p class="figure-note">集團組織增減與重組頻繁，唯當下印出附卷始能證明授信時點之真實狀態。</p>
+      </div>
+      <div class="figure-card">
+        <span class="figure-kicker">MOPS 現行調閱路徑</span>
+        <span class="figure-value">電子書 ▸ 關係企業三書表專區</span>
+        <p class="figure-note">跳脫舊制年報末尾翻找，直接下載「關係企業合併營業報告書」等文件。</p>
+      </div>
+      <div class="figure-card">
+        <span class="figure-kicker">鎖頭銀行徵信鐵律</span>
+        <span class="figure-value">有所本 ‧ 充分揭露 ‧ 依規定</span>
+        <p class="figure-note">不憑空作文、不隱瞞異常，並熟稔對保階段附屬文件之補正策略。</p>
+      </div>
+    </section>
+
+    <!-- Search & Filter Toolbar -->
+    <section aria-label="搜尋與單元篩選" class="control-bar">
+      <div class="field-group">
+        <label class="field-label" for="search-input">
+          <i data-lucide="search" aria-hidden="true" width="14" height="14"></i>
+          關鍵字搜尋（法條、案例、表單代碼）
+        </label>
+        <div class="search-wrap">
+          <span class="search-icon" aria-hidden="true">
+            <i data-lucide="search" width="16" height="16"></i>
+          </span>
+          <input
+            type="search"
+            id="search-input"
+            class="search-input"
+            placeholder="例如：A08、三書表、一借三保、水單、對保…"
+            oninput="applyFilters()"
+          >
+          <button type="button" class="clear-search-btn" id="clear-search-btn" onclick="clearSearch()" aria-label="清除搜尋文字" style="display:none;">
+            <i data-lucide="x" width="16" height="16" aria-hidden="true"></i>
+          </button>
+        </div>
+      </div>
+
+      <div class="field-group">
+        <span class="field-label">
+          <i data-lucide="filter" aria-hidden="true" width="14" height="14"></i>
+          章節分類標籤篩選
+        </span>
+        <div class="filter-chips" role="group" aria-label="章節分類篩選">
+          <button type="button" class="filter-btn is-active" data-cat="all" onclick="setCategory('all', this)">全部單元</button>
+          <button type="button" class="filter-btn" data-cat="法規準則" onclick="setCategory('法規準則', this)">法規準則</button>
+          <button type="button" class="filter-btn" data-cat="實務查核管道" onclick="setCategory('實務查核管道', this)">實務查核管道</button>
+          <button type="button" class="filter-btn" data-cat="組織變革風險" onclick="setCategory('組織變革風險', this)">組織變革風險</button>
+          <button type="button" class="filter-btn" data-cat="實務案例剖析" onclick="setCategory('實務案例剖析', this)">實務案例剖析</button>
+          <button type="button" class="filter-btn" data-cat="防線與保全實務" onclick="setCategory('防線與保全實務', this)">防線與保全實務</button>
+        </div>
+      </div>
+
+      <div class="field-group">
+        <label class="field-label" for="status-filter">閱讀狀態</label>
+        <select id="status-filter" class="status-select" onchange="applyFilters()">
+          <option value="all">全部顯示</option>
+          <option value="unread">僅顯示未讀</option>
+          <option value="read">僅顯示已讀</option>
+        </select>
+      </div>
+    </section>
+
+    <div class="result-bar">
+      <span id="filter-status-text">目前顯示 5 / 5 個學習單元</span>
+      <span>提示：點擊單元下方「展開完整圖文解析」可檢視案例剖析與互動結構圖</span>
+    </div>
+
+    <!-- Bento Grid: 5 Learning Units -->
+    <section class="bento-grid" aria-label="Day 25 課程單元列表">
+
+      <!-- UNIT 1 -->
+      <article
+        class="unit-card span-6"
+        id="unit-1"
+        data-unit="1"
+        data-category="法規準則"
+        data-keywords="第21條 第7條 同一關係企業及集團資料表 銀行公會 A08 A11 G27 統一集團 中小企業 上市櫃 公正平實 准駁"
+      >
+        <div class="unit-header">
+          <div class="unit-meta-row">
+            <div class="unit-tags">
+              <span class="unit-num">UNIT 01</span>
+              <span class="cat-tag">法規準則</span>
+            </div>
+            <label class="read-toggle" for="check-unit-1">
+              <input type="checkbox" id="check-unit-1" onchange="toggleRead(1, this.checked)">
+              <span>已讀</span>
+            </label>
+          </div>
+          <h2 class="unit-title">關係企業法規體系與徵信核心職責</h2>
+          <p class="unit-summary">
+            剖析《銀行公會徵信準則》第 21 條授權、銀行公會版「同一關係企業及集團資料表」填報原則，以及中小企業與大型上市櫃企業之差異化客觀建檔實務。
+          </p>
+        </div>
+
+        <button
+          type="button"
+          class="unit-trigger"
+          aria-expanded="true"
+          aria-controls="body-unit-1"
+          onclick="toggleExpand(1, this)"
+        >
+          <span>展開 / 收合詳細圖文解析</span>
+          <span class="chevron" aria-hidden="true"><i data-lucide="chevron-down" width="18" height="18"></i></span>
+        </button>
+
+        <div class="unit-body is-open" id="body-unit-1">
+          <div class="content-block">
+            <h3 class="sub-heading">一、核心法源授權與徵信角色分際</h3>
+            <div class="callout is-mod5">
+              <p class="callout-title">《中華民國銀行公會會員徵信準則》第 21 條</p>
+              <p>「企業授信戶得由營業單位洽索其各關係企業之有關資料，併送徵信單位參考。」—— 確立集團風險必須以整體關聯網絡彙總評估，不得僅視單一借款個體。</p>
+            </div>
+            <div class="callout">
+              <p class="callout-title">《徵信準則》第 7 條（職能邊界提醒）</p>
+              <p>徵信人員應依誠信原則公正平實撰寫徵信報告，收集並完整呈現客觀資料，<strong>不宜對授信案件直接表示准駁之意見</strong>；後續授信准駁判斷應由授信主辦及決策層級為之。</p>
+            </div>
+          </div>
+
+          <div class="content-block">
+            <h3 class="sub-heading">二、「同一關係企業及集團資料表」雙軌建檔實務</h3>
+            <p>實務上所使用之「同一關係企業及集團資料表」為<strong>銀行公會統一版本</strong>，但面對不同規模授信戶時，鎖頭銀行徵信人員應採差異化查核處理：</p>
+            <div class="table-scroll">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>企業規模分類</th>
+                    <th>客戶填報現況</th>
+                    <th>徵信人員實務作法與佐證標準</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>中小企業</strong></td>
+                    <td>關係企業數量有限，通常能完整填寫或僅局部遺漏。</td>
+                    <td>原則由客戶填寫齊全；若有缺漏，徵信人員可協助輔導補齊填報內容。</td>
+                  </tr>
+                  <tr>
+                    <td><strong>大型上市櫃企業</strong><br>（如：統一集團）</td>
+                    <td>集團極度龐大，關係企業三書表動輒突破十頁，客戶往往無法逐筆補齊。</td>
+                    <td>
+                      <strong>無須以手寫代客補填整份表單</strong>。應依客觀查證資料協助建檔，並將查詢結果直接列印附於該資料表後方作為佐證：
+                      <br>• 聯徵及商工客觀資料：<strong>A08</strong>、<strong>A11</strong>、<strong>G27</strong>
+                      <br>• 公開資訊：公開發行之<strong>關係企業三書表</strong>或<strong>財務報表</strong>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p style="margin-top: var(--space-sm); margin-bottom: 0;">
+              <span class="source-missing">
+                <i data-lucide="alert-circle" width="13" height="13" aria-hidden="true"></i>
+                A08 / A11 / G27 各別完整欄位定義明細：來源未提供（來源僅說明屬聯徵與變更登記客觀建檔查核資訊）
+              </span>
+            </p>
+          </div>
+        </div>
+      </article>
+
+      <!-- UNIT 2 -->
+      <article
+        class="unit-card span-6"
+        id="unit-2"
+        data-unit="2"
+        data-category="實務查核管道"
+        data-keywords="關係企業三書表 公開資訊觀測站 MOPS 電子書 關係企業合併營業報告書 年報 鴻海 統一 留存徵信軌跡 印出附卷"
+      >
+        <div class="unit-header">
+          <div class="unit-meta-row">
+            <div class="unit-tags">
+              <span class="unit-num">UNIT 02</span>
+              <span class="cat-tag">實務查核管道</span>
+            </div>
+            <label class="read-toggle" for="check-unit-2">
+              <input type="checkbox" id="check-unit-2" onchange="toggleRead(2, this.checked)">
+              <span>已讀</span>
+            </label>
+          </div>
+          <h2 class="unit-title">關係企業三書表之調閱管道與查核實務</h2>
+          <p class="unit-summary">
+            掌握公開資訊觀測站（MOPS）最新電子書下載路徑，並理解鎖頭銀行徵信人員為何必須於查證當下「印出附卷」以建立不可篡改的徵信軌跡。
+          </p>
+        </div>
+
+        <button
+          type="button"
+          class="unit-trigger"
+          aria-expanded="false"
+          aria-controls="body-unit-2"
+          onclick="toggleExpand(2, this)"
+        >
+          <span>展開 / 收合詳細圖文解析</span>
+          <span class="chevron" aria-hidden="true"><i data-lucide="chevron-down" width="18" height="18"></i></span>
+        </button>
+
+        <div class="unit-body" id="body-unit-2">
+          <div class="content-block">
+            <h3 class="sub-heading">一、三書表調閱位置演進對照（以鴻海實例說明）</h3>
+            <div class="seg-controls" role="group" aria-label="三書表調閱路徑比較">
+              <button type="button" class="seg-btn" id="mops-btn-old" onclick="switchMopsView('old')">傳統位置（過去年報）</button>
+              <button type="button" class="seg-btn is-active" id="mops-btn-new" onclick="switchMopsView('new')">現行路徑（MOPS 電子書專區）</button>
+            </div>
+
+            <div class="diagram-stage" id="mops-view-old" style="display:none;">
+              <p style="margin:0 0 var(--space-sm) 0; font-weight:600; color:var(--secondary);">傳統實務痛點：必須開啟 200 多頁企業年報逐頁翻查末尾</p>
+              <svg viewBox="0 0 600 100" role="img" aria-label="傳統年報翻找流程圖">
+                <rect x="10" y="20" width="160" height="56" rx="3" class="svg-box-leaf"/>
+                <text x="90" y="45" text-anchor="middle" class="svg-text-dark">企業年度報告書</text>
+                <text x="90" y="63" text-anchor="middle" class="svg-text-sub">全份往往超過 200 頁</text>
+                <line x1="170" y1="48" x2="215" y2="48" class="svg-line-solid"/>
+                <rect x="215" y="20" width="165" height="56" rx="3" class="svg-box-leaf"/>
+                <text x="297" y="45" text-anchor="middle" class="svg-text-dark">翻至最後幾頁附錄</text>
+                <text x="297" y="63" text-anchor="middle" class="svg-text-sub">位置隱蔽、檢索耗時</text>
+                <line x1="380" y1="48" x2="425" y2="48" class="svg-line-solid"/>
+                <rect x="425" y="20" width="165" height="56" rx="3" class="svg-box-warn"/>
+                <text x="507" y="45" text-anchor="middle" class="svg-text-mod5">提取關係企業三書表</text>
+                <text x="507" y="63" text-anchor="middle" class="svg-text-sub">舊制已改版遷移</text>
+              </svg>
+            </div>
+
+            <div class="diagram-stage" id="mops-view-new">
+              <p style="margin:0 0 var(--space-sm) 0; font-weight:600; color:var(--primary);">現行標準流程（課程附件六．鴻海實例）：直達獨立專區下載</p>
+              <svg viewBox="0 0 600 100" role="img" aria-label="現行MOPS電子書調閱流程圖">
+                <rect x="10" y="20" width="140" height="56" rx="3" class="svg-box-primary"/>
+                <text x="80" y="45" text-anchor="middle" class="svg-text-light">公開資訊觀測站</text>
+                <text x="80" y="63" text-anchor="middle" class="svg-text-light" style="font-size:10px;opacity:0.85;">MOPS 電子書</text>
+                <line x1="150" y1="48" x2="178" y2="48" class="svg-line-mod5"/>
+                <rect x="178" y="20" width="145" height="56" rx="3" class="svg-box-leaf"/>
+                <text x="250" y="45" text-anchor="middle" class="svg-text-dark">關係企業三書表專區</text>
+                <text x="250" y="63" text-anchor="middle" class="svg-text-sub">獨立電子書項目</text>
+                <line x1="323" y1="48" x2="350" y2="48" class="svg-line-mod5"/>
+                <rect x="350" y="20" width="130" height="56" rx="3" class="svg-box-warn"/>
+                <text x="415" y="42" text-anchor="middle" class="svg-text-mod5">合併營業報告書</text>
+                <text x="415" y="60" text-anchor="middle" class="svg-text-sub">直接下載該欄位</text>
+                <line x1="480" y1="48" x2="505" y2="48" class="svg-line-pass"/>
+                <rect x="505" y="20" width="88" height="56" rx="3" class="svg-box-pass"/>
+                <text x="549" y="45" text-anchor="middle" class="svg-text-dark">印出附卷</text>
+                <text x="549" y="63" text-anchor="middle" class="svg-text-sub">留存軌跡</text>
+              </svg>
+              <p style="margin: var(--space-xs) 0 0 0; font-size: 0.8125rem;">
+                <span class="source-missing">
+                  <i data-lucide="info" width="13" height="13" aria-hidden="true"></i>
+                  三書表其餘細表完整法定名稱（來源口述僅明載「關係企業三書表」及「關係企業合併營業報告書」）：完整三書表細目名稱來源未提供
+                </span>
+              </p>
+            </div>
+          </div>
+
+          <div class="content-block">
+            <h3 class="sub-heading">二、「留存徵信軌跡」的防禦價值</h3>
+            <div class="callout is-alert">
+              <p class="callout-title">鎖頭銀行徵信強制動作：查出即印出、附卷存檔</p>
+              <ul>
+                <li><strong>組織動態增減頻繁</strong>：如統一、鴻海等大型集團，旗下關係企業數量龐大，常因併購、處分或策略調整而隨時增減成員或變更架構。</li>
+                <li><strong>避免事後無法舉證</strong>：若僅在電腦螢幕查閱而未印出附在徵信卷宗上，一旦日後該企業發生財務狀況或組織重組，線上最新資料已遭覆蓋，徵信人員將無法證明授信審查「當下」所掌握的集團真實狀態。</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- UNIT 3 (Span 12 Featured Interactive Simulator) -->
+      <article
+        class="unit-card span-12"
+        id="unit-3"
+        data-unit="3"
+        data-category="組織變革風險"
+        data-keywords="海外聯貸 一借三保 三借一保 Refinance 再融資 保證脫節 第36條 第37條 免責 UBO 實質控制人 境外公司 COI Certificate of Good Standing 水單 OBU 母公司 倫敦 山基"
+      >
+        <div class="unit-header">
+          <div class="unit-meta-row">
+            <div class="unit-tags">
+              <span class="unit-num">UNIT 03</span>
+              <span class="cat-tag">組織變革風險</span>
+              <span class="cat-tag">法規準則</span>
+            </div>
+            <label class="read-toggle" for="check-unit-3">
+              <input type="checkbox" id="check-unit-3" onchange="toggleRead(3, this.checked)">
+              <span>已讀</span>
+            </label>
+          </div>
+          <h2 class="unit-title">跨國跨區實質控制人與海外聯貸保證架構脫節風險</h2>
+          <p class="unit-summary">
+            透過「一借三保 ➔ 三借一保」互動架構拓撲圖，解析再融資（Refinance）與海外組織重組引發的連帶保證脫節風險，並串接《徵信準則》第 36、37 條免責要件與境外法人實質控制人查核。
+          </p>
+        </div>
+
+        <button
+          type="button"
+          class="unit-trigger"
+          aria-expanded="true"
+          aria-controls="body-unit-3"
+          onclick="toggleExpand(3, this)"
+        >
+          <span>展開 / 收合詳細圖文解析與互動拓撲圖</span>
+          <span class="chevron" aria-hidden="true"><i data-lucide="chevron-down" width="18" height="18"></i></span>
+        </button>
+
+        <div class="unit-body is-open" id="body-unit-3">
+          <div class="content-block">
+            <h3 class="sub-heading">一、海外聯貸組織形態反轉模擬（點擊切換時點比較）</h3>
+            <div class="seg-controls" role="group" aria-label="海外聯貸保證架構時點切換">
+              <button type="button" class="seg-btn is-active" id="syn-btn-t0" onclick="switchSyndicate('t0')">
+                t₀ 初次聯貸規劃：一借三保（平行架構）
+              </button>
+              <button type="button" class="seg-btn" id="syn-btn-t1" onclick="switchSyndicate('t1')">
+                t₁ 2～3 年後 Refinance：三借一保（保證架構脫節）
+              </button>
+            </div>
+
+            <div class="diagram-stage">
+              <div id="syn-view-t0">
+                <svg viewBox="0 0 760 190" role="img" aria-label="初次聯貸一借三保平行架構圖">
+                  <rect x="275" y="14" width="210" height="46" rx="3" class="svg-box-primary"/>
+                  <text x="380" y="34" text-anchor="middle" class="svg-text-light">主借款人（1 家核心主體）</text>
+                  <text x="380" y="51" text-anchor="middle" class="svg-text-light" style="font-size:11px;opacity:0.85;">主辦行初次籌組聯貸（一借）</text>
+
+                  <line x1="380" y1="60" x2="380" y2="88" class="svg-line-pass"/>
+                  <line x1="140" y1="88" x2="620" y2="88" class="svg-line-pass"/>
+                  <line x1="140" y1="88" x2="140" y2="115" class="svg-line-pass"/>
+                  <line x1="380" y1="88" x2="380" y2="115" class="svg-line-pass"/>
+                  <line x1="620" y1="88" x2="620" y2="115" class="svg-line-pass"/>
+
+                  <rect x="45" y="115" width="190" height="54" rx="3" class="svg-box-pass"/>
+                  <text x="140" y="138" text-anchor="middle" class="svg-text-dark">連帶保證人 A（平行關係企業）</text>
+                  <text x="140" y="156" text-anchor="middle" class="svg-text-sub">提供完整連帶保證效力</text>
+
+                  <rect x="285" y="115" width="190" height="54" rx="3" class="svg-box-pass"/>
+                  <text x="380" y="138" text-anchor="middle" class="svg-text-dark">連帶保證人 B（平行關係企業）</text>
+                  <text x="380" y="156" text-anchor="middle" class="svg-text-sub">提供完整連帶保證效力</text>
+
+                  <rect x="525" y="115" width="190" height="54" rx="3" class="svg-box-pass"/>
+                  <text x="620" y="138" text-anchor="middle" class="svg-text-dark">連帶保證人 C（平行關係企業）</text>
+                  <text x="620" y="156" text-anchor="middle" class="svg-text-sub">提供完整連帶保證效力</text>
+                </svg>
+                <div class="callout is-pass">
+                  <p class="callout-title">t₀ 初始徵信狀態：架構清晰，債權確保完整</p>
+                  <p>國內聯貸案架構通常較穩定，但海外聯貸在首次規劃時看似風險分散、三家平行關企共同擔保；此時務必印出當時組織圖與登記資料附卷。</p>
+                </div>
+              </div>
+
+              <div id="syn-view-t1" style="display:none;">
+                <svg viewBox="0 0 760 200" role="img" aria-label="再融資後三借一保架構脫節警示圖">
+                  <rect x="45" y="16" width="190" height="50" rx="3" class="svg-box-warn"/>
+                  <text x="140" y="38" text-anchor="middle" class="svg-text-mod5">借款主體 1</text>
+                  <text x="140" y="55" text-anchor="middle" class="svg-text-sub">組織已非原平行形態</text>
+
+                  <rect x="285" y="16" width="190" height="50" rx="3" class="svg-box-warn"/>
+                  <text x="380" y="38" text-anchor="middle" class="svg-text-mod5">借款主體 2</text>
+                  <text x="380" y="55" text-anchor="middle" class="svg-text-sub">分散借款需求</text>
+
+                  <rect x="525" y="16" width="190" height="50" rx="3" class="svg-box-warn"/>
+                  <text x="620" y="38" text-anchor="middle" class="svg-text-mod5">借款主體 3</text>
+                  <text x="620" y="55" text-anchor="middle" class="svg-text-sub">常伴隨財務狀況浮現</text>
+
+                  <line x1="140" y1="66" x2="140" y2="96" class="svg-line-dashed"/>
+                  <line x1="380" y1="66" x2="380" y2="96" class="svg-line-dashed"/>
+                  <line x1="620" y1="66" x2="620" y2="96" class="svg-line-dashed"/>
+                  <line x1="140" y1="96" x2="620" y2="96" class="svg-line-dashed"/>
+                  <line x1="380" y1="96" x2="380" y2="124" class="svg-line-dashed"/>
+
+                  <rect x="235" y="124" width="290" height="58" rx="3" class="svg-box-danger"/>
+                  <text x="380" y="147" text-anchor="middle" class="svg-text-danger">僅存單一保證人（三借一保）</text>
+                  <text x="380" y="166" text-anchor="middle" class="svg-text-sub">保證力大幅稀釋；若未留存 t₀ 軌跡將無法舉證原貌</text>
+                </svg>
+                <div class="callout is-alert">
+                  <p class="callout-title">t₁ 警訊：Refinance 時常伴隨公司財務異常與保證架構脫節</p>
+                  <p>2～3 年後辦理再融資（Refinance）時，往往因公司財務出狀況或集團重組，原「平行」關係已改為「垂直」或其他架構，演變為「三借一保」。正如海外分行（如倫敦、美國地區分行）於疫情前承作商辦不動產聯貸看似十足擔保，疫情後整棟空置、出租率不到三成導致利息都繳不出來而被迫協議展延還款——沒人能預判兩三年後經濟反轉，<strong>唯有靠 t₀ 當下留存的徵信軌跡保護自己</strong>。</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="split-grid">
+            <div class="content-block">
+              <h3 class="sub-heading">二、第 36、37 條：盡職調查與免責要件</h3>
+              <div class="table-scroll">
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>法條</th>
+                      <th>核心條文規範</th>
+                      <th>對徵信人員之實務意義</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><strong>第 36 條</strong></td>
+                      <td>徵信人員應對所作之徵信報告，就<strong>徵信當時狀況及其所能知悉之事項</strong>負其責任。</td>
+                      <td>責任邊界限定於「徵信當時」可得查知的事實，而非未來不可預測的經濟或架構劇變。</td>
+                    </tr>
+                    <tr>
+                      <td><strong>第 37 條</strong></td>
+                      <td>凡依本準則、各會員有關規定及一般慣例所作之徵信報告，<strong>事後雖發現瑕疵，應免除其責任</strong>。</td>
+                      <td>必須仰賴「當下印出附卷之徵信軌跡」作為書證，證明當初確實已依規定完成盡職查核。</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="content-block">
+              <h3 class="sub-heading">三、境外法人與實質控制人（UBO）查核</h3>
+              <div class="callout">
+                <p class="callout-title">境外公司存續文件與「水單」過渡規範</p>
+                <ul>
+                  <li><strong>正式證明文件</strong>：設立登記、<strong>COI（Certificate of Incumbency，董事/股東職權證明）</strong>或 <strong>Certificate of Good Standing（良好存續證明）</strong>。申請規費約 150–250 至 400 美元不等，依外匯作業規範須為<strong>半年內有效</strong>。</li>
+                  <li><strong>續約過渡期「水單」替代</strong>：若正式文件尚在申請未及核發，依《徵信準則》第 17 條，續約階段至少須先取得「<strong>最近年度政府規費繳訖證明單據影本</strong>」（俗稱<strong>水單</strong>）證明公司仍存續；正式續約簽訂時仍應補齊完整證明。</li>
+                  <li><strong>OBU 境外公司負責人與跨區查核</strong>：OBU 公司名義負責人實為<strong>母公司</strong>，後方搭配「行使職權之自然人」（通常為母公司董事長）；香港、新加坡及中國大陸地區註冊狀態可委請當地分行或付費查詢，若見「休止、撤銷、解散」等異動，應待原因消失再行辦理，切勿硬衝。</li>
+                </ul>
+              </div>
+              <p style="margin-top: var(--space-xs); margin-bottom: 0;">
+                <span class="source-missing">
+                  <i data-lucide="alert-circle" width="13" height="13" aria-hidden="true"></i>
+                  實質控制人（UBO）具體持股百分比認定門檻（如是否為 25% 等數值）：來源未提供
+                </span>
+              </p>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- UNIT 4 -->
+      <article
+        class="unit-card span-7"
+        id="unit-4"
+        data-unit="4"
+        data-category="實務案例剖析"
+        data-keywords="永豐餘 Green & Safe 永豐麵 關係企業三書表 股權分散 虧損分攤 上誼文化 信誼 業外收入 權益法 個人獲利 營業利益 Character"
+      >
+        <div class="unit-header">
+          <div class="unit-meta-row">
+            <div class="unit-tags">
+              <span class="unit-num">UNIT 04</span>
+              <span class="cat-tag">實務案例剖析</span>
+            </div>
+            <label class="read-toggle" for="check-unit-4">
+              <input type="checkbox" id="check-unit-4" onchange="toggleRead(4, this.checked)">
+              <span>已讀</span>
+            </label>
+          </div>
+          <h2 class="unit-title">隱蔽性關係企業與集團內部利益輸送穿透</h2>
+          <p class="unit-summary">
+            拆解永豐餘集團家族關聯企業（Green &amp; Safe 永豐麵）未現身於三書表之股權分散與虧損輪流認列模式，並以家族文教事業揭露「公司帳面 vs 經營者個人荷包」的獲利穿透法。
+          </p>
+        </div>
+
+        <button
+          type="button"
+          class="unit-trigger"
+          aria-expanded="false"
+          aria-controls="body-unit-4"
+          onclick="toggleExpand(4, this)"
+        >
+          <span>展開 / 收合詳細圖文解析</span>
+          <span class="chevron" aria-hidden="true"><i data-lucide="chevron-down" width="18" height="18"></i></span>
+        </button>
+
+        <div class="unit-body" id="body-unit-4">
+          <div class="content-block">
+            <h3 class="sub-heading">一、案例穿透：Green &amp; Safe 永豐麵（永豐餘家族關聯企業）</h3>
+            <div class="seg-controls" role="group" aria-label="隱蔽性關係企業視角切換">
+              <button type="button" class="seg-btn" id="yfy-btn-surface" onclick="switchYfyView('surface')">表面視角（財報三書表）</button>
+              <button type="button" class="seg-btn is-danger-active" id="yfy-btn-deep" onclick="switchYfyView('deep')">穿透視角（集團實質輸血機制）</button>
+            </div>
+
+            <div class="diagram-stage" id="yfy-view-surface" style="display:none;">
+              <p style="margin:0 0 var(--space-sm) 0; font-weight:600; color:var(--secondary);">表面文件狀態：未能從集團關係企業三書表中直接辨識</p>
+              <svg viewBox="0 0 600 120" role="img" aria-label="表面視角下並未列入關係企業三書表">
+                <rect x="20" y="24" width="210" height="68" rx="3" class="svg-box-leaf"/>
+                <text x="125" y="52" text-anchor="middle" class="svg-text-dark">集團「關係企業三書表」</text>
+                <text x="125" y="72" text-anchor="middle" class="svg-text-sub">帳面名單中查無此公司</text>
+                <line x1="230" y1="58" x2="310" y2="58" class="svg-line-dashed"/>
+                <text x="270" y="48" text-anchor="middle" class="svg-text-danger">刻意隱蔽</text>
+                <rect x="310" y="24" width="270" height="68" rx="3" class="svg-box-warn"/>
+                <text x="445" y="50" text-anchor="middle" class="svg-text-mod5">Green &amp; Safe 永豐麵</text>
+                <text x="445" y="70" text-anchor="middle" class="svg-text-sub">個別看：營業現金流曾流出、經營不穩</text>
+              </svg>
+            </div>
+
+            <div class="diagram-stage" id="yfy-view-deep">
+              <p style="margin:0 0 var(--space-sm) 0; font-weight:600; color:var(--error-text);">實質運作機制：家族成員掌控、集團關企分散持股並「輪流認賠」</p>
+              <svg viewBox="0 0 600 175" role="img" aria-label="穿透視角下集團輪流認列虧損機制圖">
+                <rect x="175" y="10" width="250" height="44" rx="3" class="svg-box-primary"/>
+                <text x="300" y="30" text-anchor="middle" class="svg-text-light">集團總裁家族（總裁女兒實際經營）</text>
+                <text x="300" y="45" text-anchor="middle" class="svg-text-light" style="font-size:10px;opacity:0.85;">主導集團內部協調分攤架構</text>
+
+                <line x1="300" y1="54" x2="300" y2="75" class="svg-line-mod5"/>
+                <line x1="115" y1="75" x2="485" y2="75" class="svg-line-mod5"/>
+                <line x1="115" y1="75" x2="115" y2="95" class="svg-line-mod5"/>
+                <line x1="300" y1="75" x2="300" y2="95" class="svg-line-mod5"/>
+                <line x1="485" y1="75" x2="485" y2="95" class="svg-line-mod5"/>
+
+                <rect x="20" y="95" width="190" height="66" rx="3" class="svg-box-warn"/>
+                <text x="115" y="116" text-anchor="middle" class="svg-text-mod5">第一批關企：分散持股</text>
+                <text x="115" y="134" text-anchor="middle" class="svg-text-sub">例如各自認購 36%、28%…</text>
+                <text x="115" y="150" text-anchor="middle" class="svg-text-sub">避開控制門檻、未列三書表</text>
+
+                <rect x="225" y="95" width="150" height="66" rx="3" class="svg-box-danger"/>
+                <text x="300" y="116" text-anchor="middle" class="svg-text-danger">第二批關企：接棒</text>
+                <text x="300" y="134" text-anchor="middle" class="svg-text-sub">前批賠完後隔兩年</text>
+                <text x="300" y="150" text-anchor="middle" class="svg-text-sub">換另三間公司輪流認損</text>
+
+                <rect x="395" y="95" width="185" height="66" rx="3" class="svg-box-pass"/>
+                <text x="487" y="116" text-anchor="middle" class="svg-text-dark">實際營運結果</text>
+                <text x="487" y="134" text-anchor="middle" class="svg-text-sub">處分大陸廠房斷尾求生</text>
+                <text x="487" y="150" text-anchor="middle" class="svg-text-sub">靠集團輸血仍穩健存續</text>
+              </svg>
+            </div>
+            <p style="font-size: 0.9rem; color: var(--on-surface-variant);">
+              徵信判讀要訣：此類企業屬「明知其個體經營不穩，但在明確集團家族保護傘下仍具續作支撐」的特殊樣態；唯必須透過家族人脈與股權關聯穿透，才能掌握真正風險來源。
+            </p>
+          </div>
+
+          <div class="content-block">
+            <h3 class="sub-heading">二、穿透「經營者個人獲利」vs「公司帳面獲利」</h3>
+            <div class="callout is-mod5">
+              <p class="callout-title">徵信 5C 首重 Character：看清經營者如何實際賺錢</p>
+              <p>授信 5P 談 People 背景，但徵信 5C 的 <strong>Character</strong> 就像瞎子摸象後拚出全貌——<strong>重點不只是這家公司怎麼獲利，而是「經營者本人實際上怎麼獲利」</strong>。</p>
+            </div>
+            <div class="split-grid" style="margin-top: var(--space-sm);">
+              <div class="callout">
+                <p class="callout-title">手段 1：本業平庸、業外權益法分紅</p>
+                <p>以傳統文教事業（上誼文化）為例，在產業萎縮下仍能獲利，關鍵在於旗下子公司採權益法認列投資收益，每年持續分紅入帳——須嚴格區分「<strong>營業利益（本業本質）</strong>」與「<strong>業外收支（通常較不穩定）</strong>」。</p>
+              </div>
+              <div class="callout">
+                <p class="callout-title">手段 2：純家族房東公司抽取租金</p>
+                <p>另設股東結構極單純（僅父母與子女、無外人）之企業（信誼）作為企業大樓房東收租；導致「不管主體公司帳面賺或賠，外部親戚股東氣得牙癢癢，但核心經營家族始終穩賺不賠、荷包滿滿」。</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- UNIT 5 -->
+      <article
+        class="unit-card span-5"
+        id="unit-5"
+        data-unit="5"
+        data-category="防線與保全實務"
+        data-keywords="有所本 充分揭露 依規定辦理 鎖頭銀行 關係戶資料表 銀行法第33條之3 同一關係人資料表 對保 補正 否定意見 經理報告 公司法第15條"
+      >
+        <div class="unit-header">
+          <div class="unit-meta-row">
+            <div class="unit-tags">
+              <span class="unit-num">UNIT 05</span>
+              <span class="cat-tag">防線與保全實務</span>
+            </div>
+            <label class="read-toggle" for="check-unit-5">
+              <input type="checkbox" id="check-unit-5" onchange="toggleRead(5, this.checked)">
+              <span>已讀</span>
+            </label>
+          </div>
+          <h2 class="unit-title">鎖頭銀行徵信作業防線與審查實務準則</h2>
+          <p class="unit-summary">
+            掌握鎖頭銀行徵信三大金科玉律，破解「關係戶資料表 vs 銀行法第 33 條之 3」徵提僵局的對保補正技巧，以及面臨組織併購與資金挪用時的額度保全策略。
+          </p>
+        </div>
+
+        <button
+          type="button"
+          class="unit-trigger"
+          aria-expanded="false"
+          aria-controls="body-unit-5"
+          onclick="toggleExpand(5, this)"
+        >
+          <span>展開 / 收合詳細圖文解析</span>
+          <span class="chevron" aria-hidden="true"><i data-lucide="chevron-down" width="18" height="18"></i></span>
+        </button>
+
+        <div class="unit-body" id="body-unit-5">
+          <div class="content-block">
+            <h3 class="sub-heading">一、徵信人員三大金科玉律</h3>
+            <div class="pillar-grid">
+              <div class="pillar-item">
+                <strong>01｜有所本</strong>
+                所有陳述皆須有客觀佐證（商工登記、稅務入口網、聯徵、MOPS），切忌憑空作文、避免「多寫多錯」。
+              </div>
+              <div class="pillar-item">
+                <strong>02｜充分揭露</strong>
+                忠實揭露異常（如非營業性其他應收關係人借方違反《公司法》第 15 條），不為客戶粉飾，免成「徵信不實」之過。
+              </div>
+              <div class="pillar-item">
+                <strong>03｜依規定辦理</strong>
+                緊扣 SOP、函釋、董事會稽核重點與《徵信準則》，保護授信戶債權之餘，更保護徵信人員執業平安。
+              </div>
+            </div>
+          </div>
+
+          <div class="content-block">
+            <h3 class="sub-heading">二、高壓實務情境決策演練（點擊情境查看解方）</h3>
+            <div class="seg-controls" role="group" aria-label="實務防線情境選擇">
+              <button type="button" class="seg-btn is-active" id="scn-btn-1" onclick="switchScenario(1)">情境 A：上市櫃拒簽關係戶表</button>
+              <button type="button" class="seg-btn" id="scn-btn-2" onclick="switchScenario(2)">情境 B：併購否定意見財報</button>
+              <button type="button" class="seg-btn" id="scn-btn-3" onclick="switchScenario(3)">情境 C：負責人挪用資金買豪宅</button>
+            </div>
+
+            <div class="scenario-box" id="scenario-1">
+              <p style="margin:0; font-weight:600;">痛點：大型上市櫃企業往來二、三十家銀行，法務拒絕修改或簽署鎖頭銀行獨家「關係戶資料表」，僅願提供《銀行法》第 33 條之 3「同一關係人資料表」。</p>
+              <div class="scenario-answer">
+                <strong>鎖頭銀行對保補正技巧（最終防線）：</strong>
+                <p style="margin: var(--space-xs) 0 0 0;">因關係戶資料表屬內部審查業管文件，若前期徵信階段確實無法使命必達，最不得已的實務作法是於最終<strong>「對保」階段，將其視為內部契約書附屬文件之一併交由客戶蓋章</strong>，隨後補附回徵信卷宗完成歸檔。</p>
+              </div>
+            </div>
+
+            <div class="scenario-box" id="scenario-2" style="display:none;">
+              <p style="margin:0; font-weight:600;">痛點：參貸海外聯貸之主體因經營不善將被母公司併購，會計師因不再符合繼續經營假設（改採處分價值）而出具「否定意見」查核報告，徵信如何處理？</p>
+              <div class="scenario-answer">
+                <strong>主體轉換與額度審查處置：</strong>
+                <p style="margin: var(--space-xs) 0 0 0;">並非直接「不能做」。因借款主體將更換為併購方（母公司），實務應辦理<strong>變更授信條件／變更授信戶分析主體</strong>：照實寫明原主體財報係採處分價值故「僅供參考」，並將分析重心轉移至併購後的「母公司」即可。</p>
+              </div>
+            </div>
+
+            <div class="scenario-box" id="scenario-3" style="display:none;">
+              <p style="margin:0; font-weight:600;">痛點：中小企業董座將公司資金挪去購置個人超跑與豪宅，帳列「其他應收款—關係人（借方）」佔總資產達 50%（違反《公司法》第 15 條）。</p>
+              <div class="scenario-answer">
+                <strong>向上陳報與額度保全策略：</strong>
+                <p style="margin: var(--space-xs) 0 0 0;">切勿自行「展現勇氣（Guts）」貿然處斷或替客戶掩蓋。徵信人員應<strong>對內忠實撰寫揭露、對外委婉提醒改善</strong>，並立即<strong>向經理報告</strong>——由經理及授信端決定「斷尾求生（收縮額度）」或「與客戶協商約定隔年消除異常」。</p>
+              </div>
+            </div>
+
+            <p style="margin-top: var(--space-sm); margin-bottom: 0;">
+              <span class="source-missing">
+                <i data-lucide="alert-circle" width="13" height="13" aria-hidden="true"></i>
+                鎖頭銀行內部額度縮減比例、擔保品加徵成數具體量化公式：來源未提供
+              </span>
+            </p>
+          </div>
+        </div>
+      </article>
+
+      <!-- Empty Search State -->
+      <div class="empty-state" id="empty-state">
+        <p style="font-size: 1.0625rem; font-weight: 600; color: var(--primary); margin: 0 0 var(--space-xs) 0;">
+          找不到符合條件的課程單元
+        </p>
+        <p style="color: var(--on-surface-variant); margin: 0 0 var(--space-md) 0;">
+          目前的搜尋關鍵字或閱讀狀態篩選沒有對應結果，請試著更換關鍵字或重設篩選條件。
+        </p>
+        <button type="button" class="btn-primary" onclick="resetAllFilters()">顯示全部 5 個單元</button>
+      </div>
+
+    </section>
+
+    <!-- Self-Check Mini Quiz -->
+    <section class="quiz-section" aria-label="Day 25 實務防線隨堂檢核">
+      <div class="quiz-head">
+        <div>
+          <span class="figure-kicker" style="color: var(--mod5-orange-text);">SELF-ASSESSMENT CHECKPOINT</span>
+          <h2>Day 25 高階風控實務隨堂檢核</h2>
+        </div>
+        <span class="quiz-score-badge" id="quiz-score-badge">目前得分：0 / 3 題</span>
+      </div>
+
+      <div class="quiz-grid">
+        <!-- Q1 -->
+        <div class="quiz-card" data-q="1">
+          <p class="quiz-q">1. 遇大型上市櫃集團（關係企業三書表破十頁）無法填齊「同一關係企業及集團資料表」時，鎖頭銀行徵信人員應如何處理？</p>
+          <div class="quiz-opts">
+            <button type="button" class="quiz-opt-btn" onclick="answerQuiz(1, 0, this)">A. 退件並強制客戶財務長逐頁手寫補齊，否則不予受理</button>
+            <button type="button" class="quiz-opt-btn" onclick="answerQuiz(1, 1, this)">B. 依客觀資料（A08、A11、G27、三書表或財報）協助建檔並印出附於該頁後方佐證</button>
+            <button type="button" class="quiz-opt-btn" onclick="answerQuiz(1, 2, this)">C. 直接於徵信報告填寫「免查」並由徵信人員批示准貸</button>
+          </div>
+          <div class="quiz-feedback" id="quiz-fb-1"></div>
+        </div>
+
+        <!-- Q2 -->
+        <div class="quiz-card" data-q="2">
+          <p class="quiz-q">2. 海外聯貸常在 2～3 年後 Refinance 時從「一借三保」變成「三借一保」，依《徵信準則》第 36、37 條，徵信人員最重要的自保與免責關鍵為何？</p>
+          <div class="quiz-opts">
+            <button type="button" class="quiz-opt-btn" onclick="answerQuiz(2, 0, this)">A. 查核當下即印出組織圖與三書表等資料附卷，留存完整徵信軌跡</button>
+            <button type="button" class="quiz-opt-btn" onclick="answerQuiz(2, 1, this)">B. 僅在電腦檢視公開資訊觀測站即可，無須浪費紙張列印歸檔</button>
+            <button type="button" class="quiz-opt-btn" onclick="answerQuiz(2, 2, this)">C. 要求客戶自行口頭承諾未來三年內絕不調整集團組織架構</button>
+          </div>
+          <div class="quiz-feedback" id="quiz-fb-2"></div>
+        </div>
+
+        <!-- Q3 -->
+        <div class="quiz-card" data-q="3">
+          <p class="quiz-q">3. 實務上分析如「Green &amp; Safe 永豐麵」或家族關係企業時，為何不能只看公司個體損益表，還須穿透集團與經營者結構？</p>
+          <div class="quiz-opts">
+            <button type="button" class="quiz-opt-btn" onclick="answerQuiz(3, 0, this)">A. 因法律規定所有餐飲門市都免編財務報表</button>
+            <button type="button" class="quiz-opt-btn" onclick="answerQuiz(3, 1, this)">B. 只要業外收入高就代表本業極為穩健，無須區分營業利益</button>
+            <button type="button" class="quiz-opt-btn" onclick="answerQuiz(3, 2, this)">C. 可能透過股權分散未列三書表、輪流認列虧損，或由純家族房東／業外分紅達成個人穩賺</button>
+          </div>
+          <div class="quiz-feedback" id="quiz-fb-3"></div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <a class="home-link" href="index.html">回首頁</a>
+      <span class="footer-brand">Powered By Dunk</span>
+      <p class="footer-note">
+        資料來源依據《中華民國銀行公會會員徵信準則》及《中小企業授信與財報分析實務》課程講述整理；未提供細項數據處均明標「來源未提供」。
+      </p>
+    </div>
+  </footer>
+
+  <api-shim></api-shim>
+
+  <script>
+    const TOTAL_UNITS = 5;
+
+    const appState = {
+      readUnits: [],
+      expandedUnits: [1, 3],
+      activeCategory: 'all',
+      searchQuery: '',
+      statusFilter: 'all',
+      quizAnswers: {}
+    };
+
+    const quizConfig = {
+      1: {
+        correctIndex: 1,
+        explanation: `正解 B：大型上市櫃企業無須手寫代補整份表格，依客觀查證資訊（A08、A11、G27 及公開發行之關係企業三書表或財報）列印並附於該頁後方佐證即可；且依第 7 條徵信人員不得表示准駁意見。`
+      },
+      2: {
+        correctIndex: 0,
+        explanation: `正解 A：組織隨時可能增減調整，唯有當下印出附卷「留存徵信軌跡」，才能證明徵信當時盡職調查之狀態，符合第 36 條及第 37 條之事後免責要件。`
+      },
+      3: {
+        correctIndex: 2,
+        explanation: `正解 C：永豐餘關企案例顯示集團可透過分散持股（如 36%、28%）避開三書表並輪流分攤虧損；上誼／信誼案例亦提醒須區分本業「營業利益」與「業外／家族租金輸送」。`
+      }
+    };
+
+    async function savePersistedState() {
+      if (window.notebookAppApi && typeof window.notebookAppApi.setAppState === 'function') {
+        try {
+          await window.notebookAppApi.setAppState({
+            readUnits: appState.readUnits,
+            expandedUnits: appState.expandedUnits,
+            quizAnswers: appState.quizAnswers
+          });
+        } catch (err) {
+          /* Ignore transient host state errors */
+        }
+      }
+    }
+
+    function updateProgressUI() {
+      const count = appState.readUnits.length;
+      const pct = Math.round((count / TOTAL_UNITS) * 100);
+      const pctEl = document.getElementById('progress-pct');
+      const countEl = document.getElementById('progress-count');
+      const fillEl = document.getElementById('progress-fill');
+      const barAriaEl = document.getElementById('progress-bar-aria');
+
+      if (pctEl) pctEl.textContent = `${pct}%`;
+      if (countEl) {
+        countEl.textContent = count === TOTAL_UNITS
+          ? `已完成 ${count} / ${TOTAL_UNITS} 單元（Day 25 全章節學習達成）`
+          : `已完成 ${count} / ${TOTAL_UNITS} 單元（勾選各單元「已讀」即時更新）`;
+      }
+      if (fillEl) {
+        fillEl.style.width = `${pct}%`;
+        fillEl.classList.toggle('is-complete', count === TOTAL_UNITS);
+      }
+      if (barAriaEl) {
+        barAriaEl.setAttribute('aria-valuenow', String(pct));
+      }
+
+      for (let i = 1; i <= TOTAL_UNITS; i++) {
+        const isRead = appState.readUnits.includes(i);
+        const card = document.getElementById(`unit-${i}`);
+        const cb = document.getElementById(`check-unit-${i}`);
+        if (card) card.classList.toggle('is-read', isRead);
+        if (cb) cb.checked = isRead;
+      }
+    }
+
+    function syncExpandedUI() {
+      for (let i = 1; i <= TOTAL_UNITS; i++) {
+        const isOpen = appState.expandedUnits.includes(i);
+        const body = document.getElementById(`body-unit-${i}`);
+        const card = document.getElementById(`unit-${i}`);
+        const btn = card ? card.querySelector('.unit-trigger') : null;
+        if (body) body.classList.toggle('is-open', isOpen);
+        if (btn) btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      }
+    }
+
+    function toggleRead(unitId, checked) {
+      if (checked) {
+        if (!appState.readUnits.includes(unitId)) {
+          appState.readUnits.push(unitId);
+        }
+      } else {
+        appState.readUnits = appState.readUnits.filter(id => id !== unitId);
+      }
+      updateProgressUI();
+      applyFilters();
+      savePersistedState();
+    }
+
+    function toggleExpand(unitId, triggerBtn) {
+      const body = document.getElementById(`body-unit-${unitId}`);
+      if (!body) return;
+      const isOpen = body.classList.contains('is-open');
+      if (isOpen) {
+        body.classList.remove('is-open');
+        if (triggerBtn) triggerBtn.setAttribute('aria-expanded', 'false');
+        appState.expandedUnits = appState.expandedUnits.filter(id => id !== unitId);
+      } else {
+        body.classList.add('is-open');
+        if (triggerBtn) triggerBtn.setAttribute('aria-expanded', 'true');
+        if (!appState.expandedUnits.includes(unitId)) {
+          appState.expandedUnits.push(unitId);
+        }
+      }
+      savePersistedState();
+    }
+
+    function toggleAllUnits(expand) {
+      appState.expandedUnits = expand ? [1, 2, 3, 4, 5] : [];
+      syncExpandedUI();
+      savePersistedState();
+    }
+
+    function handleResetProgress(btn) {
+      if (!btn) return;
+      if (btn.dataset.armed !== 'true') {
+        btn.dataset.armed = 'true';
+        btn.innerHTML = `再次點擊確認重設`;
+        setTimeout(() => {
+          if (btn.dataset.armed === 'true') {
+            btn.dataset.armed = 'false';
+            btn.innerHTML = `<i data-lucide="rotate-ccw" aria-hidden="true" width="14" height="14"></i> 重設已讀紀錄`;
+            if (window.lucide) window.lucide.createIcons();
+          }
+        }, 3500);
+        return;
+      }
+      btn.dataset.armed = 'false';
+      btn.innerHTML = `<i data-lucide="rotate-ccw" aria-hidden="true" width="14" height="14"></i> 重設已讀紀錄`;
+      if (window.lucide) window.lucide.createIcons();
+
+      appState.readUnits = [];
+      appState.quizAnswers = {};
+      updateProgressUI();
+      renderQuizState();
+      applyFilters();
+      savePersistedState();
+    }
+
+    function setCategory(cat, btnEl) {
+      appState.activeCategory = cat;
+      const allBtns = document.querySelectorAll('.filter-btn');
+      allBtns.forEach(b => b.classList.remove('is-active'));
+      if (btnEl) btnEl.classList.add('is-active');
+      applyFilters();
+    }
+
+    function clearSearch() {
+      const input = document.getElementById('search-input');
+      if (input) input.value = '';
+      applyFilters();
+    }
+
+    function resetAllFilters() {
+      const input = document.getElementById('search-input');
+      const select = document.getElementById('status-filter');
+      if (input) input.value = '';
+      if (select) select.value = 'all';
+      const defaultCatBtn = document.querySelector('.filter-btn[data-cat="all"]');
+      setCategory('all', defaultCatBtn);
+    }
+
+    function applyFilters() {
+      const input = document.getElementById('search-input');
+      const clearBtn = document.getElementById('clear-search-btn');
+      const select = document.getElementById('status-filter');
+      const statusText = document.getElementById('filter-status-text');
+      const emptyState = document.getElementById('empty-state');
+
+      const query = input ? input.value.trim().toLowerCase() : '';
+      const statusVal = select ? select.value : 'all';
+      if (clearBtn) clearBtn.style.display = query.length > 0 ? 'inline-flex' : 'none';
+
+      let visibleCount = 0;
+
+      for (let i = 1; i <= TOTAL_UNITS; i++) {
+        const card = document.getElementById(`unit-${i}`);
+        if (!card) continue;
+
+        const cat = card.getAttribute('data-category') || '';
+        const keywords = (card.getAttribute('data-keywords') || '').toLowerCase();
+        const textContent = card.textContent.toLowerCase();
+        const isRead = appState.readUnits.includes(i);
+
+        const matchCat = appState.activeCategory === 'all' || cat === appState.activeCategory;
+        const matchQuery = !query || keywords.includes(query) || textContent.includes(query);
+        const matchStatus =
+          statusVal === 'all' ||
+          (statusVal === 'read' && isRead) ||
+          (statusVal === 'unread' && !isRead);
+
+        const show = matchCat && matchQuery && matchStatus;
+        card.classList.toggle('is-hidden', !show);
+        if (show) visibleCount++;
+      }
+
+      if (statusText) {
+        statusText.textContent = `目前顯示 ${visibleCount} / ${TOTAL_UNITS} 個學習單元`;
+      }
+      if (emptyState) {
+        emptyState.classList.toggle('is-visible', visibleCount === 0);
+      }
+    }
+
+    /* Interactive Diagram Switchers inside Units */
+    function switchMopsView(mode) {
+      const oldBox = document.getElementById('mops-view-old');
+      const newBox = document.getElementById('mops-view-new');
+      const btnOld = document.getElementById('mops-btn-old');
+      const btnNew = document.getElementById('mops-btn-new');
+      if (!oldBox || !newBox || !btnOld || !btnNew) return;
+
+      if (mode === 'old') {
+        oldBox.style.display = 'block';
+        newBox.style.display = 'none';
+        btnOld.classList.add('is-active');
+        btnNew.classList.remove('is-active');
+      } else {
+        oldBox.style.display = 'none';
+        newBox.style.display = 'block';
+        btnNew.classList.add('is-active');
+        btnOld.classList.remove('is-active');
+      }
+    }
+
+    function switchSyndicate(phase) {
+      const t0 = document.getElementById('syn-view-t0');
+      const t1 = document.getElementById('syn-view-t1');
+      const btn0 = document.getElementById('syn-btn-t0');
+      const btn1 = document.getElementById('syn-btn-t1');
+      if (!t0 || !t1 || !btn0 || !btn1) return;
+
+      if (phase === 't0') {
+        t0.style.display = 'block';
+        t1.style.display = 'none';
+        btn0.classList.add('is-active');
+        btn1.classList.remove('is-danger-active');
+      } else {
+        t0.style.display = 'none';
+        t1.style.display = 'block';
+        btn0.classList.remove('is-active');
+        btn1.classList.add('is-danger-active');
+      }
+    }
+
+    function switchYfyView(mode) {
+      const surf = document.getElementById('yfy-view-surface');
+      const deep = document.getElementById('yfy-view-deep');
+      const btnSurf = document.getElementById('yfy-btn-surface');
+      const btnDeep = document.getElementById('yfy-btn-deep');
+      if (!surf || !deep || !btnSurf || !btnDeep) return;
+
+      if (mode === 'surface') {
+        surf.style.display = 'block';
+        deep.style.display = 'none';
+        btnSurf.classList.add('is-active');
+        btnDeep.classList.remove('is-danger-active');
+      } else {
+        surf.style.display = 'none';
+        deep.style.display = 'block';
+        btnSurf.classList.remove('is-active');
+        btnDeep.classList.add('is-danger-active');
+      }
+    }
+
+    function switchScenario(num) {
+      for (let i = 1; i <= 3; i++) {
+        const box = document.getElementById(`scenario-${i}`);
+        const btn = document.getElementById(`scn-btn-${i}`);
+        if (box) box.style.display = i === num ? 'block' : 'none';
+        if (btn) btn.classList.toggle('is-active', i === num);
+      }
+    }
+
+    /* Quiz Logic */
+    function answerQuiz(qNum, selectedIdx, btnEl) {
+      appState.quizAnswers[qNum] = selectedIdx;
+      renderQuizState();
+      savePersistedState();
+    }
+
+    function renderQuizState() {
+      let score = 0;
+      for (let qNum = 1; qNum <= 3; qNum++) {
+        const card = document.querySelector(`.quiz-card[data-q="${qNum}"]`);
+        const fb = document.getElementById(`quiz-fb-${qNum}`);
+        if (!card || !fb) continue;
+
+        const buttons = card.querySelectorAll('.quiz-opt-btn');
+        const chosen = appState.quizAnswers[qNum];
+        const cfg = quizConfig[qNum];
+
+        buttons.forEach((b, idx) => {
+          b.classList.remove('is-correct', 'is-wrong');
+          if (chosen !== undefined) {
+            if (idx === cfg.correctIndex) b.classList.add('is-correct');
+            else if (idx === chosen) b.classList.add('is-wrong');
+          }
+        });
+
+        if (chosen !== undefined) {
+          if (chosen === cfg.correctIndex) score++;
+          fb.textContent = cfg.explanation;
+          fb.classList.add('is-visible');
+        } else {
+          fb.textContent = '';
+          fb.classList.remove('is-visible');
+        }
+      }
+
+      const badge = document.getElementById('quiz-score-badge');
+      if (badge) badge.textContent = `目前得分：${score} / 3 題`;
+    }
+
+    /* Init */
+    document.addEventListener('DOMContentLoaded', async () => {
+      if (window.lucide && typeof window.lucide.createIcons === 'function') {
+        window.lucide.createIcons();
+      }
+
+      if (window.notebookAppApi && typeof window.notebookAppApi.getAppState === 'function') {
+        try {
+          const saved = await window.notebookAppApi.getAppState();
+          if (saved && typeof saved === 'object') {
+            if (Array.isArray(saved.readUnits)) {
+              appState.readUnits = saved.readUnits.filter(n => typeof n === 'number' && n >= 1 && n <= TOTAL_UNITS);
+            }
+            if (Array.isArray(saved.expandedUnits)) {
+              appState.expandedUnits = saved.expandedUnits.filter(n => typeof n === 'number' && n >= 1 && n <= TOTAL_UNITS);
+            }
+            if (saved.quizAnswers && typeof saved.quizAnswers === 'object') {
+              appState.quizAnswers = saved.quizAnswers;
+            }
+          }
+        } catch (err) {
+          /* Fall back cleanly to default initial state */
+        }
+      }
+
+      updateProgressUI();
+      syncExpandedUI();
+      renderQuizState();
+      applyFilters();
+
+      if (window.notebookAppApi && typeof window.notebookAppApi.notifyAppReady === 'function') {
+        window.notebookAppApi.notifyAppReady();
+      }
+    });
+  </script>
+</body>
+</html>

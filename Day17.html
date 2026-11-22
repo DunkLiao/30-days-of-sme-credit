@@ -1,0 +1,2497 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#14283a">
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="./manifest.webmanifest">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="授信實務30天">
+  <script>
+    if ("serviceWorker" in navigator && (location.protocol === "https:" || location.hostname === "localhost")) {
+      window.addEventListener("load", () => navigator.serviceWorker.register("./service-worker.js").catch((error) => console.warn("PWA offline support unavailable:", error)));
+    }
+  </script>
+  <meta name="artifact-type" content="dashboard">
+  <meta name="design-style" content="charter">
+  <title>中小企業授信與財報分析實務-Day17-現金流量表——防衛性報表與EBITDA還原技術</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&family=Libre+Caslon+Text:wght@400;700&family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      color-scheme: light;
+
+      /* Page and surfaces (THEME: 畫布冷白與石板灰階) */
+      --background: #F8FAFC;
+      --surface-container-low: #FFFFFF;
+      --surface-container: #F1F5F9;
+      --surface-container-high: #E2E8F0;
+
+      /* Ink (THEME: 深海軍藍與金屬石板灰) */
+      --on-surface: #0F2537;
+      --on-surface-slate: #334155;
+      --on-surface-variant: #475569;
+
+      /* Rules (THEME: 香檳金與琥珀金) */
+      --outline: #C5A880;
+      --outline-amber: #D97706;
+      --outline-variant: #CBD5E1;
+
+      /* Accents (THEME: 深海軍藍主色與琥珀輔色) */
+      --primary: #0F2537;
+      --primary-royal: #1E3A8A;
+      --on-primary: #FFFFFF;
+      --on-primary-muted: #E2E8F0;
+      --primary-container: #EFF6FF;
+      --on-primary-container: #0F2537;
+      --secondary: #059669;
+      --tertiary: #B45309;
+      --tertiary-bg: #FFFBEB;
+      --tertiary-border: #FDE68A;
+      --error: #DC2626;
+      --error-bg: #FEF2F2;
+      --error-border: #FECACA;
+      --on-error: #FFFFFF;
+
+      /* Semantic (AA-compliant text variants paired with theme accents) */
+      --positive: #059669;
+      --positive-text: #047857;
+      --positive-bg: #ECFDF5;
+      --positive-border: #A7F3D0;
+      --warning: #D97706;
+      --warning-text: #B45309;
+
+      /* Data series */
+      --data-1: #1E3A8A;
+      --data-2: #D97706;
+      --data-3: #059669;
+      --data-4: #475569;
+      --data-context: #94A3B8;
+
+      /* Focus ring */
+      --focus: #1E3A8A;
+
+      /* Fonts */
+      --font-headline: 'Noto Serif TC', 'Libre Caslon Text', serif;
+      --font-body: 'Noto Sans TC', 'Inter', sans-serif;
+      --font-label: 'Noto Sans TC', 'IBM Plex Mono', monospace;
+      --font-mono: 'IBM Plex Mono', 'Noto Sans TC', monospace;
+
+      /* Type scale (Dashboard / Study Explorer) */
+      --display-size: clamp(1.5rem, 1.25rem + 1.2vw, 2.25rem);
+      --headline-size: clamp(1.2rem, 1.08rem + 0.5vw, 1.5rem);
+      --subhead-size: clamp(1.05rem, 1rem + 0.25vw, 1.1875rem);
+      --body-size: clamp(0.9375rem, 0.91rem + 0.14vw, 1rem);
+      --label-size: 0.78rem;
+
+      /* Shape (Charter squared corners) */
+      --rounded: 0.125rem;
+      --rounded-lg: 0.25rem;
+      --rounded-full: 0.125rem;
+
+      /* Style effects */
+      --brass-rule: 2px solid var(--outline-amber);
+      --champagne-rule: 2px solid var(--outline);
+      --hairline: 1px solid var(--outline-variant);
+      --leaf-shadow: 0 1px 3px color-mix(in srgb, var(--primary) 8%, transparent);
+
+      /* Spacing scale */
+      --space-xs: 0.25rem;
+      --space-sm: 0.5rem;
+      --space-md: 1rem;
+      --space-lg: 1.5rem;
+      --space-xl: 2.5rem;
+      --space-2xl: 3.5rem;
+
+      /* Motion */
+      --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+      --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+      --dur-micro: 120ms;
+      --dur-short: 220ms;
+      --dur-long: 420ms;
+    }
+
+    /* Base reset */
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body {
+      overflow-x: clip;
+      margin: 0;
+      padding: 0;
+      background-color: var(--background);
+      color: var(--on-surface-slate);
+      font-family: var(--font-body);
+      font-size: var(--body-size);
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+    }
+    header { position: static !important; }
+    button, input, select, textarea { font-family: inherit; }
+
+    /* Focus visibility */
+    :focus-visible {
+      outline: 3px solid var(--focus);
+      outline-offset: 2px;
+    }
+
+    /* Header Band (Charter Navy + Champagne Brass) */
+    .title-band {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-royal) 100%);
+      color: var(--on-primary);
+      border-bottom: 3px solid var(--outline);
+      padding: var(--space-xl) var(--space-lg);
+    }
+    .title-band-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr);
+      gap: var(--space-xl);
+      align-items: end;
+    }
+    .eyebrow {
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      font-weight: 600;
+      color: var(--outline);
+      margin-bottom: var(--space-sm);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: var(--space-sm);
+    }
+    .eyebrow-badge {
+      border: 1px solid var(--outline);
+      padding: 0.15rem 0.5rem;
+      border-radius: var(--rounded);
+      color: var(--outline);
+      background: color-mix(in srgb, var(--primary) 70%, transparent);
+    }
+    .title-band h1 {
+      font-family: var(--font-headline);
+      font-weight: 400;
+      font-size: var(--display-size);
+      line-height: 1.25;
+      margin: 0 0 var(--space-md) 0;
+      color: var(--on-primary);
+      padding-bottom: var(--space-md);
+      border-bottom: 1px solid color-mix(in srgb, var(--outline) 55%, transparent);
+    }
+    .title-band .lede {
+      margin: 0;
+      color: var(--on-primary-muted);
+      font-size: var(--body-size);
+      max-width: 65ch;
+      line-height: 1.65;
+    }
+
+    /* Progress Tracker Panel inside Title Band */
+    .progress-panel {
+      background: color-mix(in srgb, var(--primary) 55%, var(--on-surface));
+      border: 1px solid var(--outline);
+      border-top: 3px solid var(--outline-amber);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-lg);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-md);
+    }
+    .progress-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: var(--space-sm);
+      flex-wrap: wrap;
+    }
+    .progress-label {
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      color: var(--outline);
+      font-weight: 600;
+    }
+    .progress-stat {
+      font-family: var(--font-mono);
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--on-primary);
+      font-variant-numeric: tabular-nums;
+    }
+    .progress-track {
+      width: 100%;
+      height: 10px;
+      background: color-mix(in srgb, var(--on-primary) 16%, transparent);
+      border-radius: var(--rounded);
+      overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background: var(--positive);
+      transition: width var(--dur-long) var(--ease-out);
+    }
+    .progress-actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: var(--space-sm);
+      flex-wrap: wrap;
+    }
+    .progress-hint {
+      font-size: var(--label-size);
+      color: var(--on-primary-muted);
+    }
+    .btn-ghost-light {
+      min-height: 36px;
+      padding: 0.35rem 0.75rem;
+      background: transparent;
+      color: var(--on-primary-muted);
+      border: 1px solid color-mix(in srgb, var(--outline) 65%, transparent);
+      border-radius: var(--rounded);
+      font-size: var(--label-size);
+      cursor: pointer;
+      transition: background-color var(--dur-micro) var(--ease-out), color var(--dur-micro) var(--ease-out);
+    }
+    .btn-ghost-light:hover {
+      background: color-mix(in srgb, var(--outline) 18%, transparent);
+      color: var(--on-primary);
+    }
+    .btn-ghost-light[data-armed="true"] {
+      background: var(--error);
+      border-color: var(--error);
+      color: var(--on-error);
+    }
+
+    /* Main Workspace Container */
+    .page-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: var(--space-xl);
+      padding: var(--space-xl) var(--space-lg);
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .page-grid * { min-width: 0; }
+
+    /* Section Headers (Charter Brass Section Rule) */
+    .section-head {
+      border-top: var(--champagne-rule);
+      padding-top: var(--space-md);
+      border-bottom: var(--hairline);
+      padding-bottom: var(--space-sm);
+      margin-bottom: var(--space-lg);
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: var(--space-md);
+      flex-wrap: wrap;
+    }
+    .section-kicker {
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      font-weight: 600;
+      color: var(--tertiary);
+      margin-bottom: var(--space-xs);
+    }
+    .section-head h2 {
+      font-family: var(--font-headline);
+      font-weight: 400;
+      font-size: var(--headline-size);
+      color: var(--on-surface);
+      margin: 0;
+      line-height: 1.3;
+    }
+    .section-subtitle {
+      font-size: var(--label-size);
+      color: var(--on-surface-variant);
+      margin: 0;
+    }
+
+    /* Core Concepts Summary Grid */
+    .overview-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr));
+      gap: var(--space-md);
+    }
+    .figure-card {
+      background: var(--surface-container-low);
+      border: var(--hairline);
+      border-top: 3px solid var(--outline-amber);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-lg);
+      box-shadow: var(--leaf-shadow);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-sm);
+    }
+    .figure-card.is-navy { border-top-color: var(--primary-royal); }
+    .figure-card.is-green { border-top-color: var(--positive); }
+    .figure-card.is-red { border-top-color: var(--error); }
+    .figure-kicker {
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      font-weight: 600;
+      color: var(--on-surface-variant);
+    }
+    .figure-title {
+      font-family: var(--font-headline);
+      font-size: var(--subhead-size);
+      font-weight: 700;
+      color: var(--on-surface);
+      margin: 0;
+    }
+    .figure-metric {
+      font-family: var(--font-mono);
+      font-size: 1.35rem;
+      font-weight: 600;
+      color: var(--primary-royal);
+      font-variant-numeric: tabular-nums;
+    }
+    .figure-desc {
+      margin: 0;
+      font-size: 0.92rem;
+      color: var(--on-surface-slate);
+      line-height: 1.6;
+    }
+
+    /* Analysis Chain Banner (Three-Link Audit Strip) */
+    .chain-strip {
+      margin-top: var(--space-md);
+      background: var(--surface-container);
+      border: var(--hairline);
+      border-left: 4px solid var(--primary);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-md) var(--space-lg);
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(210px, 100%), 1fr));
+      gap: var(--space-md);
+    }
+    .chain-step-label {
+      font-family: var(--font-mono);
+      font-size: var(--label-size);
+      font-weight: 600;
+      color: var(--tertiary);
+    }
+    .chain-step-title {
+      font-weight: 700;
+      color: var(--on-surface);
+      margin: 2px 0;
+    }
+    .chain-step-text {
+      font-size: 0.875rem;
+      color: var(--on-surface-variant);
+      margin: 0;
+    }
+
+    /* Search & Filter Control Panel */
+    .controls-panel {
+      background: var(--surface-container-low);
+      border: var(--hairline);
+      border-top: 2px solid var(--primary);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-lg);
+      box-shadow: var(--leaf-shadow);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-md);
+    }
+    .controls-top-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1.8fr) minmax(0, 1fr) auto;
+      gap: var(--space-md);
+      align-items: end;
+    }
+    .field-group {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xs);
+    }
+    .field-label {
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      font-weight: 600;
+      color: var(--on-surface);
+    }
+    .search-input, .select-input, .num-input {
+      min-height: 44px;
+      padding: 0.5rem 0.875rem;
+      background: var(--surface-container-low);
+      border: 1px solid var(--outline-variant);
+      border-radius: var(--rounded);
+      color: var(--on-surface);
+      font-size: var(--body-size);
+      transition: border-color var(--dur-micro) var(--ease-out), box-shadow var(--dur-micro) var(--ease-out);
+    }
+    .select-input { padding-right: 2rem; }
+    .search-input:focus, .select-input:focus, .num-input:focus {
+      border-color: var(--primary-royal);
+      box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary-royal) 16%, transparent);
+      outline: none;
+    }
+    .bulk-actions {
+      display: flex;
+      gap: var(--space-sm);
+      flex-wrap: wrap;
+    }
+    .btn-secondary {
+      min-height: 44px;
+      padding: 0.5rem 1rem;
+      background: transparent;
+      color: var(--primary);
+      border: 1px solid var(--primary);
+      border-radius: var(--rounded);
+      font-size: 0.875rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background-color var(--dur-micro) var(--ease-out);
+    }
+    .btn-secondary:hover {
+      background: var(--primary-container);
+    }
+    .btn-primary {
+      min-height: 44px;
+      padding: 0.5rem 1.1rem;
+      background: var(--primary);
+      color: var(--on-primary);
+      border: 1px solid var(--primary);
+      border-radius: var(--rounded);
+      font-size: 0.875rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background-color var(--dur-micro) var(--ease-out);
+    }
+    .btn-primary:hover {
+      background: var(--primary-royal);
+      border-color: var(--primary-royal);
+    }
+
+    /* Tag Filter Chips */
+    .tags-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-sm);
+      align-items: center;
+      padding-top: var(--space-sm);
+      border-top: var(--hairline);
+    }
+    .tags-title {
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      font-weight: 600;
+      color: var(--on-surface-variant);
+      margin-right: var(--space-xs);
+    }
+    .tag-chip {
+      min-height: 36px;
+      padding: 0.3rem 0.75rem;
+      background: var(--surface-container);
+      color: var(--on-surface-slate);
+      border: 1px solid var(--outline-variant);
+      border-radius: var(--rounded);
+      font-size: 0.85rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background-color var(--dur-micro) var(--ease-out), color var(--dur-micro) var(--ease-out), border-color var(--dur-micro) var(--ease-out);
+    }
+    .tag-chip:hover {
+      background: var(--primary-container);
+      border-color: var(--primary-royal);
+      color: var(--primary);
+    }
+    .tag-chip.is-active {
+      background: var(--primary);
+      color: var(--on-primary);
+      border-color: var(--primary);
+    }
+    .results-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: var(--label-size);
+      color: var(--on-surface-variant);
+      flex-wrap: wrap;
+      gap: var(--space-sm);
+    }
+
+    /* Chapter Cards Grid */
+    .chapters-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(360px, 100%), 1fr));
+      gap: var(--space-lg);
+      align-items: start;
+    }
+    .chapter-card {
+      background: var(--surface-container-low);
+      border: var(--hairline);
+      border-top: 3px solid var(--primary);
+      border-radius: var(--rounded-lg);
+      box-shadow: var(--leaf-shadow);
+      display: flex;
+      flex-direction: column;
+      transition: box-shadow var(--dur-short) var(--ease-out), border-color var(--dur-short) var(--ease-out);
+    }
+    .chapter-card.is-read {
+      border-top-color: var(--positive);
+    }
+    .chapter-card.is-expanded {
+      grid-column: 1 / -1;
+      border-top-width: 4px;
+      border-color: var(--outline);
+      border-top-color: var(--primary-royal);
+      box-shadow: 0 8px 24px color-mix(in srgb, var(--primary) 10%, transparent);
+    }
+    .chapter-card.is-expanded.is-read {
+      border-top-color: var(--positive);
+    }
+
+    .card-meta-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: var(--space-md) var(--space-lg) 0 var(--space-lg);
+      gap: var(--space-sm);
+      flex-wrap: wrap;
+    }
+    .chapter-num {
+      font-family: var(--font-mono);
+      font-size: var(--label-size);
+      font-weight: 600;
+      color: var(--tertiary);
+      background: var(--tertiary-bg);
+      border: 1px solid var(--tertiary-border);
+      padding: 0.2rem 0.55rem;
+      border-radius: var(--rounded);
+    }
+
+    /* Read Checkbox (44px touch target) */
+    .read-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      min-height: 44px;
+      padding: 0.25rem 0.65rem;
+      border-radius: var(--rounded);
+      cursor: pointer;
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--on-surface-variant);
+      border: 1px solid transparent;
+      user-select: none;
+      transition: background-color var(--dur-micro) var(--ease-out), color var(--dur-micro) var(--ease-out);
+    }
+    .read-toggle:hover {
+      background: var(--surface-container);
+    }
+    .read-toggle.is-checked {
+      color: var(--positive-text);
+      background: var(--positive-bg);
+      border-color: var(--positive-border);
+    }
+    .read-toggle input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--positive);
+      cursor: pointer;
+      margin: 0;
+    }
+
+    /* Clickable Header Trigger */
+    .card-trigger {
+      width: 100%;
+      text-align: left;
+      background: transparent;
+      border: none;
+      padding: var(--space-sm) var(--space-lg) var(--space-lg) var(--space-lg);
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-sm);
+      color: inherit;
+    }
+    .card-trigger:hover .card-title {
+      color: var(--primary-royal);
+    }
+    .card-title-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: var(--space-md);
+    }
+    .card-title {
+      font-family: var(--font-headline);
+      font-size: clamp(1.125rem, 1.05rem + 0.35vw, 1.35rem);
+      font-weight: 700;
+      color: var(--on-surface);
+      margin: 0;
+      line-height: 1.35;
+      transition: color var(--dur-micro) var(--ease-out);
+    }
+    .expand-pill {
+      flex-shrink: 0;
+      font-family: var(--font-label);
+      font-size: 0.78rem;
+      font-weight: 600;
+      padding: 0.25rem 0.6rem;
+      border-radius: var(--rounded);
+      border: 1px solid var(--outline-variant);
+      background: var(--surface-container);
+      color: var(--on-surface);
+      white-space: nowrap;
+    }
+    .chapter-card.is-expanded .expand-pill {
+      background: var(--primary);
+      color: var(--on-primary);
+      border-color: var(--primary);
+    }
+    .card-summary {
+      margin: 0;
+      font-size: 0.94rem;
+      color: var(--on-surface-variant);
+      line-height: 1.6;
+    }
+    .card-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+      margin-top: var(--space-xs);
+    }
+    .stamp-tag {
+      font-size: 0.75rem;
+      font-weight: 500;
+      padding: 0.15rem 0.5rem;
+      border: 1px solid var(--outline);
+      color: var(--tertiary);
+      background: transparent;
+      border-radius: var(--rounded);
+    }
+
+    /* Expandable Body */
+    .card-body {
+      display: none;
+      border-top: var(--hairline);
+      padding: var(--space-lg);
+      background: var(--surface-container-low);
+      flex-direction: column;
+      gap: var(--space-lg);
+    }
+    .chapter-card.is-expanded .card-body {
+      display: flex;
+      animation: fadeSlide var(--dur-short) var(--ease-out);
+    }
+    @keyframes fadeSlide {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Rich Content Blocks Inside Expanded Card */
+    .detail-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr));
+      gap: var(--space-lg);
+    }
+    .prose-block {
+      max-width: 72ch;
+    }
+    .prose-block h4, .sub-title {
+      font-family: var(--font-headline);
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--on-surface);
+      margin: 0 0 var(--space-sm) 0;
+      padding-left: var(--space-sm);
+      border-left: 3px solid var(--outline-amber);
+    }
+    .prose-block p {
+      margin: 0 0 var(--space-sm) 0;
+      color: var(--on-surface-slate);
+    }
+    .prose-block ul {
+      margin: 0;
+      padding-left: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xs);
+    }
+    .prose-block li {
+      color: var(--on-surface-slate);
+    }
+
+    /* Callouts */
+    .callout {
+      padding: var(--space-md) var(--space-lg);
+      border-radius: var(--rounded);
+      border: 1px solid var(--outline-variant);
+      border-left-width: 4px;
+      background: var(--surface-container);
+    }
+    .callout.is-warn {
+      background: var(--error-bg);
+      border-color: var(--error-border);
+      border-left-color: var(--error);
+    }
+    .callout.is-ok {
+      background: var(--positive-bg);
+      border-color: var(--positive-border);
+      border-left-color: var(--positive);
+    }
+    .callout.is-amber {
+      background: var(--tertiary-bg);
+      border-color: var(--tertiary-border);
+      border-left-color: var(--outline-amber);
+    }
+    .callout.is-gap {
+      background: var(--surface-container);
+      border-color: var(--outline-variant);
+      border-left-color: var(--on-surface-variant);
+    }
+    .callout-head {
+      font-weight: 700;
+      font-size: 0.94rem;
+      margin-bottom: var(--space-xs);
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+      flex-wrap: wrap;
+      color: var(--on-surface);
+    }
+    .callout.is-warn .callout-head { color: var(--error); }
+    .callout.is-ok .callout-head { color: var(--positive-text); }
+    .callout.is-amber .callout-head { color: var(--tertiary); }
+
+    /* Source Gap Tag ("來源未提供") */
+    .source-gap-badge {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 0.12rem 0.45rem;
+      border-radius: var(--rounded);
+      background: var(--surface-container-high);
+      color: var(--on-surface);
+      border: 1px solid var(--on-surface-variant);
+    }
+
+    /* Charter Financial Tables */
+    .table-wrap {
+      width: 100%;
+      overflow-x: auto;
+      border: var(--hairline);
+      border-radius: var(--rounded);
+    }
+    table.fin-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+      background: var(--surface-container-low);
+    }
+    .fin-table thead th {
+      background: var(--surface-container-high);
+      color: var(--on-surface);
+      font-family: var(--font-label);
+      font-weight: 600;
+      text-align: left;
+      padding: 0.65rem 0.85rem;
+      border-bottom: 2px solid var(--outline);
+      white-space: nowrap;
+    }
+    .fin-table td {
+      padding: 0.65rem 0.85rem;
+      border-bottom: var(--hairline);
+      color: var(--on-surface-slate);
+      vertical-align: top;
+    }
+    .fin-table tbody tr:last-child td { border-bottom: none; }
+    .fin-table .num, .fin-table th.num {
+      text-align: right;
+      font-family: var(--font-mono);
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+    }
+    .formula-code {
+      font-family: var(--font-mono);
+      font-size: 0.84rem;
+      background: var(--surface-container);
+      padding: 0.15rem 0.4rem;
+      border-radius: var(--rounded);
+      color: var(--primary);
+      display: inline-block;
+    }
+
+    /* Interactive Tool Panels inside Chapters */
+    .lab-panel {
+      background: var(--surface-container);
+      border: 1px solid var(--outline);
+      border-top: 3px solid var(--primary-royal);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-lg);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-md);
+    }
+    .lab-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: var(--space-md);
+      flex-wrap: wrap;
+      border-bottom: var(--hairline);
+      padding-bottom: var(--space-sm);
+    }
+    .lab-title {
+      font-family: var(--font-headline);
+      font-size: 1.08rem;
+      font-weight: 700;
+      color: var(--on-surface);
+      margin: 0;
+    }
+    .preset-row {
+      display: flex;
+      gap: var(--space-sm);
+      flex-wrap: wrap;
+    }
+    .preset-btn {
+      min-height: 36px;
+      padding: 0.25rem 0.65rem;
+      font-size: 0.82rem;
+      font-weight: 500;
+      border-radius: var(--rounded);
+      border: 1px solid var(--primary);
+      background: var(--surface-container-low);
+      color: var(--primary);
+      cursor: pointer;
+    }
+    .preset-btn:hover, .preset-btn.is-active {
+      background: var(--primary);
+      color: var(--on-primary);
+    }
+    .lab-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
+      gap: var(--space-lg);
+      align-items: start;
+    }
+    .inputs-stack {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-md);
+    }
+    .slider-pair {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 100px;
+      gap: var(--space-sm);
+      align-items: center;
+    }
+    input[type="range"] {
+      width: 100%;
+      accent-color: var(--primary-royal);
+      cursor: pointer;
+      min-height: 36px;
+    }
+    .outputs-panel {
+      background: var(--surface-container-low);
+      border: var(--hairline);
+      border-radius: var(--rounded);
+      padding: var(--space-md);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-md);
+    }
+    .kpi-mini-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(150px, 100%), 1fr));
+      gap: var(--space-sm);
+    }
+    .kpi-mini {
+      background: var(--surface-container);
+      border-top: 2px solid var(--outline);
+      padding: var(--space-sm) var(--space-md);
+      border-radius: var(--rounded);
+    }
+    .kpi-mini-label {
+      font-size: 0.78rem;
+      color: var(--on-surface-variant);
+      font-weight: 600;
+    }
+    .kpi-mini-val {
+      font-family: var(--font-mono);
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--on-surface);
+      font-variant-numeric: tabular-nums;
+      margin-top: 2px;
+    }
+    .kpi-mini-val.is-ok { color: var(--positive-text); }
+    .kpi-mini-val.is-warn { color: var(--error); }
+    .kpi-mini-val.is-amber { color: var(--tertiary); }
+
+    /* Visual Bar Comparison */
+    .bar-viz {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-sm);
+    }
+    .bar-row {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .bar-row-head {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.84rem;
+      font-weight: 600;
+      color: var(--on-surface-slate);
+    }
+    .bar-track {
+      width: 100%;
+      height: 14px;
+      background: var(--surface-container-high);
+      border-radius: var(--rounded);
+      overflow: hidden;
+    }
+    .bar-fill {
+      height: 100%;
+      border-radius: var(--rounded);
+      transition: width var(--dur-short) var(--ease-out);
+    }
+    .bar-fill.navy { background: var(--data-1); }
+    .bar-fill.amber { background: var(--data-2); }
+    .bar-fill.green { background: var(--data-3); }
+    .bar-fill.red { background: var(--error); }
+
+    /* Scenario Selector Tabs inside Ch2 */
+    .scenario-result {
+      background: var(--surface-container-low);
+      border: var(--hairline);
+      border-left: 4px solid var(--outline-amber);
+      padding: var(--space-md);
+      border-radius: var(--rounded);
+    }
+    .cf-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-sm);
+      margin-bottom: var(--space-sm);
+    }
+    .cf-pill {
+      font-family: var(--font-mono);
+      font-size: 0.84rem;
+      font-weight: 600;
+      padding: 0.25rem 0.65rem;
+      border-radius: var(--rounded);
+      border: 1px solid var(--outline-variant);
+      background: var(--surface-container);
+      color: var(--on-surface);
+    }
+    .cf-pill.pos {
+      background: var(--positive-bg);
+      border-color: var(--positive-border);
+      color: var(--positive-text);
+    }
+    .cf-pill.neg {
+      background: var(--error-bg);
+      border-color: var(--error-border);
+      color: var(--error);
+    }
+
+    /* Empty Search State */
+    .empty-state {
+      display: none;
+      background: var(--surface-container-low);
+      border: var(--hairline);
+      border-top: 3px solid var(--outline-amber);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-2xl) var(--space-lg);
+      text-align: center;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--space-md);
+    }
+    .empty-state.is-visible { display: flex; }
+    .empty-state h3 {
+      margin: 0;
+      font-family: var(--font-headline);
+      color: var(--on-surface);
+    }
+    .empty-state p {
+      margin: 0;
+      color: var(--on-surface-variant);
+      max-width: 48ch;
+    }
+
+    /* Footer */
+    .site-footer {
+      background: var(--primary);
+      color: var(--on-primary-muted);
+      border-top: 3px solid var(--outline);
+      padding: var(--space-xl) var(--space-lg);
+      margin-top: var(--space-xl);
+    }
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: var(--space-md);
+      flex-wrap: wrap;
+    }
+    .footer-brand {
+      font-family: var(--font-mono);
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--outline);
+    }
+    .footer-sources {
+      font-size: 0.82rem;
+      color: var(--on-primary-muted);
+      max-width: 72ch;
+    }
+
+    /* Mobile Responsive Breakpoint */
+    @media (max-width: 768px) {
+      .title-band-inner { grid-template-columns: 1fr; gap: var(--space-lg); }
+      .controls-top-row { grid-template-columns: 1fr; }
+      .lab-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 640px) {
+      .title-band { padding: var(--space-lg) var(--space-md); }
+      .page-grid { padding: var(--space-lg) var(--space-md); gap: var(--space-lg); }
+      .chapters-grid { grid-template-columns: 1fr; }
+      .slider-pair { grid-template-columns: 1fr; }
+    }
+
+    /* Reduced Motion */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+      .home-link { display: inline-flex; align-items: center; color: var(--outline); font: inherit; font-size: var(--label-size, 0.875rem); font-weight: 600; text-decoration: none; border: 1px solid var(--outline); padding: 0.4rem 0.7rem; margin: 0 0 var(--space-sm) 0; }
+    .home-link:hover, .home-link:focus-visible { color: var(--on-primary); text-decoration: underline; text-underline-offset: 0.18em; }
+    @media (max-width: 640px) { }
+      .header-bank-label { display: inline-block; margin: 0 0 var(--space-sm); color: var(--outline); font-family: var(--font-label); font-size: var(--label-size, 0.875rem); font-weight: 700; letter-spacing: 0.08em; }
+  </style>
+</head>
+<body>
+  <header class="title-band">
+    <div class="title-band-inner">
+      <span class="header-bank-label">鎖頭銀行</span>
+      <div>
+        <div class="eyebrow">
+          <span class="eyebrow-badge">DAY 17 徵信實務研習</span>
+          <span>鎖頭銀行企業授信與財報分析</span>
+        </div>
+        <h1>中小企業授信與財報分析實務-Day17-現金流量表——防衛性報表與EBITDA還原技術</h1>
+        <p class="lede">
+          超越資產負債表與損益表的靜態表象，從鎖頭銀行風控實務出發，掌握「防衛性報表」的現金流結構互動、折舊攤銷還原調整、EBITDA 國際聯貸償債測試，以及第一還款來源（營業金流）覆蓋率檢驗。
+        </p>
+      </div>
+
+      <aside class="progress-panel" aria-label="學習進度追蹤">
+        <div class="progress-top">
+          <span class="progress-label">學習完成進度計量</span>
+          <span class="progress-stat" id="progress-stat-text">0 / 6 章節 (0%)</span>
+        </div>
+        <div class="progress-track" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="progress-bar-aria">
+          <div class="progress-fill" id="progress-fill"></div>
+        </div>
+        <div class="progress-actions">
+          <span class="progress-hint" id="progress-hint">勾選各章節「已讀」即自動保存進度</span>
+          <button type="button" class="btn-ghost-light" id="reset-progress-btn" onclick="handleResetProgress(this)">重置進度</button>
+        </div>
+      </aside>
+    </div>
+  </header>
+
+  <main class="page-grid">
+    <!-- Section 1: Home Core Overview -->
+    <section aria-labelledby="overview-heading">
+      <div class="section-head">
+        <div>
+          <div class="section-kicker">MODULE OVERVIEW ・ 首頁主題與核心概念整理</div>
+          <h2 id="overview-heading">授信風控為何需要「防衛性報表」？</h2>
+        </div>
+        <p class="section-subtitle">緊扣來源教材：企業授信實務 Day 17、授信審查三種方法與聯徵統計定義</p>
+      </div>
+
+      <div class="overview-grid">
+        <article class="figure-card is-navy">
+          <div class="figure-kicker">核心概念 01 ・ 報表定位</div>
+          <h3 class="figure-title">防衛性報表防範紙上獲利</h3>
+          <div class="figure-metric">還原實質還款力</div>
+          <p class="figure-desc">
+            流動比、速動比可能受定存單質押限制影響；損益表僅看帳面盈餘。現金流量表排除帳務分攤干擾，揭露企業手上是否真有現金可還鎖頭銀行。
+          </p>
+        </article>
+
+        <article class="figure-card">
+          <div class="figure-kicker">核心概念 02 ・ 結構判讀</div>
+          <h3 class="figure-title">三大現金流結構互動檢驗</h3>
+          <div class="figure-metric">營業 × 投資 × 籌資</div>
+          <p class="figure-desc">
+            營業活動現金流原則上應為正流入；若營業淨流出卻帳面賺錢，須警覺是否靠處分廠房或業外收入「斷尾求生」。投資擴張期應緊盯現金流轉正拐點。
+          </p>
+        </article>
+
+        <article class="figure-card is-red">
+          <div class="figure-kicker">核心概念 03 ・ 現金還原</div>
+          <h3 class="figure-title">非現金加回與營運資金擠壓</h3>
+          <div class="figure-metric">折舊攤銷「先付後攤」</div>
+          <p class="figure-desc">
+            設備購置前期即已付款，後續折舊攤銷並無現金流出，調整時應加回；同步須防範應收帳款與存貨暴增（或大廠長帳期）吞噬週轉現金。
+          </p>
+        </article>
+
+        <article class="figure-card is-green">
+          <div class="figure-kicker">核心概念 04 ・ 償債基準</div>
+          <h3 class="figure-title">EBITDA 聯貸實務與 C1 基準</h3>
+          <div class="figure-metric">C1 現金流量比 &gt; 40%</div>
+          <p class="figure-desc">
+            引進國際聯貸 EBITDA 概念計算加回折舊之利息保障倍數（T2），辨識「帳面虧損但具付息力」借戶，並以 C1 &gt; 40% 與 T6 驗證第一還款來源。
+          </p>
+        </article>
+      </div>
+
+      <div class="chain-strip" aria-label="授信審查三鏈分析整合定位">
+        <div>
+          <div class="chain-step-label">STEP 01 ・ 實數分析</div>
+          <div class="chain-step-title">錢變動在哪裡？</div>
+          <p class="chain-step-text">核對營業現金流入、應收帳款及存貨增減金額，辨識資金真實去向。</p>
+        </div>
+        <div>
+          <div class="chain-step-label">STEP 02 ・ 比率分析</div>
+          <div class="chain-step-title">償債結構是否合理？</div>
+          <p class="chain-step-text">比對傳統利息保障（T1）與加回折舊（T2）、現金流量比率（C1）。</p>
+        </div>
+        <div>
+          <div class="chain-step-label">STEP 03 ・ 比較分析</div>
+          <div class="chain-step-title">企業問題或產業常態？</div>
+          <p class="chain-step-text">與企業歷期趨勢及聯徵同業統計（7 大營收級距）交叉對照。</p>
+        </div>
+        <div>
+          <div class="chain-step-label">STEP 04 ・ 審查收斂</div>
+          <div class="chain-step-title">回歸第一還款來源</div>
+          <p class="chain-step-text">核對存摺、對帳單與實際收款，確認營業金流足以覆蓋本息負擔。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 2: Search & Filter Controls -->
+    <section aria-labelledby="chapters-heading">
+      <div class="section-head">
+        <div>
+          <div class="section-kicker">INTERACTIVE CURRICULUM ・ 章節探索與實戰檢驗</div>
+          <h2 id="chapters-heading">Day 17 實務章節卡片（點選展開詳細說明與試算工具）</h2>
+        </div>
+        <p class="section-subtitle">所有資料嚴格依據來源教材整理；來源未涵蓋之定義或門檻均明確標示「來源未提供」</p>
+      </div>
+
+      <div class="controls-panel" role="region" aria-label="章節搜尋與篩選控制">
+        <div class="controls-top-row">
+          <div class="field-group">
+            <label class="field-label" for="search-input">關鍵字即時搜尋（支援章節標題、案例名稱、公式代號如 T2 / C1 / EBITDA）</label>
+            <input
+              type="search"
+              id="search-input"
+              class="search-input"
+              placeholder="輸入關鍵字，例如：北投紅茶、EBITDA、C1、營運資金、來源未提供…"
+              oninput="handleSearchInput(this.value)"
+            >
+          </div>
+
+          <div class="field-group">
+            <label class="field-label" for="read-filter">閱讀狀態篩選</label>
+            <select id="read-filter" class="select-input" onchange="handleReadFilterChange(this.value)">
+              <option value="all">全部章節</option>
+              <option value="unread">僅顯示未讀</option>
+              <option value="read">僅顯示已讀</option>
+            </select>
+          </div>
+
+          <div class="bulk-actions">
+            <button type="button" class="btn-secondary" onclick="expandAllChapters()">全部展開</button>
+            <button type="button" class="btn-secondary" onclick="collapseAllChapters()">全部收合</button>
+          </div>
+        </div>
+
+        <div class="tags-bar" role="group" aria-label="章節標籤篩選">
+          <span class="tags-title">主題標籤：</span>
+          <button type="button" class="tag-chip is-active" data-tag="全部" onclick="handleTagFilter('全部')">全部章節</button>
+          <button type="button" class="tag-chip" data-tag="防衛性報表" onclick="handleTagFilter('防衛性報表')">防衛性報表</button>
+          <button type="button" class="tag-chip" data-tag="三大現金流" onclick="handleTagFilter('三大現金流')">三大現金流</button>
+          <button type="button" class="tag-chip" data-tag="折舊攤銷還原" onclick="handleTagFilter('折舊攤銷還原')">折舊攤銷還原</button>
+          <button type="button" class="tag-chip" data-tag="EBITDA" onclick="handleTagFilter('EBITDA')">EBITDA</button>
+          <button type="button" class="tag-chip" data-tag="國際聯貸" onclick="handleTagFilter('國際聯貸')">國際聯貸</button>
+          <button type="button" class="tag-chip" data-tag="覆蓋率檢驗" onclick="handleTagFilter('覆蓋率檢驗')">覆蓋率檢驗</button>
+          <button type="button" class="tag-chip" data-tag="第一還款來源" onclick="handleTagFilter('第一還款來源')">第一還款來源</button>
+          <button type="button" class="tag-chip" data-tag="算式實務" onclick="handleTagFilter('算式實務')">算式實務</button>
+          <button type="button" class="tag-chip" data-tag="風險把關" onclick="handleTagFilter('風險把關')">風險把關</button>
+        </div>
+
+        <div class="results-meta">
+          <span id="results-count">顯示 6 / 6 個章節</span>
+          <span>提示：點選任一卡片標題即可展開詳細說明與互動試算工具</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 3: Chapter Cards Grid -->
+    <section aria-label="章節內容列表">
+      <div class="chapters-grid" id="chapters-grid">
+
+        <!-- CHAPTER 1 -->
+        <article class="chapter-card" id="card-ch1" data-chapter="ch1" data-tags="防衛性報表,風險把關,第一還款來源">
+          <div class="card-meta-bar">
+            <span class="chapter-num">CH 01 ・ 報表本質</span>
+            <label class="read-toggle" id="read-label-ch1">
+              <input type="checkbox" id="chk-ch1" onchange="toggleReadStatus('ch1', this.checked)">
+              <span>已讀</span>
+            </label>
+          </div>
+          <button type="button" class="card-trigger" id="trigger-ch1" aria-expanded="false" aria-controls="body-ch1" onclick="toggleChapter('ch1')">
+            <div class="card-title-row">
+              <h3 class="card-title">現金流量表作為「防衛性報表」之本質與授信把關價值</h3>
+              <span class="expand-pill" id="pill-ch1">展開詳情</span>
+            </div>
+            <p class="card-summary">
+              剖析為何資產負債表流動比與損益表帳面獲利可能誤導審查，並透過處分廠房「斷尾求生」與業外收入案例，拆解紙上獲利背後的真實金流風險。
+            </p>
+            <div class="card-tags">
+              <span class="stamp-tag">防衛性報表</span>
+              <span class="stamp-tag">風險把關</span>
+              <span class="stamp-tag">第一還款來源</span>
+            </div>
+          </button>
+
+          <div class="card-body" id="body-ch1">
+            <div class="detail-grid">
+              <div class="prose-block">
+                <h4>為何稱現金流量表為「防衛性報表」？</h4>
+                <p>
+                  鎖頭銀行徵信實務中，資產負債表與損益表各有盲點：資產負債表中的流動比率與速動比率依固定公式計算，若企業定存單附帶限制條款或應收存貨變現性低，帳面比率便可能失真；損益表則採權責發生制，包含折舊攤銷等非現金分攤與一次性業外處分利益。
+                </p>
+                <p>
+                  相較之下，現金流量表俗稱「防衛性報表」，因為它直接還原營業活動中的折舊攤銷與現金收付本質，檢驗企業<strong>實質上到底有多少現金可以償還鎖頭銀行本息</strong>，是防範「帳面賺錢卻無現金還款」的最後一道財務防線。
+                </p>
+              </div>
+
+              <div class="prose-block">
+                <h4>破解「紙上獲利」兩大實務案例</h4>
+                <ul>
+                  <li>
+                    <strong>營業淨現金流出卻有盈餘（斷尾求生警訊）：</strong>
+                    課程中舉示某大型集團關係企業（經營生鮮品牌 Green &amp; Safe）案例：財報出現「營業活動淨現金流出，損益表卻顯示賺錢」的反常現象。深入穿透後發現，該獲利來自於<strong>將大陸廠房整個處分掉（投資活動處分資產）</strong>，屬於斷尾求生而非本業賺錢；日常營運虧損則靠集團關聯企業分攤認列支撐，且該公司並未列入母集團關係企業三書表內，徵信人員若不看現金流與集團結構極易誤判。
+                  </li>
+                  <li>
+                    <strong>本業獲利 vs 業外收入（上誼文化／信誼案例）：</strong>
+                    文教事業本業經營艱困，卻能維持獲利，主因來自權益法轉投資子公司分紅及持有企業大樓向關係企業收取租金（信誼）。審查時必須以<strong>「營業利益」</strong>代表本業本質，一般業外收入穩定性低，不宜直接視為常態還款財源。
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="callout is-warn">
+              <div class="callout-head">風控紅線：營業現金流出卻有帳面盈餘時的強制追查</div>
+              <p style="margin:0;">
+                當企業「營業活動淨現金流出」同時損益表卻仍呈現獲利時，徵信報告必須立即追查獲利來源是否屬於「投資活動處分資產」或「一次性業外收益」。在營業現金流尚未真正轉正之前，該企業之本業還款能力仍屬高度危險狀態。
+              </p>
+            </div>
+
+            <div class="callout is-gap">
+              <div class="callout-head">
+                <span class="source-gap-badge">來源未提供</span>
+                <span>「黑字倒閉」專有名詞條目說明</span>
+              </div>
+              <p style="margin:0;">
+                本課程來源筆記與錄音逐字稿中，並未直接出現「黑字倒閉」四字之專章詞條定義（標示<strong>來源未提供</strong>）；惟來源已於《授信審查三種方法》批發商案例及「營業流出卻帳面有盈餘」案例中，完整闡述「帳面營收成長或保有獲利，但資金遭應收帳款、存貨占用或依賴處分資產撐場，導致實質償債現金不足」之同等風險核心。
+              </p>
+            </div>
+          </div>
+        </article>
+
+        <!-- CHAPTER 2 -->
+        <article class="chapter-card" id="card-ch2" data-chapter="ch2" data-tags="三大現金流,防衛性報表,風險把關">
+          <div class="card-meta-bar">
+            <span class="chapter-num">CH 02 ・ 結構互動</span>
+            <label class="read-toggle" id="read-label-ch2">
+              <input type="checkbox" id="chk-ch2" onchange="toggleReadStatus('ch2', this.checked)">
+              <span>已讀</span>
+            </label>
+          </div>
+          <button type="button" class="card-trigger" id="trigger-ch2" aria-expanded="false" aria-controls="body-ch2" onclick="toggleChapter('ch2')">
+            <div class="card-title-row">
+              <h3 class="card-title">營業、投資、籌資三大現金流量結構互動與健康度檢驗</h3>
+              <span class="expand-pill" id="pill-ch2">展開詳情</span>
+            </div>
+            <p class="card-summary">
+              解析三大現金流量之互動規律、轉正拐點判讀，並明確區分來源實務情境與「優良型、擴張型、過渡型、以債養債型」分類表之來源涵蓋邊界。
+            </p>
+            <div class="card-tags">
+              <span class="stamp-tag">三大現金流</span>
+              <span class="stamp-tag">防衛性報表</span>
+              <span class="stamp-tag">風險把關</span>
+            </div>
+          </button>
+
+          <div class="card-body" id="body-ch2">
+            <div class="detail-grid">
+              <div class="prose-block">
+                <h4>三大現金流活動互動核心判讀</h4>
+                <ul>
+                  <li><strong>營業活動現金流：</strong>衡量企業本業造血與第一還款來源之根本，原則上以<strong>淨流入（正值）</strong>為健康基準。若為淨流出且靠其他項目補洞，代表本業未能產出償債現金。</li>
+                  <li><strong>投資活動現金流：</strong>反映設備購置、建廠資本支出（流出）或處分廠房投資（流入）。前期大舉建廠導致投資現金大額流出屬常見擴張歷程，但若營業現金流遲未轉正且產能利用率偏低（如僅三成），財務壓力將浮現；反之，若出現異常正流入，須查明是否變賣生財器具斷尾求生。</li>
+                  <li><strong>籌資活動現金流：</strong>反映向鎖頭銀行借款、償還借款、借新還舊及現金增資／發放股利之資金調度（對照如短期借款暴增以填補應收與存貨缺口之情況）。</li>
+                </ul>
+              </div>
+
+              <div class="lab-panel" aria-label="三大現金流實務情境判讀器">
+                <div class="lab-header">
+                  <h4 class="lab-title">來源實務情境互動診斷器</h4>
+                  <div class="preset-row">
+                    <button type="button" class="preset-btn is-active" id="cf-btn-1" onclick="selectCfScenario(1)">情境 1：本業現金轉正</button>
+                    <button type="button" class="preset-btn" id="cf-btn-2" onclick="selectCfScenario(2)">情境 2：產能過剩轉型中</button>
+                    <button type="button" class="preset-btn" id="cf-btn-3" onclick="selectCfScenario(3)">情境 3：賣廠斷尾求生</button>
+                  </div>
+                </div>
+                <div class="scenario-result" id="cf-scenario-output">
+                  <!-- Populated by JS -->
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <h4 class="sub-title">健康度檢驗模型分類與來源資料盤點</h4>
+              <div class="table-wrap">
+                <table class="fin-table">
+                  <thead>
+                    <tr>
+                      <th>結構類型名稱</th>
+                      <th>營業活動現金流</th>
+                      <th>投資活動現金流</th>
+                      <th>籌資活動現金流</th>
+                      <th>來源記載狀態與實務判讀重點</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><strong>優良型</strong></td>
+                      <td><span class="source-gap-badge">來源未提供</span></td>
+                      <td><span class="source-gap-badge">來源未提供</span></td>
+                      <td><span class="source-gap-badge">來源未提供</span></td>
+                      <td><span class="source-gap-badge">來源未提供</span> 筆記課綱僅列「三大現金流量之結構互動與健康度檢驗」，未定義「優良型」名稱與正負組合規則。</td>
+                    </tr>
+                    <tr>
+                      <td><strong>擴張型</strong></td>
+                      <td><span class="source-gap-badge">來源未提供</span></td>
+                      <td><span class="source-gap-badge">來源未提供</span></td>
+                      <td><span class="source-gap-badge">來源未提供</span></td>
+                      <td><span class="source-gap-badge">來源未提供</span> 來源僅提及大額資本支出建廠時應追蹤「現金流何時轉正」，未定義「擴張型」專屬分類表格。</td>
+                    </tr>
+                    <tr>
+                      <td><strong>過渡型</strong></td>
+                      <td><span class="source-gap-badge">來源未提供</span></td>
+                      <td><span class="source-gap-badge">來源未提供</span></td>
+                      <td><span class="source-gap-badge">來源未提供</span></td>
+                      <td><span class="source-gap-badge">來源未提供</span> 來源未提供「過渡型」正負組合模型之定義與對應指標門檻。</td>
+                    </tr>
+                    <tr>
+                      <td><strong>以債養債型</strong></td>
+                      <td><span class="source-gap-badge">來源未提供</span></td>
+                      <td><span class="source-gap-badge">來源未提供</span></td>
+                      <td><span class="source-gap-badge">來源未提供</span></td>
+                      <td><span class="source-gap-badge">來源未提供</span> 來源未定義此名詞分類；惟於《授信審查三種方法》提示應警覺「短期借款增加以支應應收存貨占用」及「借新還舊」案件之總額控管。</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- CHAPTER 3 -->
+        <article class="chapter-card" id="card-ch3" data-chapter="ch3" data-tags="折舊攤銷還原,算式實務,第一還款來源">
+          <div class="card-meta-bar">
+            <span class="chapter-num">CH 03 ・ 還原調整</span>
+            <label class="read-toggle" id="read-label-ch3">
+              <input type="checkbox" id="chk-ch3" onchange="toggleReadStatus('ch3', this.checked)">
+              <span>已讀</span>
+            </label>
+          </div>
+          <button type="button" class="card-trigger" id="trigger-ch3" aria-expanded="false" aria-controls="body-ch3" onclick="toggleChapter('ch3')">
+            <div class="card-title-row">
+              <h3 class="card-title">營業現金流還原技術：非現金支出加回與營運資金實質擠壓</h3>
+              <span class="expand-pill" id="pill-ch3">展開詳情</span>
+            </div>
+            <p class="card-summary">
+              透過「北投紅茶店 200 萬攤銷」案例看懂折舊攤銷加回原理，並結合「批發商 300 萬週轉金」與「360 天長帳期」案例解析營運資金對現金的吞噬效應。
+            </p>
+            <div class="card-tags">
+              <span class="stamp-tag">折舊攤銷還原</span>
+              <span class="stamp-tag">算式實務</span>
+              <span class="stamp-tag">第一還款來源</span>
+            </div>
+          </button>
+
+          <div class="card-body" id="body-ch3">
+            <div class="detail-grid">
+              <div class="prose-block">
+                <h4>一、非現金支出（折舊、攤銷）加回原理</h4>
+                <p>
+                  企業購置機器設備或支付店面裝修費用時，現金在最前端就已經支付完畢（或向鎖頭銀行取得資本支出融資）。往後數年損益表上每年認列的「折舊費用」與「攤銷費用」，純粹是會計帳務的分年攤提，<strong>當年度並沒有任何現金再次流出企業口袋</strong>。
+                </p>
+                <p>
+                  因此，在現金流量表的營業活動調整項目中，折舊與攤銷費用屬於「加項（加回）」。講師在課堂上以<strong>北投紅茶店</strong>生動說明：
+                </p>
+                <ul>
+                  <li>前期投入裝修與機器設備共 <strong>200 萬元</strong>（向鎖頭銀行借款），分 <strong>5 年</strong>攤銷，每年固定攤銷 <strong>40 萬元</strong>。</li>
+                  <li>若第一年營業活動淨現金流入 <strong>41 萬元</strong>，扣除 40 萬元攤銷後，損益表帳面獲利僅剩 <strong>1 萬元</strong>（比工讀生賺得還少），但實質上企業手上有 41 萬元現金可用於償還鎖頭銀行貸款。</li>
+                </ul>
+              </div>
+
+              <div class="prose-block">
+                <h4>二、營運資金變動對現金的實質擠壓</h4>
+                <p>
+                  帳面營收成長不代表現金流入！依《授信審查三種方法》教學案例：某批發商申請新增週轉金貸款 <strong>300 萬元</strong>，財報顯示：
+                </p>
+                <ul>
+                  <li><strong>獲利背離：</strong>營收成長 400 萬元（+20%），但毛利率由 20% 降至 15%，毛利反而減少 40 萬元。</li>
+                  <li><strong>資金遭占用：</strong>應收帳款增加 300 萬元（+100%）、存貨增加 200 萬元（+100%），兩項合計吸走 <strong>500 萬元</strong>營運資金，且增速遠高於營收增幅 20%，被迫增加短期借款 300 萬元。</li>
+                  <li><strong>結構惡化：</strong>雖帳面營運資金絕對額仍為 400 萬元，但流動比率由 200% 降至 150%，速動比率由 150% 降至 100%，顯示收款品質或庫存去化可能出現危機。</li>
+                  <li><strong>供應鏈帳期擠壓：</strong>實務上大型電子品牌常採取「交貨後 180 天驗收＋再開立 180 天期票」，導致中小型協力廠應收／存貨週轉天期高達 <strong>200 至 360 天</strong>。徵信須查證訂單穩定性與對帳憑證，確認是否為產業常態或收款惡化。</li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- Interactive Depreciation Add-back Simulator -->
+            <div class="lab-panel" aria-label="折舊攤銷還原實質現金流試算器">
+              <div class="lab-header">
+                <h4 class="lab-title">互動試算：折舊攤銷加回與帳面淨利還原模擬器</h4>
+                <div class="preset-row">
+                  <button type="button" class="preset-btn is-active" onclick="applyBeveragePreset(200, 5, 41)">北投紅茶原案 (200萬/5年/流入41萬)</button>
+                  <button type="button" class="preset-btn" onclick="applyBeveragePreset(1000, 5, 180)">高折舊微虧損門市 (1000萬/5年/流入180萬)</button>
+                </div>
+              </div>
+
+              <div class="lab-grid">
+                <div class="inputs-stack">
+                  <div class="field-group">
+                    <label class="field-label" for="bev-capex-num">前期設備裝修投資總額（萬元）</label>
+                    <div class="slider-pair">
+                      <input type="range" id="bev-capex-slider" min="50" max="2000" step="10" value="200" oninput="syncBevCapexFromSlider(this.value)">
+                      <input type="number" id="bev-capex-num" class="num-input" min="50" max="2000" step="10" value="200" oninput="syncBevCapexFromNum(this.value)">
+                    </div>
+                  </div>
+                  <div class="field-group">
+                    <label class="field-label" for="bev-years-num">設備分年攤銷年限（年）</label>
+                    <div class="slider-pair">
+                      <input type="range" id="bev-years-slider" min="1" max="15" step="1" value="5" oninput="syncBevYearsFromSlider(this.value)">
+                      <input type="number" id="bev-years-num" class="num-input" min="1" max="15" step="1" value="5" oninput="syncBevYearsFromNum(this.value)">
+                    </div>
+                  </div>
+                  <div class="field-group">
+                    <label class="field-label" for="bev-ocf-num">本年度營業活動淨現金流入（萬元）</label>
+                    <div class="slider-pair">
+                      <input type="range" id="bev-ocf-slider" min="-100" max="500" step="1" value="41" oninput="syncBevOcfFromSlider(this.value)">
+                      <input type="number" id="bev-ocf-num" class="num-input" min="-100" max="500" step="1" value="41" oninput="syncBevOcfFromNum(this.value)">
+                    </div>
+                  </div>
+                </div>
+
+                <div class="outputs-panel">
+                  <div class="kpi-mini-grid">
+                    <div class="kpi-mini">
+                      <div class="kpi-mini-label">每年非現金攤銷費用</div>
+                      <div class="kpi-mini-val is-amber" id="bev-out-amort">40.0 萬</div>
+                    </div>
+                    <div class="kpi-mini">
+                      <div class="kpi-mini-label">損益表推估帳面損益</div>
+                      <div class="kpi-mini-val" id="bev-out-net">+1.0 萬</div>
+                    </div>
+                    <div class="kpi-mini">
+                      <div class="kpi-mini-label">實質可供還款現金流</div>
+                      <div class="kpi-mini-val is-ok" id="bev-out-cash">41.0 萬</div>
+                    </div>
+                  </div>
+
+                  <div class="bar-viz">
+                    <div class="bar-row">
+                      <div class="bar-row-head">
+                        <span>損益表帳面獲利（扣除攤銷後）</span>
+                        <span id="bev-bar-net-txt">1.0 萬</span>
+                      </div>
+                      <div class="bar-track"><div class="bar-fill amber" id="bev-bar-net" style="width: 2%;"></div></div>
+                    </div>
+                    <div class="bar-row">
+                      <div class="bar-row-head">
+                        <span>每年加回折舊攤銷（非現金支出）</span>
+                        <span id="bev-bar-amort-txt">40.0 萬</span>
+                      </div>
+                      <div class="bar-track"><div class="bar-fill navy" id="bev-bar-amort" style="width: 40%;"></div></div>
+                    </div>
+                    <div class="bar-row">
+                      <div class="bar-row-head">
+                        <span>營業活動淨現金流入（實質償債資源）</span>
+                        <span id="bev-bar-ocf-txt">41.0 萬</span>
+                      </div>
+                      <div class="bar-track"><div class="bar-fill green" id="bev-bar-ocf" style="width: 41%;"></div></div>
+                    </div>
+                  </div>
+
+                  <p class="figure-desc" id="bev-verdict-text">
+                    解讀：即使損益表帳面獲利僅 1 萬元，因 40 萬元折舊攤銷未耗用當期現金，企業實質仍具備 41 萬元營業現金流可償還鎖頭銀行借款。
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div class="callout is-gap">
+              <div class="callout-head">
+                <span class="source-gap-badge">來源未提供</span>
+                <span>間接法營業現金流完整細部會計調表項目清單</span>
+              </div>
+              <p style="margin:0;">
+                本來源已詳述折舊攤銷加回原理及應收帳款、存貨擴張對現金之擠壓實例；惟關於會計準則間接法現金流量表之完整細部調整分錄清單（如遞延所得稅資產負債變動、其他流動負債細項公式等），<strong>來源未提供</strong>，實務調表應依會計師簽證財報附註核實。
+              </p>
+            </div>
+          </div>
+        </article>
+
+        <!-- CHAPTER 4 -->
+        <article class="chapter-card" id="card-ch4" data-chapter="ch4" data-tags="EBITDA,國際聯貸,算式實務,折舊攤銷還原">
+          <div class="card-meta-bar">
+            <span class="chapter-num">CH 04 ・ 聯貸實務</span>
+            <label class="read-toggle" id="read-label-ch4">
+              <input type="checkbox" id="chk-ch4" onchange="toggleReadStatus('ch4', this.checked)">
+              <span>已讀</span>
+            </label>
+          </div>
+          <button type="button" class="card-trigger" id="trigger-ch4" aria-expanded="false" aria-controls="body-ch4" onclick="toggleChapter('ch4')">
+            <div class="card-title-row">
+              <h3 class="card-title">EBITDA 還原技術與國際聯貸標準承諾指標實務</h3>
+              <span class="expand-pill" id="pill-ch4">展開詳情</span>
+            </div>
+            <p class="card-summary">
+              對照傳統利息保障倍數（T1）與加回折舊攤銷版（T2），結合「產能利用率僅三成大廠房」案例與聯徵槓桿倍數（T10），破解帳面虧損借戶的實質付息力。
+            </p>
+            <div class="card-tags">
+              <span class="stamp-tag">EBITDA</span>
+              <span class="stamp-tag">國際聯貸</span>
+              <span class="stamp-tag">算式實務</span>
+            </div>
+          </button>
+
+          <div class="card-body" id="body-ch4">
+            <div class="detail-grid">
+              <div class="prose-block">
+                <h4>為何鎖頭銀行同時檢視「兩種」利息保障倍數？</h4>
+                <p>
+                  課程特別比較信用評等表／公開資訊觀測站所列與鎖頭銀行徵信報告財務比率表之算法差異（對應聯徵 IFRS 財務比率表 <span class="formula-code">T1</span> 與 <span class="formula-code">T2</span>）：
+                </p>
+                <ul>
+                  <li>
+                    <strong>T1 傳統利息保障倍數（保守評等版）：</strong><br>
+                    <span class="formula-code">(稅前損益 + 財務成本) ÷ 財務成本</span><br>
+                    早年銀行公會公告與公開資訊觀測站採用此式，未加回折舊攤銷，立場較保守。
+                  </li>
+                  <li>
+                    <strong>T2 加回折舊、攤銷版（EBITDA 還原概念）：</strong><br>
+                    <span class="formula-code">(稅前損益 + 財務成本 + 折舊、攤銷費用) ÷ 財務成本</span><br>
+                    引進國際聯貸實務之 <strong>EBITDA（息稅折舊攤銷前盈餘）</strong>概念，將不耗用現金的折舊攤銷加回，真實反映企業手上是否握有現金流足以支付利息。
+                  </li>
+                </ul>
+              </div>
+
+              <div class="prose-block">
+                <h4>破解「帳面虧損但具實質付息與還債力」</h4>
+                <p>
+                  課程舉例：若一間製造業前期預估過度樂觀，興建了超大型廠房，投產初期<strong>產能利用率僅達 3 成（30%）</strong>，會產生什麼財報現象？
+                </p>
+                <ul>
+                  <li>損益表因背負龐大廠房設備折舊攤銷費用，呈現 <strong>Loss（帳面虧損）</strong>，若只看傳統 T1 指標會誤判為無力付息。</li>
+                  <li>但從防衛性報表（現金流）與 EBITDA 角度加回折舊攤銷後，只要 <strong>EBITDA 與營業活動現金流為正且轉正持續擴大</strong>，即代表借戶實質上有現金可以準時支付鎖頭銀行利息，企業正逐步往好方向調整；反之在現金流轉正前仍具高度風險。</li>
+                </ul>
+                <p>
+                  <strong>國際聯貸實務連結：</strong>最近 20 年國內聯貸市場廣泛採納國外聯貸案的財務承諾（Financial Covenants）框架，結合 <span class="formula-code">T10 槓桿倍數 = 總負債 ÷ EBITDA</span> 評估企業實質還本付息能力。
+                </p>
+              </div>
+            </div>
+
+            <!-- Interactive EBITDA & T1/T2 Simulator -->
+            <div class="lab-panel" aria-label="EBITDA 與 T1 T2 利息保障倍數互動計算器">
+              <div class="lab-header">
+                <h4 class="lab-title">互動工具：EBITDA 還原與 T1 / T2 / T10 聯貸指標對照模擬器</h4>
+                <div class="preset-row">
+                  <button type="button" class="preset-btn is-active" onclick="applyEbitdaPreset(-1200, 600, 3000, 8000)">三成產能大廠房（帳虧但有現金）</button>
+                  <button type="button" class="preset-btn" onclick="applyEbitdaPreset(1500, 300, 800, 4500)">穩健擴張企業</button>
+                  <button type="button" class="preset-btn" onclick="applyEbitdaPreset(-2500, 800, 1200, 12000)">現金流枯竭警訊</button>
+                </div>
+              </div>
+
+              <div class="lab-grid">
+                <div class="inputs-stack">
+                  <div class="field-group">
+                    <label class="field-label" for="eb-ebt">稅前損益（萬元，可輸入負數代表帳面虧損）</label>
+                    <input type="number" id="eb-ebt" class="num-input" value="-1200" step="100" oninput="calcEbitdaLab()">
+                  </div>
+                  <div class="field-group">
+                    <label class="field-label" for="eb-int">財務成本 / 利息費用（萬元）</label>
+                    <input type="number" id="eb-int" class="num-input" value="600" min="1" step="50" oninput="calcEbitdaLab()">
+                  </div>
+                  <div class="field-group">
+                    <label class="field-label" for="eb-da">折舊與攤銷費用（萬元）</label>
+                    <input type="number" id="eb-da" class="num-input" value="3000" min="0" step="100" oninput="calcEbitdaLab()">
+                  </div>
+                  <div class="field-group">
+                    <label class="field-label" for="eb-debt">總負債（萬元，供計算 T10 槓桿倍數）</label>
+                    <input type="number" id="eb-debt" class="num-input" value="8000" min="0" step="500" oninput="calcEbitdaLab()">
+                  </div>
+                </div>
+
+                <div class="outputs-panel">
+                  <div class="kpi-mini-grid">
+                    <div class="kpi-mini">
+                      <div class="kpi-mini-label">傳統 EBIT（息前稅前）</div>
+                      <div class="kpi-mini-val" id="eb-out-ebit">-600 萬</div>
+                    </div>
+                    <div class="kpi-mini">
+                      <div class="kpi-mini-label">還原後 EBITDA</div>
+                      <div class="kpi-mini-val is-ok" id="eb-out-ebitda">+2,400 萬</div>
+                    </div>
+                    <div class="kpi-mini">
+                      <div class="kpi-mini-label">T1 傳統利息保障倍數</div>
+                      <div class="kpi-mini-val is-warn" id="eb-out-t1">-1.00 x</div>
+                    </div>
+                    <div class="kpi-mini">
+                      <div class="kpi-mini-label">T2 加回折舊利息保障</div>
+                      <div class="kpi-mini-val is-ok" id="eb-out-t2">4.00 x</div>
+                    </div>
+                    <div class="kpi-mini">
+                      <div class="kpi-mini-label">T10 槓桿倍數（總負債÷EBITDA）</div>
+                      <div class="kpi-mini-val is-amber" id="eb-out-t10">3.33 x</div>
+                    </div>
+                  </div>
+
+                  <div class="callout is-ok" id="eb-verdict-box">
+                    <div class="callout-head" id="eb-verdict-title">審查判讀：帳面虧損但具實質付息能力</div>
+                    <p style="margin:0;" id="eb-verdict-desc">
+                      雖稅前損益虧損 1,200 萬元導致 T1 為負值（-1.00 倍），但加回 3,000 萬元非現金折舊攤銷後，EBITDA 達 2,400 萬元，T2 達 4.00 倍，顯示借戶當期實質具備支付利息之現金流基礎。
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="callout is-gap">
+              <div class="callout-head">
+                <span class="source-gap-badge">來源未提供</span>
+                <span>國際聯貸財務承諾（Covenants）具體契約門檻數字</span>
+              </div>
+              <p style="margin:0;">
+                來源教材已明確說明我國近 20 年廣泛引進國外聯貸案之 EBITDA 財務承諾邏輯及聯徵 <span class="formula-code">T2</span>、<span class="formula-code">T10</span> 公式；惟個別聯貸合約通常約定之具體財務承諾上下限數字（例如 T10 槓桿倍數不得高於幾倍、或利息保障不得低於幾倍），<strong>來源未提供</strong>，實務須依個案聯貸授信合約條件核對。
+              </p>
+            </div>
+          </div>
+        </article>
+
+        <!-- CHAPTER 5 -->
+        <article class="chapter-card" id="card-ch5" data-chapter="ch5" data-tags="覆蓋率檢驗,第一還款來源,算式實務">
+          <div class="card-meta-bar">
+            <span class="chapter-num">CH 05 ・ 還款覆蓋</span>
+            <label class="read-toggle" id="read-label-ch5">
+              <input type="checkbox" id="chk-ch5" onchange="toggleReadStatus('ch5', this.checked)">
+              <span>已讀</span>
+            </label>
+          </div>
+          <button type="button" class="card-trigger" id="trigger-ch5" aria-expanded="false" aria-controls="body-ch5" onclick="toggleChapter('ch5')">
+            <div class="card-title-row">
+              <h3 class="card-title">現金流量對短期授信與第一還款來源之覆蓋率檢驗</h3>
+              <span class="expand-pill" id="pill-ch5">展開詳情</span>
+            </div>
+            <p class="card-summary">
+              掌握「現金流量比率 &gt; 40%」穩健防線，整合聯徵中心 C1、T3、T4、T5、T6、T9 六大公式，驗證營業金流對短期借款與利息的真實覆蓋能力。
+            </p>
+            <div class="card-tags">
+              <span class="stamp-tag">覆蓋率檢驗</span>
+              <span class="stamp-tag">第一還款來源</span>
+              <span class="stamp-tag">算式實務</span>
+            </div>
+          </button>
+
+          <div class="card-body" id="body-ch5">
+            <div class="prose-block">
+              <h4>第一還款來源檢驗與進階現金流比率體系</h4>
+              <p>
+                授信審查必須區分「第一還款來源（營業金流）」與「第二還款來源（擔保品／中小企業信用保證基金）」。講師指出，傳統流動比率與速動比率因為應收帳款與存貨變現性未必可靠，參考穩定度不如現金流量指標。講師特別強調實務上最穩健的門檻為：<strong>現金流量比率（C1）大於 40%</strong> 代表公司相對穩當（在傳統徵信報告比率表外，現今可運用 AI 輔助從公開合併財報運算進階比率）。
+              </p>
+            </div>
+
+            <div class="table-wrap">
+              <table class="fin-table">
+                <thead>
+                  <tr>
+                    <th>聯徵代號</th>
+                    <th>比率名稱</th>
+                    <th>來源官方計算公式（IFRS 60 項）</th>
+                    <th>來源參考標準 / 狀態</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><span class="formula-code">C1</span></td>
+                    <td><strong>現金流量比率</strong></td>
+                    <td>營業活動之淨現金流量 ÷ 流動負債</td>
+                    <td><strong style="color:var(--positive-text);">大於 40% 相對穩當</strong>（來源明確口述標準）</td>
+                  </tr>
+                  <tr>
+                    <td><span class="formula-code">T6</span></td>
+                    <td><strong>營業現金流對短期借款比率</strong></td>
+                    <td>營業活動之淨現金流量 ÷ (短期借款 + 應付短期票券 + 一年或一營業週期內到期長期負債 + 特別股負債-流動)</td>
+                    <td><span class="source-gap-badge">來源未提供</span> 特定及格標準數值未提供</td>
+                  </tr>
+                  <tr>
+                    <td><span class="formula-code">T3</span></td>
+                    <td><strong>營業現金流對財務成本比率</strong></td>
+                    <td>營業活動之淨現金流量 ÷ 財務成本</td>
+                    <td><span class="source-gap-badge">來源未提供</span> 特定及格標準數值未提供</td>
+                  </tr>
+                  <tr>
+                    <td><span class="formula-code">T9</span></td>
+                    <td><strong>現金利息保障倍數</strong></td>
+                    <td>(營業活動之淨現金流量 + 所得稅付現額 + 現金利息支出) ÷ 現金利息支出</td>
+                    <td><span class="source-gap-badge">來源未提供</span> 特定及格標準數值未提供</td>
+                  </tr>
+                  <tr>
+                    <td><span class="formula-code">T4</span></td>
+                    <td><strong>營業現金流對負債總額比率</strong></td>
+                    <td>營業活動之淨現金流量 ÷ 負債總額</td>
+                    <td><span class="source-gap-badge">來源未提供</span> 特定及格標準數值未提供</td>
+                  </tr>
+                  <tr>
+                    <td><span class="formula-code">T5</span></td>
+                    <td><strong>自由支配淨現金流對負債總額比</strong></td>
+                    <td>(營業活動之淨現金流量 − 資本支出 − 現金股利) ÷ 負債總額</td>
+                    <td><span class="source-gap-badge">來源未提供</span> 特定及格標準數值未提供（Day 18 延伸：自由現金流涵蓋力）</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Interactive Coverage Ratio Checker -->
+            <div class="lab-panel" aria-label="第一還款來源覆蓋率快速檢驗器">
+              <div class="lab-header">
+                <h4 class="lab-title">實務快篩：第一還款來源（C1 / T6 / T3）覆蓋率檢驗工具</h4>
+                <div class="preset-row">
+                  <button type="button" class="preset-btn is-active" onclick="applyCovPreset(2800, 5000, 1500, 200)">穩健達標製造業</button>
+                  <button type="button" class="preset-btn" onclick="applyCovPreset(600, 4000, 2500, 300)">短借沉重警戒戶</button>
+                </div>
+              </div>
+
+              <div class="lab-grid">
+                <div class="inputs-stack">
+                  <div class="field-group">
+                    <label class="field-label" for="cov-ocf">營業活動之淨現金流量（萬元）</label>
+                    <input type="number" id="cov-ocf" class="num-input" value="2800" step="100" oninput="calcCovLab()">
+                  </div>
+                  <div class="field-group">
+                    <label class="field-label" for="cov-cl">流動負債總額（萬元）</label>
+                    <input type="number" id="cov-cl" class="num-input" value="5000" min="1" step="100" oninput="calcCovLab()">
+                  </div>
+                  <div class="field-group">
+                    <label class="field-label" for="cov-stdebt">短期借款及一年內到期長債合計（萬元）</label>
+                    <input type="number" id="cov-stdebt" class="num-input" value="1500" min="1" step="100" oninput="calcCovLab()">
+                  </div>
+                  <div class="field-group">
+                    <label class="field-label" for="cov-fin">財務成本 / 利息費用（萬元）</label>
+                    <input type="number" id="cov-fin" class="num-input" value="200" min="1" step="50" oninput="calcCovLab()">
+                  </div>
+                </div>
+
+                <div class="outputs-panel">
+                  <div class="kpi-mini-grid">
+                    <div class="kpi-mini">
+                      <div class="kpi-mini-label">C1 現金流量比率（標準 &gt; 40%）</div>
+                      <div class="kpi-mini-val is-ok" id="cov-out-c1">56.0%</div>
+                    </div>
+                    <div class="kpi-mini">
+                      <div class="kpi-mini-label">T6 對短期借款覆蓋比率</div>
+                      <div class="kpi-mini-val" id="cov-out-t6">186.7%</div>
+                    </div>
+                    <div class="kpi-mini">
+                      <div class="kpi-mini-label">T3 對財務成本倍數</div>
+                      <div class="kpi-mini-val" id="cov-out-t3">14.00 x</div>
+                    </div>
+                  </div>
+
+                  <div class="bar-viz">
+                    <div class="bar-row">
+                      <div class="bar-row-head">
+                        <span>C1 現金流量比率 vs 40% 穩健基準線</span>
+                        <span id="cov-c1-status-label">達標（&gt; 40%）</span>
+                      </div>
+                      <div class="bar-track"><div class="bar-fill green" id="cov-c1-bar" style="width: 56%;"></div></div>
+                    </div>
+                  </div>
+
+                  <p class="figure-desc" id="cov-verdict-desc">
+                    檢驗結果：C1 達 56.0%（高於來源 40% 穩健基準），營業金流覆蓋短期借款及財務成本空間充裕；仍須併同核對存摺、對帳單及實際收款紀錄作為第一還款來源佐證。
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- CHAPTER 6 -->
+        <article class="chapter-card" id="card-ch6" data-chapter="ch6" data-tags="風險把關,防衛性報表,第一還款來源">
+          <div class="card-meta-bar">
+            <span class="chapter-num">CH 06 ・ 徵信防線</span>
+            <label class="read-toggle" id="read-label-ch6">
+              <input type="checkbox" id="chk-ch6" onchange="toggleReadStatus('ch6', this.checked)">
+              <span>已讀</span>
+            </label>
+          </div>
+          <button type="button" class="card-trigger" id="trigger-ch6" aria-expanded="false" aria-controls="body-ch6" onclick="toggleChapter('ch6')">
+            <div class="card-title-row">
+              <h3 class="card-title">鎖頭銀行徵信實務防線：交叉查證、雙重報表防範與獨立倫理</h3>
+              <span class="expand-pill" id="pill-ch6">展開詳情</span>
+            </div>
+            <p class="card-summary">
+              彙整《銀行公會會員徵信準則》第 7 條、第 18 條實務規範：3,000 萬融資簽證計算與空窗期管控、營業稅 401/403 交叉核對與聯徵財報副本聯防機制。
+            </p>
+            <div class="card-tags">
+              <span class="stamp-tag">風險把關</span>
+              <span class="stamp-tag">防衛性報表</span>
+              <span class="stamp-tag">第一還款來源</span>
+            </div>
+          </button>
+
+          <div class="card-body" id="body-ch6">
+            <div class="detail-grid">
+              <div class="prose-block">
+                <h4>一、徵信職能分工與留存軌跡原則</h4>
+                <ul>
+                  <li>
+                    <strong>不直接表示准駁（準則第 7 條）：</strong>鎖頭銀行徵信人員應本於誠信原則公正平實撰寫報告，忠實揭露負面或異常資訊（如大額關係人非營業資金融通、營業現金流出警訊），<strong>不宜對授信案件直接表示准駁意見</strong>，將核貸准駁判斷留予授信主辦與審查主管。
+                  </li>
+                  <li>
+                    <strong>有所本、充分揭露、依規辦理：</strong>任何查證均須使用客觀來源（商工登記、稅務入口網、聯徵資料、公開資訊觀測站）並印附留存軌跡，確保事後稽核可證實當時盡職調查（徵信準則第 36、37 條免責基礎）。
+                  </li>
+                </ul>
+              </div>
+
+              <div class="prose-block">
+                <h4>二、交叉檢核與聯徵財報副本聯防</h4>
+                <ul>
+                  <li>
+                    <strong>外部憑證交叉對照（準則第 18 條第 1 項第 5 款）：</strong>財報數字（含營業收入、現金流量及存貨應收）必須與營業稅申報書（401 表／403 表／405 表）、進出口報單、海關數據及鎖頭銀行帳戶資金流水（存摺、對帳單）交互驗證；有顯著落差須要求借戶說明並載明於報告。
+                  </li>
+                  <li>
+                    <strong>防範雙重報表（準則第 18 條第 1 項第 6 款）：</strong>授信契約應約定借戶要求簽證會計師將財務報表查核報告副本逕送聯徵中心（JCIC），杜絕企業向鎖頭銀行提供美化財報、向稅局申報真實報表之道德風險。
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="callout is-amber">
+              <div class="callout-head">3,000 萬元融資簽證門檻與空窗期控管要領（鎖頭銀行實務）</div>
+              <ul style="margin:0; padding-left:1.25rem;">
+                <li><strong>總授信金額計算：</strong>聯徵歸戶餘額（B33）＋ 本次申請額度，得扣除本行（鎖頭銀行）定存單質借、出口押匯、進口押匯及無追索權應收帳款承購之買方額度。達新台幣 3,000 萬元以上（或公司組織申請本票保證不論金額）一律強制徵提融資簽證。</li>
+                <li><strong>1 月 1 日至 5 月 31 日財報空窗期：</strong>若於此期間首次達 3,000 萬，可先徵提去年度暫結報表、自編聲明書及會計師受託查核證明；<strong>6 月 1 日起</strong>務必追蹤補提正式查核報告（須留意若會計師未參與期初存貨盤點或現金函證，可能出具「保留意見」）。</li>
+                <li><strong>N20 會計師懲戒紀錄：</strong>務必查核聯徵 N20 紀錄，區分警告／申誡（一年內採用須註明原因審慎評估）、停業處分（停業期間／法規加倍期間不予採用）與除名（永久不予採用）。</li>
+              </ul>
+            </div>
+          </div>
+        </article>
+
+      </div>
+
+      <!-- Empty Search State -->
+      <div class="empty-state" id="empty-state">
+        <h3>找不到符合條件的章節</h3>
+        <p id="empty-state-reason">目前的關鍵字或標籤篩選條件下沒有對應章節。您可以清除搜尋字詞或切換回「全部章節」繼續學習。</p>
+        <button type="button" class="btn-primary" onclick="clearAllFilters()">清除所有篩選條件</button>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <a class="home-link" href="index.html">回首頁</a>
+      <div class="footer-brand">Powered By Dunk</div>
+      <div class="footer-sources">
+        本互動學習頁面內容整理自課程來源：《企業授信實務（30天課綱）》Day 17、課堂實務講解錄音、《授信審查三種方法》筆記、《中華民國銀行公會會員徵信準則》及《財團法人金融聯合徵信中心產業財務統計資訊內容說明》。所有銀行機構均依規範以「鎖頭銀行」統稱。
+      </div>
+    </div>
+  </footer>
+
+  <api-shim></api-shim>
+  <script>
+    /* State object persisted via window.notebookAppApi */
+    var appState = {
+      readChapters: {},
+      expandedChapters: {},
+      activeTag: `全部`,
+      readFilter: `all`,
+      searchQuery: ``,
+      cfScenario: 1
+    };
+
+    var CHAPTER_IDS = [`ch1`, `ch2`, `ch3`, `ch4`, `ch5`, `ch6`];
+
+    var CF_SCENARIOS = {
+      1: {
+        badges: [
+          { label: `營業活動淨現金流`, text: `轉正（+流入）`, type: `pos` },
+          { label: `投資活動淨現金流`, text: `前期流出（建廠）`, type: `neg` },
+          { label: `籌資活動淨現金流`, text: `依實務調度`, type: `neutral` }
+        ],
+        title: `情境一：大舉建廠後營業現金流順利轉正（改善訊號）`,
+        desc: `依課堂說明，企業前期若投入大額資本支出建廠，初期常伴隨帳面虧損與高折舊；一旦觀察到「防衛性報表（營業現金流）開始轉正」，代表公司已跨越轉折點，開始往好的方向發展，實質付息與償債動能逐步建立。`
+      },
+      2: {
+        badges: [
+          { label: `營業活動淨現金流`, text: `尚未轉正（−流出）`, type: `neg` },
+          { label: `投資活動淨現金流`, text: `大額流出（擴廠過度）`, type: `neg` },
+          { label: `籌資活動淨現金流`, text: `依賴借款支撐`, type: `neutral` }
+        ],
+        title: `情境二：產能利用率偏低且現金流尚未轉正（高度警戒）`,
+        desc: `依課堂案例，若公司初期預估過度樂觀蓋了超大廠房，產能利用率僅三成，損益表呈現 Loss，且營業現金流尚未轉正之前，代表折舊壓力與本業失血同時存在，在現金流正式轉正前仍屬高風險階段，授信審查須審慎控管。`
+      },
+      3: {
+        badges: [
+          { label: `營業活動淨現金流`, text: `負值（−流出）`, type: `neg` },
+          { label: `投資活動淨現金流`, text: `正值（+處分廠房）`, type: `pos` },
+          { label: `損益表帳面盈餘`, text: `假性獲利（+盈餘）`, type: `neutral` }
+        ],
+        title: `情境三：營業流出卻帳面賺錢——賣廠「斷尾求生」（紅旗警示）`,
+        desc: `依課堂「Green & Safe 關係企業」案例，若「營業活動淨現金流出」同時「損益表卻顯示獲利」，主因往往來自投資活動（處分大陸廠房等資產）或關係企業分攤支撐。徵信人員絕不可只看損益表獲利就放行，必須揭露其本業現金失血實態。`
+      }
+    };
+
+    /* Persistence helpers */
+    async function saveAppState() {
+      if (window.notebookAppApi && typeof window.notebookAppApi.setAppState === `function`) {
+        try {
+          await window.notebookAppApi.setAppState(appState);
+        } catch (err) {
+          /* Silently ignore transient shim save error */
+        }
+      }
+    }
+
+    function updateProgressUI() {
+      var readCount = 0;
+      for (var i = 0; i < CHAPTER_IDS.length; i++) {
+        var id = CHAPTER_IDS[i];
+        var isRead = Boolean(appState.readChapters[id]);
+        if (isRead) readCount++;
+
+        var chk = document.getElementById(`chk-` + id);
+        if (chk) chk.checked = isRead;
+
+        var lbl = document.getElementById(`read-label-` + id);
+        if (lbl) {
+          if (isRead) lbl.classList.add(`is-checked`);
+          else lbl.classList.remove(`is-checked`);
+        }
+
+        var card = document.getElementById(`card-` + id);
+        if (card) {
+          if (isRead) card.classList.add(`is-read`);
+          else card.classList.remove(`is-read`);
+        }
+      }
+
+      var total = CHAPTER_IDS.length;
+      var pct = Math.round((readCount / total) * 100);
+      var statEl = document.getElementById(`progress-stat-text`);
+      if (statEl) statEl.textContent = readCount + ` / ` + total + ` 章節 (` + pct + `%)`;
+
+      var fillEl = document.getElementById(`progress-fill`);
+      if (fillEl) fillEl.style.width = pct + `%`;
+
+      var ariaEl = document.getElementById(`progress-bar-aria`);
+      if (ariaEl) ariaEl.setAttribute(`aria-valuenow`, String(pct));
+
+      var hintEl = document.getElementById(`progress-hint`);
+      if (hintEl) {
+        if (readCount === total) {
+          hintEl.textContent = `恭喜！已完成 Day 17 全部核心章節研習`;
+        } else if (readCount === 0) {
+          hintEl.textContent = `勾選各章節「已讀」即自動保存進度`;
+        } else {
+          hintEl.textContent = `尚餘 ` + (total - readCount) + ` 個章節待研習`;
+        }
+      }
+    }
+
+    function applyExpandedUI() {
+      for (var i = 0; i < CHAPTER_IDS.length; i++) {
+        var id = CHAPTER_IDS[i];
+        var isExp = Boolean(appState.expandedChapters[id]);
+        var card = document.getElementById(`card-` + id);
+        var trigger = document.getElementById(`trigger-` + id);
+        var pill = document.getElementById(`pill-` + id);
+
+        if (card) {
+          if (isExp) card.classList.add(`is-expanded`);
+          else card.classList.remove(`is-expanded`);
+        }
+        if (trigger) trigger.setAttribute(`aria-expanded`, isExp ? `true` : `false`);
+        if (pill) pill.textContent = isExp ? `收合內容` : `展開詳情`;
+      }
+    }
+
+    function applyFilters() {
+      var q = (appState.searchQuery || ``).trim().toLowerCase();
+      var tag = appState.activeTag || `全部`;
+      var rFilter = appState.readFilter || `all`;
+      var visibleCount = 0;
+
+      for (var i = 0; i < CHAPTER_IDS.length; i++) {
+        var id = CHAPTER_IDS[i];
+        var card = document.getElementById(`card-` + id);
+        if (!card) continue;
+
+        var tagsAttr = card.getAttribute(`data-tags`) || ``;
+        var tagMatch = (tag === `全部`) || (tagsAttr.indexOf(tag) !== -1);
+
+        var isRead = Boolean(appState.readChapters[id]);
+        var readMatch = (rFilter === `all`) ||
+                        (rFilter === `read` && isRead) ||
+                        (rFilter === `unread` && !isRead);
+
+        var textContent = (card.innerText || card.textContent || ``).toLowerCase();
+        var searchMatch = (q === ``) || (textContent.indexOf(q) !== -1);
+
+        if (tagMatch && readMatch && searchMatch) {
+          card.style.display = ``;
+          visibleCount++;
+        } else {
+          card.style.display = `none`;
+        }
+      }
+
+      var countEl = document.getElementById(`results-count`);
+      if (countEl) countEl.textContent = `顯示 ` + visibleCount + ` / ` + CHAPTER_IDS.length + ` 個章節`;
+
+      var emptyEl = document.getElementById(`empty-state`);
+      if (emptyEl) {
+        if (visibleCount === 0) {
+          emptyEl.classList.add(`is-visible`);
+          var reasonEl = document.getElementById(`empty-state-reason`);
+          if (reasonEl) {
+            reasonEl.textContent = `在目前搜尋（「` + (appState.searchQuery || `無`) + `」）與標籤（「` + tag + `」）條件下無符合章節，請調整篩選條件。`;
+          }
+        } else {
+          emptyEl.classList.remove(`is-visible`);
+        }
+      }
+    }
+
+    function syncFilterControlsUI() {
+      var searchEl = document.getElementById(`search-input`);
+      if (searchEl) searchEl.value = appState.searchQuery || ``;
+
+      var readEl = document.getElementById(`read-filter`);
+      if (readEl) readEl.value = appState.readFilter || `all`;
+
+      var chips = document.querySelectorAll(`.tag-chip`);
+      for (var i = 0; i < chips.length; i++) {
+        var chip = chips[i];
+        if (chip.getAttribute(`data-tag`) === appState.activeTag) {
+          chip.classList.add(`is-active`);
+        } else {
+          chip.classList.remove(`is-active`);
+        }
+      }
+    }
+
+    /* Hoisted event handlers for HTML attributes */
+    function toggleChapter(id) {
+      appState.expandedChapters[id] = !Boolean(appState.expandedChapters[id]);
+      applyExpandedUI();
+      saveAppState();
+    }
+
+    function expandAllChapters() {
+      for (var i = 0; i < CHAPTER_IDS.length; i++) {
+        appState.expandedChapters[CHAPTER_IDS[i]] = true;
+      }
+      applyExpandedUI();
+      saveAppState();
+    }
+
+    function collapseAllChapters() {
+      appState.expandedChapters = {};
+      applyExpandedUI();
+      saveAppState();
+    }
+
+    function toggleReadStatus(id, checked) {
+      appState.readChapters[id] = Boolean(checked);
+      updateProgressUI();
+      applyFilters();
+      saveAppState();
+    }
+
+    function handleSearchInput(val) {
+      appState.searchQuery = val;
+      applyFilters();
+      saveAppState();
+    }
+
+    function handleReadFilterChange(val) {
+      appState.readFilter = val;
+      applyFilters();
+      saveAppState();
+    }
+
+    function handleTagFilter(tag) {
+      appState.activeTag = tag;
+      syncFilterControlsUI();
+      applyFilters();
+      saveAppState();
+    }
+
+    function clearAllFilters() {
+      appState.searchQuery = ``;
+      appState.activeTag = `全部`;
+      appState.readFilter = `all`;
+      syncFilterControlsUI();
+      applyFilters();
+      saveAppState();
+    }
+
+    function handleResetProgress(btn) {
+      if (!btn) return;
+      if (btn.dataset.armed !== `true`) {
+        btn.dataset.armed = `true`;
+        btn.textContent = `再點一次確認重置`;
+        return;
+      }
+      btn.dataset.armed = `false`;
+      btn.textContent = `重置進度`;
+      appState.readChapters = {};
+      updateProgressUI();
+      applyFilters();
+      saveAppState();
+    }
+
+    /* Chapter 2: Cash Flow Scenario Switcher */
+    function selectCfScenario(num) {
+      appState.cfScenario = num;
+      renderCfScenario(num);
+      saveAppState();
+    }
+
+    function renderCfScenario(num) {
+      var data = CF_SCENARIOS[num] || CF_SCENARIOS[1];
+      for (var i = 1; i <= 3; i++) {
+        var btn = document.getElementById(`cf-btn-` + i);
+        if (btn) {
+          if (i === num) btn.classList.add(`is-active`);
+          else btn.classList.remove(`is-active`);
+        }
+      }
+      var container = document.getElementById(`cf-scenario-output`);
+      if (!container) return;
+
+      var badgesHtml = `<div class="cf-badges">`;
+      for (var j = 0; j < data.badges.length; j++) {
+        var b = data.badges[j];
+        var cls = b.type === `pos` ? `cf-pill pos` : (b.type === `neg` ? `cf-pill neg` : `cf-pill`);
+        badgesHtml += `<span class="` + cls + `">` + b.label + `：` + b.text + `</span>`;
+      }
+      badgesHtml += `</div>`;
+
+      container.innerHTML = badgesHtml +
+        `<h5 style="margin:0 0 0.35rem 0; font-size:1rem; color:var(--on-surface);">` + data.title + `</h5>` +
+        `<p style="margin:0; font-size:0.92rem; color:var(--on-surface-slate);">` + data.desc + `</p>`;
+    }
+
+    /* Chapter 3: Beverage Shop Depreciation Add-back Calculator */
+    function syncBevCapexFromSlider(val) {
+      var el = document.getElementById(`bev-capex-num`);
+      if (el) el.value = val;
+      calcBeverageLab();
+    }
+    function syncBevCapexFromNum(val) {
+      var el = document.getElementById(`bev-capex-slider`);
+      if (el) el.value = val;
+      calcBeverageLab();
+    }
+    function syncBevYearsFromSlider(val) {
+      var el = document.getElementById(`bev-years-num`);
+      if (el) el.value = val;
+      calcBeverageLab();
+    }
+    function syncBevYearsFromNum(val) {
+      var el = document.getElementById(`bev-years-slider`);
+      if (el) el.value = val;
+      calcBeverageLab();
+    }
+    function syncBevOcfFromSlider(val) {
+      var el = document.getElementById(`bev-ocf-num`);
+      if (el) el.value = val;
+      calcBeverageLab();
+    }
+    function syncBevOcfFromNum(val) {
+      var el = document.getElementById(`bev-ocf-slider`);
+      if (el) el.value = val;
+      calcBeverageLab();
+    }
+    function applyBeveragePreset(capex, years, ocf) {
+      var c1 = document.getElementById(`bev-capex-slider`);
+      var c2 = document.getElementById(`bev-capex-num`);
+      var y1 = document.getElementById(`bev-years-slider`);
+      var y2 = document.getElementById(`bev-years-num`);
+      var o1 = document.getElementById(`bev-ocf-slider`);
+      var o2 = document.getElementById(`bev-ocf-num`);
+      if (c1) c1.value = capex;
+      if (c2) c2.value = capex;
+      if (y1) y1.value = years;
+      if (y2) y2.value = years;
+      if (o1) o1.value = ocf;
+      if (o2) o2.value = ocf;
+      calcBeverageLab();
+    }
+
+    function calcBeverageLab() {
+      var capexEl = document.getElementById(`bev-capex-num`);
+      var yearsEl = document.getElementById(`bev-years-num`);
+      var ocfEl = document.getElementById(`bev-ocf-num`);
+      if (!capexEl || !yearsEl || !ocfEl) return;
+
+      var capex = parseFloat(capexEl.value) || 0;
+      var years = Math.max(1, parseFloat(yearsEl.value) || 1);
+      var ocf = parseFloat(ocfEl.value) || 0;
+
+      var amort = capex / years;
+      var netProfit = ocf - amort;
+
+      var outAmort = document.getElementById(`bev-out-amort`);
+      var outNet = document.getElementById(`bev-out-net`);
+      var outCash = document.getElementById(`bev-out-cash`);
+
+      if (outAmort) outAmort.textContent = amort.toFixed(1) + ` 萬`;
+      if (outNet) {
+        outNet.textContent = (netProfit >= 0 ? `+` : ``) + netProfit.toFixed(1) + ` 萬`;
+        outNet.className = `kpi-mini-val ` + (netProfit >= 0 ? `is-amber` : `is-warn`);
+      }
+      if (outCash) {
+        outCash.textContent = (ocf >= 0 ? `+` : ``) + ocf.toFixed(1) + ` 萬`;
+        outCash.className = `kpi-mini-val ` + (ocf > 0 ? `is-ok` : `is-warn`);
+      }
+
+      var scaleMax = Math.max(100, Math.abs(ocf), amort, Math.abs(netProfit));
+      var barNet = document.getElementById(`bev-bar-net`);
+      var barAmort = document.getElementById(`bev-bar-amort`);
+      var barOcf = document.getElementById(`bev-bar-ocf`);
+      var txtNet = document.getElementById(`bev-bar-net-txt`);
+      var txtAmort = document.getElementById(`bev-bar-amort-txt`);
+      var txtOcf = document.getElementById(`bev-bar-ocf-txt`);
+
+      if (txtNet) txtNet.textContent = netProfit.toFixed(1) + ` 萬`;
+      if (txtAmort) txtAmort.textContent = amort.toFixed(1) + ` 萬`;
+      if (txtOcf) txtOcf.textContent = ocf.toFixed(1) + ` 萬`;
+
+      if (barNet) {
+        barNet.style.width = Math.min(100, (Math.abs(netProfit) / scaleMax) * 100) + `%`;
+        barNet.className = `bar-fill ` + (netProfit >= 0 ? `amber` : `red`);
+      }
+      if (barAmort) barAmort.style.width = Math.min(100, (amort / scaleMax) * 100) + `%`;
+      if (barOcf) {
+        barOcf.style.width = Math.min(100, (Math.abs(ocf) / scaleMax) * 100) + `%`;
+        barOcf.className = `bar-fill ` + (ocf >= 0 ? `green` : `red`);
+      }
+
+      var verdictEl = document.getElementById(`bev-verdict-text`);
+      if (verdictEl) {
+        if (ocf > 0 && netProfit <= 0) {
+          verdictEl.textContent = `解讀：帳面推估虧損 ` + Math.abs(netProfit).toFixed(1) + ` 萬元，但因 ` + amort.toFixed(1) + ` 萬元折舊攤銷已於前期支付，本年營業活動實質仍淨流入 ` + ocf.toFixed(1) + ` 萬元，具備實質還款現金來源。`;
+        } else if (ocf > 0) {
+          verdictEl.textContent = `解讀：損益表帳面獲利僅 ` + netProfit.toFixed(1) + ` 萬元，加回 ` + amort.toFixed(1) + ` 萬元非現金折舊攤銷後，實質可供還款營業現金流達 ` + ocf.toFixed(1) + ` 萬元。`;
+        } else {
+          verdictEl.textContent = `警訊：營業活動呈淨現金流出 ` + ocf.toFixed(1) + ` 萬元，即使加回折舊攤銷仍未見現金流入，第一還款來源不足，應查證資金缺口。`;
+        }
+      }
+    }
+
+    /* Chapter 4: EBITDA & T1/T2/T10 Calculator */
+    function applyEbitdaPreset(ebt, interest, da, debt) {
+      var eEl = document.getElementById(`eb-ebt`);
+      var iEl = document.getElementById(`eb-int`);
+      var dEl = document.getElementById(`eb-da`);
+      var debtEl = document.getElementById(`eb-debt`);
+      if (eEl) eEl.value = ebt;
+      if (iEl) iEl.value = interest;
+      if (dEl) dEl.value = da;
+      if (debtEl) debtEl.value = debt;
+      calcEbitdaLab();
+    }
+
+    function calcEbitdaLab() {
+      var eEl = document.getElementById(`eb-ebt`);
+      var iEl = document.getElementById(`eb-int`);
+      var dEl = document.getElementById(`eb-da`);
+      var debtEl = document.getElementById(`eb-debt`);
+      if (!eEl || !iEl || !dEl || !debtEl) return;
+
+      var ebt = parseFloat(eEl.value) || 0;
+      var interest = Math.max(1, parseFloat(iEl.value) || 1);
+      var da = Math.max(0, parseFloat(dEl.value) || 0);
+      var debt = Math.max(0, parseFloat(debtEl.value) || 0);
+
+      var ebit = ebt + interest;
+      var ebitda = ebit + da;
+      var t1 = ebit / interest;
+      var t2 = ebitda / interest;
+      var t10Text = ebitda > 0 ? (debt / ebitda).toFixed(2) + ` x` : `無有效覆蓋（EBITDA ≤ 0）`;
+
+      var outEbit = document.getElementById(`eb-out-ebit`);
+      var outEbitda = document.getElementById(`eb-out-ebitda`);
+      var outT1 = document.getElementById(`eb-out-t1`);
+      var outT2 = document.getElementById(`eb-out-t2`);
+      var outT10 = document.getElementById(`eb-out-t10`);
+
+      if (outEbit) {
+        outEbit.textContent = (ebit >= 0 ? `+` : ``) + ebit.toLocaleString() + ` 萬`;
+        outEbit.className = `kpi-mini-val ` + (ebit >= 0 ? `` : `is-warn`);
+      }
+      if (outEbitda) {
+        outEbitda.textContent = (ebitda >= 0 ? `+` : ``) + ebitda.toLocaleString() + ` 萬`;
+        outEbitda.className = `kpi-mini-val ` + (ebitda > 0 ? `is-ok` : `is-warn`);
+      }
+      if (outT1) {
+        outT1.textContent = t1.toFixed(2) + ` x`;
+        outT1.className = `kpi-mini-val ` + (t1 >= 1 ? `is-ok` : `is-warn`);
+      }
+      if (outT2) {
+        outT2.textContent = t2.toFixed(2) + ` x`;
+        outT2.className = `kpi-mini-val ` + (t2 >= 1 ? `is-ok` : `is-warn`);
+      }
+      if (outT10) {
+        outT10.textContent = t10Text;
+        outT10.className = `kpi-mini-val ` + (ebitda > 0 ? `is-amber` : `is-warn`);
+      }
+
+      var box = document.getElementById(`eb-verdict-box`);
+      var vTitle = document.getElementById(`eb-verdict-title`);
+      var vDesc = document.getElementById(`eb-verdict-desc`);
+      if (!box || !vTitle || !vDesc) return;
+
+      if (ebt < 0 && t2 >= 1) {
+        box.className = `callout is-ok`;
+        vTitle.textContent = `審查判讀：帳面虧損但具實質付息能力（EBITDA 還原有效）`;
+        vDesc.textContent = `雖稅前虧損 ` + Math.abs(ebt).toLocaleString() + ` 萬元導致傳統 T1 為 ` + t1.toFixed(2) + ` 倍，但加回 ` + da.toLocaleString() + ` 萬元折舊攤銷後，EBITDA 達 ` + ebitda.toLocaleString() + ` 萬元、T2 達 ` + t2.toFixed(2) + ` 倍，證實借戶仍具備付息現金基礎。`;
+      } else if (t2 >= 1) {
+        box.className = `callout is-ok`;
+        vTitle.textContent = `審查判讀：本業獲利與 EBITDA 均支撐付息能力`;
+        vDesc.textContent = `T1 傳統倍數（` + t1.toFixed(2) + `x）與 T2 還原倍數（` + t2.toFixed(2) + `x）皆大於 1 倍，具備良好付息空間；仍須查驗應收帳款與營業現金流轉正狀況。`;
+      } else {
+        box.className = `callout is-warn`;
+        vTitle.textContent = `風險警訊：加回折舊後 EBITDA 仍不足支應利息`;
+        vDesc.textContent = `即使採 EBITDA 還原（T2 = ` + t2.toFixed(2) + `x）仍未達 1 倍，代表借戶本業現金流已無法覆蓋財務成本，須嚴防依賴借款或處分資產維生。`;
+      }
+    }
+
+    /* Chapter 5: Coverage Ratio Checker */
+    function applyCovPreset(ocf, cl, stdebt, fin) {
+      var oEl = document.getElementById(`cov-ocf`);
+      var cEl = document.getElementById(`cov-cl`);
+      var sEl = document.getElementById(`cov-stdebt`);
+      var fEl = document.getElementById(`cov-fin`);
+      if (oEl) oEl.value = ocf;
+      if (cEl) cEl.value = cl;
+      if (sEl) sEl.value = stdebt;
+      if (fEl) fEl.value = fin;
+      calcCovLab();
+    }
+
+    function calcCovLab() {
+      var oEl = document.getElementById(`cov-ocf`);
+      var cEl = document.getElementById(`cov-cl`);
+      var sEl = document.getElementById(`cov-stdebt`);
+      var fEl = document.getElementById(`cov-fin`);
+      if (!oEl || !cEl || !sEl || !fEl) return;
+
+      var ocf = parseFloat(oEl.value) || 0;
+      var cl = Math.max(1, parseFloat(cEl.value) || 1);
+      var stdebt = Math.max(1, parseFloat(sEl.value) || 1);
+      var fin = Math.max(1, parseFloat(fEl.value) || 1);
+
+      var c1 = (ocf / cl) * 100;
+      var t6 = (ocf / stdebt) * 100;
+      var t3 = ocf / fin;
+
+      var outC1 = document.getElementById(`cov-out-c1`);
+      var outT6 = document.getElementById(`cov-out-t6`);
+      var outT3 = document.getElementById(`cov-out-t3`);
+      var lblC1 = document.getElementById(`cov-c1-status-label`);
+      var barC1 = document.getElementById(`cov-c1-bar`);
+      var descEl = document.getElementById(`cov-verdict-desc`);
+
+      if (outC1) {
+        outC1.textContent = c1.toFixed(1) + `%`;
+        outC1.className = `kpi-mini-val ` + (c1 > 40 ? `is-ok` : `is-warn`);
+      }
+      if (outT6) outT6.textContent = t6.toFixed(1) + `%`;
+      if (outT3) outT3.textContent = t3.toFixed(2) + ` x`;
+
+      if (lblC1) {
+        lblC1.textContent = c1 > 40 ? `達標（> 40% 穩健基準）` : `未達 40% 基準（需補強查核）`;
+      }
+      if (barC1) {
+        barC1.style.width = Math.max(0, Math.min(100, c1)) + `%`;
+        barC1.className = `bar-fill ` + (c1 > 40 ? `green` : `red`);
+      }
+      if (descEl) {
+        if (c1 > 40) {
+          descEl.textContent = `檢驗結果：C1 達 ` + c1.toFixed(1) + `%（高於來源 40% 穩健基準），營業金流覆蓋流動負債及短期借款動能較佳；T6（` + t6.toFixed(1) + `%）與 T3（` + t3.toFixed(2) + `x）無單一及格基準（來源未提供），須併同企業歷期與同業比較判讀。`;
+        } else {
+          descEl.textContent = `風險提醒：C1 為 ` + c1.toFixed(1) + `%（低於來源 40% 穩健基準），顯示營業淨現金流對流動負債覆蓋偏弱；應進一步核對存摺、對帳單、應收帳款帳齡及借款本息攤還計畫。`;
+        }
+      }
+    }
+
+    /* Initialization with Gemini Notebook Shim API */
+    async function initApp() {
+      if (window.notebookAppApi && typeof window.notebookAppApi.getAppState === `function`) {
+        try {
+          var saved = await window.notebookAppApi.getAppState();
+          if (saved && typeof saved === `object`) {
+            if (saved.readChapters) appState.readChapters = saved.readChapters;
+            if (saved.expandedChapters) appState.expandedChapters = saved.expandedChapters;
+            if (saved.activeTag) appState.activeTag = saved.activeTag;
+            if (saved.readFilter) appState.readFilter = saved.readFilter;
+            if (typeof saved.searchQuery === `string`) appState.searchQuery = saved.searchQuery;
+            if (saved.cfScenario) appState.cfScenario = saved.cfScenario;
+          }
+        } catch (err) {
+          /* Fallback gracefully if state unavailable */
+        }
+      }
+
+      syncFilterControlsUI();
+      updateProgressUI();
+      applyExpandedUI();
+      applyFilters();
+      renderCfScenario(appState.cfScenario || 1);
+      calcBeverageLab();
+      calcEbitdaLab();
+      calcCovLab();
+
+      if (window.notebookAppApi && typeof window.notebookAppApi.notifyAppReady === `function`) {
+        window.notebookAppApi.notifyAppReady();
+      }
+    }
+
+    document.addEventListener(`DOMContentLoaded`, initApp);
+  </script>
+</body>
+</html>

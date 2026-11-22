@@ -1,0 +1,2550 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#14283a">
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="./manifest.webmanifest">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="授信實務30天">
+  <script>
+    if ("serviceWorker" in navigator && (location.protocol === "https:" || location.hostname === "localhost")) {
+      window.addEventListener("load", () => navigator.serviceWorker.register("./service-worker.js").catch((error) => console.warn("PWA offline support unavailable:", error)));
+    }
+  </script>
+  <meta name="artifact-type" content="narrative">
+  <meta name="design-style" content="charter">
+  <title>中小企業授信與財報分析實務-Day29-多維外部資料跨平台檢驗與實地訪查實務</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&family=Noto+Sans+TC:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@1.43.0/dist/umd/lucide.min.js"></script>
+  <style>
+    :root {
+      color-scheme: light;
+
+      /* 1. Charter base structure + User THEME Palette */
+      --background: #F8FAFC;
+      --surface-container-low: #FFFFFF;
+      --surface-container: #F1F5F9;
+      --surface-container-high: #E2E8F0;
+
+      /* Ink */
+      --on-surface: #0F2537;
+      --on-surface-variant: #475569;
+      --slate-secondary: #334155;
+
+      /* Rules & Accents */
+      --outline: #C5A880;
+      --outline-variant: #CBD5E1;
+      --card-border-subtle: #E2E8F0;
+
+      --primary: #0F2537;
+      --primary-royal: #1E3A8A;
+      --on-primary: #FFFFFF;
+      --on-primary-muted: #CBD5E1;
+      --primary-container: #EFF6FF;
+      --on-primary-container: #1E3A8A;
+
+      --accent: #D97706;
+      --accent-champagne: #C5A880;
+      --accent-text: #92400E;
+      --accent-soft: #FFFBEB;
+      --accent-border: #FCD34D;
+
+      /* Module 5 High-Order Risk Color */
+      --risk-orange: #EA580C;
+      --risk-orange-text: #C2410C;
+      --risk-orange-soft: #FFF7ED;
+      --risk-orange-border: #FDBA74;
+
+      /* Functional Semantics */
+      --error: #DC2626;
+      --error-soft: #FEF2F2;
+      --error-border: #FECACA;
+      --on-error: #FFFFFF;
+
+      --positive: #059669;
+      --positive-text: #047857;
+      --positive-soft: #ECFDF5;
+      --positive-border: #A7F3D0;
+
+      --warning: #F59E0B;
+      --warning-soft: #FFFBEB;
+
+      --missing-bg: #F8FAFC;
+      --missing-border: #94A3B8;
+      --missing-text: #334155;
+
+      --focus: #1E3A8A;
+
+      /* Data series */
+      --data-1: #0F2537;
+      --data-2: #D97706;
+      --data-3: #059669;
+      --data-4: #EA580C;
+      --data-context: #94A3B8;
+
+      /* Fonts (Non-Latin primary first) */
+      --font-headline: 'Noto Sans TC', 'Libre Caslon Text', sans-serif;
+      --font-serif-num: 'Libre Caslon Text', 'Noto Sans TC', serif;
+      --font-body: 'Noto Sans TC', 'Inter', sans-serif;
+      --font-label: 'JetBrains Mono', 'Noto Sans TC', monospace;
+
+      /* Type scale */
+      --display-size: clamp(1.625rem, 1.2rem + 1.8vw, 2.35rem);
+      --headline-size: clamp(1.25rem, 1.05rem + 0.8vw, 1.625rem);
+      --subhead-size: clamp(1.0625rem, 1rem + 0.3vw, 1.25rem);
+      --body-size: clamp(0.95rem, 0.92rem + 0.18vw, 1.05rem);
+      --label-size: 0.78rem;
+
+      /* Shape */
+      --rounded: 0.25rem;
+      --rounded-lg: 0.5rem;
+      --rounded-pill: 9999px;
+
+      /* Effects */
+      --brass-rule: 3px solid var(--outline);
+      --navy-rule: 2px solid var(--primary);
+      --hairline: 1px solid var(--card-border-subtle);
+      --card-shadow: 0 4px 6px -1px var(--shadow-tint);
+      --card-shadow-hover: 0 12px 20px -6px var(--shadow-hover-tint);
+      --shadow-tint: rgba(15, 37, 55, 0.06);
+      --shadow-hover-tint: rgba(15, 37, 55, 0.12);
+
+      /* Spacing scale */
+      --space-xs: 0.25rem;
+      --space-sm: 0.5rem;
+      --space-md: 1rem;
+      --space-lg: 1.5rem;
+      --space-xl: 2.25rem;
+      --space-2xl: 3.5rem;
+
+      /* Motion */
+      --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+      --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+      --dur-micro: 120ms;
+      --dur-short: 220ms;
+      --dur-long: 420ms;
+    }
+
+    /* Base reset */
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body {
+      overflow-x: clip;
+      margin: 0;
+      padding: 0;
+      background-color: var(--background);
+      color: var(--on-surface);
+      font-family: var(--font-body);
+      font-size: var(--body-size);
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+    }
+    header { position: static !important; }
+    button, input, select, textarea { font-family: inherit; }
+
+    :focus-visible {
+      outline: 3px solid var(--focus);
+      outline-offset: 2px;
+    }
+
+    /* Header Band (Charter Navy Band) */
+    .title-band {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-royal) 100%);
+      color: var(--on-primary);
+      border-bottom: 4px solid var(--accent-champagne);
+      padding: var(--space-xl) var(--space-lg) var(--space-lg);
+    }
+
+    .band-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .top-meta-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-sm);
+      margin-bottom: var(--space-md);
+    }
+
+    .module-badge-group {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: var(--space-sm);
+    }
+
+    .module-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-xs);
+      background-color: var(--risk-orange);
+      color: var(--on-primary);
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      font-weight: 700;
+      padding: var(--space-xs) var(--space-sm);
+      border-radius: var(--rounded);
+      letter-spacing: 0.02em;
+    }
+
+    .day-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-xs);
+      background-color: var(--surface-container-low);
+      color: var(--primary);
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      font-weight: 700;
+      padding: var(--space-xs) var(--space-sm);
+      border-radius: var(--rounded);
+      border: 1px solid var(--accent-champagne);
+    }
+
+    .institution-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-xs);
+      color: var(--accent-champagne);
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      font-weight: 600;
+      border: 1px solid var(--accent-champagne);
+      padding: var(--space-xs) var(--space-sm);
+      border-radius: var(--rounded);
+    }
+
+    .title-band h1 {
+      font-family: var(--font-headline);
+      font-size: var(--display-size);
+      font-weight: 700;
+      line-height: 1.25;
+      margin: 0 0 var(--space-sm) 0;
+      color: var(--on-primary);
+    }
+
+    .title-lede {
+      font-size: var(--subhead-size);
+      color: var(--on-primary-muted);
+      margin: 0;
+      max-width: 68ch;
+      line-height: 1.55;
+    }
+
+    /* Main Container */
+    .page-grid {
+      display: grid;
+      gap: var(--space-lg);
+      padding: var(--space-lg);
+      max-width: 1200px;
+      margin: 0 auto;
+      overflow: hidden;
+    }
+    .page-grid * { min-width: 0; }
+
+    /* Progress & Control Bar */
+    .progress-dashboard {
+      background-color: var(--surface-container-low);
+      border: var(--hairline);
+      border-top: 3px solid var(--accent);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-md) var(--space-lg);
+      box-shadow: var(--card-shadow);
+      display: grid;
+      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+      gap: var(--space-lg);
+      align-items: center;
+    }
+
+    .progress-info-head {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: var(--space-sm);
+      margin-bottom: var(--space-sm);
+    }
+
+    .progress-title {
+      font-weight: 700;
+      color: var(--primary);
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-xs);
+    }
+
+    .progress-counter {
+      font-family: var(--font-label);
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--primary-royal);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .progress-track {
+      width: 100%;
+      height: 12px;
+      background-color: var(--surface-container);
+      border-radius: var(--rounded-pill);
+      overflow: hidden;
+      border: 1px solid var(--outline-variant);
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--primary-royal) 0%, var(--positive) 100%);
+      border-radius: var(--rounded-pill);
+      transition: width var(--dur-long) var(--ease-out);
+    }
+
+    .progress-subnote {
+      margin-top: var(--space-xs);
+      font-size: 0.85rem;
+      color: var(--on-surface-variant);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: var(--space-sm);
+    }
+
+    .status-pill-done {
+      background-color: var(--positive-soft);
+      color: var(--positive-text);
+      border: 1px solid var(--positive-border);
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      font-weight: 700;
+      padding: 2px var(--space-sm);
+      border-radius: var(--rounded);
+    }
+
+    .status-pill-active {
+      background-color: var(--accent-soft);
+      color: var(--accent-text);
+      border: 1px solid var(--accent-border);
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      font-weight: 700;
+      padding: 2px var(--space-sm);
+      border-radius: var(--rounded);
+    }
+
+    .progress-actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: var(--space-sm);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-xs);
+      min-height: 44px;
+      padding: var(--space-sm) var(--space-md);
+      border-radius: var(--rounded);
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      border: 1px solid var(--outline-variant);
+      background-color: var(--surface-container-low);
+      color: var(--primary);
+      transition: background-color var(--dur-micro) var(--ease-out), border-color var(--dur-micro) var(--ease-out), transform var(--dur-micro) var(--ease-out);
+    }
+
+    .btn:hover {
+      background-color: var(--surface-container);
+      border-color: var(--primary);
+    }
+
+    .btn:active {
+      transform: translateY(1px);
+    }
+
+    .btn-primary {
+      background-color: var(--primary);
+      color: var(--on-primary);
+      border-color: var(--primary);
+    }
+
+    .btn-primary:hover {
+      background-color: var(--primary-royal);
+      border-color: var(--primary-royal);
+    }
+
+    .btn-danger-ghost {
+      color: var(--error);
+      border-color: var(--error-border);
+      background-color: var(--error-soft);
+    }
+
+    .btn-danger-ghost:hover {
+      background-color: var(--error);
+      color: var(--on-error);
+      border-color: var(--error);
+    }
+
+    /* Core Overview Section (3 Pillars + Statement Figures) */
+    .section-head {
+      border-top: var(--navy-rule);
+      padding-top: var(--space-md);
+      border-bottom: var(--hairline);
+      padding-bottom: var(--space-sm);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: var(--space-sm);
+    }
+
+    .section-head h2 {
+      font-family: var(--font-headline);
+      font-size: var(--headline-size);
+      font-weight: 700;
+      margin: 0;
+      color: var(--primary);
+    }
+
+    .section-kicker {
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      font-weight: 600;
+      color: var(--on-surface-variant);
+      letter-spacing: 0.04em;
+    }
+
+    .overview-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: var(--space-md);
+      margin-top: var(--space-md);
+    }
+
+    .pillar-card {
+      background-color: var(--surface-container-low);
+      border: var(--hairline);
+      border-top: 3px solid var(--primary-royal);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-md) var(--space-lg);
+      box-shadow: var(--card-shadow);
+    }
+
+    .pillar-card.pillar-risk {
+      border-top-color: var(--risk-orange);
+    }
+
+    .pillar-card.pillar-esg {
+      border-top-color: var(--positive);
+    }
+
+    .pillar-num {
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      font-weight: 700;
+      color: var(--accent-text);
+      margin-bottom: var(--space-xs);
+      display: flex;
+      align-items: center;
+      gap: var(--space-xs);
+    }
+
+    .pillar-card h3 {
+      margin: 0 0 var(--space-xs) 0;
+      font-size: 1.08rem;
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    .pillar-card p {
+      margin: 0;
+      font-size: 0.92rem;
+      color: var(--on-surface-variant);
+      line-height: 1.55;
+    }
+
+    /* Key Figures Strip */
+    .figures-strip {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(180px, 100%), 1fr));
+      gap: var(--space-md);
+      margin-top: var(--space-md);
+    }
+
+    .figure-card {
+      background-color: var(--surface-container-low);
+      border: var(--hairline);
+      border-top: 2px solid var(--accent-champagne);
+      border-radius: var(--rounded);
+      padding: var(--space-md);
+    }
+
+    .figure-label {
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      font-weight: 600;
+      color: var(--on-surface-variant);
+      margin-bottom: var(--space-xs);
+    }
+
+    .figure-value {
+      font-family: var(--font-serif-num);
+      font-size: 1.5rem;
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+      color: var(--primary);
+      line-height: 1.2;
+    }
+
+    .figure-note {
+      font-size: 0.82rem;
+      color: var(--slate-secondary);
+      margin-top: var(--space-xs);
+    }
+
+    /* Search & Filter Toolbar */
+    .filter-toolbar {
+      background-color: var(--surface-container-low);
+      border: var(--hairline);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-md) var(--space-lg);
+      box-shadow: var(--card-shadow);
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.5fr);
+      gap: var(--space-lg);
+      align-items: end;
+    }
+
+    .search-field-group {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xs);
+    }
+
+    .input-label {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: var(--space-xs);
+    }
+
+    .search-input-wrap {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .search-input {
+      width: 100%;
+      min-height: 44px;
+      padding: var(--space-sm) 2.5rem var(--space-sm) var(--space-md);
+      border: 1px solid var(--outline-variant);
+      border-radius: var(--rounded);
+      background-color: var(--background);
+      color: var(--on-surface);
+      font-size: 0.95rem;
+      transition: border-color var(--dur-micro) var(--ease-out), box-shadow var(--dur-micro) var(--ease-out);
+    }
+
+    .search-input:focus {
+      border-color: var(--primary-royal);
+      background-color: var(--surface-container-low);
+      outline: none;
+      box-shadow: 0 0 0 3px var(--primary-container);
+    }
+
+    .clear-search-btn {
+      position: absolute;
+      right: var(--space-xs);
+      min-width: 36px;
+      min-height: 36px;
+      border: none;
+      background: transparent;
+      color: var(--on-surface-variant);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: var(--rounded);
+    }
+
+    .clear-search-btn:hover {
+      background-color: var(--surface-container);
+      color: var(--primary);
+    }
+
+    .filter-group {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xs);
+    }
+
+    .filter-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-sm);
+    }
+
+    .filter-chip {
+      min-height: 44px;
+      padding: var(--space-xs) var(--space-md);
+      border-radius: var(--rounded);
+      border: 1px solid var(--outline-variant);
+      background-color: var(--surface-container);
+      color: var(--slate-secondary);
+      font-size: 0.875rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-xs);
+      transition: background-color var(--dur-micro) var(--ease-out), color var(--dur-micro) var(--ease-out), border-color var(--dur-micro) var(--ease-out);
+    }
+
+    .filter-chip:hover {
+      border-color: var(--primary-royal);
+      color: var(--primary);
+    }
+
+    .filter-chip[aria-pressed="true"] {
+      background-color: var(--primary);
+      color: var(--on-primary);
+      border-color: var(--primary);
+    }
+
+    .filter-status-bar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-sm);
+      font-size: 0.88rem;
+      color: var(--on-surface-variant);
+    }
+
+    /* Bento Grid Cards */
+    .bento-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: var(--space-lg);
+      align-items: start;
+    }
+
+    .chapter-card {
+      container-type: inline-size;
+      background-color: var(--surface-container-low);
+      border: var(--hairline);
+      border-top: 4px solid var(--primary-royal);
+      border-radius: var(--rounded-lg);
+      box-shadow: var(--card-shadow);
+      transition: transform var(--dur-short) var(--ease-out), box-shadow var(--dur-short) var(--ease-out), border-color var(--dur-short) var(--ease-out);
+      overflow: hidden;
+    }
+
+    .chapter-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--card-shadow-hover);
+      border-color: var(--accent-champagne);
+    }
+
+    .chapter-card[data-expanded="true"] {
+      grid-column: 1 / -1;
+      border-color: var(--primary-royal);
+    }
+
+    .chapter-card.is-read {
+      border-top-color: var(--positive);
+    }
+
+    .chapter-card[data-chapter="1"] { border-top-color: var(--risk-orange); }
+    .chapter-card[data-chapter="2"] { border-top-color: var(--primary); }
+    .chapter-card[data-chapter="3"] { border-top-color: var(--accent); }
+    .chapter-card[data-chapter="4"] { border-top-color: var(--primary-royal); }
+    .chapter-card[data-chapter="5"] { border-top-color: var(--positive); }
+    .chapter-card.is-read { border-top-color: var(--positive); }
+
+    .chapter-card.is-hidden {
+      display: none;
+    }
+
+    .card-header {
+      padding: var(--space-lg);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-sm);
+    }
+
+    .card-top-bar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-sm);
+    }
+
+    .pill-badges {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: var(--space-xs);
+    }
+
+    .chapter-num-badge {
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      font-weight: 700;
+      background-color: var(--primary);
+      color: var(--on-primary);
+      padding: 2px var(--space-sm);
+      border-radius: var(--rounded);
+    }
+
+    .pill-badge {
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      font-weight: 600;
+      padding: 2px var(--space-sm);
+      border-radius: var(--rounded-pill);
+      border: 1px solid var(--outline-variant);
+      background-color: var(--surface-container);
+      color: var(--slate-secondary);
+    }
+
+    .pill-badge.badge-risk {
+      background-color: var(--risk-orange-soft);
+      color: var(--risk-orange-text);
+      border-color: var(--risk-orange-border);
+    }
+
+    .pill-badge.badge-law {
+      background-color: var(--primary-container);
+      color: var(--on-primary-container);
+      border-color: var(--outline-variant);
+    }
+
+    .pill-badge.badge-field {
+      background-color: var(--accent-soft);
+      color: var(--accent-text);
+      border-color: var(--accent-border);
+    }
+
+    .pill-badge.badge-esg {
+      background-color: var(--positive-soft);
+      color: var(--positive-text);
+      border-color: var(--positive-border);
+    }
+
+    /* Read Checkbox Control */
+    .read-toggle-label {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-xs);
+      min-height: 44px;
+      padding: 0 var(--space-sm);
+      border-radius: var(--rounded);
+      border: 1px solid var(--outline-variant);
+      background-color: var(--background);
+      cursor: pointer;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--slate-secondary);
+      user-select: none;
+      transition: background-color var(--dur-micro) var(--ease-out), border-color var(--dur-micro) var(--ease-out), color var(--dur-micro) var(--ease-out);
+    }
+
+    .read-toggle-label:hover {
+      border-color: var(--positive);
+      color: var(--positive-text);
+    }
+
+    .read-toggle-label.checked {
+      background-color: var(--positive-soft);
+      border-color: var(--positive);
+      color: var(--positive-text);
+    }
+
+    .read-checkbox {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--positive);
+      cursor: pointer;
+    }
+
+    .card-title-btn {
+      width: 100%;
+      text-align: left;
+      background: transparent;
+      border: none;
+      padding: 0;
+      cursor: pointer;
+      color: inherit;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: var(--space-md);
+    }
+
+    .card-title-btn h3 {
+      margin: 0;
+      font-family: var(--font-headline);
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--primary);
+      line-height: 1.35;
+    }
+
+    .card-summary {
+      margin: var(--space-xs) 0 0 0;
+      font-size: 0.94rem;
+      color: var(--on-surface-variant);
+      line-height: 1.6;
+    }
+
+    .expand-indicator {
+      flex-shrink: 0;
+      min-width: 44px;
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: var(--rounded);
+      background-color: var(--surface-container);
+      color: var(--primary);
+      transition: transform var(--dur-short) var(--ease-out), background-color var(--dur-micro) var(--ease-out);
+    }
+
+    .card-title-btn:hover .expand-indicator {
+      background-color: var(--primary-container);
+      color: var(--primary-royal);
+    }
+
+    .chapter-card[data-expanded="true"] .expand-indicator {
+      transform: rotate(180deg);
+      background-color: var(--primary);
+      color: var(--on-primary);
+    }
+
+    .card-quick-footer {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-sm);
+      padding-top: var(--space-sm);
+      border-top: 1px dashed var(--outline-variant);
+      font-size: 0.84rem;
+      color: var(--slate-secondary);
+    }
+
+    .highlight-chip {
+      background-color: var(--accent-soft);
+      color: var(--accent-text);
+      font-weight: 700;
+      padding: 2px var(--space-xs);
+      border-radius: var(--rounded);
+    }
+
+    /* Expandable Body */
+    .card-body {
+      display: none;
+      padding: 0 var(--space-lg) var(--space-lg);
+      border-top: var(--hairline);
+      background-color: var(--surface-container-low);
+      animation: fadeSlide var(--dur-short) var(--ease-out);
+    }
+
+    .chapter-card[data-expanded="true"] .card-body {
+      display: block;
+    }
+
+    @keyframes fadeSlide {
+      from { opacity: 0; transform: translateY(-6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .detail-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+      gap: var(--space-lg);
+      margin-top: var(--space-lg);
+    }
+
+    @container (max-width: 680px) {
+      .detail-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .detail-block h4 {
+      margin: 0 0 var(--space-sm) 0;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: var(--space-xs);
+      padding-bottom: var(--space-xs);
+      border-bottom: 2px solid var(--surface-container-high);
+    }
+
+    .detail-list {
+      margin: 0;
+      padding-left: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-sm);
+    }
+
+    .detail-list li {
+      color: var(--on-surface);
+      line-height: 1.65;
+    }
+
+    /* Callout boxes inside cards */
+    .callout {
+      padding: var(--space-md);
+      border-radius: var(--rounded);
+      border-left: 4px solid var(--primary-royal);
+      background-color: var(--surface-container);
+      margin-top: var(--space-md);
+    }
+
+    .callout.callout-alert {
+      border-left-color: var(--error);
+      background-color: var(--error-soft);
+    }
+
+    .callout.callout-risk {
+      border-left-color: var(--risk-orange);
+      background-color: var(--risk-orange-soft);
+    }
+
+    .callout.callout-positive {
+      border-left-color: var(--positive);
+      background-color: var(--positive-soft);
+    }
+
+    .callout.callout-missing {
+      border-left-color: var(--missing-border);
+      background-color: var(--missing-bg);
+      border-top: 1px dashed var(--missing-border);
+      border-right: 1px dashed var(--missing-border);
+      border-bottom: 1px dashed var(--missing-border);
+    }
+
+    .callout-title {
+      font-weight: 700;
+      font-size: 0.92rem;
+      margin: 0 0 var(--space-xs) 0;
+      display: flex;
+      align-items: center;
+      gap: var(--space-xs);
+      color: var(--primary);
+    }
+
+    .callout-alert .callout-title { color: var(--error); }
+    .callout-risk .callout-title { color: var(--risk-orange-text); }
+    .callout-positive .callout-title { color: var(--positive-text); }
+
+    .callout p {
+      margin: 0;
+      font-size: 0.9rem;
+      color: var(--slate-secondary);
+      line-height: 1.6;
+    }
+
+    .missing-tag {
+      display: inline-block;
+      font-family: var(--font-label);
+      font-size: 0.78rem;
+      font-weight: 700;
+      background-color: var(--surface-container-high);
+      color: var(--missing-text);
+      border: 1px solid var(--missing-border);
+      padding: 1px 6px;
+      border-radius: var(--rounded);
+      margin-left: var(--space-xs);
+    }
+
+    /* Interactive Tool Panel inside Chapters */
+    .interactive-panel {
+      background-color: var(--background);
+      border: 1px solid var(--outline-variant);
+      border-top: 3px solid var(--accent);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-md);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-md);
+    }
+
+    .interactive-panel-title {
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: var(--space-xs);
+      margin: 0;
+    }
+
+    .slider-row {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xs);
+    }
+
+    .slider-controls {
+      display: flex;
+      align-items: center;
+      gap: var(--space-md);
+    }
+
+    .range-slider {
+      flex: 1;
+      accent-color: var(--primary-royal);
+      min-height: 36px;
+      cursor: pointer;
+    }
+
+    .num-input {
+      width: 5.5rem;
+      min-height: 44px;
+      padding: var(--space-xs) var(--space-sm);
+      border: 1px solid var(--outline-variant);
+      border-radius: var(--rounded);
+      font-family: var(--font-label);
+      font-weight: 700;
+      text-align: right;
+      background-color: var(--surface-container-low);
+      color: var(--primary);
+    }
+
+    .sim-result-box {
+      padding: var(--space-md);
+      border-radius: var(--rounded);
+      background-color: var(--surface-container-low);
+      border: 1px solid var(--outline-variant);
+    }
+
+    /* Pipeline Schematic */
+    .pipeline-steps {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: var(--space-sm);
+      margin-top: var(--space-sm);
+    }
+
+    @container (max-width: 520px) {
+      .pipeline-steps {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .pipe-step {
+      background-color: var(--surface-container);
+      border: 1px solid var(--outline-variant);
+      border-radius: var(--rounded);
+      padding: var(--space-sm);
+      font-size: 0.84rem;
+    }
+
+    .pipe-step-num {
+      font-family: var(--font-label);
+      font-weight: 700;
+      color: var(--primary-royal);
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    /* Law Article Box */
+    .statute-card {
+      background-color: var(--surface-container-low);
+      border: 1px solid var(--outline);
+      border-left: 4px solid var(--primary);
+      border-radius: var(--rounded);
+      padding: var(--space-md);
+      margin-bottom: var(--space-sm);
+    }
+
+    .statute-num {
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      font-weight: 700;
+      color: var(--primary-royal);
+      margin-bottom: var(--space-xs);
+    }
+
+    .statute-quote {
+      margin: 0;
+      font-weight: 600;
+      color: var(--primary);
+      font-size: 0.95rem;
+    }
+
+    /* Four-in-One Matrix */
+    .matrix-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: var(--space-sm);
+    }
+
+    @container (max-width: 520px) {
+      .matrix-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .matrix-item {
+      background-color: var(--surface-container-low);
+      border: 1px solid var(--outline-variant);
+      border-radius: var(--rounded);
+      padding: var(--space-md);
+      transition: border-color var(--dur-micro) var(--ease-out), background-color var(--dur-micro) var(--ease-out);
+    }
+
+    .matrix-item.is-active {
+      border-color: var(--primary-royal);
+      background-color: var(--primary-container);
+    }
+
+    .matrix-item.is-mandatory-500m {
+      border-color: var(--risk-orange);
+      background-color: var(--risk-orange-soft);
+    }
+
+    .matrix-item.is-dimmed {
+      opacity: 0.55;
+    }
+
+    .matrix-dept {
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      font-weight: 700;
+      color: var(--primary-royal);
+      margin-bottom: var(--space-xs);
+    }
+
+    .matrix-item.is-mandatory-500m .matrix-dept {
+      color: var(--risk-orange-text);
+    }
+
+    .matrix-title {
+      font-weight: 700;
+      color: var(--primary);
+      margin: 0 0 var(--space-xs) 0;
+      font-size: 0.98rem;
+    }
+
+    .matrix-desc {
+      margin: 0;
+      font-size: 0.85rem;
+      color: var(--slate-secondary);
+      line-height: 1.5;
+    }
+
+    /* Segmented toggle buttons */
+    .seg-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-xs);
+    }
+
+    .seg-btn {
+      min-height: 44px;
+      padding: var(--space-xs) var(--space-md);
+      border: 1px solid var(--outline-variant);
+      background-color: var(--surface-container-low);
+      color: var(--slate-secondary);
+      border-radius: var(--rounded);
+      font-size: 0.86rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .seg-btn[aria-pressed="true"] {
+      background-color: var(--primary);
+      color: var(--on-primary);
+      border-color: var(--primary);
+    }
+
+    /* Quiz Section */
+    .quiz-section {
+      background-color: var(--surface-container-low);
+      border: var(--hairline);
+      border-top: 3px solid var(--primary);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-lg);
+      box-shadow: var(--card-shadow);
+    }
+
+    .quiz-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: var(--space-md);
+      margin-top: var(--space-md);
+    }
+
+    .quiz-card {
+      background-color: var(--background);
+      border: 1px solid var(--outline-variant);
+      border-radius: var(--rounded);
+      padding: var(--space-md);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-sm);
+    }
+
+    .quiz-q {
+      font-weight: 700;
+      font-size: 0.94rem;
+      color: var(--primary);
+      margin: 0;
+    }
+
+    .quiz-options {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xs);
+    }
+
+    .quiz-opt-btn {
+      text-align: left;
+      min-height: 44px;
+      padding: var(--space-xs) var(--space-sm);
+      border: 1px solid var(--outline-variant);
+      border-radius: var(--rounded);
+      background-color: var(--surface-container-low);
+      color: var(--on-surface);
+      font-size: 0.86rem;
+      cursor: pointer;
+      transition: background-color var(--dur-micro) var(--ease-out), border-color var(--dur-micro) var(--ease-out);
+    }
+
+    .quiz-opt-btn:hover {
+      border-color: var(--primary-royal);
+      background-color: var(--primary-container);
+    }
+
+    .quiz-opt-btn.opt-correct {
+      background-color: var(--positive-soft);
+      border-color: var(--positive);
+      color: var(--positive-text);
+      font-weight: 700;
+    }
+
+    .quiz-opt-btn.opt-wrong {
+      background-color: var(--error-soft);
+      border-color: var(--error);
+      color: var(--error);
+    }
+
+    .quiz-feedback {
+      font-size: 0.84rem;
+      line-height: 1.5;
+      color: var(--slate-secondary);
+      min-height: 2.5rem;
+    }
+
+    /* Empty State */
+    .empty-state {
+      display: none;
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: var(--space-2xl) var(--space-lg);
+      background-color: var(--surface-container-low);
+      border: 1px dashed var(--outline-variant);
+      border-radius: var(--rounded-lg);
+    }
+
+    .empty-state.visible {
+      display: block;
+    }
+
+    .empty-state h3 {
+      margin: var(--space-sm) 0;
+      color: var(--primary);
+    }
+
+    .empty-state p {
+      margin: 0 0 var(--space-md) 0;
+      color: var(--on-surface-variant);
+    }
+
+    /* Footer */
+    .site-footer {
+      background-color: var(--primary);
+      color: var(--on-primary);
+      border-top: 3px solid var(--accent-champagne);
+      padding: var(--space-lg);
+      margin-top: var(--space-xl);
+    }
+
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-md);
+      font-size: 0.88rem;
+    }
+
+    .footer-brand {
+      font-family: var(--font-label);
+      font-weight: 700;
+      color: var(--accent-champagne);
+      letter-spacing: 0.04em;
+    }
+
+    .footer-sources {
+      color: var(--on-primary-muted);
+      font-size: 0.82rem;
+    }
+
+    /* Responsive Breakpoints */
+    @media (max-width: 900px) {
+      .progress-dashboard {
+        grid-template-columns: 1fr;
+      }
+      .progress-actions {
+        justify-content: flex-start;
+      }
+      .overview-grid {
+        grid-template-columns: 1fr;
+      }
+      .filter-toolbar {
+        grid-template-columns: 1fr;
+      }
+      .bento-grid {
+        grid-template-columns: 1fr;
+      }
+      .quiz-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .page-grid {
+        grid-template-columns: 1fr;
+        padding: var(--space-md);
+        gap: var(--space-md);
+      }
+      .title-band {
+        padding: var(--space-lg) var(--space-md);
+      }
+      .card-header {
+        padding: var(--space-md);
+      }
+      .card-body {
+        padding: 0 var(--space-md) var(--space-md);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+      .home-link { display: inline-flex; align-items: center; color: var(--outline); font: inherit; font-size: var(--label-size, 0.875rem); font-weight: 600; text-decoration: none; border: 1px solid var(--outline); padding: 0.4rem 0.7rem; margin: 0 0 var(--space-sm) 0; }
+    .home-link:hover, .home-link:focus-visible { color: var(--on-primary); text-decoration: underline; text-underline-offset: 0.18em; }
+    @media (max-width: 640px) { }
+      .header-bank-label { display: inline-block; margin: 0 0 var(--space-sm); color: var(--outline); font-family: var(--font-label); font-size: var(--label-size, 0.875rem); font-weight: 700; letter-spacing: 0.08em; }
+  </style>
+</head>
+<body>
+
+  <header class="title-band">
+      <span class="header-bank-label">鎖頭銀行</span>
+    <div class="band-inner">
+      <div class="top-meta-row">
+        <div class="module-badge-group">
+          <span class="module-tag">
+            <i data-lucide="shield-alert" aria-hidden="true" width="15" height="15"></i>
+            模組五：關係人穿透與授信決策
+          </span>
+          <span class="day-tag">DAY 29 / 30</span>
+        </div>
+        <span class="institution-tag">
+          <i data-lucide="lock" aria-hidden="true" width="14" height="14"></i>
+          鎖頭銀行企業徵授信實務培訓
+        </span>
+      </div>
+      <h1>中小企業授信與財報分析實務-Day29-多維外部資料跨平台檢驗與實地訪查實務</h1>
+      <p class="title-lede">
+        橫跨司法院外部司法訴訟檢索、現場實地廠驗與四表合一整合、ESG 負面新聞查證及徵信軌跡免責防禦體系，建立具備抗辯力與審查價值的外訪查核標準。
+      </p>
+    </div>
+  </header>
+
+  <main class="page-grid">
+
+    <!-- Top Learning Progress Bar -->
+    <section class="progress-dashboard" aria-label="學習進度追蹤">
+      <div>
+        <div class="progress-info-head">
+          <span class="progress-title">
+            <i data-lucide="check-circle-2" aria-hidden="true" width="18" height="18"></i>
+            Day 29 章節研讀進度
+          </span>
+          <span class="progress-counter" id="progress-counter">已完成 0 / 5 章節（0%）</span>
+        </div>
+        <div class="progress-track" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="progress-bar-aria">
+          <div class="progress-fill" id="progress-fill"></div>
+        </div>
+        <div class="progress-subnote">
+          <span id="progress-status-pill" class="status-pill-active">進行中</span>
+          <span id="progress-hint">勾選各章節卡片右上角的「已讀」方塊，進度將自動儲存並更新。</span>
+        </div>
+      </div>
+      <div class="progress-actions">
+        <button type="button" class="btn" onclick="toggleAllChapters(true)">
+          <i data-lucide="chevrons-down" aria-hidden="true" width="16" height="16"></i>
+          全部展開
+        </button>
+        <button type="button" class="btn" onclick="toggleAllChapters(false)">
+          <i data-lucide="chevrons-up" aria-hidden="true" width="16" height="16"></i>
+          全部折疊
+        </button>
+        <button type="button" class="btn btn-danger-ghost" id="reset-progress-btn" onclick="resetProgress(this)">
+          <i data-lucide="rotate-ccw" aria-hidden="true" width="16" height="16"></i>
+          重置進度
+        </button>
+      </div>
+    </section>
+
+    <!-- Core Overview & Key Figures -->
+    <section aria-labelledby="overview-heading">
+      <div class="section-head">
+        <h2 id="overview-heading">課程核心架構與防禦體系總覽</h2>
+        <span class="section-kicker">THREE-PILLAR VERIFICATION ARCHITECTURE</span>
+      </div>
+
+      <div class="overview-grid">
+        <article class="pillar-card pillar-risk">
+          <div class="pillar-num">
+            <i data-lucide="scale" aria-hidden="true" width="15" height="15"></i>
+            防線 01｜外部司法與稽核免責
+          </div>
+          <h3>跨平台訴訟檢索與存卷軌跡</h3>
+          <p>鎖定非上市櫃營造工程業之鄰損與工程款糾紛，結合判決檢索輔助系統與敗訴率評估，並透過「列印存卷」滿足《徵信準則》第 36、37 條免責要件。</p>
+        </article>
+
+        <article class="pillar-card">
+          <div class="pillar-num">
+            <i data-lucide="factory" aria-hidden="true" width="15" height="15"></i>
+            防線 02｜現場實地廠驗與整合
+          </div>
+          <h3>產銷實地查核與四表合一作業</h3>
+          <p>以一次外訪整合徵信部、授審部、企金部與授管部四張核心表單，將實務痛點轉化為高效率合規紀錄，並嚴格區分來源實證與未提供之細部標準。</p>
+        </article>
+
+        <article class="pillar-card pillar-esg">
+          <div class="pillar-num">
+            <i data-lucide="leaf" aria-hidden="true" width="15" height="15"></i>
+            防線 03｜ESG 查證與永續倫理
+          </div>
+          <h3>系統輔助判讀與人工補正防線</h3>
+          <p>落實獨立 ESG 表單之人工覆核原則，外部介接失敗時主動透過 Google 搜尋補齊負面新聞查證，並遵守每年至少 3 小時永續金融培訓法定義務。</p>
+        </article>
+      </div>
+
+      <div class="figures-strip" aria-label="Day29 關鍵門檻指標">
+        <div class="figure-card">
+          <div class="figure-label">訴訟揭露經驗分水嶺</div>
+          <div class="figure-value">&gt; 50%</div>
+          <div class="figure-note">評估勝率超過五成可免列，敗訴機率高則須揭露於財報</div>
+        </div>
+        <div class="figure-card">
+          <div class="figure-label">徵信免責法源條文</div>
+          <div class="figure-value">第 36 / 37 條</div>
+          <div class="figure-note">依當時狀況與慣例辦理並留存軌跡，事後瑕疵免究責</div>
+        </div>
+        <div class="figure-card">
+          <div class="figure-label">外訪行政整併目標</div>
+          <div class="figure-value">四表合一</div>
+          <div class="figure-note">徵信、授審、企金、授管單次外訪同步完稿呈核</div>
+        </div>
+        <div class="figure-card">
+          <div class="figure-label">授管部年訪門檻</div>
+          <div class="figure-value">5 億元</div>
+          <div class="figure-note">鎖頭銀行總歸戶達 5 億元以上每年強制實地訪查 1 次</div>
+        </div>
+        <div class="figure-card">
+          <div class="figure-label">永續金融培訓義務</div>
+          <div class="figure-value">3 小時 / 年</div>
+          <div class="figure-note">《徵信準則》第 7 條之一徵信人員年度法定進修時數</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Search & Filter Toolbar -->
+    <section aria-labelledby="chapters-heading">
+      <div class="section-head">
+        <h2 id="chapters-heading">五大實務章節精研卡片</h2>
+        <span class="section-kicker">BENTO CURRICULUM CARDS</span>
+      </div>
+
+      <div class="filter-toolbar" style="margin-top: var(--space-md);">
+        <div class="search-field-group">
+          <label for="keyword-search" class="input-label">
+            <i data-lucide="search" aria-hidden="true" width="16" height="16"></i>
+            即時關鍵字搜尋（支援標題、條文、實務用語）
+          </label>
+          <div class="search-input-wrap">
+            <input
+              type="text"
+              id="keyword-search"
+              class="search-input"
+              placeholder="輸入如：司法院、第36條、5億、Google、水電費、來源未提供…"
+              oninput="handleSearchInput(this.value)"
+            >
+            <button type="button" class="clear-search-btn" id="clear-search-btn" onclick="clearSearch()" aria-label="清除搜尋關鍵字" style="display: none;">
+              <i data-lucide="x" aria-hidden="true" width="16" height="16"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="filter-group">
+          <span class="input-label">
+            <i data-lucide="filter" aria-hidden="true" width="16" height="16"></i>
+            章節分類標籤篩選
+          </span>
+          <div class="filter-chips" role="group" aria-label="章節分類篩選器">
+            <button type="button" class="filter-chip" data-filter="all" aria-pressed="true" onclick="setCategoryFilter('all', this)">全部章節 (5)</button>
+            <button type="button" class="filter-chip" data-filter="judicial" aria-pressed="false" onclick="setCategoryFilter('judicial', this)">司法與免責 (2)</button>
+            <button type="button" class="filter-chip" data-filter="field" aria-pressed="false" onclick="setCategoryFilter('field', this)">廠驗與多表 (2)</button>
+            <button type="button" class="filter-chip" data-filter="esg" aria-pressed="false" onclick="setCategoryFilter('esg', this)">ESG 與永續 (1)</button>
+            <button type="button" class="filter-chip" data-filter="unread" aria-pressed="false" onclick="setCategoryFilter('unread', this)">僅看未讀</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="filter-status-bar" style="margin-top: var(--space-sm); margin-bottom: var(--space-md);">
+        <span id="filter-result-count">顯示 5 / 5 個章節</span>
+        <span>點擊任意卡片標題即可展開詳細實務解析與互動檢核工具</span>
+      </div>
+
+      <!-- Bento Grid of 5 Chapters -->
+      <div class="bento-grid" id="chapters-grid">
+
+        <!-- Chapter 1 -->
+        <article class="chapter-card" data-chapter="1" data-category="judicial" data-expanded="false">
+          <div class="card-header">
+            <div class="card-top-bar">
+              <div class="pill-badges">
+                <span class="chapter-num-badge">CH 01</span>
+                <span class="pill-badge badge-risk">【實務案例】</span>
+                <span class="pill-badge badge-law">【外部司法】</span>
+              </div>
+              <label class="read-toggle-label" id="read-label-1">
+                <input type="checkbox" class="read-checkbox" id="read-check-1" onchange="toggleChapterRead(1, this.checked)">
+                <span>已讀</span>
+              </label>
+            </div>
+            <button type="button" class="card-title-btn" aria-expanded="false" aria-controls="body-1" onclick="toggleChapterExpand(1)">
+              <div>
+                <h3>章節一：司法院判決書系統跨平台檢索與勝敗率評估</h3>
+                <p class="card-summary">鎖定非上市櫃營造業鄰損與工程款糾紛，結合鎖頭銀行外部介接判決輔助系統與勝敗率揭露門檻，提前辨識高風險訴訟。</p>
+              </div>
+              <span class="expand-indicator" aria-hidden="true">
+                <i data-lucide="chevron-down" width="20" height="20"></i>
+              </span>
+            </button>
+            <div class="card-quick-footer">
+              <span>重點：<span class="highlight-chip">敗訴風險 &gt; 50%</span> 須揭露、百件判決 AI 摘要輔助</span>
+              <span>司法與免責分類</span>
+            </div>
+          </div>
+
+          <div class="card-body" id="body-1">
+            <div class="detail-grid">
+              <div class="detail-block">
+                <h4>
+                  <i data-lucide="gavel" aria-hidden="true" width="17" height="17"></i>
+                  核心知識與實務解析
+                </h4>
+                <ul class="detail-list">
+                  <li>
+                    <strong>非上市櫃公司與營造工程業檢索重要性：</strong>針對非上市櫃公司查詢司法院裁判時，實務最忌諱遇到<strong>營造工程業</strong>——該產業經常與鄰近基地發生「<strong>鄰損糾紛</strong>」或「<strong>工程款糾紛</strong>」而頻繁興訟。若未主動跨平台檢索，極易錯失潛在或有負債警訊。
+                    <span class="missing-tag">註：「履約糾紛」細部子分類標準來源未提供</span>
+                  </li>
+                  <li>
+                    <strong>判決檢索輔助系統（外部資料庫介接）：</strong>鎖頭銀行於外部資料庫連結中上線實驗性輔助程式，解決動輒數十上百件判決逐筆翻閱的耗時痛點：
+                    <div class="pipeline-steps">
+                      <div class="pipe-step">
+                        <span class="pipe-step-num">STEP 01｜批次擷取</span>
+                        假設有 100 件判決書，系統先自動彙整並區分「有利／不利」初步分類。
+                      </div>
+                      <div class="pipe-step">
+                        <span class="pipe-step-num">STEP 02｜文稿摘要</span>
+                        每件訴訟產出文稿摘要，協助徵信人員快速判斷是否須深入點閱。
+                      </div>
+                      <div class="pipe-step">
+                        <span class="pipe-step-num">STEP 03｜原文比對</span>
+                        不須跳轉回司法院網站，點選後右側直接呈現完整司法院判決書原文。
+                      </div>
+                    </div>
+                  </li>
+                  <li>
+                    <strong>訴訟勝率評估與財報附註揭露實務：</strong>依會計師查核實務之判斷原則，若公司與會計師評估該訴訟<strong>勝率超過五成（&gt; 50%）</strong>，通常可不須寫入財報；反之若<strong>敗訴機率高於五成</strong>，該筆潛在賠償份額幾近確定時，會計師即要求必須列示於財報上。因此，凡是在財報附註中看到的重大訴訟（例如來源提及曾有大型企業海外大陸法院訴訟案例），皆是公司與會計師「協調半天仍堅持要寫」的重大警訊。
+                  </li>
+                </ul>
+
+                <div class="callout callout-missing">
+                  <div class="callout-title">
+                    <i data-lucide="info" aria-hidden="true" width="16" height="16"></i>
+                    來源範圍邊界說明
+                  </div>
+                  <p>
+                    判決檢索輔助系統之內部系統代碼名稱與 AI 摘要模型規格<strong>「來源未提供」</strong>；會計師評估負債準備提列之具體會計公報條文編號（如金額認列細部比例級距）亦<strong>「來源未提供」</strong>，實務請依財報附註及最新會計師查核準則辦理。
+                  </p>
+                </div>
+              </div>
+
+              <div class="detail-block">
+                <div class="interactive-panel">
+                  <h4 class="interactive-panel-title" style="border: none; padding: 0; margin: 0;">
+                    <i data-lucide="sliders" aria-hidden="true" width="17" height="17"></i>
+                    互動檢核：訴訟勝敗率與財報揭露判定器
+                  </h4>
+                  <p style="margin: 0; font-size: 0.86rem; color: var(--on-surface-variant);">
+                    調整企業評估之「敗訴風險機率」，模擬會計師與徵信人員之揭露判讀反應：
+                  </p>
+                  <div class="slider-row">
+                    <label for="loss-risk-slider" class="input-label">預估敗訴風險機率（%）</label>
+                    <div class="slider-controls">
+                      <input type="range" id="loss-risk-slider" class="range-slider" min="0" max="100" value="65" oninput="syncLossRiskFromSlider(this.value)">
+                      <input type="number" id="loss-risk-num" class="num-input" min="0" max="100" value="65" aria-label="敗訴風險百分比數值" oninput="syncLossRiskFromNumber(this.value)">
+                    </div>
+                  </div>
+                  <div class="sim-result-box" id="loss-risk-output">
+                    <!-- Dynamic output rendered by JS -->
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Chapter 2 -->
+        <article class="chapter-card" data-chapter="2" data-category="judicial" data-expanded="false">
+          <div class="card-header">
+            <div class="card-top-bar">
+              <div class="pill-badges">
+                <span class="chapter-num-badge">CH 02</span>
+                <span class="pill-badge badge-law">【法規】</span>
+                <span class="pill-badge badge-risk">【稽核防線】</span>
+              </div>
+              <label class="read-toggle-label" id="read-label-2">
+                <input type="checkbox" class="read-checkbox" id="read-check-2" onchange="toggleChapterRead(2, this.checked)">
+                <span>已讀</span>
+              </label>
+            </div>
+            <button type="button" class="card-title-btn" aria-expanded="false" aria-controls="body-2" onclick="toggleChapterExpand(2)">
+              <div>
+                <h3>章節二：印出存卷留存作業軌跡與《徵信準則》免責要件</h3>
+                <p class="card-summary">以「列印存卷」建立查核證據鏈，結合《銀行公會徵信準則》第 36 條與第 37 條，建構倒帳時保護徵信人員的合規防線。</p>
+              </div>
+              <span class="expand-indicator" aria-hidden="true">
+                <i data-lucide="chevron-down" width="20" height="20"></i>
+              </span>
+            </button>
+            <div class="card-quick-footer">
+              <span>重點：<span class="highlight-chip">第 36／37 條</span> 免責構成要件、列印功能留存軌跡</span>
+              <span>司法與免責分類</span>
+            </div>
+          </div>
+
+          <div class="card-body" id="body-2">
+            <div class="detail-grid">
+              <div class="detail-block">
+                <h4>
+                  <i data-lucide="file-check-2" aria-hidden="true" width="17" height="17"></i>
+                  稽核防線與法定免責條文
+                </h4>
+                <div class="statute-card">
+                  <div class="statute-num">《中華民國銀行公會會員徵信準則》第 36 條</div>
+                  <p class="statute-quote">「徵信人員應對所作之徵信報告，就徵信當時狀況及其所能知悉之事項負其責任。」</p>
+                </div>
+                <div class="statute-card">
+                  <div class="statute-num">《中華民國銀行公會會員徵信準則》第 37 條</div>
+                  <p class="statute-quote">「凡依本準則、各會員有關規定及一般慣例所作之徵信報告，事後雖發現瑕疵，應免除其責任。」</p>
+                </div>
+
+                <ul class="detail-list" style="margin-top: var(--space-md);">
+                  <li>
+                    <strong>防範倒帳百口莫辯之稽核防線：</strong>過往常見徵信人員漏查重大司法訴訟，平常案件正常繳息時無事，一旦發生倒帳違約，稽核追查時便「百口莫辯、不知如何解釋」。
+                  </li>
+                  <li>
+                    <strong>「有做但做不好」與「完全沒做」的天壤之別：</strong>在判決檢索輔助系統頁面已專門設計「<strong>列印功能</strong>」。實務重點在於將查詢結果列印附卷——若已依規定執行且列印存卷，即使事後被發現判讀未臻全面，仍可主張「我有做，只是做得不夠好、下次改善」，援引第 36、37 條免除究責；反之若無法證明當下曾經查調，則難以解釋免責。
+                  </li>
+                  <li>
+                    <strong>保存當下靜態狀態的必要性：</strong>正如大型集團組織或關係企業架構隨時可能調整增減，司法訴訟與外部登記亦具動態變化。查調當下務必「印出來附在卷上」，才能證明徵信當時之客觀事實。
+                    <span class="missing-tag">註：紙本存卷年限及掃描歸檔編號規範來源未提供</span>
+                  </li>
+                </ul>
+              </div>
+
+              <div class="detail-block">
+                <div class="interactive-panel">
+                  <h4 class="interactive-panel-title" style="border: none; padding: 0; margin: 0;">
+                    <i data-lucide="printer" aria-hidden="true" width="17" height="17"></i>
+                    標準作業檢核：徵信軌跡留存防禦測試
+                  </h4>
+                  <p style="margin: 0; font-size: 0.86rem; color: var(--on-surface-variant);">
+                    點選情境檢視徵信報告遭稽核查核時，是否符合《徵信準則》免責要件：
+                  </p>
+                  <div class="seg-group" role="group" aria-label="徵信軌跡情境切換">
+                    <button type="button" class="seg-btn" id="audit-btn-ok" aria-pressed="true" onclick="setAuditScenario('ok')">情境 A：已查調並列印附卷</button>
+                    <button type="button" class="seg-btn" id="audit-btn-miss" aria-pressed="false" onclick="setAuditScenario('miss')">情境 B：僅口頭看過未列印</button>
+                  </div>
+                  <div class="sim-result-box" id="audit-scenario-output">
+                    <!-- Dynamic output rendered by JS -->
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Chapter 3 -->
+        <article class="chapter-card" data-chapter="3" data-category="field" data-expanded="false">
+          <div class="card-header">
+            <div class="card-top-bar">
+              <div class="pill-badges">
+                <span class="chapter-num-badge">CH 03</span>
+                <span class="pill-badge badge-field">【實地廠驗】</span>
+                <span class="pill-badge">【作業流程】</span>
+              </div>
+              <label class="read-toggle-label" id="read-label-3">
+                <input type="checkbox" class="read-checkbox" id="read-check-3" onchange="toggleChapterRead(3, this.checked)">
+                <span>已讀</span>
+              </label>
+            </div>
+            <button type="button" class="card-title-btn" aria-expanded="false" aria-controls="body-3" onclick="toggleChapterExpand(3)">
+              <div>
+                <h3>章節三：實地訪查（工廠廠驗）現場查驗關鍵技術</h3>
+                <p class="card-summary">檢視工廠概況與產銷現場查驗架構，整合來源實證之產銷勾稽、產能利用率與存貨盤點風險，並明確標示未提供細則。</p>
+              </div>
+              <span class="expand-indicator" aria-hidden="true">
+                <i data-lucide="chevron-down" width="20" height="20"></i>
+              </span>
+            </button>
+            <div class="card-quick-footer">
+              <span>重點：產銷勾稽、存貨保留意見與<span class="highlight-chip">工廠概況改版</span></span>
+              <span>廠驗與多表分類</span>
+            </div>
+          </div>
+
+          <div class="card-body" id="body-3">
+            <div class="detail-grid">
+              <div class="detail-block">
+                <h4>
+                  <i data-lucide="clipboard-check" aria-hidden="true" width="17" height="17"></i>
+                  三大現場查驗面向與來源實證對照
+                </h4>
+                <ul class="detail-list">
+                  <li>
+                    <strong>一、產銷狀況現場勘查：</strong>
+                    來源明確要求徵信報告上填寫之「產銷情形」須能與客戶提供之其他財務報表及 401/403 申報資料進行交叉勾稽、維持一致性；且當工廠過度擴張導致<strong>產能利用率僅約三成</strong>時，將造成損益表帳面虧損但折舊加回後現金流仍為正的現象，須於現場評估實際營運稼動狀況。
+                    <br>
+                    <em>檢驗細項「工廠電費、水費單據比對反推實際產能稼動率」：</em>具體水電度數換算產能之計算公式、單據查核月份期間與差異容許值 <span class="missing-tag">來源未提供</span>
+                  </li>
+                  <li>
+                    <strong>二、設備銘牌與動線查核：</strong>
+                    來源提及「工廠概況」與實地訪查之作業整合：過往填寫工廠概況仍須另案左側起案撰寫實地訪查報告，鎖頭銀行徵信系統已規劃於明年第一季（三月前發文）調整為「登打工廠概況即視同完成一次實地訪查」。
+                    <br>
+                    <em>檢驗細項「核對機器設備銘牌規格與所有權（防假資產）、評估生產線人員排班與出勤狀況」：</em>設備銘牌核對標準欄位、假資產辨識程序及現場人員出勤排班抽查標準 <span class="missing-tag">來源未提供</span>
+                  </li>
+                  <li>
+                    <strong>三、存貨三態實地盤點：</strong>
+                    來源強調「實地盤點存貨」對財務報表公信力之關鍵影響：首次達 3,000 萬元門檻之企業，若會計師因未執行期初存貨實地盤點或無法函證現金，僅能出具「保留意見」查核報告；此外，針對設備製造業等特殊模式，實務常見存貨雖已裝機於買方廠區內卻因「尚未驗收（如長達半年）」仍掛於帳上，導致存貨週轉天期高達 200 多天，現場訪查與訪談時須釐清存貨實際所在與驗收進度。
+                    <br>
+                    <em>檢驗細項「存貨三態實地盤點、庫存堆疊動線、生鏽／積灰之呆滯存貨辨識」：</em>原料／在製品／製成品盤點比例及生鏽積灰呆滯料提列呆帳比率 <span class="missing-tag">來源未提供</span>
+                  </li>
+                </ul>
+              </div>
+
+              <div class="detail-block">
+                <div class="callout callout-risk">
+                  <div class="callout-title">
+                    <i data-lucide="alert-triangle" aria-hidden="true" width="16" height="16"></i>
+                    廠驗實務提醒：產能過剩與假象防護
+                  </div>
+                  <p>
+                    工廠實地訪查的核心在於「有畫面有真相」：須搭配財報中的不動產廠房設備、存貨週轉天期與產銷量值表相互驗證。切勿將設備廠「已交貨未驗收」的在途／裝機存貨誤判為滯銷，也須警覺高折舊低稼動率背後隱藏的長期虧損壓力。
+                  </p>
+                </div>
+
+                <div class="callout callout-missing">
+                  <div class="callout-title">
+                    <i data-lucide="file-question" aria-hidden="true" width="16" height="16"></i>
+                    嚴格遵循資料邊界聲明
+                  </div>
+                  <p>
+                    為遵循「資料不足之處標示『來源未提供』，嚴禁自行編造」原則，本章節僅呈現來源逐字稿及教材確切提及之查核邏輯；水電單據推算模型、設備銘牌查驗表及呆滯存貨量化折減標準均不予自行杜撰。
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Chapter 4 -->
+        <article class="chapter-card" data-chapter="4" data-category="field" data-expanded="false">
+          <div class="card-header">
+            <div class="card-top-bar">
+              <div class="pill-badges">
+                <span class="chapter-num-badge">CH 04</span>
+                <span class="pill-badge badge-field">【多表合一】</span>
+                <span class="pill-badge badge-law">【合規流程】</span>
+              </div>
+              <label class="read-toggle-label" id="read-label-4">
+                <input type="checkbox" class="read-checkbox" id="read-check-4" onchange="toggleChapterRead(4, this.checked)">
+                <span>已讀</span>
+              </label>
+            </div>
+            <button type="button" class="card-title-btn" aria-expanded="false" aria-controls="body-4" onclick="toggleChapterExpand(4)">
+              <div>
+                <h3>章節四：實地外訪「多表合一」高效合規整合作業</h3>
+                <p class="card-summary">克服多部門表單重複填報的痛點，於單次外訪同步完成鎖頭銀行四張訪查與洽談表單，一天內呈請主管核章。</p>
+              </div>
+              <span class="expand-indicator" aria-hidden="true">
+                <i data-lucide="chevron-down" width="20" height="20"></i>
+              </span>
+            </button>
+            <div class="card-quick-footer">
+              <span>重點：<span class="highlight-chip">四表合一</span> 單次呈核、總歸戶 5 億年訪規定</span>
+              <span>廠驗與多表分類</span>
+            </div>
+          </div>
+
+          <div class="card-body" id="body-4">
+            <div class="detail-grid">
+              <div class="detail-block">
+                <h4>
+                  <i data-lucide="layers" aria-hidden="true" width="17" height="17"></i>
+                  外訪整併心法：「從從容容、游刃有餘」
+                </h4>
+                <ul class="detail-list">
+                  <li>
+                    <strong>克服行政繁複與重複核章困擾：</strong>徵信人員外訪時常面臨不同業管部門各自要求表單的壓力。若分批產出表單，不僅耗時且容易讓主管每簽一張就詢問一次；更不應為了補齊不同表單而多次出訪，引發客戶反感。因此鎖頭銀行實務提倡「走過路過不要錯過」——<strong>單次外訪一次完成所有適用表單</strong>，並在一天之內呈請經理／副理等主管一次核章。
+                  </li>
+                  <li>
+                    <strong>系統拋轉與手動備份實務眉角：</strong>
+                    徵信部「實地訪查報告」與授審部「洽談紀錄」之間已建立<strong>互相匯入</strong>功能；而企金部「企金行銷管理系統」因部門系統架構較獨立，當您在該系統登打完業務拜訪紀錄後，原則上須等到<strong>隔天</strong>才會自動拋轉成一份洽談紀錄。若您希望當天就將四張表單一次處理完畢呈核，建議直接將文字「複製貼上」完成。
+                  </li>
+                  <li>
+                    <strong>大額授信強制訪查門檻：</strong>凡在鎖頭銀行<strong>總歸戶金額達新臺幣 5 億元以上</strong>之大額客戶，依授管部規定<strong>每年須執行一次實地訪查</strong>，並產出授管部「實地訪查表」。
+                  </li>
+                </ul>
+              </div>
+
+              <div class="detail-block">
+                <div class="interactive-panel">
+                  <h4 class="interactive-panel-title" style="border: none; padding: 0; margin: 0;">
+                    <i data-lucide="layout-grid" aria-hidden="true" width="17" height="17"></i>
+                    互動模擬：鎖頭銀行「四表合一」外訪矩陣篩選
+                  </h4>
+                  <div>
+                    <span class="input-label" style="margin-bottom: var(--space-xs);">1. 選擇客戶於鎖頭銀行之總歸戶金額：</span>
+                    <div class="seg-group">
+                      <button type="button" class="seg-btn" id="amt-under-500" aria-pressed="false" onclick="setExposureLevel('under')">未達 5 億元</button>
+                      <button type="button" class="seg-btn" id="amt-over-500" aria-pressed="true" onclick="setExposureLevel('over')">達 5 億元以上（大額戶）</button>
+                    </div>
+                  </div>
+                  <div>
+                    <span class="input-label" style="margin-bottom: var(--space-xs);">2. 選擇表單呈核作業時程：</span>
+                    <div class="seg-group">
+                      <button type="button" class="seg-btn" id="timing-same" aria-pressed="true" onclick="setTimingMode('same')">當日一次完稿呈核</button>
+                      <button type="button" class="seg-btn" id="timing-next" aria-pressed="false" onclick="setTimingMode('next')">允許隔日系統拋轉</button>
+                    </div>
+                  </div>
+
+                  <div class="matrix-grid" id="four-table-matrix">
+                    <div class="matrix-item is-active" id="tbl-1">
+                      <div class="matrix-dept">01｜徵信部</div>
+                      <h5 class="matrix-title">實地訪查報告</h5>
+                      <p class="matrix-desc">徵信部主責表單，可與授審部洽談紀錄互相匯入；預計明年 Q1 整併工廠概況。</p>
+                    </div>
+                    <div class="matrix-item is-active" id="tbl-2">
+                      <div class="matrix-dept">02｜授審部</div>
+                      <h5 class="matrix-title">洽談紀錄</h5>
+                      <p class="matrix-desc">授審部業管必備表單，可與實地訪查報告雙向匯入，確保訪談紀錄一致。</p>
+                    </div>
+                    <div class="matrix-item is-active" id="tbl-3">
+                      <div class="matrix-dept">03｜企金部</div>
+                      <h5 class="matrix-title">企金行銷管理系統</h5>
+                      <p class="matrix-desc" id="tbl-3-desc">當日一次完稿建議手動「複製貼上」至洽談紀錄，免等隔日系統拋轉。</p>
+                    </div>
+                    <div class="matrix-item is-mandatory-500m" id="tbl-4">
+                      <div class="matrix-dept">04｜授管部（債管部）</div>
+                      <h5 class="matrix-title">實地訪查表</h5>
+                      <p class="matrix-desc" id="tbl-4-desc">總歸戶達 5 億元以上大額客戶，每年強制訪查一次，必須併同產出。</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Chapter 5 -->
+        <article class="chapter-card" data-chapter="5" data-category="esg" data-expanded="false">
+          <div class="card-header">
+            <div class="card-top-bar">
+              <div class="pill-badges">
+                <span class="chapter-num-badge">CH 05</span>
+                <span class="pill-badge badge-esg">【ESG查證】</span>
+                <span class="pill-badge badge-law">【法規培訓】</span>
+              </div>
+              <label class="read-toggle-label" id="read-label-5">
+                <input type="checkbox" class="read-checkbox" id="read-check-5" onchange="toggleChapterRead(5, this.checked)">
+                <span>已讀</span>
+              </label>
+            </div>
+            <button type="button" class="card-title-btn" aria-expanded="false" aria-controls="body-5" onclick="toggleChapterExpand(5)">
+              <div>
+                <h3>章節五：ESG 負面新聞即時查證與系統輔助判讀</h3>
+                <p class="card-summary">掌握獨立 ESG 表單架構與 AI 系統帶入之輔助定位，落實人工覆核與異常 Google 補正，並遵守每年 3 小時永續金融培訓規範。</p>
+              </div>
+              <span class="expand-indicator" aria-hidden="true">
+                <i data-lucide="chevron-down" width="20" height="20"></i>
+              </span>
+            </button>
+            <div class="card-quick-footer">
+              <span>重點：<span class="highlight-chip">人工覆核始得儲存</span>、異常時主動 Google 補正</span>
+              <span>ESG 與永續分類</span>
+            </div>
+          </div>
+
+          <div class="card-body" id="body-5">
+            <div class="detail-grid">
+              <div class="detail-block">
+                <h4>
+                  <i data-lucide="globe" aria-hidden="true" width="17" height="17"></i>
+                  ESG 介接實務、異常補正與法定培訓
+                </h4>
+                <ul class="detail-list">
+                  <li>
+                    <strong>獨立 ESG 表格與外部介接機制：</strong>鎖頭銀行於年度 6 月 12 日調整徵信報告架構，將 ESG 資訊獨立拉出成為專屬表格，並透過外部資料庫自動介接帶入負面新聞檢索結果，減輕人工彙整負擔。
+                  </li>
+                  <li>
+                    <strong>系統帶入與 AI 生成內容之徵信定位（嚴禁直接照抄儲存）：</strong>
+                    無論是外部資料庫自動帶入，抑或透過 AI 輔助生成之文字，在徵信報告中<strong>僅屬輔助參考</strong>。徵信人員絕不能看見按鈕一按就直接儲存，必須發揮專業倫理親自審閱、判斷風險實質並修改文字後，始得正式儲存。
+                  </li>
+                  <li>
+                    <strong>資料匯入異常或缺漏之 Google 主動補正程序：</strong>
+                    負面新聞因屬外部系統介接，當遇到企業相關資料量過大、或新聞標題與內文含有<strong>難字（生僻字）</strong>時，常導致查詢失敗或資料無法匯入系統。一旦發生回傳失敗或空白缺漏，徵信人員必須主動透過 <strong>Google 搜尋</strong>進行即時查證，將查證結果人工寫入報告中，作為防禦補正防線。
+                  </li>
+                  <li>
+                    <strong>《徵信準則》第 7 條之一與永續金融趨勢：</strong>
+                    依條文強制規範，徵信人員<strong>每年應至少進修三小時永續金融相關訓練課程</strong>。針對高額授信與中長期融資企業，鎖頭銀行亦逐步要求提供碳盤查數據、氣候風險評估報告與永續報告書，未來氣候財務揭露（TCFD）與綠色融資指標將與財報查核報告結合，成為授信條件決策關鍵。
+                    <span class="missing-tag">註：ESG 負面新聞外部介接廠商名稱與具體評分權重來源未提供</span>
+                  </li>
+                </ul>
+              </div>
+
+              <div class="detail-block">
+                <div class="interactive-panel">
+                  <h4 class="interactive-panel-title" style="border: none; padding: 0; margin: 0;">
+                    <i data-lucide="git-branch" aria-hidden="true" width="17" height="17"></i>
+                    決策模擬：ESG 外部資料回傳狀態應對
+                  </h4>
+                  <div class="seg-group" role="group" aria-label="ESG 資料狀態選擇">
+                    <button type="button" class="seg-btn" id="esg-btn-normal" aria-pressed="true" onclick="setEsgStatus('normal')">正常匯入系統摘要</button>
+                    <button type="button" class="seg-btn" id="esg-btn-fail" aria-pressed="false" onclick="setEsgStatus('fail')">資料過多／難字導致失敗</button>
+                  </div>
+                  <div class="sim-result-box" id="esg-status-output">
+                    <!-- Dynamic output rendered by JS -->
+                  </div>
+                  <div class="callout callout-positive" style="margin-top: 0;">
+                    <div class="callout-title">
+                      <i data-lucide="award" aria-hidden="true" width="16" height="16"></i>
+                      年度合規提醒
+                    </div>
+                    <p>請確認本年度已完成《徵信準則》第 7 條之一規定之 <strong>3 小時永續金融訓練課程</strong>，並保留完訓紀錄備查。</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Empty State for Search/Filter -->
+        <div class="empty-state" id="empty-state">
+          <i data-lucide="search-x" aria-hidden="true" width="36" height="36"></i>
+          <h3>找不到符合條件的章節</h3>
+          <p id="empty-state-reason">目前的搜尋關鍵字或分類篩選沒有符合的 Day 29 學習卡片。</p>
+          <button type="button" class="btn btn-primary" onclick="resetFilters()">重設所有篩選條件</button>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Quick Self-Check Quiz -->
+    <section class="quiz-section" aria-labelledby="quiz-heading">
+      <div class="section-head" style="border-top: none; padding-top: 0;">
+        <h2 id="quiz-heading">Day 29 實務防線隨堂快測</h2>
+        <span class="section-kicker" id="quiz-score-badge">已作答 0 / 3 題</span>
+      </div>
+      <div class="quiz-grid">
+        <div class="quiz-card">
+          <p class="quiz-q">1. 針對非上市櫃營造工程業查詢司法院判決書時，若要依《徵信準則》第 36、37 條主張免責，最關鍵的動作為何？</p>
+          <div class="quiz-options">
+            <button type="button" class="quiz-opt-btn" onclick="answerQuiz(0, 0, this)">A. 僅口頭詢問企業負責人是否有重大官司</button>
+            <button type="button" class="quiz-opt-btn" onclick="answerQuiz(0, 1, this)">B. 使用系統列印功能印出查調結果並附於徵信卷宗</button>
+            <button type="button" class="quiz-opt-btn" onclick="answerQuiz(0, 2, this)">C. 等待會計師年底出具財報再決定是否查詢</button>
+          </div>
+          <div class="quiz-feedback" id="quiz-fb-0">請點選上方選項進行檢核。</div>
+        </div>
+
+        <div class="quiz-card">
+          <p class="quiz-q">2. 鎖頭銀行辦理大額客戶實地訪查時，總歸戶達多少金額以上，每年須強制執行一次授管部「實地訪查表」？</p>
+          <div class="quiz-options">
+            <button type="button" class="quiz-opt-btn" onclick="answerQuiz(1, 0, this)">A. 新臺幣 3,000 萬元以上</button>
+            <button type="button" class="quiz-opt-btn" onclick="answerQuiz(1, 1, this)">B. 新臺幣 1 億元以上</button>
+            <button type="button" class="quiz-opt-btn" onclick="answerQuiz(1, 2, this)">C. 新臺幣 5 億元以上</button>
+          </div>
+          <div class="quiz-feedback" id="quiz-fb-1">請點選上方選項進行檢核。</div>
+        </div>
+
+        <div class="quiz-card">
+          <p class="quiz-q">3. 當 ESG 外部負面新聞系統因「資料過多或含有難字」導致匯入失敗時，徵信人員應如何處置？</p>
+          <div class="quiz-options">
+            <button type="button" class="quiz-opt-btn" onclick="answerQuiz(2, 0, this)">A. 直接略過該欄位並按下儲存鍵即可</button>
+            <button type="button" class="quiz-opt-btn" onclick="answerQuiz(2, 1, this)">B. 主動使用 Google 搜尋查證並人工撰寫補正入報告</button>
+            <button type="button" class="quiz-opt-btn" onclick="answerQuiz(2, 2, this)">C. 交由企金行銷管理系統隔日自動拋轉補齊</button>
+          </div>
+          <div class="quiz-feedback" id="quiz-fb-2">請點選上方選項進行檢核。</div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <a class="home-link" href="index.html">回首頁</a>
+      <span class="footer-brand">Powered By Dunk</span>
+      <span class="footer-sources">
+        內容依據：中小企業授信與財報分析實務 Day29 課程架構、課堂實務講授紀錄、《中華民國銀行公會會員徵信準則》第 7 條之一及第 36–37 條（所有金融機構名稱均已依規範代稱「鎖頭銀行」；來源未提供之細部標準已如實標註）。
+      </span>
+    </div>
+  </footer>
+
+  <api-shim></api-shim>
+  <script>
+    const TOTAL_CHAPTERS = 5;
+
+    let appState = {
+      readChapters: [],
+      expandedChapters: [1],
+      searchQuery: ``,
+      categoryFilter: `all`,
+      lossRiskPct: 65,
+      auditScenario: `ok`,
+      exposureLevel: `over`,
+      timingMode: `same`,
+      esgStatus: `normal`,
+      quizAnswers: {}
+    };
+
+    const quizCorrectIndex = [1, 2, 1];
+    const quizExplanations = [
+      `正確！透過判決檢索系統「列印功能」印出並附卷留存徵信軌跡，方能依《徵信準則》第 36、37 條證明當下已盡查證義務，免除事後究責。`,
+      `正確！鎖頭銀行總歸戶達 5 億元以上大額客戶，每年須執行一次授管部「實地訪查表」，外訪時可併同徵信、授審、企金表單四表合一完成。`,
+      `正確！系統自動帶入僅屬輔助，遇匯入異常或缺漏時，徵信人員必須主動透過 Google 搜尋查證並親自修訂文字後始得儲存。`
+    ];
+    const quizWrongHints = [
+      `再想一下：口頭詢問或等待年底財報無法留下徵信當時的查調證據，一旦倒帳將面臨稽核查核百口莫辯的風險。`,
+      `再想一下：3,000 萬元為融資財簽門檻；授管部年度強制實地訪查之鎖頭銀行總歸戶門檻為 5 億元以上。`,
+      `再想一下：不可直接略過或依賴其他業務系統拋轉，必須主動以 Google 搜尋進行外部查證與文字補正。`
+    ];
+
+    function safeRenderIcons() {
+      if (window.lucide && typeof window.lucide.createIcons === `function`) {
+        window.lucide.createIcons();
+      }
+    }
+
+    async function persistState() {
+      if (window.notebookAppApi && typeof window.notebookAppApi.setAppState === `function`) {
+        try {
+          await window.notebookAppApi.setAppState(appState);
+        } catch (err) {
+          // Ignore persistence errors silently in standalone mode
+        }
+      }
+    }
+
+    function updateProgressUI() {
+      const readCount = appState.readChapters.length;
+      const pct = Math.round((readCount / TOTAL_CHAPTERS) * 100);
+
+      const counterEl = document.getElementById(`progress-counter`);
+      const fillEl = document.getElementById(`progress-fill`);
+      const ariaEl = document.getElementById(`progress-bar-aria`);
+      const pillEl = document.getElementById(`progress-status-pill`);
+      const hintEl = document.getElementById(`progress-hint`);
+
+      if (counterEl) counterEl.textContent = `已完成 ${readCount} / ${TOTAL_CHAPTERS} 章節（${pct}%）`;
+      if (fillEl) fillEl.style.width = `${pct}%`;
+      if (ariaEl) ariaEl.setAttribute(`aria-valuenow`, String(pct));
+
+      if (pillEl && hintEl) {
+        if (readCount === TOTAL_CHAPTERS) {
+          pillEl.textContent = `已完成 Day29`;
+          pillEl.className = `status-pill-done`;
+          hintEl.textContent = `恭喜！您已完整研讀本單元五個核心章節，建議同步完成下方隨堂快測。`;
+        } else {
+          pillEl.textContent = `進行中`;
+          pillEl.className = `status-pill-active`;
+          hintEl.textContent = `勾選各章節卡片右上角的「已讀」方塊，進度將自動儲存並更新。`;
+        }
+      }
+
+      for (let i = 1; i <= TOTAL_CHAPTERS; i++) {
+        const isRead = appState.readChapters.includes(i);
+        const cb = document.getElementById(`read-check-${i}`);
+        const lbl = document.getElementById(`read-label-${i}`);
+        const card = document.querySelector(`.chapter-card[data-chapter="${i}"]`);
+        if (cb) cb.checked = isRead;
+        if (lbl) lbl.classList.toggle(`checked`, isRead);
+        if (card) card.classList.toggle(`is-read`, isRead);
+      }
+    }
+
+    function toggleChapterRead(chapterNum, isChecked) {
+      const idx = appState.readChapters.indexOf(chapterNum);
+      if (isChecked && idx === -1) {
+        appState.readChapters.push(chapterNum);
+      } else if (!isChecked && idx !== -1) {
+        appState.readChapters.splice(idx, 1);
+      }
+      updateProgressUI();
+      if (appState.categoryFilter === `unread`) {
+        applyFilters();
+      }
+      persistState();
+    }
+
+    function applyExpandedUI() {
+      for (let i = 1; i <= TOTAL_CHAPTERS; i++) {
+        const isExpanded = appState.expandedChapters.includes(i);
+        const card = document.querySelector(`.chapter-card[data-chapter="${i}"]`);
+        if (card) {
+          card.setAttribute(`data-expanded`, isExpanded ? `true` : `false`);
+          const btn = card.querySelector(`.card-title-btn`);
+          if (btn) btn.setAttribute(`aria-expanded`, isExpanded ? `true` : `false`);
+        }
+      }
+    }
+
+    function toggleChapterExpand(chapterNum) {
+      const idx = appState.expandedChapters.indexOf(chapterNum);
+      if (idx === -1) {
+        appState.expandedChapters.push(chapterNum);
+      } else {
+        appState.expandedChapters.splice(idx, 1);
+      }
+      applyExpandedUI();
+      persistState();
+    }
+
+    function toggleAllChapters(expandAll) {
+      if (expandAll) {
+        appState.expandedChapters = [1, 2, 3, 4, 5];
+      } else {
+        appState.expandedChapters = [];
+      }
+      applyExpandedUI();
+      persistState();
+    }
+
+    function resetProgress(btn) {
+      if (!btn) return;
+      if (btn.dataset.armed !== `true`) {
+        btn.dataset.armed = `true`;
+        btn.innerHTML = `<i data-lucide="alert-circle" aria-hidden="true" width="16" height="16"></i> 再次點擊確認重置`;
+        safeRenderIcons();
+        setTimeout(() => {
+          if (btn && btn.dataset.armed === `true`) {
+            btn.dataset.armed = `false`;
+            btn.innerHTML = `<i data-lucide="rotate-ccw" aria-hidden="true" width="16" height="16"></i> 重置進度`;
+            safeRenderIcons();
+          }
+        }, 4000);
+        return;
+      }
+      btn.dataset.armed = `false`;
+      btn.innerHTML = `<i data-lucide="rotate-ccw" aria-hidden="true" width="16" height="16"></i> 重置進度`;
+      safeRenderIcons();
+
+      appState.readChapters = [];
+      appState.quizAnswers = {};
+      updateProgressUI();
+      renderQuizState();
+      applyFilters();
+      persistState();
+    }
+
+    function handleSearchInput(val) {
+      appState.searchQuery = val || ``;
+      const clearBtn = document.getElementById(`clear-search-btn`);
+      if (clearBtn) {
+        clearBtn.style.display = appState.searchQuery.trim() ? `inline-flex` : `none`;
+      }
+      applyFilters();
+      persistState();
+    }
+
+    function clearSearch() {
+      const input = document.getElementById(`keyword-search`);
+      if (input) input.value = ``;
+      handleSearchInput(``);
+    }
+
+    function setCategoryFilter(filterKey, clickedBtn) {
+      appState.categoryFilter = filterKey;
+      const chips = document.querySelectorAll(`.filter-chip`);
+      chips.forEach((chip) => {
+        chip.setAttribute(`aria-pressed`, chip === clickedBtn ? `true` : `false`);
+      });
+      applyFilters();
+      persistState();
+    }
+
+    function resetFilters() {
+      appState.searchQuery = ``;
+      appState.categoryFilter = `all`;
+      const input = document.getElementById(`keyword-search`);
+      if (input) input.value = ``;
+      const clearBtn = document.getElementById(`clear-search-btn`);
+      if (clearBtn) clearBtn.style.display = `none`;
+      const chips = document.querySelectorAll(`.filter-chip`);
+      chips.forEach((chip) => {
+        chip.setAttribute(`aria-pressed`, chip.dataset.filter === `all` ? `true` : `false`);
+      });
+      applyFilters();
+      persistState();
+    }
+
+    function applyFilters() {
+      const query = appState.searchQuery.trim().toLowerCase();
+      const filter = appState.categoryFilter;
+      let visibleCount = 0;
+
+      for (let i = 1; i <= TOTAL_CHAPTERS; i++) {
+        const card = document.querySelector(`.chapter-card[data-chapter="${i}"]`);
+        if (!card) continue;
+
+        const category = card.getAttribute(`data-category`) || ``;
+        const isRead = appState.readChapters.includes(i);
+        const textContent = (card.textContent || ``).toLowerCase();
+
+        let matchesCategory = true;
+        if (filter === `unread`) {
+          matchesCategory = !isRead;
+        } else if (filter !== `all`) {
+          matchesCategory = (category === filter);
+        }
+
+        const matchesQuery = !query || textContent.includes(query);
+        const shouldShow = matchesCategory && matchesQuery;
+
+        card.classList.toggle(`is-hidden`, !shouldShow);
+        if (shouldShow) visibleCount++;
+      }
+
+      const countEl = document.getElementById(`filter-result-count`);
+      if (countEl) {
+        countEl.textContent = `顯示 ${visibleCount} / ${TOTAL_CHAPTERS} 個章節`;
+      }
+
+      const emptyEl = document.getElementById(`empty-state`);
+      const reasonEl = document.getElementById(`empty-state-reason`);
+      if (emptyEl) {
+        emptyEl.classList.toggle(`visible`, visibleCount === 0);
+      }
+      if (reasonEl && visibleCount === 0) {
+        if (filter === `unread` && appState.readChapters.length === TOTAL_CHAPTERS && !query) {
+          reasonEl.textContent = `太棒了！五個章節皆已標記為已讀，故「僅看未讀」篩選無待讀項目。`;
+        } else {
+          reasonEl.textContent = `沒有符合關鍵字「${appState.searchQuery || '目前條件'}」的章節，請嘗試調整或重設篩選。`;
+        }
+      }
+    }
+
+    /* Chapter 1 Interactive: Loss Risk Simulator */
+    function renderLossRiskOutput() {
+      const pct = Number(appState.lossRiskPct) || 0;
+      const winPct = 100 - pct;
+      const box = document.getElementById(`loss-risk-output`);
+      if (!box) return;
+
+      if (pct >= 50) {
+        box.innerHTML = `
+          <div style="display:flex; align-items:center; justify-content:space-between; gap: var(--space-sm); margin-bottom: var(--space-xs);">
+            <strong style="color: var(--error);">高風險警訊：須於財報揭露或提列</strong>
+            <span class="pill-badge badge-risk">勝率僅 ${winPct}%</span>
+          </div>
+          <p style="margin:0; font-size:0.86rem; color: var(--slate-secondary); line-height:1.55;">
+            當敗訴機率達 ${pct}%（勝率未超過五成）且賠償份額幾近確定時，依會計師判斷原則即須列示於財報上。實務上只要財報出現此類訴訟揭露，通常代表「公司與會計師協調多次仍堅持要寫」的重大案件，徵信報告務必強化揭示。
+          </p>
+        `;
+      } else {
+        box.innerHTML = `
+          <div style="display:flex; align-items:center; justify-content:space-between; gap: var(--space-sm); margin-bottom: var(--space-xs);">
+            <strong style="color: var(--positive-text);">低敗訴風險區間：財報可能未揭露</strong>
+            <span class="pill-badge badge-esg">勝率達 ${winPct}%</span>
+          </div>
+          <p style="margin:0; font-size:0.86rem; color: var(--slate-secondary); line-height:1.55;">
+            依會計師實務原則，若評估訴訟勝率超過五成（目前推算勝率 ${winPct}%），企業得免於寫入財報。但對非上市櫃營造業而言，仍應透過司法院檢索系統主動查核鄰損與工程款訴訟件數，避免產生查調盲區。
+          </p>
+        `;
+      }
+    }
+
+    function syncLossRiskFromSlider(val) {
+      const clamped = Math.max(0, Math.min(100, Number(val) || 0));
+      appState.lossRiskPct = clamped;
+      const numEl = document.getElementById(`loss-risk-num`);
+      if (numEl) numEl.value = String(clamped);
+      renderLossRiskOutput();
+      persistState();
+    }
+
+    function syncLossRiskFromNumber(val) {
+      const clamped = Math.max(0, Math.min(100, Number(val) || 0));
+      appState.lossRiskPct = clamped;
+      const sliderEl = document.getElementById(`loss-risk-slider`);
+      if (sliderEl) sliderEl.value = String(clamped);
+      renderLossRiskOutput();
+      persistState();
+    }
+
+    /* Chapter 2 Interactive: Audit Defense Scenario */
+    function setAuditScenario(mode) {
+      appState.auditScenario = mode;
+      const okBtn = document.getElementById(`audit-btn-ok`);
+      const missBtn = document.getElementById(`audit-btn-miss`);
+      if (okBtn) okBtn.setAttribute(`aria-pressed`, mode === `ok` ? `true` : `false`);
+      if (missBtn) missBtn.setAttribute(`aria-pressed`, mode === `miss` ? `true` : `false`);
+
+      const out = document.getElementById(`audit-scenario-output`);
+      if (!out) return;
+
+      if (mode === `ok`) {
+        out.innerHTML = `
+          <strong style="color: var(--positive-text); display:block; margin-bottom: var(--space-xs);">符合免責構成要件（可援引第 36／37 條）</strong>
+          <p style="margin:0; font-size:0.86rem; color: var(--slate-secondary); line-height:1.55;">
+            已透過系統「列印功能」將司法院查調結果印出附於徵信卷宗，能明確證明當時盡職調查軌跡。即便事後授信戶發生異常或遭認定判讀不夠全面，仍可就徵信當時狀況說明「已做但待精進」，依法免除事後瑕疵究責。
+          </p>
+        `;
+      } else {
+        out.innerHTML = `
+          <strong style="color: var(--error); display:block; margin-bottom: var(--space-xs);">稽核高風險：倒帳時將百口莫辯</strong>
+          <p style="margin:0; font-size:0.86rem; color: var(--slate-secondary); line-height:1.55;">
+            若僅於螢幕瀏覽卻未列印存卷，一旦未來發生倒帳違約，稽核查調時完全看不出您當時是否有執行訴訟查證，既無法舉證「當時所能知悉之事項」，亦難以適用《徵信準則》第 37 條免責規定。
+          </p>
+        `;
+      }
+      persistState();
+    }
+
+    /* Chapter 4 Interactive: Four-in-One Matrix */
+    function renderFourTableMatrix() {
+      const isOver = appState.exposureLevel === `over`;
+      const isSameDay = appState.timingMode === `same`;
+
+      const uBtn = document.getElementById(`amt-under-500`);
+      const oBtn = document.getElementById(`amt-over-500`);
+      const sBtn = document.getElementById(`timing-same`);
+      const nBtn = document.getElementById(`timing-next`);
+
+      if (uBtn) uBtn.setAttribute(`aria-pressed`, !isOver ? `true` : `false`);
+      if (oBtn) oBtn.setAttribute(`aria-pressed`, isOver ? `true` : `false`);
+      if (sBtn) sBtn.setAttribute(`aria-pressed`, isSameDay ? `true` : `false`);
+      if (nBtn) nBtn.setAttribute(`aria-pressed`, !isSameDay ? `true` : `false`);
+
+      const tbl3Desc = document.getElementById(`tbl-3-desc`);
+      const tbl4 = document.getElementById(`tbl-4`);
+      const tbl4Desc = document.getElementById(`tbl-4-desc`);
+
+      if (tbl3Desc) {
+        tbl3Desc.textContent = isSameDay
+          ? `選擇「當日一次完稿」：於企金行銷管理系統登打後，建議同步手動複製貼上為洽談紀錄，免等隔日拋轉，當天即可一次請主管核章。`
+          : `選擇「允許隔日拋轉」：於企金行銷管理系統登打拜訪紀錄後，原則上隔天系統會自動拋轉成為一份洽談紀錄。`;
+      }
+
+      if (tbl4 && tbl4Desc) {
+        if (isOver) {
+          tbl4.classList.remove(`is-dimmed`);
+          tbl4.classList.add(`is-mandatory-500m`);
+          tbl4Desc.textContent = `鎖頭銀行總歸戶達 5 億元以上大額客戶，每年強制實地訪查一次！本次外訪應同步產出並請主管一併核章。`;
+        } else {
+          tbl4.classList.remove(`is-mandatory-500m`);
+          tbl4.classList.add(`is-dimmed`);
+          tbl4Desc.textContent = `總歸戶未達 5 億元（未觸發授管部年度大額強制訪查門檻），可依實際需求評估是否另填或免填本表。`;
+        }
+      }
+    }
+
+    function setExposureLevel(level) {
+      appState.exposureLevel = level;
+      renderFourTableMatrix();
+      persistState();
+    }
+
+    function setTimingMode(mode) {
+      appState.timingMode = mode;
+      renderFourTableMatrix();
+      persistState();
+    }
+
+    /* Chapter 5 Interactive: ESG Status Simulator */
+    function setEsgStatus(status) {
+      appState.esgStatus = status;
+      const normBtn = document.getElementById(`esg-btn-normal`);
+      const failBtn = document.getElementById(`esg-btn-fail`);
+      if (normBtn) normBtn.setAttribute(`aria-pressed`, status === `normal` ? `true` : `false`);
+      if (failBtn) failBtn.setAttribute(`aria-pressed`, status === `fail` ? `true` : `false`);
+
+      const out = document.getElementById(`esg-status-output`);
+      if (!out) return;
+
+      if (status === `normal`) {
+        out.innerHTML = `
+          <strong style="color: var(--primary); display:block; margin-bottom: var(--space-xs);">標準覆核程序：輔助不等於定論</strong>
+          <p style="margin:0; font-size:0.86rem; color: var(--slate-secondary); line-height:1.55;">
+            外部系統或 AI 帶入的 ESG 負面新聞摘要僅供輔助參考。徵信人員務必逐字判讀是否與授信主體相關、確認影響程度並親自修訂文字後，始得按下「儲存」，切忌原封不動直接存檔。
+          </p>
+        `;
+      } else {
+        out.innerHTML = `
+          <strong style="color: var(--risk-orange-text); display:block; margin-bottom: var(--space-xs);">異常補正程序：啟動人工 Google 搜尋</strong>
+          <p style="margin:0; font-size:0.86rem; color: var(--slate-secondary); line-height:1.55;">
+            因外部資料庫介接時，遇大量新聞或內文含「難字」易發生查詢失敗或資料進不來之狀況。此時須立即跳出系統，親自透過 <strong>Google 搜尋</strong>查證該企業近期 ESG 與負面新聞，並將結果寫入獨立 ESG 表格中。
+          </p>
+        `;
+      }
+      persistState();
+    }
+
+    /* Quiz Handler */
+    function renderQuizState() {
+      let answeredCount = 0;
+      for (let q = 0; q < 3; q++) {
+        const chosen = appState.quizAnswers[q];
+        const card = document.querySelectorAll(`.quiz-card`)[q];
+        const fb = document.getElementById(`quiz-fb-${q}`);
+        if (!card || !fb) continue;
+
+        const btns = card.querySelectorAll(`.quiz-opt-btn`);
+        btns.forEach((b, idx) => {
+          b.classList.remove(`opt-correct`, `opt-wrong`);
+          if (chosen !== undefined && chosen !== null) {
+            if (idx === quizCorrectIndex[q]) {
+              b.classList.add(`opt-correct`);
+            } else if (idx === chosen) {
+              b.classList.add(`opt-wrong`);
+            }
+          }
+        });
+
+        if (chosen !== undefined && chosen !== null) {
+          answeredCount++;
+          fb.textContent = chosen === quizCorrectIndex[q] ? quizExplanations[q] : quizWrongHints[q];
+          fb.style.color = chosen === quizCorrectIndex[q] ? `var(--positive-text)` : `var(--error)`;
+        } else {
+          fb.textContent = `請點選上方選項進行檢核。`;
+          fb.style.color = `var(--slate-secondary)`;
+        }
+      }
+
+      const badge = document.getElementById(`quiz-score-badge`);
+      if (badge) {
+        const correctCount = Object.keys(appState.quizAnswers).filter((k) => appState.quizAnswers[k] === quizCorrectIndex[Number(k)]).length;
+        badge.textContent = `已作答 ${answeredCount} / 3 題（答對 ${correctCount} 題）`;
+      }
+    }
+
+    function answerQuiz(qIdx, optIdx) {
+      appState.quizAnswers[qIdx] = optIdx;
+      renderQuizState();
+      persistState();
+    }
+
+    /* Initialization */
+    async function initApp() {
+      if (window.notebookAppApi && typeof window.notebookAppApi.getAppState === `function`) {
+        try {
+          const saved = await window.notebookAppApi.getAppState();
+          if (saved && typeof saved === `object`) {
+            appState = {
+              readChapters: Array.isArray(saved.readChapters) ? saved.readChapters : [],
+              expandedChapters: Array.isArray(saved.expandedChapters) ? saved.expandedChapters : [1],
+              searchQuery: typeof saved.searchQuery === `string` ? saved.searchQuery : ``,
+              categoryFilter: typeof saved.categoryFilter === `string` ? saved.categoryFilter : `all`,
+              lossRiskPct: typeof saved.lossRiskPct === `number` ? saved.lossRiskPct : 65,
+              auditScenario: saved.auditScenario === `miss` ? `miss` : `ok`,
+              exposureLevel: saved.exposureLevel === `under` ? `under` : `over`,
+              timingMode: saved.timingMode === `next` ? `next` : `same`,
+              esgStatus: saved.esgStatus === `fail` ? `fail` : `normal`,
+              quizAnswers: saved.quizAnswers && typeof saved.quizAnswers === `object` ? saved.quizAnswers : {}
+            };
+          }
+        } catch (err) {
+          // Fallback to default state
+        }
+      }
+
+      const searchInput = document.getElementById(`keyword-search`);
+      if (searchInput) searchInput.value = appState.searchQuery;
+      const clearBtn = document.getElementById(`clear-search-btn`);
+      if (clearBtn) clearBtn.style.display = appState.searchQuery.trim() ? `inline-flex` : `none`;
+
+      const chips = document.querySelectorAll(`.filter-chip`);
+      chips.forEach((chip) => {
+        chip.setAttribute(`aria-pressed`, chip.dataset.filter === appState.categoryFilter ? `true` : `false`);
+      });
+
+      const slider = document.getElementById(`loss-risk-slider`);
+      const num = document.getElementById(`loss-risk-num`);
+      if (slider) slider.value = String(appState.lossRiskPct);
+      if (num) num.value = String(appState.lossRiskPct);
+
+      updateProgressUI();
+      applyExpandedUI();
+      applyFilters();
+      renderLossRiskOutput();
+      setAuditScenario(appState.auditScenario);
+      renderFourTableMatrix();
+      setEsgStatus(appState.esgStatus);
+      renderQuizState();
+      safeRenderIcons();
+
+      if (window.notebookAppApi && typeof window.notebookAppApi.notifyAppReady === `function`) {
+        window.notebookAppApi.notifyAppReady();
+      }
+    }
+
+    document.addEventListener(`DOMContentLoaded`, initApp);
+  </script>
+</body>
+</html>
