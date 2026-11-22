@@ -1,8 +1,9 @@
-const CACHE_NAME = "sme-credit-pwa-v1";
+const CACHE_NAME = "sme-credit-pwa-v4";
 const APP_SHELL = [
   "./",
   "./index.html",
   ...Array.from({ length: 30 }, (_, index) => `./Day${String(index + 1).padStart(2, "0")}.html`),
+  "./progress-store.js",
   "./manifest.webmanifest",
   "./favicon.svg"
 ];

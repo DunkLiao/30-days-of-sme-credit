@@ -14,6 +14,7 @@
       window.addEventListener("load", () => navigator.serviceWorker.register("./service-worker.js").catch((error) => console.warn("PWA offline support unavailable:", error)));
     }
   </script>
+  <script src="./progress-store.js"></script>
   <meta name="artifact-type" content="dashboard">
   <meta name="design-style" content="charter">
   <title>中小企業徵信與財報分析實務（30天課程）｜課程導航與徵信速查</title>
@@ -1699,12 +1700,13 @@
     }
 
     async function initApp() {
+      let legacyCompletedDays = [];
       try {
         if (window.notebookAppApi && typeof window.notebookAppApi.getAppState === `function`) {
           const saved = await window.notebookAppApi.getAppState();
           if (saved && typeof saved === `object`) {
             if (Array.isArray(saved.completedDays)) {
-              appState.completedDays = saved.completedDays.filter(function(d) { return typeof d === `number` && d >= 1 && d <= 30; });
+              legacyCompletedDays = saved.completedDays.filter(function(d) { return typeof d === `number` && d >= 1 && d <= 30; });
             }
             if (Array.isArray(saved.expandedDays)) {
               appState.expandedDays = saved.expandedDays.filter(function(d) { return typeof d === `number` && d >= 1 && d <= 30; });
@@ -1718,6 +1720,12 @@
         // Fallback to default state
       }
 
+      if (window.CourseProgressStore && typeof window.CourseProgressStore.initializeCompletedDays === `function`) {
+        appState.completedDays = window.CourseProgressStore.initializeCompletedDays(legacyCompletedDays);
+      } else {
+        appState.completedDays = legacyCompletedDays;
+      }
+
       // Sync UI controls with restored state
       const statusSel = document.getElementById(`status-filter`);
       if (statusSel) statusSel.value = appState.statusFilter;
@@ -1729,6 +1737,14 @@
       runThresholdCalc();
       renderReferenceTable();
       renderDivergenceChart();
+
+      if (window.CourseProgressStore && typeof window.CourseProgressStore.subscribeCompleted === `function`) {
+        window.CourseProgressStore.subscribeCompleted(function(completedDays) {
+          appState.completedDays = completedDays.slice();
+          updateProgressUI();
+          renderCurriculum();
+        });
+      }
 
       if (window.notebookAppApi && typeof window.notebookAppApi.notifyAppReady === `function`) {
         window.notebookAppApi.notifyAppReady();
@@ -1766,11 +1782,15 @@
 
     function toggleDayCompletion(dayNum) {
       const idx = appState.completedDays.indexOf(dayNum);
-      if (idx === -1) {
+      const isCompleted = idx === -1;
+      if (isCompleted) {
         appState.completedDays.push(dayNum);
         appState.completedDays.sort(function(a, b) { return a - b; });
       } else {
         appState.completedDays.splice(idx, 1);
+      }
+      if (window.CourseProgressStore && typeof window.CourseProgressStore.setDayCompleted === `function`) {
+        window.CourseProgressStore.setDayCompleted(dayNum, isCompleted);
       }
       updateProgressUI();
       renderCurriculum();
@@ -1808,6 +1828,9 @@
       btn.dataset.armed = `false`;
       btn.textContent = `重設進度`;
       appState.completedDays = [];
+      if (window.CourseProgressStore && typeof window.CourseProgressStore.setCompletedDays === `function`) {
+        window.CourseProgressStore.setCompletedDays([]);
+      }
       updateProgressUI();
       renderCurriculum();
       persistState();

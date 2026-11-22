@@ -21,6 +21,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&family=Noto+Sans+TC:wght@400;500;600;700&family=Noto+Serif+TC:wght@500;700&display=swap" rel="stylesheet">
   <script src="https://unpkg.com/lucide@1.43.0/dist/umd/lucide.min.js"></script>
+  <script src="./progress-store.js"></script>
   <style>
     :root {
       color-scheme: light;
@@ -1745,6 +1746,7 @@
 
     function markAllRead() {
       appState.readChapters = [...CHAPTER_IDS];
+      if (window.CourseProgressStore) window.CourseProgressStore.setDayReadIds(10, CHAPTER_IDS);
       updateProgressUI();
       persistState();
     }
@@ -2044,6 +2046,7 @@
         window.lucide.createIcons();
       }
 
+      if (window.CourseProgressStore) window.CourseProgressStore.bindPage(10, appState.readChapters);
       if (window.notebookAppApi && typeof window.notebookAppApi.notifyAppReady === 'function') {
         window.notebookAppApi.notifyAppReady();
       }

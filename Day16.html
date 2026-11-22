@@ -18,6 +18,7 @@
   <meta name="design-style" content="charter">
   <title>中小企業徵信與財報分析實務-Day16-損益表審核與獲利品質穿透</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+  <script src="./progress-store.js"></script>
   <style>
     :root {
       color-scheme: light;
@@ -2195,6 +2196,7 @@
       updateProgressUI();
       renderChapters();
 
+      if (window.CourseProgressStore) window.CourseProgressStore.bindPage(16, appState.readChapters);
       if (window.notebookAppApi && typeof window.notebookAppApi.notifyAppReady === `function`) {
         window.notebookAppApi.notifyAppReady();
       }

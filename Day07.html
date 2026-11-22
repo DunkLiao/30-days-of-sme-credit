@@ -18,6 +18,7 @@
   <meta name="design-style" content="charter">
   <title>中小企業徵信與財報分析實務-Day07-3,000萬元融資簽證門檻與法規強制規範</title>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700&family=Noto+Sans+TC:wght@400;500;600;700&family=Libre+Caslon+Text:wght@400;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <script src="./progress-store.js"></script>
   <style>
     :root {
       color-scheme: light;
@@ -1948,6 +1949,7 @@
       renderChapters();
       recalculateThreshold();
 
+      if (window.CourseProgressStore) window.CourseProgressStore.bindPage(7, appState.readIds);
       if (window.notebookAppApi && typeof window.notebookAppApi.notifyAppReady === `function`) {
         window.notebookAppApi.notifyAppReady();
       }

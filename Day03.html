@@ -19,6 +19,7 @@
   <title>中小企業徵信與財報分析實務-Day03-授信資料表分級架構與門檻判定</title>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=Noto+Sans+TC:wght@400;500;700&family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <script src="https://unpkg.com/lucide@1.43.0/dist/umd/lucide.min.js"></script>
+  <script src="./progress-store.js"></script>
   <style>
     :root {
       color-scheme: light;
@@ -1964,6 +1965,7 @@
       if (window.lucide && typeof window.lucide.createIcons === `function`) {
         window.lucide.createIcons();
       }
+      if (window.CourseProgressStore) window.CourseProgressStore.bindPage(3, appState.readIds);
       if (window.notebookAppApi && typeof window.notebookAppApi.notifyAppReady === `function`) {
         window.notebookAppApi.notifyAppReady();
       }
