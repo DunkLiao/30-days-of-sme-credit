@@ -41,6 +41,30 @@ Day01 至 Day30 均可獨立開啟。各頁通常包含章節展開、已讀進�
 
 在 HTTPS 或 localhost 初次連線開啟網站後，Service Worker 會嘗試預先快取首頁、30 個課程頁及本地 PWA 資源。之後可離線開啟這些頁面；外部字型與 CDN 圖表腳本不在預先快取清單內，相關外觀或圖表可能受離線狀態影響。瀏覽器的「安裝應用程式」是否出現，取決於瀏覽器及其 PWA 支援情況。
 
+## 課程短影片（Video 資料夾）
+
+`Video/` 收錄對應 Day01～Day30 的直式教學短影片與製作來源，適合搭配每日課程複習。影片採 1080 × 1920、24 fps，包含繁體中文字幕與本機合成旁白；人工審閱、定稿及發布進度見 [影片待辦清單](Video/TODO.md)。
+
+### 播放與預覽
+
+1. 開啟 [影片總覽](Video/index.html)，選擇當天影片播放，並可查看旁白稿、分鏡與教材依據。
+2. 確認 `Video/Day01.mp4` 至 `Video/Day30.mp4` 已放在本機對應位置。MP4 已由 `.gitignore` 排除，從 Git 複製或下載專案時不會附帶影片，需另行取得或依製作文件重新輸出。
+3. 若要預覽可編輯的單集來源，在專案根目錄執行 `python -m http.server 8080`，再開啟例如 `http://localhost:8080/Video/day05-tax-reconciliation/preview.html`；其他集數請替換資料夾名稱。
+
+### 資料夾內容
+
+| 路徑或檔案 | 用途 |
+|---|---|
+| `Video/index.html` | 30 集影片總覽、播放器與製作文件連結。 |
+| `Video/dayXX-主題/` | 單集製作來源：`index.html` 合成畫面、`preview.html` 預覽、`assets/` 旁白與素材。 |
+| 單集內的 `SCRIPT.md`、`STORYBOARD.md`、`NOTES.md` | 旁白稿、逐秒分鏡、教材依據與案例說明。 |
+| 單集內的 `episode.json`、`timings.json`、`captions.srt` | 畫面資料、時間軸與繁體中文字幕。 |
+| `Video/build_*.py`、`Video/verify_*.py`、`Video/*.ps1` | 內容建置、影音驗證、語音合成與部分批次渲染腳本。 |
+| `Video/PLAN.md`、`Video/DAY*_PLAN.md` | 系列規劃與各批次重製步驟。 |
+| `Video/VERIFICATION*.md`、`Video/verification*.json` | 各批次的驗證紀錄與結果。 |
+
+完整製作方式與各批次說明見 [Video 使用說明](Video/README.md)。MP4、渲染目錄、快取、日誌與 QA 截圖不納入 Git；旁白、封面、字型、腳本、字幕及驗證報告則保留供預覽與重製使用。課程網站的 PWA 預先快取不包含影片，離線觀看需另行保留 MP4。
+
 ## 常見問題
 
 **課程連結打不開？** 確認所有 `DayXX.html` 與 `index.html` 位於同一資料夾，檔名中的日數為兩位數。

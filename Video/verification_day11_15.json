@@ -1,0 +1,237 @@
+[
+  {
+    "day": "11",
+    "file": "Day11.mp4",
+    "seconds": 58.291667,
+    "bytes": 2206987,
+    "findings": {
+      "lint": {
+        "errors": 0,
+        "warnings": 7,
+        "codes": [
+          "nested_structure_needs_subcomposition",
+          "timeline_track_too_dense"
+        ]
+      },
+      "runtime": {
+        "errors": 0,
+        "warnings": 0,
+        "codes": []
+      },
+      "layout": {
+        "errors": 0,
+        "warnings": 0,
+        "codes": []
+      },
+      "motion": {
+        "errors": 0,
+        "warnings": 0,
+        "codes": []
+      },
+      "contrast": {
+        "errors": 0,
+        "warnings": 0,
+        "codes": []
+      },
+      "craft": {
+        "errors": 0,
+        "warnings": 0,
+        "codes": []
+      },
+      "audio": {
+        "errors": 0,
+        "warnings": 0,
+        "codes": []
+      }
+    },
+    "report": "day11-report-reconciliation\\.hyperframes\\artifacts\\checks\\7b863d5f-36d3-4fa6-b3d7-d3e1f3ab0fa7.json"
+  },
+  {
+    "day": "12",
+    "file": "Day12.mp4",
+    "seconds": 59.291667,
+    "bytes": 2297041,
+    "findings": {
+      "lint": {
+        "errors": 0,
+        "warnings": 7,
+        "codes": [
+          "nested_structure_needs_subcomposition",
+          "timeline_track_too_dense"
+        ]
+      },
+      "runtime": {
+        "errors": 0,
+        "warnings": 0,
+        "codes": []
+      },
+      "layout": {
+        "errors": 0,
+        "warnings": 0,
+        "codes": []
+      },
+      "motion": {
+        "errors": 0,
+        "warnings": 0,
+        "codes": []
+      },
+      "contrast": {
+        "errors": 0,
+        "warnings": 0,
+        "codes": []
+      },
+      "craft": {
+        "errors": 0,
+        "warnings": 0,
+        "codes": []
+      },
+      "audio": {
+        "errors": 0,
+        "warnings": 0,
+        "codes": []
+      }
+    },
+    "report": "day12-simplified-review\\.hyperframes\\artifacts\\checks\\4eccadd0-c03e-4c6c-8e0c-0c98fd9c8d9f.json"
+  },
+  {
+    "day": "13",
+    "file": "Day13.mp4",
+    "seconds": 59.166667,
+    "bytes": 2258961,
+    "findings": {
+      "lint": {
+        "errors": 0,
+        "warnings": 7,
+        "codes": [
+          "nested_structure_needs_subcomposition",
+          "timeline_track_too_dense"
+        ]
+      },
+      "runtime": {
+        "errors": 0,
+        "warnings": 0,
+        "codes": []
+      },
+      "layout": {
+        "errors": 0,
+        "warnings": 0,
+        "codes": []
+      },
+      "motion": {
+        "errors": 0,
+        "warnings": 0,
+        "codes": []
+      },
+      "contrast": {
+        "errors": 0,
+        "warnings": 0,
+        "codes": []
+      },
+      "craft": {
+        "errors": 0,
+        "warnings": 0,
+        "codes": []
+      },
+      "audio": {
+        "errors": 0,
+        "warnings": 0,
+        "codes": []
+      }
+    },
+    "report": "day13-three-link-analysis\\.hyperframes\\artifacts\\checks\\6809a61d-6f56-41af-947b-95216eac8215.json"
+  },
+  {
+    "day": "14",
+    "file": "Day14.mp4",
+    "seconds": 58.75,
+    "bytes": 2277183,
+    "findings": {
+      "lint": {
+        "errors": 0,
+        "warnings": 7,
+        "codes": [
+          "nested_structure_needs_subcomposition",
+          "timeline_track_too_dense"
+        ]
+      },
+      "runtime": {
+        "errors": 0,
+        "warnings": 0,
+        "codes": []
+      },
+      "layout": {
+        "errors": 0,
+        "warnings": 0,
+        "codes": []
+      },
+      "motion": {
+        "errors": 0,
+        "warnings": 0,
+        "codes": []
+      },
+      "contrast": {
+        "errors": 0,
+        "warnings": 0,
+        "codes": []
+      },
+      "craft": {
+        "errors": 0,
+        "warnings": 0,
+        "codes": []
+      },
+      "audio": {
+        "errors": 0,
+        "warnings": 0,
+        "codes": []
+      }
+    },
+    "report": "day14-trend-analysis\\.hyperframes\\artifacts\\checks\\1656ec61-aaf6-47ca-b43e-4434c210d764.json"
+  },
+  {
+    "day": "15",
+    "file": "Day15.mp4",
+    "seconds": 58.208333,
+    "bytes": 2271571,
+    "findings": {
+      "lint": {
+        "errors": 0,
+        "warnings": 7,
+        "codes": [
+          "nested_structure_needs_subcomposition",
+          "timeline_track_too_dense"
+        ]
+      },
+      "runtime": {
+        "errors": 0,
+        "warnings": 0,
+        "codes": []
+      },
+      "layout": {
+        "errors": 0,
+        "warnings": 0,
+        "codes": []
+      },
+      "motion": {
+        "errors": 0,
+        "warnings": 0,
+        "codes": []
+      },
+      "contrast": {
+        "errors": 0,
+        "warnings": 0,
+        "codes": []
+      },
+      "craft": {
+        "errors": 0,
+        "warnings": 0,
+        "codes": []
+      },
+      "audio": {
+        "errors": 0,
+        "warnings": 0,
+        "codes": []
+      }
+    },
+    "report": "day15-asset-liquidity\\.hyperframes\\artifacts\\checks\\86cc90d9-43e9-4bdb-a949-6eb9fd7459d7.json"
+  }
+]

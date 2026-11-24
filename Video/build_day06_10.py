@@ -1,0 +1,87 @@
+"""沿用既有六段式圖解，製作 Day06～10，不重製既有影片。"""
+from pathlib import Path
+import json, shutil, sys
+import build_trials as base
+
+ROOT=Path(__file__).resolve().parent
+EPISODES=[
+ dict(day='06',slug='day06-audit-trail',merge_short_captions=True,title='查過了，依據在哪裡？',topic='徵信作業軌跡與紀錄',source='Day06.html',anchors=[],thesis='查核做完，也要讓依據找得到。',post='查過資料，也要留下日期、來源、結果與後續處理，讓報告重要敘述能回到當時證據。',scenes=[
+  dict(label='案件疑問',title='你說查過了',sub='當時的依據，找得到嗎？',visual='hook',lines=['你說這家公司查過了，但現在資料變了，當時的依據還找得到嗎？']),
+  dict(label='教學案例',title='登記資料，出現變動',sub='明川公司｜虛構教學情境',visual='steps',items=['上次查詢：記得看過登記','本次查詢：資料已有異動','卷宗內：缺少當時查核紀錄'],lines=['假設明川公司的登記資料出現異動，同事問你上次查到什麼。','你記得當時看過，卻找不到查詢結果，也沒有記下日期。']),
+  dict(label='停一下，先判斷',title='只靠記憶，夠嗎？',sub='報告的敘述，要能回到證據',visual='question',lines=['先想一想。只有我記得這句話，能讓別人重建當時的查核嗎？']),
+  dict(label='拆解觀念',title='讓查核可以追溯',sub='日期、來源、結果與處理',visual='steps',items=['何時查？從哪裡取得？','查到什麼？有何差異？','怎麼處理？還有哪些待查？'],lines=['把日期、資料來源與查核結果記清楚，再記下差異和後續處理。','依法及依內部規範保存佐證，並讓報告能連回相關紀錄。']),
+  dict(label='明天接件就能做',title='重要敘述，要有依據',sub='保存佐證，註明日期及待查事項',visual='steps',items=['核對重要敘述與資料來源','保存適用的查詢及處理紀錄','缺件與補查事項列入追蹤'],lines=['送件前，逐項核對報告的重要敘述，確認佐證和待查事項有留存。','紀錄能支持查核過程，但不代表留下紀錄就自動免責。']),
+  dict(label='今天帶走一句話',title='查核做完',sub='也要讓依據找得到',visual='closing',lines=['今天記住：查核做完，也要讓依據找得到。完整練習看第六天課程。'])
+ ]),
+ dict(day='07',slug='day07-audit-requirements',title='財簽要不要收，漏看什麼？',topic='融資簽證的判定條件',source='Day07.html',anchors=['chapters-heading'],thesis='先確認適用條件，再作財簽判定。',post='判斷融資簽證徵提要求，先查案件性質、計算口徑與適用條件，避免只看本次申請金額。',scenes=[
+  dict(label='案件疑問',title='財簽，要不要收？',sub='除了金額，還要確認什麼？',visual='hook',lines=['客戶問，這筆申請金額不大，會計師的財務報表查核報告可以不收嗎？']),
+  dict(label='教學案例',title='相同金額，不同業務',sub='明川公司｜虛構教學情境',visual='steps',items=['案件一：申請週轉金','案件二：申請本票保證','問題：能沿用同一判斷嗎？'],lines=['假設明川公司先詢問週轉金，後來改問本票保證。','申請金額相同，你可以把前一個案件的財簽判斷直接搬過來嗎？']),
+  dict(label='停一下，先判斷',title='只看金額，夠嗎？',sub='先確認這次到底辦什麼業務',visual='question',lines=['先停一下。除了金額，你有沒有核對這次業務的適用條件？']),
+  dict(label='拆解觀念',title='先對案件，再對規定',sub='性質、口徑、例外分開核對',visual='steps',items=['案件性質：辦理什麼業務？','計算口徑：哪些金額納入？','適用條件：有何排除或例外？'],lines=['先確認案件性質，再查總授信金額的計算口徑與適用條件。','特殊業務、扣除或替代文件，都要有規定依據，不能自行套用。']),
+  dict(label='明天接件就能做',title='把判定過程留下來',sub='規定依據 → 文件要求 → 待確認',visual='steps',items=['核對適用規定與版本','列出應收文件及缺件','疑義依內部程序確認'],lines=['依適用規定列出應收文件，記下計算與判定依據。','遇到疑義，依內部程序確認，再告知客戶需要準備什麼。']),
+  dict(label='今天帶走一句話',title='先確認適用條件',sub='再作財簽判定',visual='closing',lines=['今天記住：先確認適用條件，再作財簽判定。完整練習看第七天課程。'])
+ ]),
+ dict(day='08',slug='day08-report-timing',title='去年財報還沒出來，怎麼查？',topic='財報時點與過渡資料',source='Day08.html',anchors=['sec-chapters-title'],thesis='先看資料涵蓋到哪一天，再確認缺口怎麼補。',post='財報還在查核時，先核對案件時點與資料期間，依適用程序補充資料並追蹤正式文件。',scenes=[
+  dict(label='案件疑問',title='去年財報還沒出來',sub='案件需要的資料，怎麼接上？',visual='hook',lines=['新年度來申請借款，客戶說去年財報還沒查完，你接著要查什麼？']),
+  dict(label='教學案例',title='手上資料，還差一段',sub='明川公司｜虛構教學情境',visual='steps',items=['已取得：前年正式財報','尚未出具：去年查核財報','客戶提供：去年暫結資料'],lines=['假設明川公司只有前年正式財報，去年財報還在查核。','客戶提供一份暫結資料，希望先用這份往下辦理。']),
+  dict(label='停一下，先判斷',title='暫結，等於已查核？',sub='先確認文件的性質與期間',visual='question',lines=['先想一想。暫結資料和已查核財報，能當成同一種文件嗎？']),
+  dict(label='拆解觀念',title='時間與文件一起看',sub='先辨識缺口，再確認補充方式',visual='steps',items=['案件：目前在哪個申辦時點？','資料：各涵蓋到哪個期間？','程序：應補什麼、何時追蹤？'],lines=['先確認案件時點，列出每份資料的期間與查核狀態。','再依適用程序確認過渡資料和正式文件的要求，不能把暫結寫成已查核。']),
+  dict(label='明天接件就能做',title='補資料，也要追蹤',sub='說明限制，追蹤正式文件',visual='steps',items=['核對暫結與申報等補充資料','揭露資料限制及期間差異','記錄補件要求與追蹤日期'],lines=['核對暫結、申報等補充資料，清楚揭露資料限制與差異。','記下補件要求和追蹤日期，後續核對正式版本是否一致。']),
+  dict(label='今天帶走一句話',title='先看資料涵蓋到哪天',sub='再確認缺口怎麼補',visual='closing',lines=['今天記住：先看資料涵蓋到哪一天，再確認缺口怎麼補。完整練習看第八天課程。'])
+ ]),
+ dict(day='09',slug='day09-audit-opinion',title='會計師簽了，就能直接用？',topic='查核意見與影響範圍',source='Day09.html',anchors=['chapters-heading'],thesis='先讀意見與原因，再判斷數字怎麼用。',post='拿到會計師查核報告，先讀意見與形成原因，找出受影響科目和待查事項，再依規定評估使用。',scenes=[
+  dict(label='案件疑問',title='會計師簽了',sub='財報就能直接採用嗎？',visual='hook',lines=['客戶說，這份財報有會計師簽名，數字就可以直接用了嗎？']),
+  dict(label='教學案例',title='翻開報告，看到保留',sub='明川公司｜虛構教學情境',visual='steps',items=['文件：會計師財務報表查核報告','意見：報告載明保留意見','疑點：原因與影響還沒讀完'],lines=['假設明川公司提供查核報告，你看到保留意見四個字。','客戶說只是小問題，但你還沒讀形成意見的原因。']),
+  dict(label='停一下，先判斷',title='先看數字，還是意見？',sub='哪些地方可能影響你的分析？',visual='question',lines=['先停一下。只看簽名或意見名稱，足夠判斷整份財報怎麼用嗎？']),
+  dict(label='拆解觀念',title='讀出意見背後的原因',sub='類型、原因與影響範圍',visual='steps',items=['意見類型：報告怎麼表達？','形成原因：哪件事尚有疑慮？','影響範圍：涉及哪些科目？'],lines=['先辨認意見類型，再讀形成意見的基礎，找出受影響的科目與範圍。','可能影響存貨、獲利或其他數字，需要回到報告內容逐項確認。']),
+  dict(label='明天接件就能做',title='把疑點接回查核',sub='客戶說明仍需要相應佐證',visual='steps',items=['整理意見原因與受影響項目','取得說明及可核對資料','依適用規定評估並留存紀錄'],lines=['整理待查事項，取得客戶說明與佐證，再依適用規定評估。','報告要揭露對分析的影響，不能用客戶一句小問題帶過。']),
+  dict(label='今天帶走一句話',title='先讀意見與原因',sub='再判斷數字怎麼用',visual='closing',lines=['今天記住：先讀意見與原因，再判斷數字怎麼用。完整練習看第九天課程。'])
+ ]),
+ dict(day='10',slug='day10-accountant-review',title='查到會計師紀錄，就下結論？',topic='會計師資格與適任性查證',source='Day10.html',anchors=['chapters-heading'],thesis='查到紀錄後，還要讀清楚內容與期間。',post='查到會計師相關紀錄後，先核對身分、處分類型、確定日期與適用期間，再依規定處理並留存查證紀錄。',scenes=[
+  dict(label='案件疑問',title='會計師有一筆紀錄',sub='財報就一定不能採用嗎？',visual='hook',lines=['查到簽證會計師有一筆紀錄，財報就一定不能採用嗎？你還要確認什麼？']),
+  dict(label='教學案例',title='查到資料，還沒核對',sub='明川公司｜虛構教學情境',visual='steps',items=['簽證人：報告上的會計師','查詢結果：出現相關處分紀錄','尚待核對：身分、內容與日期'],lines=['假設明川公司交來財報，你查到與簽證會計師相關的處分紀錄。','但身分資料、處分內容和日期，你還沒有逐項核對。']),
+  dict(label='停一下，先判斷',title='有紀錄，就是結論？',sub='先辨認紀錄代表什麼',visual='question',lines=['先想一想。身分沒有對清楚，處分期間也沒讀完，能直接判定嗎？']),
+  dict(label='拆解觀念',title='先核對，再談適任性',sub='身分、處分類型與期間',visual='steps',items=['身分：是否確為同一位？','內容：處分類型與事由為何？','時間：何時確定、目前狀態？'],lines=['先核對是否為同一位會計師，再讀處分類型、事由與確定日期。','接著確認期間與目前狀態，依適用規定評估，不能把所有紀錄一概而論。']),
+  dict(label='明天接件就能做',title='保留查證與處理依據',sub='透過適用的正式查證管道',visual='steps',items=['查證資格與正式處分資料','保存查詢來源、日期及內容','依程序處理疑義與採用判斷'],lines=['透過適用的正式管道查證，保存查詢來源、日期和結果。','有疑義依內部程序確認，將處理依據清楚記在卷宗。']),
+  dict(label='今天帶走一句話',title='查到紀錄之後',sub='還要讀清楚內容與期間',visual='closing',lines=['今天記住：查到紀錄後，還要讀清楚內容與期間。完整練習看第十天課程。'])
+ ])
+]
+
+SOURCE_NOTES={
+ '06':'依據 Day06 徵信軌跡、佐證留存與送件檢核。以登記變動為假設情境，不將紀錄留存等同於自動免責。',
+ '07':'依據 Day07 財簽判定的案件性質、歸戶口徑及例外查核。本片不宣告特定金額門檻、豁免或本票保證的現行法律結論；具體採用依適用規定查證。',
+ '08':'依據 Day08 新案、覆查、續約與年度過渡的資料銜接。以新年度查核尚未完成為假設，不把暫結等同正式查核財報，不宣告固定補件日期或一律可先行核貸。',
+ '09':'依據 Day09 查核意見類型、形成原因及後續處理。保留意見為假設文件內容，不將所有意見情況簡化為一律採用或一律拒絕。',
+ '10':'依據 Day10 會計師資格、紀錄查證及適任性評估。影片不宣告特定處分年限、倍數或永久排除規定；先釐清紀錄再依適用規定處理。'
+}
+
+def prepare(manifest='episodes06-10.json'):
+ base.EPISODES=EPISODES; base.prepare(ROOT/manifest)
+ for ep in EPISODES:
+  folder=ROOT/ep['slug']
+  for name in ['hyperframes.json','frame.md']:
+   shutil.copy2(ROOT/'day01-credit-principles'/name,folder/name)
+  package=json.loads((ROOT/'day01-credit-principles/package.json').read_text(encoding='utf-8'))
+  package['name']=ep['slug']; base.save_json(folder/'package.json',package)
+
+def finalize():
+ base.EPISODES=EPISODES; base.finalize()
+ for ep in EPISODES:
+  folder=ROOT/ep['slug']; notes=folder/'NOTES.md'; text=notes.read_text(encoding='utf-8')
+  text=text.replace('2026-11-22','2026-11-23')
+  text=text.replace('明川公司、控股公司、貿易公司及影片所有數字均為新編教學假設，不是真實客戶資料，也不是教材原案例的逐字重現。','本集公司、事件及人物說法均為新編教學假設，不是真實客戶資料，也不是教材原案例的逐字重現。')
+  text=text.replace('完整課程：Day'+ep['day']+'.html（實際發布時換成正式網站當日網址）。','完整課程：https://30-days-of-sme-credit.killysss123.workers.dev/Day'+ep['day'])
+  notes.write_text(text+'\n## 本集內容依據\n\n'+SOURCE_NOTES[ep['day']]+'\n',encoding='utf-8')
+  p=folder/'index.html'; doc=p.read_text(encoding='utf-8')
+  doc=doc.replace('class="clip scene question"','class="clip scene question-scene"')
+  doc=doc.replace('</style>','.scene{padding-top:300px}.scene-body{padding-top:12px}</style>')
+  p.write_text(doc,encoding='utf-8')
+
+if __name__=='__main__':
+ if '--day' in sys.argv:
+  selected=sys.argv[sys.argv.index('--day')+1].zfill(2)
+  EPISODES[:]=[ep for ep in EPISODES if ep['day']==selected]
+  if not EPISODES: raise SystemExit('本批沒有指定集數')
+ if '--prepare' in sys.argv and '--day' in sys.argv:
+  raise SystemExit('逐集修訂請沿用既有旁白，勿覆寫整批 manifest')
+ prepare() if '--prepare' in sys.argv else finalize()

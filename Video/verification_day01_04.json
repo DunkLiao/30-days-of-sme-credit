@@ -1,0 +1,190 @@
+[
+  {
+    "day": "01",
+    "file": "Day01.mp4",
+    "seconds": 57.416667,
+    "bytes": 2191024,
+    "findings": {
+      "lint": {
+        "errors": 0,
+        "warnings": 7,
+        "codes": [
+          "nested_structure_needs_subcomposition",
+          "timeline_track_too_dense"
+        ]
+      },
+      "runtime": {
+        "errors": 0,
+        "warnings": 0,
+        "codes": []
+      },
+      "layout": {
+        "errors": 0,
+        "warnings": 0,
+        "codes": []
+      },
+      "motion": {
+        "errors": 0,
+        "warnings": 0,
+        "codes": []
+      },
+      "contrast": {
+        "errors": 0,
+        "warnings": 0,
+        "codes": []
+      },
+      "craft": {
+        "errors": 0,
+        "warnings": 0,
+        "codes": []
+      },
+      "audio": {
+        "errors": 0,
+        "warnings": 0,
+        "codes": []
+      }
+    },
+    "report": "day01-credit-principles\\.hyperframes\\artifacts\\checks\\4f3943c3-a615-4d6e-9795-0b611637dcbe.json"
+  },
+  {
+    "day": "02",
+    "file": "Day02.mp4",
+    "seconds": 57.708333,
+    "bytes": 2246020,
+    "findings": {
+      "lint": {
+        "errors": 0,
+        "warnings": 7,
+        "codes": [
+          "nested_structure_needs_subcomposition",
+          "timeline_track_too_dense"
+        ]
+      },
+      "runtime": {
+        "errors": 0,
+        "warnings": 0,
+        "codes": []
+      },
+      "layout": {
+        "errors": 0,
+        "warnings": 0,
+        "codes": []
+      },
+      "motion": {
+        "errors": 0,
+        "warnings": 0,
+        "codes": []
+      },
+      "contrast": {
+        "errors": 0,
+        "warnings": 0,
+        "codes": []
+      },
+      "craft": {
+        "errors": 0,
+        "warnings": 0,
+        "codes": []
+      },
+      "audio": {
+        "errors": 0,
+        "warnings": 0,
+        "codes": []
+      }
+    },
+    "report": "day02-independent-review\\.hyperframes\\artifacts\\checks\\39fa344c-1c6c-4bd2-b23f-b78fd6123c0c.json"
+  },
+  {
+    "day": "03",
+    "file": "Day03.mp4",
+    "seconds": 57.458333,
+    "bytes": 2232955,
+    "findings": {
+      "lint": {
+        "errors": 0,
+        "warnings": 7,
+        "codes": [
+          "nested_structure_needs_subcomposition",
+          "timeline_track_too_dense"
+        ]
+      },
+      "runtime": {
+        "errors": 0,
+        "warnings": 0,
+        "codes": []
+      },
+      "layout": {
+        "errors": 0,
+        "warnings": 0,
+        "codes": []
+      },
+      "motion": {
+        "errors": 0,
+        "warnings": 0,
+        "codes": []
+      },
+      "contrast": {
+        "errors": 0,
+        "warnings": 0,
+        "codes": []
+      },
+      "craft": {
+        "errors": 0,
+        "warnings": 0,
+        "codes": []
+      },
+      "audio": {
+        "errors": 0,
+        "warnings": 0,
+        "codes": []
+      }
+    },
+    "report": "day03-credit-aggregation\\.hyperframes\\artifacts\\checks\\5468e713-bc35-4259-9e65-45ed35428dd1.json"
+  },
+  {
+    "day": "04",
+    "file": "Day04.mp4",
+    "seconds": 56.458333,
+    "bytes": 2227298,
+    "findings": {
+      "lint": {
+        "errors": 0,
+        "warnings": 7,
+        "codes": [
+          "nested_structure_needs_subcomposition",
+          "timeline_track_too_dense"
+        ]
+      },
+      "runtime": {
+        "errors": 0,
+        "warnings": 0,
+        "codes": []
+      },
+      "layout": {
+        "errors": 0,
+        "warnings": 0,
+        "codes": []
+      },
+      "motion": {
+        "errors": 0,
+        "warnings": 0,
+        "codes": []
+      },
+      "contrast": {
+        "errors": 0,
+        "warnings": 0,
+        "codes": []
+      },
+      "craft": {
+        "errors": 0,
+        "warnings": 0,
+        "codes": []
+      },
+      "audio": {
+        "errors": 0,
+        "warnings": 0,
+        "codes": []
+      }
+    },
+    "report": "day04-corporate-identity\\.hyperframes\\artifacts\\checks\\ca439c9b-f2af-4d15-91ac-1d6951bdbb75.json"
+  }
+]

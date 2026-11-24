@@ -1,0 +1,155 @@
+[
+  {
+    "day": "05",
+    "seconds": 59.458,
+    "file": "Day05-trial.mp4",
+    "bytes": 2286041,
+    "streams": [
+      "video",
+      "audio"
+    ],
+    "check": "day05-tax-reconciliation\\.hyperframes\\artifacts\\checks\\e56a8c44-5b6a-4592-828f-29db06919b75.json",
+    "findings": {
+      "lint": {
+        "errors": 0,
+        "warnings": 7,
+        "codes": [
+          "nested_structure_needs_subcomposition",
+          "timeline_track_too_dense"
+        ]
+      },
+      "runtime": {
+        "errors": 0,
+        "warnings": 0,
+        "codes": []
+      },
+      "layout": {
+        "errors": 0,
+        "warnings": 0,
+        "codes": []
+      },
+      "motion": {
+        "errors": 0,
+        "warnings": 0,
+        "codes": []
+      },
+      "contrast": {
+        "errors": 0,
+        "warnings": 0,
+        "codes": []
+      },
+      "craft": {
+        "errors": 0,
+        "warnings": 0,
+        "codes": []
+      },
+      "audio": {
+        "errors": 0,
+        "warnings": 0,
+        "codes": []
+      }
+    }
+  },
+  {
+    "day": "16",
+    "seconds": 57.542,
+    "file": "Day16-trial.mp4",
+    "bytes": 2273070,
+    "streams": [
+      "video",
+      "audio"
+    ],
+    "check": "day16-profit-quality\\.hyperframes\\artifacts\\checks\\864cb919-8026-477e-a8be-33e51b42765a.json",
+    "findings": {
+      "lint": {
+        "errors": 0,
+        "warnings": 7,
+        "codes": [
+          "nested_structure_needs_subcomposition",
+          "timeline_track_too_dense"
+        ]
+      },
+      "runtime": {
+        "errors": 0,
+        "warnings": 0,
+        "codes": []
+      },
+      "layout": {
+        "errors": 0,
+        "warnings": 0,
+        "codes": []
+      },
+      "motion": {
+        "errors": 0,
+        "warnings": 0,
+        "codes": []
+      },
+      "contrast": {
+        "errors": 0,
+        "warnings": 0,
+        "codes": []
+      },
+      "craft": {
+        "errors": 0,
+        "warnings": 0,
+        "codes": []
+      },
+      "audio": {
+        "errors": 0,
+        "warnings": 0,
+        "codes": []
+      }
+    }
+  },
+  {
+    "day": "25",
+    "seconds": 55.125,
+    "file": "Day25-trial.mp4",
+    "bytes": 2265150,
+    "streams": [
+      "video",
+      "audio"
+    ],
+    "check": "day25-group-network\\.hyperframes\\artifacts\\checks\\56fe5d95-da71-41c4-8b32-b356b9e975a6.json",
+    "findings": {
+      "lint": {
+        "errors": 0,
+        "warnings": 7,
+        "codes": [
+          "nested_structure_needs_subcomposition",
+          "timeline_track_too_dense"
+        ]
+      },
+      "runtime": {
+        "errors": 0,
+        "warnings": 0,
+        "codes": []
+      },
+      "layout": {
+        "errors": 0,
+        "warnings": 0,
+        "codes": []
+      },
+      "motion": {
+        "errors": 0,
+        "warnings": 0,
+        "codes": []
+      },
+      "contrast": {
+        "errors": 0,
+        "warnings": 0,
+        "codes": []
+      },
+      "craft": {
+        "errors": 0,
+        "warnings": 0,
+        "codes": []
+      },
+      "audio": {
+        "errors": 0,
+        "warnings": 0,
+        "codes": []
+      }
+    }
+  }
+]

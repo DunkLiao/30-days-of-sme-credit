@@ -1,0 +1,40 @@
+# 匯出影片（所有目錄，副檔名不分大小寫）
+*.[mM][pP]4
+
+# Node.js 依賴與 HyperFrames 本機快取
+node_modules/
+.hyperframes/
+
+# Python 快取與虛擬環境
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# 執行日誌與暫存檔
+*.log
+*.tmp
+*.swp
+*.swo
+*~
+
+# 本機環境變數（保留可分享的設定範本）
+.env
+.env.*
+!.env.example
+!.env.sample
+!.env.template
+
+# 作業系統產生的檔案
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# 影片渲染產物與視覺檢查截圖
+/Video/**/renders/
+/Video/**/snapshots/
+/Video/**/rendered-frame.jpg
+/Video/qa_*.jpg
+/Video/day*-rendered-frame.jpg
+
+# 保留旁白音訊、封面、字型、腳本、字幕與驗證報告，供預覽及重製使用。
