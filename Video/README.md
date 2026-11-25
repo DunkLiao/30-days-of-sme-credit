@@ -1,10 +1,24 @@
 # 課程短影片與製作說明
 
-## 最新批次：Day 26～30（2026-11-24）
+## 目前狀態（2026-11-25）
+
+Day 01～30 共 **30 支直式短影片已製作完成並發布至 YouTube**。本機上傳紀錄顯示 30 集均為公開狀態，自訂縮圖與加入播放清單的步驟也均已完成；線上播放清單已切換為手動排序，並核對為 Day 01 → Day 30 連續排列。
+
+- [觀看 YouTube 播放清單](https://www.youtube.com/playlist?list=PLT1rFkuL6ecg)
+- [開啟課程首頁](https://30-days-of-sme-credit.killysss123.workers.dev/)
+- [在本機播放 Day 01～30](index.html)
+- [查看各集標題與說明](YOUTUBE_TITLES_AND_DESCRIPTIONS.md)
+- [上傳工具使用說明](youtube-uploader/README.md)與[Word 完成總結](youtube-uploader/YouTube上傳專案完成總結.docx)
+
+上傳設定保存在 `youtube-uploader/videos.json`，30 張縮圖位於 `youtube-uploader/thumbnails/`。已上傳影片的網址與執行狀態記錄在本機 `youtube-uploader/upload_state.json`；重新執行一般上傳命令會跳過已完成的集數。這 30 集均為立即公開，沒有設定排程發布。OAuth 憑證及權杖保存在本機，不應對外分享。
+
+下方保留各批次的製作與技術驗證紀錄。[TODO.md](TODO.md) 更新於 2026-11-24，其「尚待發布」敘述是當時的進度快照；人工觀看與內容回饋項目可繼續參照，不代表目前尚未上傳。
+
+## 最後製作批次：Day 26～30（2026-11-24）
 
 已新增 [Day26.mp4](Day26.mp4)、[Day27.mp4](Day27.mp4)、[Day28.mp4](Day28.mp4)、[Day29.mp4](Day29.mp4)、[Day30.mp4](Day30.mp4)。皆為 1080 × 1920、24 fps、H.264／AAC，含繁體字幕與本機合成旁白，片長約 58～60 秒；已完成各六段畫面檢視、全片解碼、影音格式、時長與字幕時間檢查。
 
-全系列 **30／30 支影片均已產出**，Day01～Day30 可由 [index.html](index.html) 播放。進度與人工審閱待辦見 [TODO.md](TODO.md)，本批驗證見 [VERIFICATION_DAY26_30.md](VERIFICATION_DAY26_30.md)，重製步驟見 [DAY26_30_PLAN.md](DAY26_30_PLAN.md)。人工觀看、必要修訂、定稿及發布另行追蹤；合成語音與句內字幕節奏仍待觀看回饋。
+全系列 **30／30 支影片均已產出**，Day01～Day30 可由 [index.html](index.html) 播放。當時的製作進度與人工審閱待辦見 [TODO.md](TODO.md)，本批驗證見 [VERIFICATION_DAY26_30.md](VERIFICATION_DAY26_30.md)，重製步驟見 [DAY26_30_PLAN.md](DAY26_30_PLAN.md)。發布現況已更新於本檔開頭；合成語音與句內字幕節奏仍可依觀看回饋修訂。
 
 ## 前一批：Day 22～24（2026-11-23）
 

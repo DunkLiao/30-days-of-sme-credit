@@ -1,0 +1,7 @@
+client_secret.json
+token.json
+upload_state.json
+*.log
+__pycache__/
+.venv/
+venv/

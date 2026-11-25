@@ -3,3 +3,11 @@
 **/node_modules/
 **/*.log
 __pycache__/
+*.py[cod]
+*.tmp
+*.swp
+*.swo
+*~
+# Office lock files and local document QA renders
+~$*
+**/.docx-qa/

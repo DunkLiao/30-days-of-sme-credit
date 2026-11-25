@@ -1,0 +1,15 @@
+{
+  "defaults": {
+    "title": "第{day}天｜{topic}",
+    "description": "本集主題：{topic}\n\n這是「30 天中小企業授信」系列課程第 {day} 集。\n\n訂閱頻道，持續學習中小企業授信實務。\n\n#中小企業授信 #授信實務",
+    "tags": [
+      "中小企業授信",
+      "授信實務",
+      "銀行授信",
+      "信用分析"
+    ],
+    "category_id": "27",
+    "language": "zh-TW",
+    "privacy_status": "public"
+  }
+}
